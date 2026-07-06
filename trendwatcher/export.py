@@ -1,0 +1,75 @@
+"""Экспорт статического сайта: index.html + data.json со снапшотом аналитики.
+
+Результат не требует backend — подходит для GitHub Pages, S3, nginx и т.п.
+Фильтрация ленты выполняется на клиенте по выгруженному массиву документов.
+"""
+
+import json
+import shutil
+from datetime import timedelta
+
+from sqlalchemy import func, select
+
+from .analytics.scoring import top_events
+from .analytics.signals import classify_signals
+from .analytics.timeseries import weekly_tag_counts
+from .config import PROJECT_ROOT
+from .db import Document, get_session, init_db, utcnow
+
+FEED_LIMIT = 400
+
+
+def build_snapshot(session, feed_limit: int = FEED_LIMIT) -> dict:
+    total = session.scalar(select(func.count(Document.id)))
+    by_type = dict(
+        session.execute(
+            select(Document.source_type, func.count(Document.id)).group_by(
+                Document.source_type
+            )
+        ).all()
+    )
+    last_week = session.scalar(
+        select(func.count(Document.id)).where(
+            Document.published_at >= utcnow() - timedelta(days=7)
+        )
+    )
+    feed = [
+        d.to_dict()
+        for d in session.scalars(
+            select(Document).order_by(Document.published_at.desc()).limit(feed_limit)
+        ).all()
+    ]
+    trends = weekly_tag_counts(session, weeks=13)
+    return {
+        "generated_at": utcnow().isoformat(),
+        "stats": {
+            "total_documents": total,
+            "by_source_type": by_type,
+            "last_week": last_week,
+        },
+        "top_events": top_events(session, days=30, limit=15),
+        "trends": {"weeks": trends["weeks"], "series": trends["series"]},
+        "signals": classify_signals(session),
+        "feed": feed,
+    }
+
+
+def export_site() -> tuple[str, str]:
+    """Собирает dist/site и zip-архив. Возвращает (путь к site, путь к zip)."""
+    init_db()
+    site_dir = PROJECT_ROOT / "dist" / "site"
+    if site_dir.exists():
+        shutil.rmtree(site_dir)
+    site_dir.mkdir(parents=True)
+
+    shutil.copy(PROJECT_ROOT / "web" / "index.html", site_dir / "index.html")
+    with get_session() as session:
+        snapshot = build_snapshot(session)
+    with open(site_dir / "data.json", "w", encoding="utf-8") as f:
+        json.dump(snapshot, f, ensure_ascii=False, default=str)
+
+    stamp = utcnow().strftime("%Y-%m-%d")
+    zip_path = shutil.make_archive(
+        str(PROJECT_ROOT / "dist" / f"TrendWatcher_static_{stamp}"), "zip", site_dir
+    )
+    return str(site_dir), zip_path

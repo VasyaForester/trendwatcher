@@ -1,0 +1,107 @@
+# Декларативный конфиг источников TrendWatcher.
+# type: rss | arxiv | nvd — определяет коннектор.
+# source_type: news | research | vulnerability | vendor | standards | incident
+# trust: вес доверия источника (0..1), влияет на скоринг событий.
+# filter_ai: true — оставлять только AI-релевантные публикации (для общих security-лент).
+
+sources:
+  - id: arxiv_ai_security
+    name: "arXiv — AI Security papers"
+    type: arxiv
+    source_type: research
+    trust: 0.9
+    # Глубокая выборка ради ретроспективы: сигналы сравниваются с baseline за ~26 недель
+    max_results: 800
+    query: >-
+      (cat:cs.CR OR cat:cs.AI OR cat:cs.CL OR cat:cs.LG) AND
+      (abs:"prompt injection" OR abs:"jailbreak" OR abs:"LLM security" OR
+       abs:"adversarial attack on language model" OR abs:"data poisoning" OR
+       abs:"model extraction" OR abs:"AI red teaming" OR abs:"agent security" OR
+       abs:"backdoor attack" OR abs:"guardrails")
+
+  - id: arxiv_ai_general
+    name: "arXiv — AI general trends"
+    type: arxiv
+    source_type: research
+    trust: 0.9
+    max_results: 500
+    query: >-
+      (cat:cs.AI OR cat:cs.LG OR cat:cs.CL OR cat:cs.MA) AND
+      (abs:"self-evolving" OR abs:"self-improving agent" OR abs:"multi-agent system" OR
+       abs:"agentic" OR abs:"test-time scaling" OR abs:"world model" OR
+       abs:"reasoning model" OR abs:"mixture-of-experts" OR abs:"small language model" OR
+       abs:"synthetic data generation" OR abs:"long context" OR abs:"agent memory")
+
+  - id: nvd_ai
+    name: "NVD — CVE по AI-продуктам"
+    type: nvd
+    source_type: vulnerability
+    trust: 1.0
+    days_back: 120
+    keywords:
+      - "large language model"
+      - "LLM"
+      - "artificial intelligence"
+
+  - id: thehackernews
+    name: "The Hacker News"
+    type: rss
+    source_type: news
+    trust: 0.6
+    filter_ai: true
+    url: "https://feeds.feedburner.com/TheHackersNews"
+
+  - id: bleepingcomputer
+    name: "BleepingComputer"
+    type: rss
+    source_type: news
+    trust: 0.6
+    filter_ai: true
+    url: "https://www.bleepingcomputer.com/feed/"
+
+  - id: simonwillison
+    name: "Simon Willison"
+    type: rss
+    source_type: news
+    trust: 0.7
+    filter_ai: true
+    url: "https://simonwillison.net/atom/everything/"
+
+  - id: schneier
+    name: "Schneier on Security"
+    type: rss
+    source_type: news
+    trust: 0.7
+    filter_ai: true
+    url: "https://www.schneier.com/feed/atom/"
+
+  - id: google_security
+    name: "Google Online Security Blog"
+    type: rss
+    source_type: vendor
+    trust: 0.85
+    filter_ai: true
+    url: "https://feeds.feedburner.com/GoogleOnlineSecurityBlog"
+
+  - id: openai_news
+    name: "OpenAI News"
+    type: rss
+    source_type: vendor
+    trust: 0.8
+    url: "https://openai.com/news/rss.xml"
+
+  - id: nist_news
+    name: "NIST News"
+    type: rss
+    source_type: standards
+    trust: 0.95
+    filter_ai: true
+    url: "https://www.nist.gov/news-events/news/rss.xml"
+
+  - id: cisa_advisories
+    name: "CISA Advisories"
+    type: rss
+    source_type: standards
+    trust: 0.95
+    filter_ai: true
+    url: "https://www.cisa.gov/cybersecurity-advisories/all.xml"

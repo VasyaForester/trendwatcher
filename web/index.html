@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrendWatcher — AI Security Trends</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0b0f17; --panel: #121826; --panel2: #1a2234; --border: #232d42;
+    --text: #e6ebf5; --muted: #8b96ad; --accent: #5b8cff; --accent2: #9d6bff;
+    --green: #3ddc97; --yellow: #ffce56; --red: #ff6b7a; --orange: #ff9f5b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: "Segoe UI", system-ui, sans-serif; padding: 24px; }
+  .container { max-width: 1280px; margin: 0 auto; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+  h1 { font-size: 26px; font-weight: 700;
+       background: linear-gradient(90deg, var(--accent), var(--accent2));
+       -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .subtitle { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .stats { display: flex; gap: 12px; flex-wrap: wrap; }
+  .stat { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 10px 18px; text-align: center; }
+  .stat .num { font-size: 22px; font-weight: 700; color: var(--accent); }
+  .stat .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  .grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; margin-bottom: 18px; }
+  @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+  .panel h2 { font-size: 15px; margin-bottom: 14px; color: var(--text); display: flex; justify-content: space-between; align-items: center; }
+  .panel h2 .hint { font-size: 11px; color: var(--muted); font-weight: 400; }
+  .event { padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .event:last-child { border-bottom: none; }
+  .event a { color: var(--text); text-decoration: none; font-size: 13.5px; font-weight: 600; }
+  .event a:hover { color: var(--accent); }
+  .event .meta { margin-top: 5px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 11px; color: var(--muted); }
+  .chip { background: var(--panel2); border: 1px solid var(--border); border-radius: 20px; padding: 2px 9px; font-size: 10.5px; }
+  .chip.tag { color: var(--accent); cursor: pointer; }
+  .chip.tag:hover { border-color: var(--accent); }
+  .score { color: var(--green); font-weight: 700; }
+  .lvl { border-radius: 20px; padding: 2px 10px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; }
+  .lvl.strong { background: rgba(61,220,151,.15); color: var(--green); }
+  .lvl.emerging { background: rgba(255,206,86,.15); color: var(--yellow); }
+  .lvl.research { background: rgba(157,107,255,.18); color: var(--accent2); }
+  .lvl.spike { background: rgba(255,159,91,.18); color: var(--orange); }
+  .lvl.stable { background: rgba(77,208,225,.13); color: #4dd0e1; }
+  .lvl.weak { background: rgba(139,150,173,.15); color: var(--muted); }
+  .lvl.declining { background: rgba(255,107,122,.15); color: var(--red); }
+  .cat-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+  .cat-dot.ai_tech { background: var(--accent2); }
+  .cat-dot.security { background: var(--accent); }
+  .legend-note { font-size: 11px; color: var(--muted); margin-top: 10px; line-height: 1.6; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th { text-align: left; color: var(--muted); font-size: 11px; text-transform: uppercase; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+  td { padding: 7px 8px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  .vel-up { color: var(--green); } .vel-down { color: var(--red); }
+  .chart-panel { margin-bottom: 18px; }
+  #trendChart { max-height: 320px; }
+  .controls { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+  select, input[type=text] {
+    background: var(--panel2); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 7px 10px; font-size: 13px; outline: none;
+  }
+  input[type=text] { flex: 1; min-width: 180px; }
+  select:focus, input:focus { border-color: var(--accent); }
+  .feed-item { padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .type-badge { border-radius: 6px; padding: 1px 7px; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-right: 6px; }
+  .t-vulnerability { background: rgba(255,107,122,.15); color: var(--red); }
+  .t-research { background: rgba(91,140,255,.15); color: var(--accent); }
+  .t-incident { background: rgba(255,159,91,.18); color: var(--orange); }
+  .t-news { background: rgba(139,150,173,.15); color: var(--muted); }
+  .t-regulation { background: rgba(157,107,255,.15); color: var(--accent2); }
+  .t-framework { background: rgba(61,220,151,.15); color: var(--green); }
+  .t-tool_release { background: rgba(255,206,86,.15); color: var(--yellow); }
+  .empty { color: var(--muted); font-size: 13px; padding: 12px 0; }
+  footer { color: var(--muted); font-size: 11.5px; text-align: center; margin-top: 20px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <h1>TrendWatcher</h1>
+      <div class="subtitle">Мониторинг трендов AI Security — инциденты, уязвимости, исследования, регуляторика</div>
+    </div>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>Топ событий <span class="hint">за 30 дней, композитный score</span></h2>
+      <div id="topEvents"><div class="empty">Загрузка…</div></div>
+    </div>
+    <div class="panel">
+      <h2>Сигналы <span class="hint">4 недели vs baseline за 26 недель</span></h2>
+      <table>
+        <thead><tr><th>Тема</th><th>Уровень</th><th>Публ.</th><th>Динамика</th></tr></thead>
+        <tbody id="signals"></tbody>
+      </table>
+      <div class="legend-note">
+        <span class="cat-dot security"></span>AI security&nbsp;&nbsp;
+        <span class="cat-dot ai_tech"></span>AI в целом.
+        <b>research</b> — тема пока только в исследованиях, потенциально перспективная;
+        <b>spike</b> — разовая вспышка (инфоповод/артефакт), не тренд;
+        <b>stable</b> — долгоиграющая тема на базовом уровне.
+        Наведите курсор на уровень — увидите обоснование.
+      </div>
+    </div>
+  </div>
+
+  <div class="panel chart-panel">
+    <h2>Динамика тем <span class="hint">публикаций в неделю, топ-7 тегов за 13 недель</span></h2>
+    <canvas id="trendChart"></canvas>
+  </div>
+
+  <div class="panel">
+    <h2>Лента публикаций</h2>
+    <div class="controls">
+      <select id="tagFilter"><option value="">Все теги</option></select>
+      <select id="typeFilter">
+        <option value="">Все типы</option>
+        <option value="incident">Инциденты</option>
+        <option value="vulnerability">Уязвимости</option>
+        <option value="research">Исследования</option>
+        <option value="regulation">Регуляторика</option>
+        <option value="framework">Фреймворки</option>
+        <option value="tool_release">Инструменты</option>
+        <option value="news">Новости</option>
+      </select>
+      <input type="text" id="searchBox" placeholder="Поиск по заголовку и тексту…">
+    </div>
+    <div id="feed"><div class="empty">Загрузка…</div></div>
+  </div>
+
+  <footer>TrendWatcher v0.1 — данные обновляются командой <code>python run.py ingest</code></footer>
+</div>
+
+<script>
+// ============================================================================
+// КОНФИГУРАЦИЯ ИСТОЧНИКА ДАННЫХ.
+// Пустая строка — данные берутся из data.json рядом с этим файлом.
+// Чтобы сайт обновлялся БЕЗ перезаливки хостинга, укажите внешний URL,
+// который обновляется автоматически (файл в репозитории GitHub):
+//   "https://raw.githubusercontent.com/ВАШ_ЛОГИН/ИМЯ_РЕПОЗИТОРИЯ/main/data.json"
+// (raw.githubusercontent.com отдает CORS * и обновляет кеш за ~5 минут)
+// ============================================================================
+const DATA_URL = "https://raw.githubusercontent.com/VasyaForester/trendwatcher/main/data.json";
+</script>
+<script>
+// Дашборд работает с единым снапшотом data.json — одинаково в динамическом
+// режиме (FastAPI отдает его живьем) и на статическом хостинге (файл рядом).
+const PALETTE = ["#5b8cff","#3ddc97","#ffce56","#ff6b7a","#9d6bff","#ff9f5b","#4dd0e1"];
+const fmtDate = iso => iso ? new Date(iso).toLocaleDateString("ru-RU", {day:"numeric", month:"short"}) : "";
+let DATA = null;
+
+function renderStats() {
+  const s = DATA.stats;
+  document.getElementById("stats").innerHTML = `
+    <div class="stat"><div class="num">${s.total_documents}</div><div class="lbl">документов</div></div>
+    <div class="stat"><div class="num">${s.last_week}</div><div class="lbl">за 7 дней</div></div>
+    <div class="stat"><div class="num">${Object.keys(s.by_source_type).length}</div><div class="lbl">типов источников</div></div>`;
+}
+
+function renderTopEvents() {
+  const events = DATA.top_events.slice(0, 12);
+  const el = document.getElementById("topEvents");
+  if (!events.length) { el.innerHTML = '<div class="empty">Нет данных</div>'; return; }
+  el.innerHTML = events.map(e => `
+    <div class="event">
+      <a href="${e.url}" target="_blank" rel="noopener">${e.title}</a>
+      <div class="meta">
+        <span class="score">★ ${e.score}</span>
+        <span class="type-badge t-${e.doc_type}">${e.doc_type}</span>
+        <span>${e.source_name}</span><span>·</span><span>${fmtDate(e.published_at)}</span>
+        ${e.corroboration ? `<span>· подтверждений: ${e.corroboration}</span>` : ""}
+        ${e.tags.slice(0,3).map(t => `<span class="chip tag" onclick="filterTag('${t}')">${t}</span>`).join("")}
+      </div>
+    </div>`).join("");
+}
+
+function renderSignals() {
+  const signals = DATA.signals;
+  const tbody = document.getElementById("signals");
+  if (!signals.length) { tbody.innerHTML = '<tr><td colspan="4" class="empty">Нет данных</td></tr>'; return; }
+  tbody.innerHTML = signals.slice(0, 20).map(s => {
+    const v = Math.round(s.velocity * 100);
+    const velHtml = v > 0 ? `<span class="vel-up">+${v}%</span>` : v < 0 ? `<span class="vel-down">${v}%</span>` : "0%";
+    const reason = (s.reason || "").replace(/"/g, "&quot;");
+    return `<tr>
+      <td><span class="cat-dot ${s.category}"></span><span class="chip tag" onclick="filterTag('${s.tag}')">${s.tag}</span></td>
+      <td><span class="lvl ${s.level}" title="${reason}">${s.level}</span></td>
+      <td>${s.recent}</td><td>${velHtml}</td>
+    </tr>`;
+  }).join("");
+}
+
+function renderChart() {
+  const data = DATA.trends;
+  const totals = Object.entries(data.series).map(([tag, arr]) => [tag, arr.reduce((a,b)=>a+b,0)]);
+  totals.sort((a,b) => b[1]-a[1]);
+  const topTags = totals.slice(0,7).map(t => t[0]);
+  new Chart(document.getElementById("trendChart"), {
+    type: "line",
+    data: {
+      labels: data.weeks.map(w => new Date(w).toLocaleDateString("ru-RU",{day:"numeric",month:"short"})),
+      datasets: topTags.map((tag,i) => ({
+        label: tag, data: data.series[tag], borderColor: PALETTE[i],
+        backgroundColor: PALETTE[i]+"22", tension: .35, borderWidth: 2, pointRadius: 2, fill: false,
+      })),
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true, aspectRatio: 3.2,
+      interaction: { mode: "index", intersect: false },
+      plugins: { legend: { labels: { color: "#8b96ad", boxWidth: 12, font: { size: 11 } } } },
+      scales: {
+        x: { ticks: { color: "#8b96ad", font: { size: 10 } }, grid: { color: "#1a2234" } },
+        y: { ticks: { color: "#8b96ad", font: { size: 10 } }, grid: { color: "#1a2234" }, beginAtZero: true },
+      },
+    },
+  });
+}
+
+function populateTagFilter() {
+  const tags = new Set();
+  DATA.feed.forEach(d => d.tags.forEach(t => tags.add(t)));
+  const tagFilter = document.getElementById("tagFilter");
+  [...tags].sort().forEach(tag => {
+    const opt = document.createElement("option");
+    opt.value = tag; opt.textContent = tag;
+    tagFilter.appendChild(opt);
+  });
+}
+
+let searchTimer;
+function renderFeed() {
+  const tag = document.getElementById("tagFilter").value;
+  const type = document.getElementById("typeFilter").value;
+  const q = document.getElementById("searchBox").value.trim().toLowerCase();
+  const items = DATA.feed.filter(d =>
+    (!tag || d.tags.includes(tag)) &&
+    (!type || d.doc_type === type) &&
+    (!q || (d.title + " " + d.summary).toLowerCase().includes(q))
+  ).slice(0, 60);
+  const el = document.getElementById("feed");
+  if (!items.length) { el.innerHTML = '<div class="empty">Ничего не найдено</div>'; return; }
+  el.innerHTML = items.map(d => `
+    <div class="feed-item">
+      <span class="type-badge t-${d.doc_type}">${d.doc_type}</span>
+      <a href="${d.url}" target="_blank" rel="noopener" style="color:var(--text);text-decoration:none;font-weight:600">${d.title}</a>
+      <div class="meta" style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;font-size:11px;color:var(--muted)">
+        <span>${d.source_name}</span><span>·</span><span>${fmtDate(d.published_at)}</span>
+        ${d.tags.slice(0,4).map(t => `<span class="chip tag" onclick="filterTag('${t}')">${t}</span>`).join("")}
+      </div>
+    </div>`).join("");
+}
+
+function filterTag(tag) {
+  document.getElementById("tagFilter").value = tag;
+  renderFeed();
+  document.getElementById("feed").scrollIntoView({ behavior: "smooth" });
+}
+
+document.getElementById("tagFilter").addEventListener("change", renderFeed);
+document.getElementById("typeFilter").addEventListener("change", renderFeed);
+document.getElementById("searchBox").addEventListener("input", () => {
+  clearTimeout(searchTimer); searchTimer = setTimeout(renderFeed, 250);
+});
+
+(async () => {
+  DATA = await (await fetch(DATA_URL || "data.json")).json();
+  const gen = DATA.generated_at
+    ? new Date(DATA.generated_at + "Z").toLocaleString("ru-RU", {day:"numeric", month:"long", hour:"2-digit", minute:"2-digit"})
+    : "";
+  document.querySelector("footer").textContent =
+    `TrendWatcher v0.1 — снапшот данных от ${gen}. Обновление: python run.py ingest && python run.py export`;
+  renderStats(); renderTopEvents(); renderSignals(); renderChart(); populateTagFilter(); renderFeed();
+})();
+</script>
+</body>
+</html>

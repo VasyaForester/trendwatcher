@@ -1,0 +1,47 @@
+# Автообновление данных TrendWatcher без участия человека и без изменения хостинга.
+#
+# Раз в сутки: собирает публикации из источников, пересчитывает аналитику и
+# коммитит свежие data.json + базу обратно в репозиторий. Сайт на вашем хостинге
+# читает data.json по raw-ссылке из этого репозитория (см. DATA_URL в web/index.html),
+# поэтому обновляется сам — загружать на хостинг ничего не нужно.
+#
+# Установка: запушить проект в GitHub-репозиторий — больше ничего настраивать
+# не требуется (права на коммит даются блоком permissions ниже).
+
+name: Update trend data
+
+on:
+  schedule:
+    - cron: "0 5 * * *"   # каждый день в 05:00 UTC
+  workflow_dispatch:        # плюс ручной запуск кнопкой в GitHub
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Ingest sources and export snapshot
+        run: |
+          python run.py ingest
+          python run.py export
+          cp dist/site/data.json data.json
+
+      - name: Commit updated data
+        run: |
+          git config user.name "trendwatcher-bot"
+          git config user.email "actions@github.com"
+          git add data.json data/trendwatcher.db
+          git diff --cached --quiet || git commit -m "data: auto-update $(date -u +%Y-%m-%d)"
+          git push
