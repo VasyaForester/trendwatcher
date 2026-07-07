@@ -22,7 +22,11 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+      # ref: main — иначе перезапуск (Re-run) старого запуска возьмет устаревший
+      # снимок репозитория и push будет отклонен
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:
@@ -44,4 +48,5 @@ jobs:
           git config user.email "actions@github.com"
           git add data.json data/trendwatcher.db
           git diff --cached --quiet || git commit -m "data: auto-update $(date -u +%Y-%m-%d)"
+          git pull --rebase origin main
           git push
