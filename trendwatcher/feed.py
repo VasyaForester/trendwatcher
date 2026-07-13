@@ -2,8 +2,8 @@
 
 from sqlalchemy import select
 
-from ..db import Document
-from .thresholds import FEED_MIN
+from .db import Document
+from .tbsf.thresholds import FEED_MIN
 
 
 def build_feed(session, limit: int = 400) -> list[dict]:
