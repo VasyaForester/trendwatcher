@@ -91,7 +91,7 @@
 
   <div class="grid">
     <div class="panel">
-      <h2>Топ событий <span class="hint">за 30 дней · arXiv: TBSF 🔴/🟡/⚪</span></h2>
+      <h2>Топ событий <span class="hint">arXiv: TBSF ≥50 (reserve), лента ≥42</span></h2>
       <div id="topEvents"><div class="empty">Загрузка…</div></div>
     </div>
     <div class="panel">
@@ -256,10 +256,14 @@ function renderFeed() {
     (!tag || d.tags.includes(tag)) &&
     (!type || d.doc_type === type) &&
     (!q || (d.title + " " + d.summary).toLowerCase().includes(q))
-  ).slice(0, 60);
+  );
+  if (type === "research") {
+    items.sort((a, b) => (b.tbsf_score || 0) - (a.tbsf_score || 0));
+  }
+  const shown = items.slice(0, 60);
   const el = document.getElementById("feed");
-  if (!items.length) { el.innerHTML = '<div class="empty">Ничего не найдено</div>'; return; }
-  el.innerHTML = items.map(d => `
+  if (!shown.length) { el.innerHTML = '<div class="empty">Ничего не найдено</div>'; return; }
+  el.innerHTML = shown.map(d => `
     <div class="feed-item">
       <span class="type-badge t-${d.doc_type}">${d.doc_type}</span>
       <a href="${d.url}" target="_blank" rel="noopener" style="color:var(--text);text-decoration:none;font-weight:600">${d.title}</a>

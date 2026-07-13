@@ -15,6 +15,7 @@ from .analytics.signals import classify_signals
 from .analytics.timeseries import weekly_tag_counts
 from .config import PROJECT_ROOT
 from .db import Document, get_session, init_db, utcnow
+from .feed import build_feed
 
 FEED_LIMIT = 400
 
@@ -33,12 +34,7 @@ def build_snapshot(session, feed_limit: int = FEED_LIMIT) -> dict:
             Document.published_at >= utcnow() - timedelta(days=7)
         )
     )
-    feed = [
-        d.to_dict()
-        for d in session.scalars(
-            select(Document).order_by(Document.published_at.desc()).limit(feed_limit)
-        ).all()
-    ]
+    feed = build_feed(session, limit=feed_limit)
     trends = weekly_tag_counts(session, weeks=13)
     return {
         "generated_at": utcnow().isoformat(),

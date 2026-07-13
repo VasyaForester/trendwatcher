@@ -10,6 +10,7 @@ from ..analytics.timeseries import weekly_tag_counts
 from ..config import PROJECT_ROOT
 from ..db import Document, get_session, init_db, utcnow
 from ..export import build_snapshot
+from ..feed import build_feed
 
 app = FastAPI(title="TrendWatcher", version="0.1.0")
 init_db()
@@ -76,20 +77,21 @@ def api_feed(
     limit: int = Query(50, ge=1, le=200),
 ):
     with get_session() as s:
-        stmt = select(Document).order_by(Document.published_at.desc()).limit(500)
-        docs = s.scalars(stmt).all()
+        items = build_feed(s, limit=500)
         out = []
-        for d in docs:
-            if tag and tag not in d.tags:
+        for d in items:
+            if tag and tag not in d["tags"]:
                 continue
-            if doc_type and d.doc_type != doc_type:
+            if doc_type and d["doc_type"] != doc_type:
                 continue
-            if q and q.lower() not in f"{d.title} {d.summary}".lower():
+            if q and q.lower() not in f"{d['title']} {d['summary']}".lower():
                 continue
-            out.append(d.to_dict())
+            out.append(d)
             if len(out) >= limit:
                 break
-        return out
+        if doc_type == "research":
+            out.sort(key=lambda x: x.get("tbsf_score") or 0, reverse=True)
+        return out[:limit]
 
 
 app.mount("/", StaticFiles(directory=PROJECT_ROOT / "web", html=True), name="web")
