@@ -16,8 +16,11 @@ with get_session() as s:
     signals = classify_signals(s)
 
 print("top events:", len(events))
-for e in events[:6]:
-    print(f"  {e['score']:>5} | {e['doc_type']:<13} | corr={e['corroboration']} | {e['title'][:75]}")
+for e in events[:8]:
+    if e.get("score_type") == "tbsf":
+        print(f"  TBSF {e['score']:>3}% {e.get('tbsf_vector',''):<15} | {e['title'][:70]}")
+    else:
+        print(f"  comp {e['score']:>5} | {e['doc_type']:<13} | {e['title'][:70]}")
 
 print("\nsignals:", len(signals))
 for sg in signals:

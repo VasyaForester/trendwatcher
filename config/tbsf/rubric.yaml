@@ -1,0 +1,156 @@
+version: "1.1.0"
+name: TBSF
+description: Threat-based Security Scoring Framework for GenAI/agent security publications
+
+survey:
+  use_case: table
+  articles_per_week: "5-20"
+  decision_mode: score_review
+  topic_logic: variant1
+  defensive_policy: penalty_10
+  mcp_without_code: llm_decides
+  keywords_update: monthly
+  keywords_language: en_only
+  storage: csv
+  json_breakdown_min_score: 75
+
+formula:
+  components:
+    topic: { max: 35 }
+    freshness: { max: 15 }
+    code: { max: 18 }
+    dataset: { max: 8 }
+    license: { max: 4 }
+    author: { max: 12 }
+    venue: { max: 8 }
+  penalties:
+    max: 10
+
+thresholds:
+  priority: 75
+  reserve_min: 50
+  reserve_max: 74
+  reject_max: 49
+  telegram_publish: 70
+
+topic:
+  mode: variant1
+  vectors:
+    agent_security: 21
+    prompt_mcp: 12
+  bonuses:
+    cyber_risk: 2
+    offensive: 1
+  llm_topic_override: true
+
+freshness:
+  buckets:
+    - { max_days: 30, score: 15 }
+    - { max_days: 90, score: 11 }
+    - { max_days: 180, score: 6 }
+    - { max_days: null, score: 0 }
+
+code:
+  non_empty_py_ipynb: 6
+  readme: 4
+  dependencies_file: 3
+  launch_script: 3
+  python_stack_bonus: 2
+  always_try_run: true
+  non_python_allowed: true
+
+dataset:
+  present: 2
+  size:
+    large: { min: 1000, score: 3 }
+    medium: { min: 500, score: 2 }
+    small: { min: 0, score: 1 }
+  attack_diversity_bonus: 2
+  described_only_score: 0
+
+license:
+  mit_apache: 2
+  other_open: 1
+  proprietary: 0
+  reproduction_instructions: 2
+
+author:
+  world_leader: 12
+  top_institution: 10
+  recognized_expert: 8
+  average: 5
+  beginner: 2
+  unverifiable: 0
+  top_on_arxiv: 12
+
+venue:
+  top_vendor: 8
+  reputable: 6
+  arxiv_and_journal: 4
+  arxiv_only: 2
+  unknown: 0
+
+penalties:
+  broken_links: 2
+  outdated_dependencies: 2
+  no_license: 3
+  code_not_runnable: 3
+  hidden_module: 2
+  purely_defensive: 10
+
+topic_tags:
+  - джейлбрейк
+  - промпт-атака
+  - непрямая промпт-атака
+  - отравление данных
+  - безопасность агентов
+  - self-evolving агенты
+  - MCP-атака
+  - бенчмарк
+  - фреймворк
+  - гардрейлы
+  - оценка безопасности
+  - киберриски агентов
+  - оценка надежности (safety)
+  - образовательный инструмент
+  - другое
+
+top_institutions:
+  - Google
+  - DeepMind
+  - OpenAI
+  - Anthropic
+  - Microsoft
+  - Meta
+  - Amazon
+  - Apple
+  - MIT
+  - Stanford
+  - Carnegie Mellon
+  - Berkeley
+
+defense_keywords:
+  - guardrail
+  - guardrails
+  - defense
+  - defensive
+  - alignment
+  - safety alignment
+  - injection defense
+  - MLSecOps defense
+
+cyber_risk_keywords:
+  - unauthorized code execution
+  - lateral movement
+  - credential theft
+  - data exfiltration
+  - agent-mediated rce
+  - rce
+  - supply chain compromise
+  - persistent backdoor
+  - sandbox escape
+  - privilege escalation
+
+output:
+  hashtags_enabled: false
+  extra_columns: []

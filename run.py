@@ -7,7 +7,7 @@ import sys
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="TrendWatcher CLI")
-    parser.add_argument("command", choices=["ingest", "serve", "analyze", "retag", "export"])
+    parser.add_argument("command", choices=["ingest", "serve", "analyze", "retag", "export", "export-site", "score-tbsf"])
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
 
@@ -25,6 +25,20 @@ def main() -> None:
         site_dir, zip_path = export_site()
         print(f"site:    {site_dir}")
         print(f"archive: {zip_path}")
+    elif args.command == "score-tbsf":
+        from trendwatcher.db import get_session, init_db
+        from trendwatcher.tbsf.batch import rescore_all
+
+        init_db()
+        with get_session() as s:
+            n = rescore_all(s)
+        print(f"scored {n} research documents with TBSF")
+    elif args.command == "export-site":
+        from trendwatcher.export import export_hosting
+
+        zip_path = export_hosting()
+        print(f"archive: {zip_path}")
+        print("upload index.html to hosting root — data loads from GitHub Actions")
     elif args.command == "serve":
         import uvicorn
 

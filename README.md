@@ -16,8 +16,11 @@ python -m venv .venv
 # 2. Запустить веб-дашборд на http://127.0.0.1:8000
 .venv\Scripts\python run.py serve
 
-# Опционально: аналитический срез в JSON (топ событий + сигналы)
-.venv\Scripts\python run.py analyze
+# Переразметка + TBSF для всех research-документов
+.venv\Scripts\python run.py retag
+
+# Только TBSF-оценка arXiv (без ingest)
+.venv\Scripts\python run.py score-tbsf
 
 # Статический экспорт для хостинга без Python (GitHub Pages, S3, nginx):
 # собирает dist/site (index.html + data.json) и zip-архив в dist/
@@ -28,8 +31,8 @@ python -m venv .venv
 
 - `config/sources.yaml` — декларативный конфиг источников (добавление без кода)
 - `trendwatcher/ingestion/` — коннекторы (RSS, arXiv API, NVD API 2.0) + дедупликация
-- `trendwatcher/enrichment/` — таксономия AI security (OWASP LLM Top 10 / MITRE ATLAS),
-  разметка тегов, типов, сущностей и severity
+- `trendwatcher/tbsf/` — **TBSF v1.1** (Threat-based Security Scoring Framework): оценка arXiv-статей 0–100%, уровни 🔴/🟡/⚪ вместо звёзд
+- `config/tbsf/` — рубрика, topic vectors, keywords (синхронизируется с проектом TBSF)
 - `trendwatcher/analytics/` — временные ряды, velocity, сигналы (weak/emerging/strong),
   скоринг топ-событий с корроборацией между источниками
 - `trendwatcher/api/` — FastAPI (`/api/stats`, `/api/top-events`, `/api/trends`,

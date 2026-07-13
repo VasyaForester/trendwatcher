@@ -1,0 +1,15 @@
+tier: indirect
+weight_hint: 0.10
+groups:
+  infrastructure:
+    - ai incident
+    - llm attack framework
+    - security benchmark
+    - owasp genai
+    - ai risk assessment
+    - ai compliance
+    - ai monitoring
+    - ai governance
+    - бенчмарк
+    - фреймворк
+    - оценка безопасности

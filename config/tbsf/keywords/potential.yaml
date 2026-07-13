@@ -1,0 +1,24 @@
+tier: potential
+weight_hint: 0.30
+language: en
+groups:
+  cyber_risks:
+    - unauthorized code execution
+    - lateral movement via agents
+    - credential theft through agents
+    - data exfiltration via tool use
+    - agent-mediated rce
+    - supply chain compromise via agents
+    - persistent backdoor in agent skills
+
+  general_threats:
+    - data poisoning
+    - model backdoor
+    - adversarial attacks
+    - red teaming
+    - injection defense
+    - guardrails
+    - safety alignment
+    - ai threat modeling
+    - mlsecops defense
+    - jailbreak

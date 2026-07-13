@@ -36,7 +36,10 @@
   .chip { background: var(--panel2); border: 1px solid var(--border); border-radius: 20px; padding: 2px 9px; font-size: 10.5px; }
   .chip.tag { color: var(--accent); cursor: pointer; }
   .chip.tag:hover { border-color: var(--accent); }
-  .score { color: var(--green); font-weight: 700; }
+  .score { font-weight: 700; }
+  .score.tbsf-priority { color: #ff6b7a; }
+  .score.tbsf-reserve { color: var(--yellow); }
+  .score.tbsf-low { color: var(--muted); }
   .lvl { border-radius: 20px; padding: 2px 10px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; }
   .lvl.strong { background: rgba(61,220,151,.15); color: var(--green); }
   .lvl.emerging { background: rgba(255,206,86,.15); color: var(--yellow); }
@@ -88,7 +91,7 @@
 
   <div class="grid">
     <div class="panel">
-      <h2>Топ событий <span class="hint">за 30 дней, композитный score</span></h2>
+      <h2>Топ событий <span class="hint">за 30 дней · arXiv: TBSF 🔴/🟡/⚪</span></h2>
       <div id="topEvents"><div class="empty">Загрузка…</div></div>
     </div>
     <div class="panel">
@@ -161,6 +164,18 @@ function renderStats() {
     <div class="stat"><div class="num">${Object.keys(s.by_source_type).length}</div><div class="lbl">типов источников</div></div>`;
 }
 
+function scoreBadge(e) {
+  if (e.score_type === "tbsf") {
+    const cls = e.score_label === "🔴" ? "tbsf-priority"
+      : e.score_label === "🟡" ? "tbsf-reserve" : "tbsf-low";
+    return `<span class="score ${cls}">${e.score_label} ${e.score}%</span>`;
+  }
+  if (e.score_label) {
+    return `<span class="score">${e.score_label} ${e.score}%</span>`;
+  }
+  return "";
+}
+
 function renderTopEvents() {
   const events = DATA.top_events.slice(0, 12);
   const el = document.getElementById("topEvents");
@@ -169,9 +184,10 @@ function renderTopEvents() {
     <div class="event">
       <a href="${e.url}" target="_blank" rel="noopener">${e.title}</a>
       <div class="meta">
-        <span class="score">★ ${e.score}</span>
+        ${scoreBadge(e)}
         <span class="type-badge t-${e.doc_type}">${e.doc_type}</span>
         <span>${e.source_name}</span><span>·</span><span>${fmtDate(e.published_at)}</span>
+        ${e.tbsf_vector ? `<span>· ${e.tbsf_vector}</span>` : ""}
         ${e.corroboration ? `<span>· подтверждений: ${e.corroboration}</span>` : ""}
         ${e.tags.slice(0,3).map(t => `<span class="chip tag" onclick="filterTag('${t}')">${t}</span>`).join("")}
       </div>
@@ -249,6 +265,7 @@ function renderFeed() {
       <a href="${d.url}" target="_blank" rel="noopener" style="color:var(--text);text-decoration:none;font-weight:600">${d.title}</a>
       <div class="meta" style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;font-size:11px;color:var(--muted)">
         <span>${d.source_name}</span><span>·</span><span>${fmtDate(d.published_at)}</span>
+        ${d.tbsf_score != null ? `<span class="score ${d.tbsf_level==='🔴'?'tbsf-priority':d.tbsf_level==='🟡'?'tbsf-reserve':'tbsf-low'}">${d.tbsf_level} ${d.tbsf_score}%</span>` : ""}
         ${d.tags.slice(0,4).map(t => `<span class="chip tag" onclick="filterTag('${t}')">${t}</span>`).join("")}
       </div>
     </div>`).join("");

@@ -1,0 +1,73 @@
+tier: actual
+weight_hint: 0.60
+language: en
+groups:
+  agent_security:
+    - agentic security
+    - ai agent security
+    - agent vulnerability
+    - agent attack
+    - agent manipulation
+    - agent hijacking
+    - excessive agency
+    - agent data exfiltration
+    - unauthorized agent action
+    - planning loop attack
+    - tool use attack
+    - agent plugin attack
+    - agent memory poisoning
+    - agent context injection
+    - multi-agent attack
+    - agent recursion attack
+    - goal hijacking agent
+    - agent behavior manipulation
+    - agent sandbox escape
+    - agent skill poisoning
+    - malicious skill injection
+    - agent privilege escalation
+    - agent supply chain attack
+    - function hijacking attack
+    - function hijacking attacks
+    - function hijacking
+    - agentic model
+    - agentic models
+    - web agent
+    - web agents
+    - misevolution
+    - self-evolving llm agent
+    - self-evolving llm agents
+
+  self_evolving:
+    - self-evolving agent
+    - self-evolving agents
+    - self-modifying agents
+    - recursive self-improvement attack
+    - agent skill drift
+    - autonomous capability expansion
+    - emergent malicious behavior
+    - self-replicating agent
+    - meta-learning attack on agents
+    - self-evolving agent vulnerability
+    - autonomous improvement attack
+
+  prompt_attacks:
+    - prompt injection
+    - direct prompt injection
+    - indirect prompt injection
+    - contextual injection
+    - multi-turn attack on agents
+    - tool-mediated injection
+    - memory-based injection
+    - cross-agent prompt leakage
+
+  mcp:
+    - mcp security
+    - model context protocol vulnerability
+    - mcp context injection
+    - mcp tool attack
+    - mcp server compromise
+    - mcp privilege escalation
+    - mcp data exfiltration
+    - mcp attack
+    - mcp exploit
+    - breaking mcp

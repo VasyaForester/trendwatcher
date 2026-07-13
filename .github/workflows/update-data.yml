@@ -39,6 +39,7 @@ jobs:
       - name: Ingest sources and export snapshot
         run: |
           python run.py ingest
+          python run.py score-tbsf
           python run.py export
           cp dist/site/data.json data.json
 

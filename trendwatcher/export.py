@@ -54,6 +54,24 @@ def build_snapshot(session, feed_limit: int = FEED_LIMIT) -> dict:
     }
 
 
+def export_hosting() -> str:
+    """Архив для загрузки на хостинг: только index.html.
+
+    Данные подтягиваются с GitHub (DATA_URL в index.html), сервер не нужен.
+    """
+    site_dir = PROJECT_ROOT / "dist" / "site"
+    if site_dir.exists():
+        shutil.rmtree(site_dir)
+    site_dir.mkdir(parents=True)
+    shutil.copy(PROJECT_ROOT / "web" / "index.html", site_dir / "index.html")
+
+    stamp = utcnow().strftime("%Y-%m-%d")
+    zip_path = shutil.make_archive(
+        str(PROJECT_ROOT / "dist" / f"TrendWatcher_site_{stamp}"), "zip", site_dir
+    )
+    return zip_path
+
+
 def export_site() -> tuple[str, str]:
     """Собирает dist/site и zip-архив. Возвращает (путь к site, путь к zip)."""
     init_db()

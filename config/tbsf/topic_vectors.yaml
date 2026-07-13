@@ -1,0 +1,57 @@
+# Topic scoring mode variant1: only ACTUAL vectors (+21 agent security OR +12 prompt/MCP).
+# Bonuses cyber_risk (+2) and offensive (+1) are additive. No stacking of keyword terms.
+# POTENTIAL/INDIRECT keywords are used for pre-filter only, not for Topic base score.
+
+mode: variant1
+
+vectors:
+  - id: agent_security
+    score: 21
+    tier: actual
+    active: true
+    keywords_file: keywords/actual.yaml
+    keyword_groups:
+      - agent_security
+      - self_evolving
+
+  - id: prompt_mcp
+    score: 12
+    tier: actual
+    active: true
+    keywords_file: keywords/actual.yaml
+    keyword_groups:
+      - prompt_attacks
+      - mcp
+
+  - id: cyber_risks
+    score: 8
+    tier: potential
+    active: false
+    keywords_file: keywords/potential.yaml
+    keyword_groups:
+      - cyber_risks
+
+  - id: general_threats
+    score: 5
+    tier: potential
+    active: false
+    keywords_file: keywords/potential.yaml
+    keyword_groups:
+      - general_threats
+
+  - id: infrastructure
+    score: 3
+    tier: indirect
+    active: false
+    keywords_file: keywords/indirect.yaml
+    keyword_groups:
+      - infrastructure
+
+bonuses:
+  cyber_risk: 2
+  offensive: 1
+
+llm_topic_override:
+  enabled: true
+  allowed_bases: [21, 12, 8, 3]
+  use_when: mcp_without_code_or_demo

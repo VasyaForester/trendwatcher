@@ -7,6 +7,7 @@ from sqlalchemy import select
 from ..config import SourceConfig, load_sources
 from ..db import Document, get_session, init_db
 from ..enrichment.tagger import enrich, is_ai_related
+from ..tbsf.batch import apply_tbsf
 from . import arxiv, nvd, rss
 
 log = logging.getLogger("trendwatcher.ingest")
@@ -45,6 +46,7 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
         )
         doc.tags = meta["tags"]
         doc.entities = meta["entities"]
+        apply_tbsf(doc)
         session.add(doc)
         existing_urls.add(item["url"])
         added += 1
@@ -65,6 +67,7 @@ def retag_all() -> None:
             doc.doc_type = meta["doc_type"]
             # severity не понижаем: в ней может сидеть CVSS-компонента с момента ingest
             doc.severity = max(doc.severity, meta["severity"])
+            apply_tbsf(doc)
         session.commit()
         log.info("retagged %d documents", len(docs))
 
