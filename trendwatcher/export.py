@@ -18,7 +18,7 @@ from .config import PROJECT_ROOT
 from .db import Document, get_session, init_db, utcnow
 from .feed import build_feed
 
-FEED_LIMIT = 400
+FEED_LIMIT = 600
 
 
 def build_snapshot(session, feed_limit: int = FEED_LIMIT) -> dict:

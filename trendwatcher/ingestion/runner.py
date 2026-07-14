@@ -67,7 +67,7 @@ def retag_all() -> None:
             doc.doc_type = meta["doc_type"]
             # severity не понижаем: в ней может сидеть CVSS-компонента с момента ingest
             doc.severity = max(doc.severity, meta["severity"])
-            apply_tbsf(doc)
+            apply_tbsf(doc, fetch_body=False)
         session.commit()
         log.info("retagged %d documents", len(docs))
 

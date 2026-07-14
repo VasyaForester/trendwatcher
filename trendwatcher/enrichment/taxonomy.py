@@ -23,6 +23,9 @@ TAXONOMY: dict[str, list[str]] = {
         r"agent(ic)? (security|attack|hijack|abuse)", r"tool (abuse|poisoning|misuse)",
         r"mcp (server|tool|protocol)", r"autonomous agent.{0,40}(risk|attack|vulnerab)",
         r"computer[- ]use", r"browser agent",
+        r"ai agents?.{0,40}(attack|memory|poison|compromis)",
+        r"false memor", r"memory.{0,30}(inject|poison|plant|manipul|attack)",
+        r"agent memory", r"memghost",
     ],
     "rag_security": [
         r"\brag\b.{0,40}(poison|attack|security|leak)", r"retrieval[- ]augmented",

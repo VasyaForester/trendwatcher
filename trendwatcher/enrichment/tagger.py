@@ -50,6 +50,8 @@ def classify_doc_type(text: str, source_type: str) -> str:
         return "framework"
     if re.search(r"breach|hacked|compromised|incident|attack (on|against)|leaked", t):
         return "incident"
+    if re.search(r"attack.{0,40}(ai|llm|agent|model)|ai agents?.{0,25}attack", t):
+        return "incident"
     if re.search(r"releases?|launch(es|ed)?|announc(es|ed)|open[- ]sourc|introduc(es|ed)|new tool", t):
         return "tool_release"
     return "news"

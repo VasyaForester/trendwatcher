@@ -1,32 +1,34 @@
-"""Лента новостей: без arXiv, GenAI security из других источников, по дате."""
+"""Лента новостей: без arXiv, GenAI-релевантные публикации из других источников, по дате."""
 
 from sqlalchemy import select
 
 from .db import Document
 from .enrichment.tagger import is_ai_related
-from .enrichment.taxonomy import SECURITY_TAGS
+from .enrichment.taxonomy import AI_TECH_TAGS, SECURITY_TAGS
 from .tbsf.arxiv_text import is_arxiv_url
+
+FEED_SCAN_LIMIT = 8000
 
 
 def _feed_eligible(doc: Document) -> bool:
+    """Широкий фильтр: лучше показать лишнее, чем пропустить важное (MemGhost и т.п.)."""
+    if doc.source_type == "vulnerability":
+        return True
     text = f"{doc.title}\n{doc.summary}"
-    if not is_ai_related(text):
-        return False
-    tags = set(doc.tags)
-    if tags & SECURITY_TAGS:
+    if is_ai_related(text):
+        return True
+    if doc.tags and set(doc.tags) & (SECURITY_TAGS | AI_TECH_TAGS):
         return True
     if doc.doc_type in ("vulnerability", "incident", "regulation", "framework"):
-        return True
-    if doc.source_type == "vulnerability":
         return True
     if doc.severity >= 0.3:
         return True
     return False
 
 
-def build_feed(session, limit: int = 400) -> list[dict]:
+def build_feed(session, limit: int = 600) -> list[dict]:
     docs = session.scalars(
-        select(Document).order_by(Document.published_at.desc()).limit(2500)
+        select(Document).order_by(Document.published_at.desc()).limit(FEED_SCAN_LIMIT)
     ).all()
 
     out: list[Document] = []
