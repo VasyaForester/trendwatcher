@@ -3,5 +3,7 @@ __pycache__/
 *.pyc
 data/*
 !data/trendwatcher.db
+!data/archive/
+!data/archive/**
 dist/
 .env

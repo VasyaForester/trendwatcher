@@ -91,11 +91,11 @@
 
   <div class="grid">
     <div class="panel">
-      <h2>Топ событий <span class="hint">arXiv: TBSF ≥50 (reserve), лента ≥42</span></h2>
+      <h2>Топ событий <span class="hint">только arXiv · TBSF ↓ · полный текст</span></h2>
       <div id="topEvents"><div class="empty">Загрузка…</div></div>
     </div>
     <div class="panel">
-      <h2>Сигналы <span class="hint">4 недели vs baseline за 26 недель</span></h2>
+      <h2>Сигналы <span class="hint">4 нед. vs prior · доля корпуса · архив GitHub</span></h2>
       <table>
         <thead><tr><th>Тема</th><th>Уровень</th><th>Публ.</th><th>Динамика</th></tr></thead>
         <tbody id="signals"></tbody>
@@ -117,14 +117,13 @@
   </div>
 
   <div class="panel">
-    <h2>Лента публикаций</h2>
+      <h2>Лента <span class="hint">новости, инциденты, CVE, блоги — без arXiv, по дате</span></h2>
     <div class="controls">
       <select id="tagFilter"><option value="">Все теги</option></select>
       <select id="typeFilter">
         <option value="">Все типы</option>
         <option value="incident">Инциденты</option>
         <option value="vulnerability">Уязвимости</option>
-        <option value="research">Исследования</option>
         <option value="regulation">Регуляторика</option>
         <option value="framework">Фреймворки</option>
         <option value="tool_release">Инструменты</option>
@@ -188,7 +187,6 @@ function renderTopEvents() {
         <span class="type-badge t-${e.doc_type}">${e.doc_type}</span>
         <span>${e.source_name}</span><span>·</span><span>${fmtDate(e.published_at)}</span>
         ${e.tbsf_vector ? `<span>· ${e.tbsf_vector}</span>` : ""}
-        ${e.corroboration ? `<span>· подтверждений: ${e.corroboration}</span>` : ""}
         ${e.tags.slice(0,3).map(t => `<span class="chip tag" onclick="filterTag('${t}')">${t}</span>`).join("")}
       </div>
     </div>`).join("");
@@ -200,7 +198,9 @@ function renderSignals() {
   if (!signals.length) { tbody.innerHTML = '<tr><td colspan="4" class="empty">Нет данных</td></tr>'; return; }
   tbody.innerHTML = signals.slice(0, 20).map(s => {
     const v = Math.round(s.velocity * 100);
-    const velHtml = v > 0 ? `<span class="vel-up">+${v}%</span>` : v < 0 ? `<span class="vel-down">${v}%</span>` : "0%";
+    const velHtml = Math.abs(s.velocity) >= 2.99
+      ? `<span class="vel-up" title="по доле в корпусе (архив)">${s.velocity > 0 ? "≥+300%" : "≤−300%"}</span>`
+      : v > 0 ? `<span class="vel-up">+${v}%</span>` : v < 0 ? `<span class="vel-down">${v}%</span>` : "0%";
     const reason = (s.reason || "").replace(/"/g, "&quot;");
     return `<tr>
       <td><span class="cat-dot ${s.category}"></span><span class="chip tag" onclick="filterTag('${s.tag}')">${s.tag}</span></td>
@@ -257,9 +257,6 @@ function renderFeed() {
     (!type || d.doc_type === type) &&
     (!q || (d.title + " " + d.summary).toLowerCase().includes(q))
   );
-  if (type === "research") {
-    items.sort((a, b) => (b.tbsf_score || 0) - (a.tbsf_score || 0));
-  }
   const shown = items.slice(0, 60);
   const el = document.getElementById("feed");
   if (!shown.length) { el.innerHTML = '<div class="empty">Ничего не найдено</div>'; return; }

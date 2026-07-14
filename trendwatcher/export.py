@@ -13,6 +13,7 @@ from sqlalchemy import func, select
 from .analytics.scoring import top_events
 from .analytics.signals import classify_signals
 from .analytics.timeseries import weekly_tag_counts
+from .analytics.archive import update_archive
 from .config import PROJECT_ROOT
 from .db import Document, get_session, init_db, utcnow
 from .feed import build_feed
@@ -36,8 +37,10 @@ def build_snapshot(session, feed_limit: int = FEED_LIMIT) -> dict:
     )
     feed = build_feed(session, limit=feed_limit)
     trends = weekly_tag_counts(session, weeks=13)
+    archive = update_archive(session)
     return {
         "generated_at": utcnow().isoformat(),
+        "archive": archive,
         "stats": {
             "total_documents": total,
             "by_source_type": by_type,

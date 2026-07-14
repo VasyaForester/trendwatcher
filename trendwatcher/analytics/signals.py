@@ -30,6 +30,7 @@ from sqlalchemy import select
 
 from ..db import Document, utcnow
 from ..enrichment.taxonomy import AI_TECH_TAGS
+from .archive import archive_tag_windows, capped_velocity
 from .timeseries import tag_profiles, week_start
 
 LEVEL_ORDER = {
@@ -111,11 +112,12 @@ def classify_signals(session, recent_weeks: int = 4, retro_weeks: int = 26) -> l
         return num / den if den else None
 
     signals = []
+    archive_stats = archive_tag_windows(recent_weeks)
     for tag in set(recent_cnt) | set(prior_cnt):
         r, p = recent_cnt.get(tag, 0), prior_cnt.get(tag, 0)
         if r == 0 and p == 0:
             continue
-        velocity = (r - p) / p if p > 0 else (1.0 if r > 0 else 0.0)
+        count_velocity = (r - p) / p if p > 0 else (1.0 if r > 0 else 0.0)
         meta = tag_meta.get(tag, {})
         age_weeks = meta.get("age_weeks", 0)
 
@@ -146,6 +148,17 @@ def classify_signals(session, recent_weeks: int = 4, retro_weeks: int = 26) -> l
         week_conc = max(recent_counts) / sum(recent_counts) if sum(recent_counts) else 0.0
         n_types = len(src_types.get(tag, set()))
         research_share = by_src_type[tag].get("research", 0) / r if r else 0.0
+
+        arch = archive_stats.get(tag, {})
+        share_vel = arch.get("share_velocity")
+        if share_vel is None and recent_share is not None and base_share and base_share > 0:
+            share_vel = (recent_share - base_share) / base_share
+        velocity = capped_velocity(share_vel, count_velocity) or 0.0
+        vel_pct = round(velocity * 100)
+        vel_label = f"{'+' if velocity > 0 else ''}{vel_pct}% доля" if share_vel is not None else (
+            f"{'+' if count_velocity > 0 else ''}{round(min(max(count_velocity, -3), 3) * 100)}% "
+            f"(оценка, мало данных в архиве)"
+        )
 
         # 1. Research-сигнал: действительно новая тема, живущая в исследованиях.
         if genuinely_new and r >= 2 and meta.get("research_share_alltime", 0) >= RESEARCH_SHARE:
@@ -204,12 +217,12 @@ def classify_signals(session, recent_weeks: int = 4, retro_weeks: int = 26) -> l
         elif r >= 3 and n_types >= 2 and velocity > 0.25:
             level = "emerging"
             reason = (
-                f"{r} публ. за {recent_weeks} нед., рост +{round(velocity * 100)}%, "
+                f"{r} публ. за {recent_weeks} нед., {vel_label}, "
                 f"{n_types} тип(а) источников"
             )
         elif velocity < -0.3 and p >= 5:
             level = "declining"
-            reason = f"спад {round(velocity * 100)}% к прошлому периоду"
+            reason = f"спад {vel_label} к прошлому периоду"
         else:
             level = "weak"
             reason = f"{r} публ. за {recent_weeks} нед., {n_types} тип(а) источников"
@@ -220,6 +233,7 @@ def classify_signals(session, recent_weeks: int = 4, retro_weeks: int = 26) -> l
                 "recent": r,
                 "prior": p,
                 "velocity": round(velocity, 3),
+                "velocity_source": "archive" if arch.get("share_velocity") is not None else "share",
                 "source_types": sorted(src_types.get(tag, set())),
                 "by_source_type": dict(by_src_type.get(tag, {})),
                 "level": level,

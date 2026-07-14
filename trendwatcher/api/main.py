@@ -89,8 +89,6 @@ def api_feed(
             out.append(d)
             if len(out) >= limit:
                 break
-        if doc_type == "research":
-            out.sort(key=lambda x: x.get("tbsf_score") or 0, reverse=True)
         return out[:limit]
 
 

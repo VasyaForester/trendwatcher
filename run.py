@@ -7,7 +7,7 @@ import sys
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="TrendWatcher CLI")
-    parser.add_argument("command", choices=["ingest", "serve", "analyze", "retag", "export", "export-site", "score-tbsf"])
+    parser.add_argument("command", choices=["ingest", "serve", "analyze", "retag", "export", "export-site", "score-tbsf", "archive"])
     parser.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
 
@@ -33,6 +33,14 @@ def main() -> None:
         with get_session() as s:
             n = rescore_all(s)
         print(f"scored {n} research documents with TBSF")
+    elif args.command == "archive":
+        from trendwatcher.db import get_session, init_db
+        from trendwatcher.analytics.archive import update_archive
+
+        init_db()
+        with get_session() as s:
+            info = update_archive(s)
+        print(json.dumps(info, ensure_ascii=False, indent=2))
     elif args.command == "export-site":
         from trendwatcher.export import export_hosting
 

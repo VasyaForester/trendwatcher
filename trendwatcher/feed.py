@@ -1,51 +1,41 @@
-"""Курируемая лента: research с достаточным TBSF, остальное — по дате."""
+"""Лента новостей: без arXiv, GenAI security из других источников, по дате."""
 
 from sqlalchemy import select
 
 from .db import Document
-from .tbsf.thresholds import FEED_MIN
+from .enrichment.tagger import is_ai_related
+from .enrichment.taxonomy import SECURITY_TAGS
+from .tbsf.arxiv_text import is_arxiv_url
+
+
+def _feed_eligible(doc: Document) -> bool:
+    text = f"{doc.title}\n{doc.summary}"
+    if not is_ai_related(text):
+        return False
+    tags = set(doc.tags)
+    if tags & SECURITY_TAGS:
+        return True
+    if doc.doc_type in ("vulnerability", "incident", "regulation", "framework"):
+        return True
+    if doc.source_type == "vulnerability":
+        return True
+    if doc.severity >= 0.3:
+        return True
+    return False
 
 
 def build_feed(session, limit: int = 400) -> list[dict]:
-    """Research: только TBSF ≥ FEED_MIN, внутри блока — по убыванию score.
-    Остальные типы — по дате публикации. Итог — смешанная лента с приоритетом сильных статей.
-    """
     docs = session.scalars(
-        select(Document).order_by(Document.published_at.desc()).limit(2000)
+        select(Document).order_by(Document.published_at.desc()).limit(2500)
     ).all()
 
-    research = [
-        d
-        for d in docs
-        if d.source_type == "research"
-        and d.tbsf_score is not None
-        and d.tbsf_score >= FEED_MIN
-    ]
-    research.sort(
-        key=lambda d: (d.tbsf_score or 0, d.published_at),
-        reverse=True,
-    )
+    out: list[Document] = []
+    for d in docs:
+        if d.source_type == "research" or is_arxiv_url(d.url):
+            continue
+        if not _feed_eligible(d):
+            continue
+        out.append(d)
 
-    other = [d for d in docs if d.source_type != "research"]
-    research_cap = min(len(research), max(limit // 2, limit - 80))
-    other_cap = limit - research_cap
-
-    merged: list[Document] = []
-    ri, oi = 0, 0
-    # Чередуем: каждые 2 other — 1 research (если есть), чтобы лента не была только arXiv
-    while len(merged) < limit and (ri < research_cap or oi < other_cap):
-        for _ in range(2):
-            if oi < other_cap and len(merged) < limit:
-                merged.append(other[oi])
-                oi += 1
-        if ri < research_cap and len(merged) < limit:
-            merged.append(research[ri])
-            ri += 1
-    while oi < other_cap and len(merged) < limit:
-        merged.append(other[oi])
-        oi += 1
-    while ri < research_cap and len(merged) < limit:
-        merged.append(research[ri])
-        ri += 1
-
-    return [d.to_dict() for d in merged[:limit]]
+    out.sort(key=lambda d: d.published_at, reverse=True)
+    return [d.to_dict() for d in out[:limit]]

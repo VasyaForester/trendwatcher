@@ -5,3 +5,4 @@ feedparser>=6.0
 SQLAlchemy>=2.0
 PyYAML>=6.0
 python-dateutil>=2.9
+pypdf>=4.0

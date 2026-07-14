@@ -39,6 +39,7 @@ class Document(Base):
     tbsf_score: Mapped[int | None] = mapped_column(Integer, nullable=True, index=True)
     tbsf_level: Mapped[str | None] = mapped_column(String(8), nullable=True)
     tbsf_vector: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    full_text: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     @property
     def tags(self) -> list[str]:
@@ -87,6 +88,7 @@ def _migrate_columns() -> None:
         "tbsf_score": "INTEGER",
         "tbsf_level": "VARCHAR(8)",
         "tbsf_vector": "VARCHAR(32)",
+        "full_text": "TEXT",
     }
     with engine.begin() as conn:
         for col, typ in alters.items():
