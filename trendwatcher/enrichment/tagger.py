@@ -6,6 +6,7 @@ LLM-обогащение подключается позже как второй
 
 import re
 
+from .tag_filter import normalize_tags
 from .taxonomy import (
     AI_RELEVANCE_PATTERNS,
     KNOWN_ENTITIES,
@@ -25,7 +26,8 @@ def is_ai_related(text: str) -> bool:
 
 
 def extract_tags(text: str) -> list[str]:
-    return [tag for tag, rxs in _TAXONOMY_RX.items() if any(rx.search(text) for rx in rxs)]
+    raw = [tag for tag, rxs in _TAXONOMY_RX.items() if any(rx.search(text) for rx in rxs)]
+    return normalize_tags(raw)
 
 
 def extract_entities(text: str) -> list[str]:

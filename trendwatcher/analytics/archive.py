@@ -19,6 +19,7 @@ from sqlalchemy import select
 from ..config import DATA_DIR
 from ..db import Document, utcnow
 from .timeseries import week_start
+from .velocity import pct_change
 
 ARCHIVE_DIR = DATA_DIR / "archive"
 WEEKLY_STATS = ARCHIVE_DIR / "weekly_stats.json"
@@ -194,9 +195,9 @@ def archive_tag_windows(recent_weeks: int = 4) -> dict[str, dict]:
         r, p = recent_tags.get(tag, 0), prior_tags.get(tag, 0)
         recent_share = r / recent_total if recent_total else None
         prior_share = p / prior_total if prior_total else None
-        share_velocity = None
-        if recent_share is not None and prior_share and prior_share > 0:
-            share_velocity = (recent_share - prior_share) / prior_share
+        share_velocity = pct_change(recent_share, prior_share) if (
+            recent_share is not None and prior_share is not None
+        ) else None
         out[tag] = {
             "recent": r,
             "prior": p,
@@ -206,17 +207,6 @@ def archive_tag_windows(recent_weeks: int = 4) -> dict[str, dict]:
             "archive_weeks": len(snaps),
         }
     return out
-
-
-def capped_velocity(share_velocity: float | None, count_velocity: float) -> float | None:
-    MAX = 3.0
-    if share_velocity is not None:
-        v = share_velocity
-    elif count_velocity == 0:
-        return 0.0
-    else:
-        v = count_velocity
-    return round(max(-MAX, min(MAX, v)), 3)
 
 
 def update_archive(session) -> dict:

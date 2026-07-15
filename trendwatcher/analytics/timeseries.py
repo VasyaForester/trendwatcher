@@ -6,6 +6,7 @@ from datetime import date, datetime, timedelta
 from sqlalchemy import select
 
 from ..db import Document, utcnow
+from .velocity import cap_velocity, pct_change
 
 
 def week_start(d: datetime) -> date:
@@ -118,7 +119,8 @@ def tag_stats(session, recent_weeks: int = 4) -> list[dict]:
     stats = []
     for tag in set(recent) | set(prior):
         r, p = recent.get(tag, 0), prior.get(tag, 0)
-        velocity = (r - p) / p if p > 0 else (1.0 if r > 0 else 0.0)
+        v = pct_change(float(r), float(p))
+        velocity = cap_velocity(v) if v is not None else (0.0 if p == 0 else 0.0)
         stats.append(
             {
                 "tag": tag,

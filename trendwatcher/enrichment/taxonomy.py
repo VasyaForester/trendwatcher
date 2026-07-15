@@ -68,7 +68,15 @@ TAXONOMY: dict[str, list[str]] = {
     ],
     "misinformation": [
         r"misinformation", r"disinformation", r"hallucination", r"fake news.{0,20}ai",
-        r"influence operation",
+        r"influence operation", r"unreliable (output|generation)", r"confabulation",
+    ],
+    "bias_fairness": [
+        r"\bbias(es)?\b.{0,30}(model|ai|llm|fairness)", r"algorithmic fairness",
+        r"discriminat(ion|ory).{0,25}(ai|model|llm)", r"model (fairness|bias)",
+    ],
+    "model_drift": [
+        r"model drift", r"data drift", r"concept drift", r"distribution(al)? shift",
+        r"performance degrad", r"model (decay|stale|rot)",
     ],
     "malware_abuse": [
         r"ai[- ](powered|generated|assisted) (malware|attack|exploit)", r"malicious use of (ai|llm)",
@@ -110,7 +118,7 @@ TAXONOMY: dict[str, list[str]] = {
         r"efficient (inference|training|fine[- ]tuning)",
     ],
     "long_context_memory": [
-        r"long[- ]context", r"context window", r"agent memory", r"memory[- ]augmented",
+        r"long[- ]context", r"context window", r"memory[- ]augmented",
         r"million[- ]token",
     ],
 }

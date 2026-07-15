@@ -29,9 +29,11 @@ from datetime import timedelta
 from sqlalchemy import select
 
 from ..db import Document, utcnow
+from ..enrichment.tag_filter import is_signal_tag
 from ..enrichment.taxonomy import AI_TECH_TAGS
-from .archive import archive_tag_windows, capped_velocity
+from .archive import archive_tag_windows
 from .timeseries import tag_profiles, week_start
+from .velocity import cap_velocity, pct_change, velocity_from_shares, velocity_label
 
 LEVEL_ORDER = {
     "strong": 0, "emerging": 1, "research": 2, "spike": 3,
@@ -114,10 +116,11 @@ def classify_signals(session, recent_weeks: int = 4, retro_weeks: int = 26) -> l
     signals = []
     archive_stats = archive_tag_windows(recent_weeks)
     for tag in set(recent_cnt) | set(prior_cnt):
+        if not is_signal_tag(tag):
+            continue
         r, p = recent_cnt.get(tag, 0), prior_cnt.get(tag, 0)
         if r == 0 and p == 0:
             continue
-        count_velocity = (r - p) / p if p > 0 else (1.0 if r > 0 else 0.0)
         meta = tag_meta.get(tag, {})
         age_weeks = meta.get("age_weeks", 0)
 
@@ -150,15 +153,18 @@ def classify_signals(session, recent_weeks: int = 4, retro_weeks: int = 26) -> l
         research_share = by_src_type[tag].get("research", 0) / r if r else 0.0
 
         arch = archive_stats.get(tag, {})
-        share_vel = arch.get("share_velocity")
-        if share_vel is None and recent_share is not None and base_share and base_share > 0:
-            share_vel = (recent_share - base_share) / base_share
-        velocity = capped_velocity(share_vel, count_velocity) or 0.0
-        vel_pct = round(velocity * 100)
-        vel_label = f"{'+' if velocity > 0 else ''}{vel_pct}% доля" if share_vel is not None else (
-            f"{'+' if count_velocity > 0 else ''}{round(min(max(count_velocity, -3), 3) * 100)}% "
-            f"(оценка, мало данных в архиве)"
-        )
+        recent_share_arch = arch.get("recent_share")
+        prior_share_arch = arch.get("prior_share")
+        if arch.get("share_velocity") is not None:
+            velocity, vel_source = cap_velocity(arch["share_velocity"]), "archive"
+        elif recent_share_arch is not None and prior_share_arch is not None:
+            velocity, vel_source = velocity_from_shares(recent_share_arch, prior_share_arch)
+        elif recent_share is not None and base_share and base_share > 0:
+            velocity = cap_velocity(pct_change(recent_share, base_share))
+            vel_source = "baseline"
+        else:
+            velocity, vel_source = 0.0, None
+        vel_label = velocity_label(velocity, vel_source)
 
         # 1. Research-сигнал: действительно новая тема, живущая в исследованиях.
         if genuinely_new and r >= 2 and meta.get("research_share_alltime", 0) >= RESEARCH_SHARE:
@@ -233,7 +239,7 @@ def classify_signals(session, recent_weeks: int = 4, retro_weeks: int = 26) -> l
                 "recent": r,
                 "prior": p,
                 "velocity": round(velocity, 3),
-                "velocity_source": "archive" if arch.get("share_velocity") is not None else "share",
+                "velocity_source": vel_source,
                 "source_types": sorted(src_types.get(tag, set())),
                 "by_source_type": dict(by_src_type.get(tag, {})),
                 "level": level,
