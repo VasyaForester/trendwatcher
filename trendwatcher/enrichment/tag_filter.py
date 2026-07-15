@@ -2,8 +2,13 @@
 
 from .taxonomy import AI_TECH_TAGS, SECURITY_TAGS, TAXONOMY
 
-# Теги, которые участвуют в блоке «Сигналы» (только AI security, без общих AI-трендов).
-SIGNAL_TAGS: frozenset[str] = frozenset(SECURITY_TAGS)
+# Ключевые AI-тренды для блока «Сигналы» (whitelist, не весь AI_TECH).
+SIGNAL_AI_TAGS: frozenset[str] = frozenset(
+    {"self_evolving_agents", "agentic_ai", "reasoning_models"}
+)
+
+# Теги, которые участвуют в блоке «Сигналы»: AI security + ключевые AI-тренды.
+SIGNAL_TAGS: frozenset[str] = frozenset(SECURITY_TAGS) | SIGNAL_AI_TAGS
 
 # Явный whitelist — только ключи из TAXONOMY (защита от мусора в будущем).
 ALL_TAXONOMY_TAGS: frozenset[str] = frozenset(TAXONOMY)

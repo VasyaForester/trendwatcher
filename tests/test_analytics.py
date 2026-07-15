@@ -42,11 +42,12 @@ class TestPctChange(unittest.TestCase):
 
 
 class TestTagFilter(unittest.TestCase):
-    def test_signal_tags_are_security_only(self):
+    def test_signal_tags(self):
         self.assertTrue(is_signal_tag("prompt_injection"))
         self.assertTrue(is_signal_tag("agent_security"))
+        self.assertTrue(is_signal_tag("agentic_ai"))
+        self.assertTrue(is_signal_tag("self_evolving_agents"))
         self.assertFalse(is_signal_tag("model_efficiency"))
-        self.assertFalse(is_signal_tag("agentic_ai"))
 
     def test_normalize_tags_whitelist(self):
         self.assertEqual(normalize_tags(["prompt_injection", "fake_tag", "prompt_injection"]), ["prompt_injection"])
