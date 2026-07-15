@@ -18,6 +18,7 @@ from sqlalchemy import select
 
 from ..config import DATA_DIR
 from ..db import Document, utcnow
+from .constants import SIGNAL_WINDOW_WEEKS
 from .timeseries import week_start
 from .velocity import pct_change
 
@@ -169,7 +170,7 @@ def append_document_ledger(session) -> int:
     return len(docs)
 
 
-def archive_tag_windows(recent_weeks: int = 4) -> dict[str, dict]:
+def archive_tag_windows(recent_weeks: int = SIGNAL_WINDOW_WEEKS) -> dict[str, dict]:
     snaps = load_weekly_snapshots()
     need = recent_weeks * 2
     if len(snaps) < need:

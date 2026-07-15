@@ -104,7 +104,7 @@
       <div id="topEvents"><div class="empty">Загрузка…</div></div>
     </div>
     <div class="panel">
-      <h2>Сигналы <span class="hint">AI security + ключевые AI-тренды · доля корпуса · архив</span></h2>
+      <h2>Сигналы <span class="hint">3 мес. vs prior · AI security + AI-тренды · архив</span></h2>
       <table>
         <thead><tr><th>Тема</th><th>Уровень</th><th>Публ.</th><th>Динамика</th><th class="col-dismiss"></th></tr></thead>
         <tbody id="signals"></tbody>
@@ -116,7 +116,8 @@
         <b>spike</b> — разовая вспышка (инфоповод/артефакт), не тренд;
         <b>stable</b> — долгоиграющая тема на базовом уровне.
         Наведите курсор на уровень — увидите обоснование.
-        Скрытые сигналы (×) сохраняются только в этом браузере.
+        Скрытые сигналы (×) — только в этом браузере.
+        <button type="button" id="restoreSignals" class="signal-dismiss" style="display:none;width:auto;padding:2px 8px;font-size:11px;margin-left:6px" title="Показать скрытые сигналы">Показать скрытые</button>
       </div>
     </div>
   </div>
@@ -165,22 +166,32 @@ const PALETTE = ["#5b8cff","#3ddc97","#ffce56","#ff6b7a","#9d6bff","#ff9f5b","#4
 const fmtDate = iso => iso ? new Date(iso).toLocaleDateString("ru-RU", {day:"numeric", month:"short"}) : "";
 let DATA = null;
 const HIDDEN_SIGNALS_KEY = "trendwatcher_hidden_signals";
-let hiddenSignals = loadHiddenSignals();
-let pendingDismissTag = null;
+// Ключевые AI-тренды: всегда видны, нельзя скрыть; снимаем из localStorage при загрузке.
+const PINNED_SIGNAL_TAGS = new Set(["self_evolving_agents", "agentic_ai", "reasoning_models"]);
 
 function loadHiddenSignals() {
   try {
-    return new Set(JSON.parse(localStorage.getItem(HIDDEN_SIGNALS_KEY) || "[]"));
+    const raw = new Set(JSON.parse(localStorage.getItem(HIDDEN_SIGNALS_KEY) || "[]"));
+    PINNED_SIGNAL_TAGS.forEach(t => raw.delete(t));
+    if (raw.size !== (JSON.parse(localStorage.getItem(HIDDEN_SIGNALS_KEY) || "[]")).length) {
+      localStorage.setItem(HIDDEN_SIGNALS_KEY, JSON.stringify([...raw]));
+    }
+    return raw;
   } catch {
     return new Set();
   }
 }
+
+let hiddenSignals = loadHiddenSignals();
+
+let pendingDismissTag = null;
 
 function saveHiddenSignals() {
   localStorage.setItem(HIDDEN_SIGNALS_KEY, JSON.stringify([...hiddenSignals]));
 }
 
 function dismissSignal(tag) {
+  if (PINNED_SIGNAL_TAGS.has(tag)) return;
   if (pendingDismissTag !== tag) {
     pendingDismissTag = tag;
     renderSignals();
@@ -189,6 +200,13 @@ function dismissSignal(tag) {
   hiddenSignals.add(tag);
   saveHiddenSignals();
   pendingDismissTag = null;
+  renderSignals();
+}
+
+function restoreHiddenSignals() {
+  hiddenSignals.clear();
+  pendingDismissTag = null;
+  saveHiddenSignals();
   renderSignals();
 }
 
@@ -231,27 +249,35 @@ function renderTopEvents() {
 
 function renderSignals() {
   const signals = DATA.signals.filter(s => !hiddenSignals.has(s.tag));
+  const restoreBtn = document.getElementById("restoreSignals");
+  if (restoreBtn) restoreBtn.style.display = hiddenSignals.size ? "inline-block" : "none";
   const tbody = document.getElementById("signals");
   if (!signals.length) {
     tbody.innerHTML = '<tr><td colspan="5" class="empty">Нет данных</td></tr>';
     return;
   }
-  tbody.innerHTML = signals.slice(0, 20).map(s => {
+  tbody.innerHTML = signals.slice(0, 25).map(s => {
     const v = Math.round(s.velocity * 100);
     const velHtml = Math.abs(s.velocity) >= 2.99
       ? `<span class="vel-up" title="по доле в корпусе (архив)">${s.velocity > 0 ? "≥+300%" : "≤−300%"}</span>`
       : v > 0 ? `<span class="vel-up">+${v}%</span>` : v < 0 ? `<span class="vel-down">${v}%</span>` : "0%";
     const reason = (s.reason || "").replace(/"/g, "&quot;");
     const confirming = pendingDismissTag === s.tag;
-    const dismissTitle = confirming
+    const pinned = PINNED_SIGNAL_TAGS.has(s.tag);
+    const dismissTitle = pinned
+      ? "Ключевой тренд — скрыть нельзя"
+      : confirming
       ? "Нажмите ещё раз, чтобы скрыть"
       : "Скрыть сигнал (только в этом браузере)";
+    const dismissBtn = pinned
+      ? `<span class="signal-dismiss" style="opacity:.25;cursor:default" title="${dismissTitle}">×</span>`
+      : `<button type="button" class="signal-dismiss${confirming ? " confirm" : ""}" title="${dismissTitle}" onclick="dismissSignal('${s.tag}')">×</button>`;
     return `<tr>
       <td><span class="cat-dot ${s.category}"></span><span class="chip tag" onclick="filterTag('${s.tag}')">${s.tag}</span></td>
       <td><span class="lvl ${s.level}" title="${reason}">${s.level}</span></td>
       <td>${s.recent}</td>
       <td class="signal-row-dynamics"><span>${velHtml}</span></td>
-      <td><button type="button" class="signal-dismiss${confirming ? " confirm" : ""}" title="${dismissTitle}" onclick="dismissSignal('${s.tag}')">×</button></td>
+      <td>${dismissBtn}</td>
     </tr>`;
   }).join("");
 }
@@ -329,6 +355,8 @@ document.getElementById("typeFilter").addEventListener("change", renderFeed);
 document.getElementById("searchBox").addEventListener("input", () => {
   clearTimeout(searchTimer); searchTimer = setTimeout(renderFeed, 250);
 });
+
+document.getElementById("restoreSignals")?.addEventListener("click", restoreHiddenSignals);
 
 document.addEventListener("click", (e) => {
   if (!pendingDismissTag) return;

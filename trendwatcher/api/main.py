@@ -4,6 +4,7 @@ from fastapi import FastAPI, Query
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy import func, select
 
+from ..analytics.constants import SIGNAL_WINDOW_WEEKS
 from ..analytics.scoring import top_events
 from ..analytics.signals import classify_signals
 from ..analytics.timeseries import weekly_tag_counts
@@ -62,8 +63,8 @@ def api_trends(weeks: int = Query(13, ge=2, le=52)):
 
 @app.get("/api/signals")
 def api_signals(
-    recent_weeks: int = Query(4, ge=1, le=13),
-    retro_weeks: int = Query(26, ge=8, le=52),
+    recent_weeks: int = Query(SIGNAL_WINDOW_WEEKS, ge=4, le=26),
+    retro_weeks: int = Query(26, ge=13, le=52),
 ):
     with get_session() as s:
         return classify_signals(s, recent_weeks=recent_weeks, retro_weeks=retro_weeks)

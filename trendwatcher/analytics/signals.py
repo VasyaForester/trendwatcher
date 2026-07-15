@@ -29,9 +29,10 @@ from datetime import timedelta
 from sqlalchemy import select
 
 from ..db import Document, utcnow
-from ..enrichment.tag_filter import is_signal_tag
+from ..enrichment.tag_filter import SIGNAL_AI_TAGS, is_signal_tag
 from ..enrichment.taxonomy import AI_TECH_TAGS
 from .archive import archive_tag_windows
+from .constants import SIGNAL_WINDOW_WEEKS
 from .timeseries import tag_profiles, week_start
 from .velocity import cap_velocity, pct_change, velocity_from_shares, velocity_label
 
@@ -53,7 +54,15 @@ MIN_STABLE_BASE = 10        # документов источника в baselin
 MIN_STABLE_RECENT = 5       # документов источника в recent для «стабильности»
 
 
-def classify_signals(session, recent_weeks: int = 4, retro_weeks: int = 26) -> list[dict]:
+def _window_label(weeks: int) -> str:
+    return "3 мес." if weeks == SIGNAL_WINDOW_WEEKS else f"{weeks} нед."
+
+
+def classify_signals(
+    session,
+    recent_weeks: int = SIGNAL_WINDOW_WEEKS,
+    retro_weeks: int = 26,
+) -> list[dict]:
     now = utcnow()
     since = now - timedelta(weeks=retro_weeks)
     docs = session.scalars(
@@ -197,7 +206,7 @@ def classify_signals(session, recent_weeks: int = 4, retro_weeks: int = 26) -> l
                     # покрытия; вывод о спаде был бы артефактом сбора данных.
                     level = "weak"
                     reason = (
-                        f"{r} публ. за {recent_weeks} нед., но все из источников с "
+                        f"{r} публ. за {_window_label(recent_weeks)}, но все из источников с "
                         "недостаточной глубиной покрытия — надежно оценить тренд нельзя"
                     )
                 else:
@@ -219,19 +228,19 @@ def classify_signals(session, recent_weeks: int = 4, retro_weeks: int = 26) -> l
             )
         elif r >= 8 and n_types >= 3 and velocity >= 0:
             level = "strong"
-            reason = f"{r} публ. за {recent_weeks} нед., {n_types} типа источников"
+            reason = f"{r} публ. за {_window_label(recent_weeks)}, {n_types} типа источников"
         elif r >= 3 and n_types >= 2 and velocity > 0.25:
             level = "emerging"
             reason = (
-                f"{r} публ. за {recent_weeks} нед., {vel_label}, "
+                f"{r} публ. за {_window_label(recent_weeks)}, {vel_label}, "
                 f"{n_types} тип(а) источников"
             )
         elif velocity < -0.3 and p >= 5:
             level = "declining"
-            reason = f"спад {vel_label} к прошлому периоду"
+            reason = f"спад {vel_label} к прошлому периоду ({_window_label(recent_weeks)})"
         else:
             level = "weak"
-            reason = f"{r} публ. за {recent_weeks} нед., {n_types} тип(а) источников"
+            reason = f"{r} публ. за {_window_label(recent_weeks)}, {n_types} тип(а) источников"
 
         signals.append(
             {
@@ -250,8 +259,15 @@ def classify_signals(session, recent_weeks: int = 4, retro_weeks: int = 26) -> l
                 "recent_share": round(recent_share, 4) if recent_share is not None else None,
                 "baseline_share": round(base_share, 4) if base_share is not None else None,
                 "research_share": round(research_share, 2),
+                "window_weeks": recent_weeks,
             }
         )
 
-    signals.sort(key=lambda s: (LEVEL_ORDER[s["level"]], -s["recent"]))
+    signals.sort(
+        key=lambda s: (
+            LEVEL_ORDER[s["level"]],
+            0 if s["tag"] in SIGNAL_AI_TAGS else 1,
+            -s["recent"],
+        )
+    )
     return signals

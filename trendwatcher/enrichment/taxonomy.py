@@ -18,14 +18,39 @@ TAXONOMY: dict[str, list[str]] = {
     "model_supply_chain": [
         r"model supply chain", r"malicious (model|checkpoint|weights)", r"pickle (exploit|deserial)",
         r"hugging\s?face.{0,40}(malicious|vulnerab|attack)", r"typosquat", r"dependency confusion",
+        r"(model|ai) (attest|provenance|sbom)", r"supply chain.{0,25}(attest|provenance)",
+        r"verifiable (model|weights|checkpoint)",
     ],
     "agent_security": [
         r"agent(ic)? (security|attack|hijack|abuse)", r"tool (abuse|poisoning|misuse)",
-        r"mcp (server|tool|protocol)", r"autonomous agent.{0,40}(risk|attack|vulnerab)",
+        r"autonomous agent.{0,40}(risk|attack|vulnerab)",
         r"computer[- ]use", r"browser agent",
         r"ai agents?.{0,40}(attack|memory|poison|compromis)",
         r"false memor", r"memory.{0,30}(inject|poison|plant|manipul|attack)",
-        r"agent memory", r"memghost",
+        r"agent memory poison", r"memghost",
+        r"secure agentic (workflow|system)", r"cognitive firewall",
+    ],
+    "mcp_security": [
+        r"\bmcp\b.{0,30}(security|attack|vulnerab|risk|exploit)",
+        r"model context protocol.{0,30}(security|risk|attack|vulnerab)",
+    ],
+    "agent_identity_trust": [
+        r"agent (identity|trust|authentication|attest)", r"trustworthy agent",
+        r"verifiable agent", r"ai[- ]to[- ]ai (auth|trust)",
+        r"agent[- ]to[- ]agent.{0,20}(auth|trust|identity)",
+        r"ai trust (infrastructure|framework|layer)",
+    ],
+    "agent_permissions": [
+        r"agent permission", r"tool permission", r"permission (system|model).{0,20}agent",
+        r"least privilege.{0,20}agent", r"capability (control|sandbox).{0,20}agent",
+    ],
+    "agent_swarm_security": [
+        r"(agent swarm|swarm of agents).{0,20}(sec|attack|risk)",
+        r"multi[- ]agent.{0,25}(security|attack|coordination)",
+    ],
+    "inference_integrity": [
+        r"inference[- ]time (integrity|security|attack)", r"test[- ]time.{0,20}(integrity|security)",
+        r"runtime (integrity|security).{0,20}(model|llm|inference)",
     ],
     "rag_security": [
         r"\brag\b.{0,40}(poison|attack|security|leak)", r"retrieval[- ]augmented",
@@ -52,10 +77,12 @@ TAXONOMY: dict[str, list[str]] = {
     "governance_regulation": [
         r"ai act", r"executive order.{0,30}ai", r"ai (regulation|governance|policy|law)",
         r"nist ai", r"ai rmf", r"iso/iec 42001", r"ai safety institute", r"responsible ai",
+        r"autonom(y|ous).{0,20}(govern|control|oversight|compliance)", r"model autonomy.{0,20}govern",
     ],
     "red_teaming": [
         r"red[- ]team", r"penetration test.{0,30}(ai|llm|model)", r"ai security (test|evaluat|benchmark)",
-        r"attack simulation",
+        r"attack simulation", r"machine[- ]speed.{0,20}(red|sec)",
+        r"continuous (red[- ]team|automated testing)", r"automated red.?team",
     ],
     "guardrails_defense": [
         r"guardrail", r"prompt (filter|shield|firewall)", r"llm firewall", r"content moderation",
@@ -81,12 +108,14 @@ TAXONOMY: dict[str, list[str]] = {
     "malware_abuse": [
         r"ai[- ](powered|generated|assisted) (malware|attack|exploit)", r"malicious use of (ai|llm)",
         r"llm.{0,30}(malware|phishing) generation", r"wormgpt|fraudgpt", r"dark ?ai",
+        r"synthetic insider", r"insider threat.{0,20}ai",
     ],
     # --- Общие AI-темы (не только security): технологические тренды ---
     "self_evolving_agents": [
         r"self[- ]evolv", r"self[- ]improv", r"recursive self[- ]improvement",
         r"self[- ]modif(y|ying|ication)", r"autonomous(ly)? (improve|evolve|learn)",
         r"darwin.{0,25}(machine|agent|model)", r"agent.{0,30}(rewrites?|updates?) (its|their) own",
+        r"self[- ]heal.{0,20}(ai|system|agent)", r"self[- ]repair.{0,20}ai",
     ],
     "agentic_ai": [
         r"multi[- ]agent", r"agent orchestrat", r"agentic (workflow|system|framework|ai|coding)",
@@ -139,7 +168,8 @@ AI_RELEVANCE_PATTERNS: list[str] = [
     r"neural network", r"deepfake", r"prompt", r"chatbot", r"gen(erative)?[- ]ai",
     r"foundation model", r"hugging ?face", r"langchain", r"\bagentic\b", r"mcp server",
     r"vibe coding", r"ai[- ]agent", r"self[- ]evolving", r"multi[- ]agent",
-    r"reasoning model", r"open[- ]weight",
+    r"reasoning model", r"open[- ]weight", r"self[- ]healing", r"mcp security",
+    r"model context protocol", r"agent memory",
 ]
 
 # Известные сущности (вендоры, продукты, модели) для простого извлечения.
