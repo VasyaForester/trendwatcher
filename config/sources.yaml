@@ -30,7 +30,8 @@ sources:
       (abs:"self-evolving" OR abs:"self-improving agent" OR abs:"multi-agent system" OR
        abs:"agentic" OR abs:"test-time scaling" OR abs:"world model" OR
        abs:"reasoning model" OR abs:"mixture-of-experts" OR abs:"small language model" OR
-       abs:"synthetic data generation" OR abs:"long context" OR abs:"agent memory")
+       abs:"synthetic data generation" OR abs:"long context" OR abs:"agent memory" OR
+       abs:"model context protocol" OR abs:"MCP server" OR abs:"tool-using agent")
 
   - id: nvd_ai
     name: "NVD — CVE по AI-продуктам"
@@ -89,6 +90,28 @@ sources:
     source_type: vendor
     trust: 0.8
     url: "https://openai.com/news/rss.xml"
+
+  - id: anthropic_news
+    name: "Anthropic News"
+    type: rss
+    source_type: vendor
+    trust: 0.8
+    # Официального RSS нет; неофициальный зеркальный фид (обновляется Actions).
+    url: "https://raw.githubusercontent.com/taobojlen/anthropic-rss-feed/main/anthropic_news_rss.xml"
+
+  - id: google_ai_blog
+    name: "Google AI Blog"
+    type: rss
+    source_type: vendor
+    trust: 0.8
+    url: "https://blog.google/technology/ai/rss/"
+
+  - id: huggingface_blog
+    name: "Hugging Face Blog"
+    type: rss
+    source_type: vendor
+    trust: 0.75
+    url: "https://huggingface.co/blog/feed.xml"
 
   - id: nist_news
     name: "NIST News"

@@ -17,6 +17,7 @@ from .analytics.archive import update_archive
 from .config import PROJECT_ROOT
 from .db import Document, get_session, init_db, utcnow
 from .feed import build_feed
+from .synthesis.narrative import build_trend_brief
 
 FEED_LIMIT = 600
 
@@ -36,8 +37,11 @@ def build_snapshot(session, feed_limit: int = FEED_LIMIT) -> dict:
         )
     )
     feed = build_feed(session, limit=feed_limit)
+    events = top_events(session, days=30, limit=15)
+    signals = classify_signals(session)
     trends = weekly_tag_counts(session, weeks=13)
     archive = update_archive(session)
+    trend_brief = build_trend_brief(signals, events, feed)
     return {
         "generated_at": utcnow().isoformat(),
         "archive": archive,
@@ -46,10 +50,11 @@ def build_snapshot(session, feed_limit: int = FEED_LIMIT) -> dict:
             "by_source_type": by_type,
             "last_week": last_week,
         },
-        "top_events": top_events(session, days=30, limit=15),
+        "top_events": events,
         "trends": {"weeks": trends["weeks"], "series": trends["series"]},
-        "signals": classify_signals(session),
+        "signals": signals,
         "feed": feed,
+        "trend_brief": trend_brief,
     }
 
 

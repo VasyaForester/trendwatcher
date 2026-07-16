@@ -66,6 +66,11 @@
   .signal-dismiss:hover { border-color: var(--muted); color: var(--text); }
   .signal-dismiss.confirm { border-color: var(--red); color: var(--red); background: rgba(255,107,122,.12); }
   th.col-dismiss { width: 32px; }
+  th.sortable { cursor: pointer; user-select: none; white-space: nowrap; }
+  th.sortable:hover { color: var(--text); }
+  th.sortable .sort-ind { opacity: .45; font-size: 10px; margin-left: 2px; }
+  th.sortable.active { color: var(--accent); }
+  th.sortable.active .sort-ind { opacity: 1; }
   .chart-panel { margin-bottom: 18px; }
   #trendChart { max-height: 320px; }
   .controls { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
@@ -85,6 +90,17 @@
   .t-framework { background: rgba(61,220,151,.15); color: var(--green); }
   .t-tool_release { background: rgba(255,206,86,.15); color: var(--yellow); }
   .empty { color: var(--muted); font-size: 13px; padding: 12px 0; }
+  .trend-brief { margin-bottom: 18px; }
+  .trend-brief .brief-body { font-size: 13.5px; line-height: 1.65; color: var(--text); }
+  .trend-brief .brief-body p { margin-bottom: 12px; }
+  .trend-brief .brief-body p:last-child { margin-bottom: 0; }
+  .trend-brief .brief-meta { margin-top: 12px; font-size: 11px; color: var(--muted); }
+  .trend-brief .brief-sources { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .trend-brief .brief-sources a {
+    color: var(--accent); font-size: 11.5px; text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .trend-brief .brief-sources a:hover { border-bottom-color: var(--accent); }
   footer { color: var(--muted); font-size: 11.5px; text-align: center; margin-top: 20px; }
 </style>
 </head>
@@ -105,8 +121,14 @@
     </div>
     <div class="panel">
       <h2>Сигналы <span class="hint">3 мес. vs prior · AI security + AI-тренды · архив</span></h2>
-      <table>
-        <thead><tr><th>Тема</th><th>Уровень</th><th>Публ.</th><th>Динамика</th><th class="col-dismiss"></th></tr></thead>
+      <table id="signalsTable">
+        <thead><tr>
+          <th class="sortable" data-sort="tag">Тема <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="level">Уровень <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="recent" title="за 3 месяца">Публ. <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="velocity">Динамика <span class="sort-ind"></span></th>
+          <th class="col-dismiss"></th>
+        </tr></thead>
         <tbody id="signals"></tbody>
       </table>
       <div class="legend-note">
@@ -143,6 +165,11 @@
       <input type="text" id="searchBox" placeholder="Поиск по заголовку и тексту…">
     </div>
     <div id="feed"><div class="empty">Загрузка…</div></div>
+  </div>
+
+  <div class="panel trend-brief">
+    <h2>Ключевые тренды <span class="hint">3 мес. · обновляется автоматически</span></h2>
+    <div id="trendBrief"><div class="empty">Загрузка…</div></div>
   </div>
 
   <footer>TrendWatcher v0.1 — данные обновляются командой <code>python run.py ingest</code></footer>
@@ -185,6 +212,54 @@ function loadHiddenSignals() {
 let hiddenSignals = loadHiddenSignals();
 
 let pendingDismissTag = null;
+
+const SIGNAL_LEVEL_ORDER = {
+  strong: 0, emerging: 1, research: 2, spike: 3, weak: 4, stable: 5, declining: 6,
+};
+const SIGNAL_SORT_DEFAULT_DIR = { tag: 1, level: 1, recent: -1, velocity: -1 };
+let signalSort = { col: null, dir: 1 };
+
+function sortSignalsList(signals) {
+  if (!signalSort.col) return signals;
+  const dir = signalSort.dir;
+  return [...signals].sort((a, b) => {
+    let cmp = 0;
+    if (signalSort.col === "tag") cmp = a.tag.localeCompare(b.tag);
+    else if (signalSort.col === "level") {
+      cmp = (SIGNAL_LEVEL_ORDER[a.level] ?? 99) - (SIGNAL_LEVEL_ORDER[b.level] ?? 99);
+    } else if (signalSort.col === "recent") cmp = a.recent - b.recent;
+    else if (signalSort.col === "velocity") cmp = a.velocity - b.velocity;
+    return cmp * dir;
+  });
+}
+
+function updateSignalSortHeaders() {
+  document.querySelectorAll("#signalsTable th.sortable").forEach(th => {
+    const col = th.dataset.sort;
+    const active = signalSort.col === col;
+    th.classList.toggle("active", active);
+    const ind = th.querySelector(".sort-ind");
+    if (!ind) return;
+    if (!active) { ind.textContent = ""; return; }
+    ind.textContent = signalSort.dir > 0 ? "▲" : "▼";
+  });
+}
+
+function onSignalSortClick(col) {
+  if (signalSort.col === col) signalSort.dir *= -1;
+  else {
+    signalSort.col = col;
+    signalSort.dir = SIGNAL_SORT_DEFAULT_DIR[col] ?? -1;
+  }
+  updateSignalSortHeaders();
+  renderSignals();
+}
+
+function initSignalSort() {
+  document.querySelectorAll("#signalsTable th.sortable").forEach(th => {
+    th.addEventListener("click", () => onSignalSortClick(th.dataset.sort));
+  });
+}
 
 function saveHiddenSignals() {
   localStorage.setItem(HIDDEN_SIGNALS_KEY, JSON.stringify([...hiddenSignals]));
@@ -248,7 +323,8 @@ function renderTopEvents() {
 }
 
 function renderSignals() {
-  const signals = DATA.signals.filter(s => !hiddenSignals.has(s.tag));
+  const signals = sortSignalsList(DATA.signals.filter(s => !hiddenSignals.has(s.tag)));
+  updateSignalSortHeaders();
   const restoreBtn = document.getElementById("restoreSignals");
   if (restoreBtn) restoreBtn.style.display = hiddenSignals.size ? "inline-block" : "none";
   const tbody = document.getElementById("signals");
@@ -350,6 +426,36 @@ function filterTag(tag) {
   document.getElementById("feed").scrollIntoView({ behavior: "smooth" });
 }
 
+function renderTrendBrief() {
+  const el = document.getElementById("trendBrief");
+  const brief = DATA.trend_brief;
+  if (!brief || !Array.isArray(brief.paragraphs) || !brief.paragraphs.length) {
+    el.innerHTML = `<div class="empty">Обзор трендов пока недоступен — появится после следующего обновления данных.</div>`;
+    return;
+  }
+  const paras = brief.paragraphs.map(p => `<p>${esc(p)}</p>`).join("");
+  const gen = brief.generated_at
+    ? new Date(brief.generated_at + (String(brief.generated_at).endsWith("Z") ? "" : "Z"))
+        .toLocaleString("ru-RU", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })
+    : "";
+  const modeLabel = brief.mode === "llm" ? "LLM" : "шаблон";
+  const sources = (brief.sources || []).slice(0, 3).map(s =>
+    `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title || s.url)}</a>`
+  ).join("");
+  el.innerHTML = `
+    <div class="brief-body">${paras}</div>
+    <div class="brief-meta">Сформировано: ${esc(gen)} · режим: ${modeLabel}</div>
+    ${sources ? `<div class="brief-sources">${sources}</div>` : ""}`;
+}
+
+function esc(s) {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 document.getElementById("tagFilter").addEventListener("change", renderFeed);
 document.getElementById("typeFilter").addEventListener("change", renderFeed);
 document.getElementById("searchBox").addEventListener("input", () => {
@@ -372,7 +478,7 @@ document.addEventListener("click", (e) => {
     : "";
   document.querySelector("footer").textContent =
     `TrendWatcher v0.1 — снапшот данных от ${gen}. Обновление: python run.py ingest && python run.py export`;
-  renderStats(); renderTopEvents(); renderSignals(); renderChart(); populateTagFilter(); renderFeed();
+  renderStats(); renderTopEvents(); initSignalSort(); renderSignals(); renderChart(); populateTagFilter(); renderFeed(); renderTrendBrief();
 })();
 </script>
 </body>

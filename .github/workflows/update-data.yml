@@ -37,6 +37,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Ingest sources and export snapshot
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           python run.py ingest
           python run.py score-tbsf
