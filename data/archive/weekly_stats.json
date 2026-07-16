@@ -2671,7 +2671,57 @@
           "share": 0.046512
         }
       }
+    },
+    "2024-07-29": {
+      "week_start": "2024-07-29",
+      "captured_at": "2026-07-16T10:40:25.765878",
+      "documents": 3,
+      "by_source_type": {
+        "vendor": 3
+      },
+      "tags": {}
+    },
+    "2024-11-04": {
+      "week_start": "2024-11-04",
+      "captured_at": "2026-07-16T10:40:25.766242",
+      "documents": 2,
+      "by_source_type": {
+        "vendor": 2
+      },
+      "tags": {}
+    },
+    "2024-11-25": {
+      "week_start": "2024-11-25",
+      "captured_at": "2026-07-16T10:40:25.766612",
+      "documents": 3,
+      "by_source_type": {
+        "vendor": 3
+      },
+      "tags": {
+        "multimodal_ai": {
+          "count": 1,
+          "share": 0.333333
+        }
+      }
+    },
+    "2024-12-30": {
+      "week_start": "2024-12-30",
+      "captured_at": "2026-07-16T10:40:25.766918",
+      "documents": 1,
+      "by_source_type": {
+        "vendor": 1
+      },
+      "tags": {}
+    },
+    "2025-01-06": {
+      "week_start": "2025-01-06",
+      "captured_at": "2026-07-16T10:40:25.767210",
+      "documents": 2,
+      "by_source_type": {
+        "vendor": 2
+      },
+      "tags": {}
     }
   },
-  "updated_at": "2026-07-16T07:32:12.045629"
+  "updated_at": "2026-07-16T10:40:25.767315"
 }
