@@ -192,7 +192,8 @@
 //   "https://raw.githubusercontent.com/ВАШ_ЛОГИН/ИМЯ_РЕПОЗИТОРИЯ/main/data.json"
 // (raw.githubusercontent.com отдает CORS * и обновляет кеш за ~5 минут)
 // ============================================================================
-const DATA_URL = "https://raw.githubusercontent.com/VasyaForester/trendwatcher/main/data.json";
+// Версия в query сбрасывает CDN/браузерный кеш raw.githubusercontent.com (max-age=300).
+const DATA_URL = "https://raw.githubusercontent.com/VasyaForester/trendwatcher/main/data.json?v=2026-07-20-revert";
 </script>
 <script>
 // Дашборд работает с единым снапшотом data.json — одинаково в динамическом
