@@ -11,6 +11,9 @@ from .taxonomy import (
     AI_RELEVANCE_PATTERNS,
     BREAKTHROUGH_AI_PATTERNS,
     BREAKTHROUGH_AI_TAGS,
+    FEED_AI_ANCHOR_PATTERNS,
+    FEED_EVENT_PATTERNS,
+    FEED_REJECT_PATTERNS,
     KNOWN_ENTITIES,
     SECURITY_TAGS,
     SEVERITY_PATTERNS,
@@ -20,6 +23,9 @@ from .taxonomy import (
 _TAXONOMY_RX = {tag: [re.compile(p, re.I) for p in pats] for tag, pats in TAXONOMY.items()}
 _AI_RX = [re.compile(p, re.I) for p in AI_RELEVANCE_PATTERNS]
 _BREAKTHROUGH_RX = [re.compile(p, re.I) for p in BREAKTHROUGH_AI_PATTERNS]
+_FEED_EVENT_RX = [re.compile(p, re.I) for p in FEED_EVENT_PATTERNS]
+_FEED_REJECT_RX = [re.compile(p, re.I) for p in FEED_REJECT_PATTERNS]
+_FEED_AI_RX = [re.compile(p, re.I) for p in FEED_AI_ANCHOR_PATTERNS]
 _SEVERITY_RX = [(re.compile(p, re.I), score) for p, score in SEVERITY_PATTERNS.items()]
 _CVE_RX = re.compile(r"CVE-\d{4}-\d{3,}", re.I)
 _ENTITY_RX = [(e, re.compile(r"\b" + re.escape(e) + r"\b", re.I)) for e in KNOWN_ENTITIES]
@@ -30,16 +36,66 @@ def is_ai_related(text: str) -> bool:
 
 
 def is_ai_security_or_breakthrough(text: str, tags: list[str] | None = None) -> bool:
-    """Узкий фильтр: AI security-теги, breakthrough-теги или явные паттерны.
-
-    Не пропускает новости только из-за слова «AI» / «machine learning».
-    """
+    """Широкий «интересный AI» (ingest legacy). Для ленты используйте is_feed_relevant."""
     tag_set = set(tags) if tags is not None else set(extract_tags(text))
     if tag_set & SECURITY_TAGS:
         return True
     if tag_set & BREAKTHROUGH_AI_TAGS:
         return True
     return any(rx.search(text) for rx in _BREAKTHROUGH_RX)
+
+
+def is_feed_relevant(
+    text: str,
+    tags: list[str] | None = None,
+    *,
+    source_name: str = "",
+) -> bool:
+    """Лента: только AI-security события/артефакты (по разметке batch1).
+
+    Нужны: AI-якорь + event-сигнал (инцидент/CVE/jailbreak/prompt injection/…).
+    Отвергаем: opinion, product launch, scorecard, обзоры «N kinds of».
+    """
+    if any(rx.search(text) for rx in _FEED_REJECT_RX):
+        return False
+
+    tag_set = set(tags) if tags is not None else set(extract_tags(text))
+    # Высокосигнальные security-теги (не privacy/governance сами по себе)
+    hard_sec = tag_set & {
+        "prompt_injection",
+        "jailbreak",
+        "agent_security",
+        "mcp_security",
+        "data_poisoning",
+        "model_supply_chain",
+        "malware_abuse",
+        "red_teaming",
+        "vulnerability_cve",
+        "inference_integrity",
+        "agent_identity_trust",
+        "agent_permissions",
+        "agent_swarm_security",
+    }
+
+    has_ai = bool(tag_set & (SECURITY_TAGS | BREAKTHROUGH_AI_TAGS)) or any(
+        rx.search(text) for rx in _FEED_AI_RX
+    )
+    if not has_ai and source_name:
+        if re.search(
+            r"hugging\s?face|openai|anthropic|google|microsoft|nvidia|nist|owasp|cisa",
+            source_name,
+            re.I,
+        ):
+            # Vendor/standards blog: AI-контекст из источника, если есть security-event
+            has_ai = True
+    if not has_ai:
+        return False
+
+    has_event = bool(hard_sec) or any(rx.search(text) for rx in _FEED_EVENT_RX)
+    if _CVE_RX.search(text):
+        has_event = True
+
+    return has_event
 
 
 def extract_tags(text: str) -> list[str]:

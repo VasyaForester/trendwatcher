@@ -190,6 +190,71 @@ BREAKTHROUGH_AI_TAGS: set[str] = {
     "world_models", "open_weights", "synthetic_data",
 }
 
+# Лента: только AI-security СОБЫТИЯ / артефакты (не product marketing и не opinion).
+FEED_EVENT_PATTERNS: list[str] = [
+    r"\bcve-\d{4}-\d+",
+    r"\bbreach", r"\bhacked\b", r"compromised", r"security incident",
+    r"incident disclosure", r"in the wild",
+    # botnet — только если цель/объект AI, не «LLM помог написать IoT-ботнет»
+    r"botnet.{0,50}(ai service|llm|ai agent|model|kubernetes|cloud key)",
+    r"(ai service|llm|ai agent).{0,50}botnet",
+    r"prompt injection", r"indirect prompt", r"\bjailbreak\b",
+    r"agent data injection", r"data injection attack.{0,40}ai agent",
+    r"(exfiltrat|leaking|leak).{0,40}(secret|credential|api key|data)",
+    r"(tricked|jailbreak).{0,40}(claude|gpt|llm|model|agent)",
+    r"cyber safeguard", r"safeguards? and our jailbreak",
+    r"\bmitigat", r"\bdisclosure\b",
+    r"vulnerabilit", r"zero[- ]day", r"0[- ]day",
+    r"red team", r"gpt[- ]red", r"prompt injection testing",
+    r"adversarial (attack|example|prompt)",
+    r"security model for ai", r"security model.{0,40}ai system",
+    r"ai (threats?|security|red team)",
+    r"(hunt|target|attack).{0,40}(ai service|llm|ai agent|model repo)",
+    r"(ai agent|autonomous (ai )?agent).{0,40}(attack|breach|intrusion|compromis|misclick|command)",
+    r"(attack|breach|intrusion).{0,40}(ai agent|autonomous|hugging ?face|model repo)",
+    r"\bmcp\b.{0,30}(cve|vulnerab|security|attack|exploit)",
+    r"(cve|vulnerab).{0,40}\bmcp\b",
+    r"llm prompt", r"\bprompty\b", r"prompt loader",
+    r"(expose|exfiltrat).{0,40}(llm |api )?keys?",
+    r"unauthenticated.{0,40}(llm|api key|config api)",
+]
+
+FEED_REJECT_PATTERNS: list[str] = [
+    r"^quoting\b",
+    r"\bweeknotes?\b",
+    r"\bscorecard\b",
+    r"\b\d+\s+kinds of\b",
+    r"\bhow (cios?|leaders|companies|executives) should\b",
+    r"\bissues impacting\b",
+    r"deserve access",
+    r"concentration of wealth",
+    r"data centers? and the",
+    r"\bevacuat",
+    r"voice ?eq",
+    r"vids updates|personal avatars?",
+    r"eviscerating",
+    r"mania is",
+    r"protecting privacy in an AI era",
+    r"protecting privacy in an ai era",
+    # LLM «помог» классической кибербезе / IoT — не AI security поверхности
+    r"llm[- ]assisted.{0,80}(botnet|iot|malware|ransomware)",
+    r"(botnet|iot|malware|ransomware).{0,80}llm[- ]assisted",
+    r"signs of llm[- ]assisted",
+    # Product drops without security event wording
+    r"^introducing (claude|gemini|gpt|llama|sonnet|opus|haiku)\b",
+    r"^introducing real world\b",
+    r"expanding managed agents",
+    r"create, edit and star",
+]
+
+# AI-сигнал (уже, чем любой «AI»): модель/агент/LLM/MCP в security-контексте.
+FEED_AI_ANCHOR_PATTERNS: list[str] = [
+    r"\bai\b", r"artificial intelligence", r"\bllm(s)?\b", r"large language model",
+    r"\bagentic\b", r"ai[- ]agent", r"\bmcp\b", r"model context protocol",
+    r"prompt injection", r"\bjailbreak\b", r"\bprompty\b", r"hugging ?face",
+    r"openai|anthropic|claude|gemini|copilot|chatgpt",
+]
+
 # Известные сущности (вендоры, продукты, модели) для простого извлечения.
 KNOWN_ENTITIES: list[str] = [
     "OpenAI", "ChatGPT", "GPT-4", "GPT-5", "Anthropic", "Claude", "Google", "Gemini",

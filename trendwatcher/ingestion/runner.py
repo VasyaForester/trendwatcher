@@ -6,7 +6,7 @@ from sqlalchemy import select
 
 from ..config import SourceConfig, load_sources
 from ..db import Document, get_session, init_db
-from ..enrichment.tagger import enrich, is_ai_security_or_breakthrough
+from ..enrichment.tagger import enrich, is_feed_relevant
 from ..tbsf.batch import apply_tbsf
 from . import arxiv, nvd, rss
 from .dedup import normalize_url, title_fingerprint
@@ -36,12 +36,10 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
             continue
         text = f"{item['title']}\n{item['summary']}"
         meta = enrich(item["title"], item["summary"], source.source_type)
-        if source.filter_ai:
-            # Строгий режим для общих СМИ: AI security / breakthrough, не любое «AI».
-            if not is_ai_security_or_breakthrough(text, meta["tags"]):
-                # Широкий AI-фильтр оставляем только для специализированных AI-блогов
-                # с filter_ai: false; здесь filter_ai=true → строгий отсев.
-                continue
+        if source.filter_ai and not is_feed_relevant(
+            text, meta["tags"], source_name=source.name
+        ):
+            continue
         severity = meta["severity"]
         if item.get("cvss") is not None:
             severity = max(severity, item["cvss"] / 10.0)
