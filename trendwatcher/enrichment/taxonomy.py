@@ -160,7 +160,7 @@ AI_TECH_TAGS: set[str] = {
 }
 SECURITY_TAGS: set[str] = set(TAXONOMY) - AI_TECH_TAGS
 
-# Признак AI-релевантности — для фильтрации общих security-лент.
+# Признак AI-релевантности — для фильтрации общих security-лент (ingest, широкий).
 AI_RELEVANCE_PATTERNS: list[str] = [
     r"\bai\b", r"artificial intelligence", r"\bllm(s)?\b", r"large language model",
     r"\bgpt-?\d?\b", r"chatgpt", r"openai", r"anthropic", r"claude", r"gemini",
@@ -171,6 +171,24 @@ AI_RELEVANCE_PATTERNS: list[str] = [
     r"reasoning model", r"open[- ]weight", r"self[- ]healing", r"mcp security",
     r"model context protocol", r"agent memory",
 ]
+
+# Узкий фильтр для ленты и строгих новостных источников:
+# AI security ИЛИ прорывные AI-технологии (не любое упоминание «AI»).
+BREAKTHROUGH_AI_PATTERNS: list[str] = [
+    r"\bagentic\b", r"ai[- ]agent(s)?\b", r"multi[- ]agent", r"self[- ]evolving",
+    r"self[- ]improving agent", r"reasoning model", r"test[- ]time (compute|scaling)",
+    r"foundation model", r"world model", r"open[- ]weight", r"mixture[- ]of[- ]experts",
+    r"model context protocol", r"\bmcp\b.{0,20}(server|security|tool)",
+    r"\bllm(s)?\b", r"large language model", r"gen(erative)?[- ]ai",
+    r"prompt injection", r"\bjailbreak\b", r"llm security", r"ai security",
+    r"ai red team", r"adversarial (attack|example).{0,30}(llm|model|ai)",
+    r"deepfake", r"model (poisoning|extraction|theft)", r"ai[- ]generated malware",
+]
+
+BREAKTHROUGH_AI_TAGS: set[str] = {
+    "self_evolving_agents", "agentic_ai", "reasoning_models", "multimodal_ai",
+    "world_models", "open_weights", "synthetic_data",
+}
 
 # Известные сущности (вендоры, продукты, модели) для простого извлечения.
 KNOWN_ENTITIES: list[str] = [

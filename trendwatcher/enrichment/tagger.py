@@ -9,13 +9,17 @@ import re
 from .tag_filter import normalize_tags
 from .taxonomy import (
     AI_RELEVANCE_PATTERNS,
+    BREAKTHROUGH_AI_PATTERNS,
+    BREAKTHROUGH_AI_TAGS,
     KNOWN_ENTITIES,
+    SECURITY_TAGS,
     SEVERITY_PATTERNS,
     TAXONOMY,
 )
 
 _TAXONOMY_RX = {tag: [re.compile(p, re.I) for p in pats] for tag, pats in TAXONOMY.items()}
 _AI_RX = [re.compile(p, re.I) for p in AI_RELEVANCE_PATTERNS]
+_BREAKTHROUGH_RX = [re.compile(p, re.I) for p in BREAKTHROUGH_AI_PATTERNS]
 _SEVERITY_RX = [(re.compile(p, re.I), score) for p, score in SEVERITY_PATTERNS.items()]
 _CVE_RX = re.compile(r"CVE-\d{4}-\d{3,}", re.I)
 _ENTITY_RX = [(e, re.compile(r"\b" + re.escape(e) + r"\b", re.I)) for e in KNOWN_ENTITIES]
@@ -23,6 +27,19 @@ _ENTITY_RX = [(e, re.compile(r"\b" + re.escape(e) + r"\b", re.I)) for e in KNOWN
 
 def is_ai_related(text: str) -> bool:
     return any(rx.search(text) for rx in _AI_RX)
+
+
+def is_ai_security_or_breakthrough(text: str, tags: list[str] | None = None) -> bool:
+    """Узкий фильтр: AI security-теги, breakthrough-теги или явные паттерны.
+
+    Не пропускает новости только из-за слова «AI» / «machine learning».
+    """
+    tag_set = set(tags) if tags is not None else set(extract_tags(text))
+    if tag_set & SECURITY_TAGS:
+        return True
+    if tag_set & BREAKTHROUGH_AI_TAGS:
+        return True
+    return any(rx.search(text) for rx in _BREAKTHROUGH_RX)
 
 
 def extract_tags(text: str) -> list[str]:

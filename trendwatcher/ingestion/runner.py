@@ -6,9 +6,10 @@ from sqlalchemy import select
 
 from ..config import SourceConfig, load_sources
 from ..db import Document, get_session, init_db
-from ..enrichment.tagger import enrich, is_ai_related
+from ..enrichment.tagger import enrich, is_ai_security_or_breakthrough
 from ..tbsf.batch import apply_tbsf
 from . import arxiv, nvd, rss
+from .dedup import normalize_url, title_fingerprint
 
 log = logging.getLogger("trendwatcher.ingest")
 
@@ -18,17 +19,29 @@ CONNECTORS = {"rss": rss.fetch, "arxiv": arxiv.fetch, "nvd": nvd.fetch}
 def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
     """Возвращает (новых документов, всего получено)."""
     items = CONNECTORS[source.type](source)
-    # URL проверяем по всей базе: один документ может прийти из разных источников
-    # (например, одна arXiv-статья попадает под security- и general-запросы)
-    existing_urls = set(session.scalars(select(Document.url)).all())
+    # URL и отпечатки заголовков — по всей базе (перепечатки из разных лент).
+    existing_urls = {normalize_url(u) for u in session.scalars(select(Document.url)).all()}
+    existing_titles = {
+        title_fingerprint(t)
+        for t in session.scalars(select(Document.title)).all()
+        if title_fingerprint(t)
+    }
     added = 0
     for item in items:
-        if item["url"] in existing_urls:
+        url = normalize_url(item["url"])
+        title_key = title_fingerprint(item["title"])
+        if not url or url in existing_urls:
+            continue
+        if title_key and title_key in existing_titles:
             continue
         text = f"{item['title']}\n{item['summary']}"
-        if source.filter_ai and not is_ai_related(text):
-            continue
         meta = enrich(item["title"], item["summary"], source.source_type)
+        if source.filter_ai:
+            # Строгий режим для общих СМИ: AI security / breakthrough, не любое «AI».
+            if not is_ai_security_or_breakthrough(text, meta["tags"]):
+                # Широкий AI-фильтр оставляем только для специализированных AI-блогов
+                # с filter_ai: false; здесь filter_ai=true → строгий отсев.
+                continue
         severity = meta["severity"]
         if item.get("cvss") is not None:
             severity = max(severity, item["cvss"] / 10.0)
@@ -37,7 +50,7 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
             source_name=source.name,
             source_type=source.source_type,
             doc_type=meta["doc_type"],
-            url=item["url"],
+            url=url or item["url"],
             title=item["title"],
             summary=item["summary"],
             published_at=item["published_at"],
@@ -48,7 +61,9 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
         doc.entities = meta["entities"]
         apply_tbsf(doc)
         session.add(doc)
-        existing_urls.add(item["url"])
+        existing_urls.add(url)
+        if title_key:
+            existing_titles.add(title_key)
         added += 1
     session.commit()
     return added, len(items)

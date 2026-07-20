@@ -2,15 +2,17 @@
 # type: rss | arxiv | nvd — определяет коннектор.
 # source_type: news | research | vulnerability | vendor | standards | incident
 # trust: вес доверия источника (0..1), влияет на скоринг событий.
-# filter_ai: true — оставлять только AI-релевантные публикации (для общих security-лент).
+# filter_ai: true — строгий отсев: только AI security / breakthrough AI
+#   (не любое упоминание «AI»). Сайты без публичного RSS сюда не входят:
+#   Bloomberg/WSJ/многие paywall и HTML-only страницы не парсятся.
 
 sources:
+  # --- Research / CVE ---
   - id: arxiv_ai_security
     name: "arXiv — AI Security papers"
     type: arxiv
     source_type: research
     trust: 0.9
-    # Глубокая выборка ради ретроспективы: сигналы сравниваются с baseline за ~26 недель
     max_results: 800
     query: >-
       (cat:cs.CR OR cat:cs.AI OR cat:cs.CL OR cat:cs.LG) AND
@@ -44,6 +46,145 @@ sources:
       - "LLM"
       - "artificial intelligence"
 
+  # --- Major tech / world media (topic RSS + strict filter) ---
+  - id: nyt_technology
+    name: "NYT Technology"
+    type: rss
+    source_type: news
+    trust: 0.75
+    filter_ai: true
+    url: "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml"
+
+  - id: guardian_technology
+    name: "The Guardian Technology"
+    type: rss
+    source_type: news
+    trust: 0.7
+    filter_ai: true
+    url: "https://www.theguardian.com/technology/rss"
+
+  - id: bbc_technology
+    name: "BBC Technology"
+    type: rss
+    source_type: news
+    trust: 0.75
+    filter_ai: true
+    url: "https://feeds.bbci.co.uk/news/technology/rss.xml"
+
+  - id: cnn_technology
+    name: "CNN Technology"
+    type: rss
+    source_type: news
+    trust: 0.65
+    filter_ai: true
+    url: "http://rss.cnn.com/rss/edition_technology.rss"
+
+  - id: washingtonpost_technology
+    name: "Washington Post Technology"
+    type: rss
+    source_type: news
+    trust: 0.7
+    filter_ai: true
+    url: "https://feeds.washingtonpost.com/rss/business/technology"
+
+  - id: cbc_technology
+    name: "CBC Technology"
+    type: rss
+    source_type: news
+    trust: 0.65
+    filter_ai: true
+    url: "https://www.cbc.ca/webfeed/rss/rss-technology"
+
+  - id: economictimes_tech
+    name: "Economic Times Tech"
+    type: rss
+    source_type: news
+    trust: 0.55
+    filter_ai: true
+    url: "https://economictimes.indiatimes.com/tech/rssfeeds/13357270.cms"
+
+  - id: heise
+    name: "Heise Online"
+    type: rss
+    source_type: news
+    trust: 0.65
+    filter_ai: true
+    url: "https://www.heise.de/rss/heise-atom.xml"
+
+  # --- Tech press ---
+  - id: wired
+    name: "WIRED"
+    type: rss
+    source_type: news
+    trust: 0.7
+    filter_ai: true
+    url: "https://www.wired.com/feed/rss"
+
+  - id: theverge
+    name: "The Verge"
+    type: rss
+    source_type: news
+    trust: 0.65
+    filter_ai: true
+    url: "https://www.theverge.com/rss/index.xml"
+
+  - id: techcrunch
+    name: "TechCrunch"
+    type: rss
+    source_type: news
+    trust: 0.65
+    filter_ai: true
+    url: "https://techcrunch.com/feed/"
+
+  - id: zdnet_ai
+    name: "ZDNet Artificial Intelligence"
+    type: rss
+    source_type: news
+    trust: 0.6
+    filter_ai: true
+    url: "https://www.zdnet.com/topic/artificial-intelligence/rss.xml"
+
+  - id: techxplore_ai
+    name: "Tech Xplore — ML/AI"
+    type: rss
+    source_type: news
+    trust: 0.6
+    filter_ai: true
+    url: "https://techxplore.com/rss-feed/machine-learning-ai-news/"
+
+  - id: sciencedaily_ai
+    name: "ScienceDaily — AI"
+    type: rss
+    source_type: news
+    trust: 0.7
+    filter_ai: true
+    url: "https://www.sciencedaily.com/rss/computers_math/artificial_intelligence.xml"
+
+  - id: mit_news_ai
+    name: "MIT News — Artificial Intelligence"
+    type: rss
+    source_type: news
+    trust: 0.85
+    filter_ai: true
+    url: "https://news.mit.edu/rss/topic/artificial-intelligence2"
+
+  - id: aibusiness
+    name: "AI Business"
+    type: rss
+    source_type: news
+    trust: 0.6
+    filter_ai: true
+    url: "https://aibusiness.com/rss.xml"
+
+  - id: cio
+    name: "CIO"
+    type: rss
+    source_type: news
+    trust: 0.55
+    filter_ai: true
+    url: "https://www.cio.com/feed/"
+
+  # --- Security trade press ---
   - id: thehackernews
     name: "The Hacker News"
     type: rss
@@ -60,13 +201,69 @@ sources:
     filter_ai: true
     url: "https://www.bleepingcomputer.com/feed/"
 
-  - id: simonwillison
-    name: "Simon Willison"
+  - id: darkreading
+    name: "Dark Reading"
     type: rss
     source_type: news
     trust: 0.7
     filter_ai: true
-    url: "https://simonwillison.net/atom/everything/"
+    url: "https://www.darkreading.com/rss.xml"
+
+  - id: krebsonsecurity
+    name: "Krebs on Security"
+    type: rss
+    source_type: news
+    trust: 0.75
+    filter_ai: true
+    url: "https://krebsonsecurity.com/feed/"
+
+  - id: csoonline
+    name: "CSO Online"
+    type: rss
+    source_type: news
+    trust: 0.65
+    filter_ai: true
+    url: "https://www.csoonline.com/feed/"
+
+  - id: welivesecurity
+    name: "WeLiveSecurity (ESET)"
+    type: rss
+    source_type: news
+    trust: 0.65
+    filter_ai: true
+    url: "https://www.welivesecurity.com/feed/"
+
+  - id: securityaffairs
+    name: "Security Affairs"
+    type: rss
+    source_type: news
+    trust: 0.55
+    filter_ai: true
+    url: "https://securityaffairs.co/wordpress/feed"
+
+  - id: hackread
+    name: "HackRead"
+    type: rss
+    source_type: news
+    trust: 0.5
+    filter_ai: true
+    url: "https://www.hackread.com/feed/"
+
+  - id: bankinfosecurity
+    name: "BankInfoSecurity"
+    type: rss
+    source_type: news
+    trust: 0.6
+    filter_ai: true
+    url: "https://www.bankinfosecurity.com/rss-feeds"
+
+  - id: sans_isc
+    name: "SANS Internet Storm Center"
+    type: rss
+    source_type: news
+    trust: 0.8
+    filter_ai: true
+    url: "https://isc.sans.edu/rssfeed_full.xml"
 
   - id: schneier
     name: "Schneier on Security"
@@ -76,19 +273,77 @@ sources:
     filter_ai: true
     url: "https://www.schneier.com/feed/atom/"
 
+  # --- Vendor / labs ---
   - id: google_security
-    name: "Google Online Security Blog"
+    name: "Google Security Blog"
     type: rss
     source_type: vendor
     trust: 0.85
     filter_ai: true
-    url: "https://feeds.feedburner.com/GoogleOnlineSecurityBlog"
+    url: "https://security.googleblog.com/feeds/posts/default"
+
+  - id: google_ai_blog
+    name: "Google AI Blog"
+    type: rss
+    source_type: vendor
+    trust: 0.8
+    filter_ai: true
+    url: "https://blog.google/technology/ai/rss/"
+
+  - id: microsoft_security
+    name: "Microsoft Security Blog"
+    type: rss
+    source_type: vendor
+    trust: 0.85
+    filter_ai: true
+    url: "https://www.microsoft.com/en-us/security/blog/feed/"
+
+  - id: aws_ml_blog
+    name: "AWS Machine Learning Blog"
+    type: rss
+    source_type: vendor
+    trust: 0.75
+    filter_ai: true
+    url: "https://aws.amazon.com/blogs/machine-learning/feed/"
+
+  - id: aws_security_blog
+    name: "AWS Security Blog"
+    type: rss
+    source_type: vendor
+    trust: 0.8
+    filter_ai: true
+    url: "https://aws.amazon.com/blogs/security/feed/"
+
+  - id: nvidia_blog
+    name: "NVIDIA Blog"
+    type: rss
+    source_type: vendor
+    trust: 0.7
+    filter_ai: true
+    url: "https://blogs.nvidia.com/feed/"
+
+  - id: nvidia_developer
+    name: "NVIDIA Developer Blog"
+    type: rss
+    source_type: vendor
+    trust: 0.7
+    filter_ai: true
+    url: "https://developer.nvidia.com/blog/feed"
+
+  - id: apple_newsroom
+    name: "Apple Newsroom"
+    type: rss
+    source_type: vendor
+    trust: 0.75
+    filter_ai: true
+    url: "https://www.apple.com/newsroom/rss-feed.rss"
 
   - id: openai_news
     name: "OpenAI News"
     type: rss
     source_type: vendor
     trust: 0.8
+    filter_ai: true
     url: "https://openai.com/news/rss.xml"
 
   - id: anthropic_news
@@ -96,23 +351,34 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.8
-    # Официального RSS нет; неофициальный зеркальный фид (обновляется Actions).
+    filter_ai: true
     url: "https://raw.githubusercontent.com/taobojlen/anthropic-rss-feed/main/anthropic_news_rss.xml"
 
-  - id: google_ai_blog
-    name: "Google AI Blog"
+  - id: anthropic_engineering
+    name: "Anthropic Engineering"
     type: rss
     source_type: vendor
     trust: 0.8
-    url: "https://blog.google/technology/ai/rss/"
+    filter_ai: true
+    url: "https://raw.githubusercontent.com/taobojlen/anthropic-rss-feed/main/anthropic_engineering_rss.xml"
 
   - id: huggingface_blog
     name: "Hugging Face Blog"
     type: rss
     source_type: vendor
     trust: 0.75
+    filter_ai: true
     url: "https://huggingface.co/blog/feed.xml"
 
+  - id: databricks_blog
+    name: "Databricks Blog"
+    type: rss
+    source_type: vendor
+    trust: 0.7
+    filter_ai: true
+    url: "https://www.databricks.com/feed"
+
+  # --- Standards ---
   - id: nist_news
     name: "NIST News"
     type: rss
