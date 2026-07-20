@@ -1,9 +1,10 @@
 # Автообновление данных TrendWatcher без участия человека и без изменения хостинга.
 #
 # Раз в сутки: собирает публикации из источников, пересчитывает аналитику и
-# коммитит свежие data.json + базу обратно в репозиторий. Сайт на вашем хостинге
-# читает data.json по raw-ссылке из этого репозитория (см. DATA_URL в web/index.html),
-# поэтому обновляется сам — загружать на хостинг ничего не нужно.
+# коммитит свежие data.json + архив обратно в репозиторий.
+# SQLite-база (data/trendwatcher.db) в git НЕ коммитится — она быстро превышает
+# лимит GitHub 100 MB из‑за full_text статей; сайту достаточно data.json.
+# Сайт на хостинге читает data.json по raw-ссылке (см. DATA_URL в web/index.html).
 #
 # Установка: запушить проект в GitHub-репозиторий — больше ничего настраивать
 # не требуется (права на коммит даются блоком permissions ниже).
@@ -49,7 +50,9 @@ jobs:
         run: |
           git config user.name "trendwatcher-bot"
           git config user.email "actions@github.com"
-          git add data.json data/trendwatcher.db data/archive/
+          # БД больше не коммитим (лимит GitHub 100 MB). Если она ещё в дереве — убрать.
+          git rm -f --ignore-unmatch data/trendwatcher.db
+          git add data.json data/archive/
           git diff --cached --quiet || git commit -m "data: auto-update $(date -u +%Y-%m-%d)"
           git pull --rebase origin main
           git push

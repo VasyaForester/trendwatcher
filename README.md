@@ -44,7 +44,7 @@ python -m venv .venv
 
 ## Деплой на хостинг
 
-1. **Данные** — автоматически: workflow [`.github/workflows/update-data.yml`](.github/workflows/update-data.yml) каждый день делает `ingest` → `score-tbsf` → `export` → push `data.json`, `data/trendwatcher.db`, `data/archive/`.
+1. **Данные** — автоматически: workflow [`.github/workflows/update-data.yml`](.github/workflows/update-data.yml) каждый день делает `ingest` → `score-tbsf` → `export` → push `data.json` и `data/archive/`. SQLite-база локальная и в git не коммитится (лимит GitHub 100 MB).
 2. **Вёрстка** — вручную, когда меняется `web/index.html`:
 
 ```powershell
