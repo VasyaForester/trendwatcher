@@ -54,6 +54,20 @@ def apply_tbsf(doc: Document, fetch_body: bool = True) -> None:
     doc.tbsf_vector = result["tbsf_vector"]
 
 
+def diet_full_text(session) -> int:
+    """Удаляет full_text у документов старше окна топ-событий — диета БД."""
+    docs = session.scalars(
+        select(Document).where(Document.full_text.is_not(None))
+    ).all()
+    dropped = 0
+    for doc in docs:
+        if (utcnow() - doc.published_at).days > FULLTEXT_DAYS:
+            doc.full_text = None
+            dropped += 1
+    session.commit()
+    return dropped
+
+
 def rescore_all(session, fetch_fulltext: bool = True) -> int:
     if fetch_fulltext:
         _reset_fulltext_budget()

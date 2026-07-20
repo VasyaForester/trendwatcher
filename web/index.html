@@ -57,6 +57,7 @@
   td { padding: 7px 8px; border-bottom: 1px solid var(--border); }
   tr:last-child td { border-bottom: none; }
   .vel-up { color: var(--green); } .vel-down { color: var(--red); }
+  .vel-na { color: var(--muted); font-style: italic; }
   .signal-row-dynamics { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .signal-dismiss {
     background: transparent; border: 1px solid var(--border); color: var(--muted);
@@ -342,9 +343,18 @@ function renderSignals() {
   }
   tbody.innerHTML = signals.slice(0, 25).map(s => {
     const v = Math.round(s.velocity * 100);
-    const velHtml = Math.abs(s.velocity) >= 2.99
-      ? `<span class="vel-up" title="по доле в корпусе (архив)">${s.velocity > 0 ? "≥+300%" : "≤−300%"}</span>`
-      : v > 0 ? `<span class="vel-up">+${v}%</span>` : v < 0 ? `<span class="vel-down">${v}%</span>` : "0%";
+    let velHtml;
+    if (!s.velocity_source) {
+      velHtml = `<span class="vel-na" title="недостаточно данных для сравнения долей">н/д</span>`;
+    } else if (Math.abs(s.velocity) >= 2.99) {
+      velHtml = `<span class="vel-up" title="по доле в корпусе (архив)">${s.velocity > 0 ? "≥+300%" : "≤−300%"}</span>`;
+    } else if (v > 0) {
+      velHtml = `<span class="vel-up">+${v}%</span>`;
+    } else if (v < 0) {
+      velHtml = `<span class="vel-down">${v}%</span>`;
+    } else {
+      velHtml = "0%";
+    }
     const reason = (s.reason || "").replace(/"/g, "&quot;");
     const confirming = pendingDismissTag === s.tag;
     const pinned = PINNED_SIGNAL_TAGS.has(s.tag);
@@ -445,7 +455,11 @@ function renderOneTrendChart(canvasId, chartKey, existing) {
       scales: {
         x: { ticks: { color: "#8b96ad", font: { size: 10 } }, grid: { color: "#1a2234" } },
         y: {
-          ticks: { color: "#8b96ad", font: { size: 10 } },
+          ticks: {
+            color: "#8b96ad",
+            font: { size: 10 },
+            callback: (v) => ((DATA.trends && DATA.trends.unit === "share_pct") ? v + "%" : v),
+          },
           grid: { color: "#1a2234" },
           beginAtZero: true,
           suggestedMax: bundle.y_max || undefined,

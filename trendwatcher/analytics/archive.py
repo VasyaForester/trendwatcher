@@ -140,9 +140,18 @@ def load_weekly_snapshots() -> list[dict]:
 
 def append_document_ledger(session) -> int:
     """Append-only экспорт новых документов с тегами."""
+    from sqlalchemy import func
+
     _ensure_dirs()
     manifest = _load_manifest()
     last_id = manifest.get("last_doc_id", 0)
+    max_id = session.scalar(select(func.max(Document.id))) or 0
+    # БД не в git: после локального/CI пересоздания id снова с 1, а манифест
+    # может помнить старый last_doc_id → ledger перестаёт расти.
+    if last_id > max_id:
+        if DOC_LEDGER.exists():
+            DOC_LEDGER.write_text("", encoding="utf-8")
+        last_id = 0
     docs = session.scalars(
         select(Document).where(Document.id > last_id).order_by(Document.id)
     ).all()
@@ -170,14 +179,56 @@ def append_document_ledger(session) -> int:
     return len(docs)
 
 
-def archive_tag_windows(recent_weeks: int = SIGNAL_WINDOW_WEEKS) -> dict[str, dict]:
-    snaps = load_weekly_snapshots()
-    need = recent_weeks * 2
-    if len(snaps) < need:
-        return {}
+# Минимальный корпус prior-окна: иначе velocity по доле — шум, лучше «н/д».
+MIN_PRIOR_CORPUS = 40
 
-    recent_snaps = snaps[-recent_weeks:]
-    prior_snaps = snaps[-need:-recent_weeks]
+
+def _calendar_week_snaps(n_weeks: int, end_week: date | None = None) -> list[dict]:
+    """Ровно n календарных недель до end_week (включительно), пустые — нули."""
+    end_week = end_week or last_complete_week_start()
+    by_key = {s["week_start"]: s for s in load_weekly_snapshots()}
+    out: list[dict] = []
+    for i in range(n_weeks - 1, -1, -1):
+        key = (end_week - timedelta(weeks=i)).isoformat()
+        out.append(
+            by_key.get(
+                key,
+                {
+                    "week_start": key,
+                    "documents": 0,
+                    "tags": {},
+                    "by_source_type": {},
+                },
+            )
+        )
+    return out
+
+
+def rebuild_weekly_snapshots(session, weeks: int = 13) -> int:
+    """Перезаписывает снимки последних N завершённых недель (после light backfill)."""
+    stats = _load_weekly_stats()
+    existing = stats.get("weeks", {})
+    last = last_complete_week_start()
+    earliest = last - timedelta(weeks=weeks - 1)
+    written = 0
+    for week in iter_weeks_between(earliest, last):
+        snap = week_snapshot(session, week)
+        if snap["documents"] == 0:
+            continue
+        existing[week.isoformat()] = snap
+        written += 1
+    stats["weeks"] = existing
+    _save_weekly_stats(stats)
+    return written
+
+
+def archive_tag_windows(recent_weeks: int = SIGNAL_WINDOW_WEEKS) -> dict[str, dict]:
+    """Сравнение recent vs prior по календарным окнам (с нулями за пустые недели)."""
+    last = last_complete_week_start()
+    recent_snaps = _calendar_week_snaps(recent_weeks, last)
+    prior_end = last - timedelta(weeks=recent_weeks)
+    prior_snaps = _calendar_week_snaps(recent_weeks, prior_end)
+    archive_weeks = len(load_weekly_snapshots())
 
     def aggregate(week_list: list[dict]) -> tuple[dict[str, int], int]:
         tags: dict[str, int] = defaultdict(int)
@@ -190,32 +241,38 @@ def archive_tag_windows(recent_weeks: int = SIGNAL_WINDOW_WEEKS) -> dict[str, di
 
     recent_tags, recent_total = aggregate(recent_snaps)
     prior_tags, prior_total = aggregate(prior_snaps)
+    prior_ok = prior_total >= MIN_PRIOR_CORPUS
 
     out: dict[str, dict] = {}
     for tag in set(recent_tags) | set(prior_tags):
         r, p = recent_tags.get(tag, 0), prior_tags.get(tag, 0)
         recent_share = r / recent_total if recent_total else None
         prior_share = p / prior_total if prior_total else None
-        share_velocity = pct_change(recent_share, prior_share) if (
-            recent_share is not None and prior_share is not None
-        ) else None
+        share_velocity = None
+        if prior_ok and recent_share is not None and prior_share is not None:
+            share_velocity = pct_change(recent_share, prior_share)
         out[tag] = {
             "recent": r,
             "prior": p,
             "recent_share": recent_share,
             "prior_share": prior_share,
             "share_velocity": share_velocity,
-            "archive_weeks": len(snaps),
+            "archive_weeks": archive_weeks,
+            "prior_corpus": prior_total,
         }
     return out
 
 
-def update_archive(session) -> dict:
+def update_archive(session, *, rebuild_weeks: int | None = None) -> dict:
     ledger = append_document_ledger(session)
-    weeks = backfill_weekly_snapshots(session)
+    if rebuild_weeks:
+        weeks = rebuild_weekly_snapshots(session, weeks=rebuild_weeks)
+    else:
+        weeks = backfill_weekly_snapshots(session)
     snaps = load_weekly_snapshots()
     return {
         "ledger_appended": ledger,
         "weeks_written": weeks,
         "weeks_total": len(snaps),
+        "rebuilt": bool(rebuild_weeks),
     }

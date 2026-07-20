@@ -34,7 +34,7 @@ from ..enrichment.taxonomy import AI_TECH_TAGS
 from .archive import archive_tag_windows
 from .constants import SIGNAL_WINDOW_WEEKS
 from .timeseries import tag_profiles, week_start
-from .velocity import cap_velocity, pct_change, velocity_from_shares, velocity_label
+from .velocity import cap_velocity, pct_change, velocity_label
 
 LEVEL_ORDER = {
     "strong": 0, "emerging": 1, "research": 2, "spike": 3,
@@ -162,12 +162,8 @@ def classify_signals(
         research_share = by_src_type[tag].get("research", 0) / r if r else 0.0
 
         arch = archive_stats.get(tag, {})
-        recent_share_arch = arch.get("recent_share")
-        prior_share_arch = arch.get("prior_share")
         if arch.get("share_velocity") is not None:
             velocity, vel_source = cap_velocity(arch["share_velocity"]), "archive"
-        elif recent_share_arch is not None and prior_share_arch is not None:
-            velocity, vel_source = velocity_from_shares(recent_share_arch, prior_share_arch)
         elif recent_share is not None and base_share and base_share > 0:
             velocity = cap_velocity(pct_change(recent_share, base_share))
             vel_source = "baseline"

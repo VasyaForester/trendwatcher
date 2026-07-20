@@ -39,8 +39,9 @@ def build_snapshot(session, feed_limit: int = FEED_LIMIT) -> dict:
     feed = build_feed(session, limit=feed_limit)
     events = top_events(session, days=30, limit=15)
     signals = classify_signals(session)
-    trends = weekly_tag_counts(session, weeks=13)
     archive = update_archive(session)
+    # Чарты после обновления архива — доли из weekly_stats.
+    trends = weekly_tag_counts(session, weeks=13)
     trend_brief = build_trend_brief(signals, events, feed)
     return {
         "generated_at": utcnow().isoformat(),
@@ -51,7 +52,13 @@ def build_snapshot(session, feed_limit: int = FEED_LIMIT) -> dict:
             "last_week": last_week,
         },
         "top_events": events,
-        "trends": {"weeks": trends["weeks"], "series": trends["series"]},
+        "trends": {
+            "weeks": trends["weeks"],
+            "series": trends["series"],
+            "totals": trends.get("totals"),
+            "unit": trends.get("unit", "share_pct"),
+            "charts": trends.get("charts", {}),
+        },
         "signals": signals,
         "feed": feed,
         "trend_brief": trend_brief,
