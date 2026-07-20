@@ -44,26 +44,44 @@ SIGNAL_TAGS: frozenset[str] = frozenset(
     }
 ) | SIGNAL_AI_TAGS
 
-# График 1 — зрелые/объёмные AI-security темы.
+# График 1 — общие темы (разметка о/с).
 TREND_CHART_GENERAL: frozenset[str] = frozenset(
     {
-        "prompt_injection",
         "jailbreak",
+        "prompt_injection",
         "agent_security",
-        "rag_security",
-        "model_supply_chain",
+        "mcp_security",
+        "guardrails_defense",
+        "indirect_prompt_injection",
         "data_poisoning",
         "red_teaming",
-        "guardrails_defense",
         "governance_regulation",
         "data_exfiltration",
-        "model_theft",
-        "model_drift",
     }
 )
 
-# График 2 — специальные / новые / breakthrough (меньший абсолютный объём).
-TREND_CHART_SPECIAL: frozenset[str] = frozenset(SIGNAL_TAGS - TREND_CHART_GENERAL)
+# График 2 — специальные / новые (разметка о/с).
+TREND_CHART_SPECIAL: frozenset[str] = frozenset(
+    {
+        "self_evolving_agents",
+        "agent_swarm_security",
+        "computer_use_agents",
+        "rag_security",
+        "model_theft",
+        "model_supply_chain",
+        "model_drift",
+        "agent_identity_trust",
+        "agent_permissions",
+        "inference_integrity",
+        "long_context_memory",
+        "agent_memory_security",
+        "tool_calling_security",
+        "ai_codegen_security",
+        "autonomous_cyber_offense",
+        "model_context_poisoning",
+        "multimodal_injection",
+    }
+)
 
 # Явный whitelist — только ключи из TAXONOMY (защита от мусора в будущем).
 ALL_TAXONOMY_TAGS: frozenset[str] = frozenset(TAXONOMY)

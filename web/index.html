@@ -369,15 +369,22 @@ function renderSignals() {
 let chartGeneral = null;
 let chartSpecial = null;
 
-const FALLBACK_GENERAL = new Set([
-  "prompt_injection","jailbreak","agent_security","rag_security","model_supply_chain",
-  "data_poisoning","red_teaming","guardrails_defense","governance_regulation",
-  "data_exfiltration","model_theft","model_drift",
+const TREND_CHART_GENERAL = new Set([
+  "jailbreak","prompt_injection","agent_security","mcp_security","guardrails_defense",
+  "indirect_prompt_injection","data_poisoning","red_teaming","governance_regulation",
+  "data_exfiltration",
+]);
+const TREND_CHART_SPECIAL = new Set([
+  "self_evolving_agents","agent_swarm_security","computer_use_agents","rag_security",
+  "model_theft","model_supply_chain","model_drift","agent_identity_trust","agent_permissions",
+  "inference_integrity","long_context_memory","agent_memory_security","tool_calling_security",
+  "ai_codegen_security","autonomous_cyber_offense","model_context_poisoning","multimodal_injection",
 ]);
 
-function buildFallbackBundle(series, weeks, isGeneral) {
+function buildFallbackBundle(series, isGeneral) {
+  const allowed = isGeneral ? TREND_CHART_GENERAL : TREND_CHART_SPECIAL;
   const scored = Object.entries(series || {})
-    .filter(([tag]) => isGeneral ? FALLBACK_GENERAL.has(tag) : !FALLBACK_GENERAL.has(tag))
+    .filter(([tag]) => allowed.has(tag))
     .map(([tag, arr]) => [tag, arr.reduce((a,b)=>a+b,0), Math.max(0, ...arr)])
     .filter(([, total]) => total > 0)
     .sort((a,b) => b[1]-a[1])
@@ -390,12 +397,31 @@ function buildFallbackBundle(series, weeks, isGeneral) {
   };
 }
 
+function sanitizeChartBundle(bundle, isGeneral) {
+  const allowed = isGeneral ? TREND_CHART_GENERAL : TREND_CHART_SPECIAL;
+  if (!bundle || !bundle.tags) return { tags: [], series: {}, y_max: 5 };
+  const tags = bundle.tags.filter(t => allowed.has(t));
+  const series = {};
+  tags.forEach(t => {
+    if (bundle.series && bundle.series[t]) series[t] = bundle.series[t];
+  });
+  const peak = Math.max(0, ...tags.map(t => Math.max(0, ...(series[t] || []))));
+  return {
+    tags,
+    series,
+    y_max: bundle.y_max && tags.length === bundle.tags.length
+      ? bundle.y_max
+      : Math.max(5, Math.ceil(peak * 1.15)),
+  };
+}
+
 function renderOneTrendChart(canvasId, chartKey, existing) {
   const trends = DATA.trends || {};
   const weeks = trends.weeks || [];
-  let bundle = trends.charts && trends.charts[chartKey];
-  if (!bundle || !bundle.tags || !bundle.tags.length) {
-    bundle = buildFallbackBundle(trends.series || {}, weeks, chartKey === "general");
+  const isGeneral = chartKey === "general";
+  let bundle = sanitizeChartBundle(trends.charts && trends.charts[chartKey], isGeneral);
+  if (!bundle.tags.length) {
+    bundle = buildFallbackBundle(trends.series || {}, isGeneral);
   }
   if (existing) existing.destroy();
   const canvas = document.getElementById(canvasId);
@@ -406,7 +432,7 @@ function renderOneTrendChart(canvasId, chartKey, existing) {
       labels: weeks.map(w => new Date(w).toLocaleDateString("ru-RU",{day:"numeric",month:"short"})),
       datasets: bundle.tags.map((tag,i) => ({
         label: tag,
-        data: (bundle.series && bundle.series[tag]) || (trends.series && trends.series[tag]) || [],
+        data: bundle.series[tag] || [],
         borderColor: PALETTE[i % PALETTE.length],
         backgroundColor: PALETTE[i % PALETTE.length]+"22",
         tension: .35, borderWidth: 2, pointRadius: 2, fill: false,

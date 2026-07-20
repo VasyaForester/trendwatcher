@@ -15,9 +15,15 @@ class TestChartSplit(unittest.TestCase):
         self.assertTrue(TREND_CHART_GENERAL.isdisjoint(TREND_CHART_SPECIAL))
         self.assertEqual(TREND_CHART_GENERAL | TREND_CHART_SPECIAL, SIGNAL_TAGS)
         self.assertIn("jailbreak", TREND_CHART_GENERAL)
+        self.assertIn("mcp_security", TREND_CHART_GENERAL)
+        self.assertIn("indirect_prompt_injection", TREND_CHART_GENERAL)
         self.assertIn("agent_security", TREND_CHART_GENERAL)
         self.assertIn("self_evolving_agents", TREND_CHART_SPECIAL)
         self.assertIn("agent_swarm_security", TREND_CHART_SPECIAL)
+        self.assertIn("rag_security", TREND_CHART_SPECIAL)
+        self.assertNotIn("agentic_ai", TREND_CHART_GENERAL | TREND_CHART_SPECIAL)
+        self.assertNotIn("vulnerability_cve", TREND_CHART_GENERAL | TREND_CHART_SPECIAL)
+        self.assertNotIn("open_weights", TREND_CHART_GENERAL | TREND_CHART_SPECIAL)
 
     def test_nice_axis_max(self):
         self.assertGreaterEqual(_nice_axis_max(17), 17)
