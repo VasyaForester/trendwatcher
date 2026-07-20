@@ -549,7 +549,7 @@ document.addEventListener("click", (e) => {
 });
 
 (async () => {
-  DATA = await (await fetch(DATA_URL || "data.json")).json();
+  DATA = await (await fetch(DATA_URL || "data.json", { cache: "no-store" })).json();
   const gen = DATA.generated_at
     ? new Date(DATA.generated_at + "Z").toLocaleString("ru-RU", {day:"numeric", month:"long", hour:"2-digit", minute:"2-digit"})
     : "";
