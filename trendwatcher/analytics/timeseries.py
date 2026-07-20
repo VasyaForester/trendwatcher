@@ -1,11 +1,15 @@
 """Недельные временные ряды по тегам таксономии."""
 
+from __future__ import annotations
+
+import math
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 
 from sqlalchemy import select
 
 from ..db import Document, utcnow
+from ..enrichment.tag_filter import TREND_CHART_GENERAL, TREND_CHART_SPECIAL
 from .velocity import cap_velocity, pct_change
 
 
@@ -14,8 +18,43 @@ def week_start(d: datetime) -> date:
     return dd - timedelta(days=dd.weekday())
 
 
+def _nice_axis_max(peak: int) -> int:
+    """Подгоняет верхнюю границу оси Y, чтобы графики выглядели сопоставимо."""
+    peak = max(int(peak), 1)
+    padded = peak * 1.15
+    if padded <= 5:
+        return 5
+    exp = 10 ** max(math.floor(math.log10(padded)) - 1, 0)
+    for mult in (1, 2, 2.5, 5, 10):
+        step = exp * mult
+        candidate = math.ceil(padded / step) * step
+        if candidate >= padded:
+            return int(candidate)
+    return int(math.ceil(padded))
+
+
+def _chart_bundle(series: dict[str, list[int]], allowed: frozenset[str], top_n: int = 7) -> dict:
+    scored = []
+    for tag, arr in series.items():
+        if tag not in allowed:
+            continue
+        total = sum(arr)
+        if total <= 0:
+            continue
+        scored.append((tag, total, max(arr) if arr else 0))
+    scored.sort(key=lambda x: (-x[1], x[0]))
+    picked = scored[:top_n]
+    chart_series = {tag: series[tag] for tag, _, _ in picked}
+    peak = max((mx for _, _, mx in picked), default=0)
+    return {
+        "tags": [tag for tag, _, _ in picked],
+        "series": chart_series,
+        "y_max": _nice_axis_max(peak),
+    }
+
+
 def weekly_tag_counts(session, weeks: int = 13) -> dict:
-    """Возвращает {"weeks": [...], "series": {tag: [count, ...]}, "totals": [count, ...]}.
+    """Возвращает недельные ряды по всем источникам корпуса + два чарта.
 
     totals — общее число документов в корпусе за неделю: нужно для нормализации,
     потому что глубина выборки по неделям неравномерна (RSS отдают только хвост,
@@ -43,11 +82,16 @@ def weekly_tag_counts(session, weeks: int = 13) -> dict:
         for tag in doc.tags:
             series[tag][index[label]] += 1
 
+    series_dict = dict(series)
     return {
         "weeks": week_labels,
-        "series": dict(series),
+        "series": series_dict,
         "totals": totals,
         "totals_by_source": dict(totals_by_source),
+        "charts": {
+            "general": _chart_bundle(series_dict, TREND_CHART_GENERAL),
+            "special": _chart_bundle(series_dict, TREND_CHART_SPECIAL),
+        },
     }
 
 

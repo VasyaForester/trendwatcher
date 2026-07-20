@@ -2,13 +2,68 @@
 
 from .taxonomy import AI_TECH_TAGS, SECURITY_TAGS, TAXONOMY
 
-# Ключевые AI-тренды для блока «Сигналы» (whitelist, не весь AI_TECH).
+# AI-тренды, которые показываем в блоке «Сигналы» (по разметке пользователя).
 SIGNAL_AI_TAGS: frozenset[str] = frozenset(
-    {"self_evolving_agents", "agentic_ai", "reasoning_models"}
+    {
+        "self_evolving_agents",
+        "computer_use_agents",
+        "long_context_memory",
+    }
 )
 
-# Теги, которые участвуют в блоке «Сигналы»: AI security + ключевые AI-тренды.
-SIGNAL_TAGS: frozenset[str] = frozenset(SECURITY_TAGS) | SIGNAL_AI_TAGS
+# Явный whitelist сигналов: AI security + выбранные breakthrough-темы.
+# Остальные теги таксономии остаются для обогащения/ленты, но не в панели сигналов.
+SIGNAL_TAGS: frozenset[str] = frozenset(
+    {
+        # security (keep)
+        "prompt_injection",
+        "jailbreak",
+        "agent_security",
+        "mcp_security",
+        "rag_security",
+        "model_supply_chain",
+        "data_poisoning",
+        "red_teaming",
+        "guardrails_defense",
+        "governance_regulation",
+        "data_exfiltration",
+        "model_theft",
+        "model_drift",
+        "agent_identity_trust",
+        "agent_permissions",
+        "agent_swarm_security",
+        "inference_integrity",
+        # security (new)
+        "indirect_prompt_injection",
+        "model_context_poisoning",
+        "multimodal_injection",
+        "agent_memory_security",
+        "tool_calling_security",
+        "ai_codegen_security",
+        "autonomous_cyber_offense",
+    }
+) | SIGNAL_AI_TAGS
+
+# График 1 — зрелые/объёмные AI-security темы.
+TREND_CHART_GENERAL: frozenset[str] = frozenset(
+    {
+        "prompt_injection",
+        "jailbreak",
+        "agent_security",
+        "rag_security",
+        "model_supply_chain",
+        "data_poisoning",
+        "red_teaming",
+        "guardrails_defense",
+        "governance_regulation",
+        "data_exfiltration",
+        "model_theft",
+        "model_drift",
+    }
+)
+
+# График 2 — специальные / новые / breakthrough (меньший абсолютный объём).
+TREND_CHART_SPECIAL: frozenset[str] = frozenset(SIGNAL_TAGS - TREND_CHART_GENERAL)
 
 # Явный whitelist — только ключи из TAXONOMY (защита от мусора в будущем).
 ALL_TAXONOMY_TAGS: frozenset[str] = frozenset(TAXONOMY)

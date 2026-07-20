@@ -45,8 +45,12 @@ class TestTagFilter(unittest.TestCase):
     def test_signal_tags(self):
         self.assertTrue(is_signal_tag("prompt_injection"))
         self.assertTrue(is_signal_tag("agent_security"))
-        self.assertTrue(is_signal_tag("agentic_ai"))
         self.assertTrue(is_signal_tag("self_evolving_agents"))
+        self.assertTrue(is_signal_tag("computer_use_agents"))
+        self.assertTrue(is_signal_tag("ai_codegen_security"))
+        self.assertFalse(is_signal_tag("agentic_ai"))
+        self.assertFalse(is_signal_tag("vulnerability_cve"))
+        self.assertFalse(is_signal_tag("deepfake_fraud"))
         self.assertFalse(is_signal_tag("model_efficiency"))
 
     def test_normalize_tags_whitelist(self):
@@ -58,8 +62,13 @@ class TestTagFilter(unittest.TestCase):
             "Through One Email"
         )
         tags = extract_tags(text)
-        self.assertIn("agent_security", tags)
+        self.assertTrue("agent_security" in tags or "agent_memory_security" in tags)
         self.assertNotIn("long_context_memory", tags)
+
+    def test_new_signal_tags_match(self):
+        self.assertIn("computer_use_agents", extract_tags("OpenAI launches a computer-use agent for browsers"))
+        self.assertIn("indirect_prompt_injection", extract_tags("Indirect prompt injection via malicious webpage"))
+        self.assertIn("autonomous_cyber_offense", extract_tags("AI agents turned into attackers in autonomous intrusion"))
 
 
 if __name__ == "__main__":

@@ -33,7 +33,9 @@ sources:
        abs:"agentic" OR abs:"test-time scaling" OR abs:"world model" OR
        abs:"reasoning model" OR abs:"mixture-of-experts" OR abs:"small language model" OR
        abs:"synthetic data generation" OR abs:"long context" OR abs:"agent memory" OR
-       abs:"model context protocol" OR abs:"MCP server" OR abs:"tool-using agent")
+       abs:"model context protocol" OR abs:"MCP server" OR abs:"tool-using agent" OR
+       abs:"computer-use agent" OR abs:"browser agent" OR abs:"autonomous cyber" OR
+       abs:"indirect prompt injection" OR abs:"multimodal injection")
 
   - id: nvd_ai
     name: "NVD — CVE по AI-продуктам"

@@ -110,6 +110,42 @@ TAXONOMY: dict[str, list[str]] = {
         r"llm.{0,30}(malware|phishing) generation", r"wormgpt|fraudgpt", r"dark ?ai",
         r"synthetic insider", r"insider threat.{0,20}ai",
     ],
+    # --- Новые security-темы (по разметке сигналов) ---
+    "indirect_prompt_injection": [
+        r"indirect prompt injection", r"stored prompt injection", r"cross[- ]site prompt",
+        r"prompt injection.{0,30}(email|web|document|website|html)",
+        r"(email|webpage|document).{0,30}prompt injection",
+    ],
+    "model_context_poisoning": [
+        r"context poison", r"poison(ed|ing)?.{0,25}(context|tool output|document)",
+        r"(tool output|retrieved document).{0,30}(poison|manipul|attack)",
+        r"knowledge[- ]base poison",
+    ],
+    "multimodal_injection": [
+        r"multimodal (prompt )?injection", r"(image|audio|video|vision).{0,25}(prompt )?injection",
+        r"visual prompt injection", r"adversarial (image|audio).{0,30}(vlm|agent|llm)",
+    ],
+    "agent_memory_security": [
+        r"agent memory (poison|inject|attack|leak|security)", r"memory (poison|inject).{0,20}agent",
+        r"false memor", r"memghost", r"persistent.{0,20}(false )?memor",
+    ],
+    "tool_calling_security": [
+        r"tool[- ]call(ing)?.{0,30}(security|attack|abuse|hijack|vulnerab)",
+        r"function[- ]call(ing)?.{0,30}(security|attack|abuse|hijack)",
+        r"tool (abuse|poisoning|misuse|hijack)",
+    ],
+    "ai_codegen_security": [
+        r"(codex|cursor|copilot|vibe coding|code generat).{0,40}(security|vulnerab|attack|risk|malware)",
+        r"ai[- ]generated code.{0,30}(vulnerab|insecure|security|exploit)",
+        r"(insecure|malicious).{0,25}ai[- ]generated code",
+        r"llm.{0,20}code.{0,20}(security|vulnerab)",
+    ],
+    "autonomous_cyber_offense": [
+        r"autonomous (ai )?agent.{0,40}(attack|intrusion|exploit|offense|red.?team)",
+        r"ai agents? turned into attack", r"agentic (intrusion|offense|cyber attack)",
+        r"llm[- ]driven (cyber|attack|exploit|intrusion)",
+        r"machine[- ]speed.{0,20}(offense|attack)",
+    ],
     # --- Общие AI-темы (не только security): технологические тренды ---
     "self_evolving_agents": [
         r"self[- ]evolv", r"self[- ]improv", r"recursive self[- ]improvement",
@@ -119,7 +155,12 @@ TAXONOMY: dict[str, list[str]] = {
     ],
     "agentic_ai": [
         r"multi[- ]agent", r"agent orchestrat", r"agentic (workflow|system|framework|ai|coding)",
-        r"agent[- ]to[- ]agent", r"\ba2a protocol\b", r"swarm of agents", r"computer[- ]use agent",
+        r"agent[- ]to[- ]agent", r"\ba2a protocol\b", r"swarm of agents",
+    ],
+    "computer_use_agents": [
+        r"computer[- ]use (agent|model|ai)", r"browser agent", r"desktop agent",
+        r"os[- ]level agent", r"gui agent", r"operator.{0,20}(openai|agent|brows)",
+        r"agents?.{0,25}(control|use|operate).{0,20}(computer|browser|desktop)",
     ],
     "reasoning_models": [
         r"reasoning (model|llm)", r"chain[- ]of[- ]thought", r"test[- ]time (compute|scaling)",
@@ -154,8 +195,8 @@ TAXONOMY: dict[str, list[str]] = {
 
 # Общие AI-темы: технологические тренды, а не поверхности атак.
 AI_TECH_TAGS: set[str] = {
-    "self_evolving_agents", "agentic_ai", "reasoning_models", "multimodal_ai",
-    "world_models", "on_device_ai", "synthetic_data", "open_weights",
+    "self_evolving_agents", "agentic_ai", "computer_use_agents", "reasoning_models",
+    "multimodal_ai", "world_models", "on_device_ai", "synthetic_data", "open_weights",
     "model_efficiency", "long_context_memory",
 }
 SECURITY_TAGS: set[str] = set(TAXONOMY) - AI_TECH_TAGS
@@ -186,7 +227,8 @@ BREAKTHROUGH_AI_PATTERNS: list[str] = [
 ]
 
 BREAKTHROUGH_AI_TAGS: set[str] = {
-    "self_evolving_agents", "agentic_ai", "reasoning_models", "multimodal_ai",
+    "self_evolving_agents", "computer_use_agents", "long_context_memory",
+    "agentic_ai", "reasoning_models", "multimodal_ai",
     "world_models", "open_weights", "synthetic_data",
 }
 

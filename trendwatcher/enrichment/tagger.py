@@ -63,6 +63,7 @@ def is_feed_relevant(
     # Высокосигнальные security-теги (не privacy/governance сами по себе)
     hard_sec = tag_set & {
         "prompt_injection",
+        "indirect_prompt_injection",
         "jailbreak",
         "agent_security",
         "mcp_security",
@@ -75,6 +76,15 @@ def is_feed_relevant(
         "agent_identity_trust",
         "agent_permissions",
         "agent_swarm_security",
+        "agent_memory_security",
+        "tool_calling_security",
+        "ai_codegen_security",
+        "autonomous_cyber_offense",
+        "model_context_poisoning",
+        "multimodal_injection",
+        "rag_security",
+        "data_exfiltration",
+        "model_theft",
     }
 
     has_ai = bool(tag_set & (SECURITY_TAGS | BREAKTHROUGH_AI_TAGS)) or any(
