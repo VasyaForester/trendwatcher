@@ -33,8 +33,8 @@ def velocity_from_shares(
 
 
 def velocity_label(velocity: float, source: str | None) -> str:
-    if not source:
-        return "н/д"
     pct = round(velocity * 100)
     sign = "+" if velocity > 0 else ""
-    return f"{sign}{pct}% доля"
+    if source:
+        return f"{sign}{pct}% доля"
+    return f"{sign}{pct}% (мало данных)"

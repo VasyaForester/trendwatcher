@@ -39,7 +39,6 @@ class TestPctChange(unittest.TestCase):
 
     def test_velocity_label(self):
         self.assertIn("+50%", velocity_label(0.5, "archive"))
-        self.assertEqual(velocity_label(0.0, None), "н/д")
 
 
 class TestTagFilter(unittest.TestCase):

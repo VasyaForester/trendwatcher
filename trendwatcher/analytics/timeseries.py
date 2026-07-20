@@ -18,9 +18,9 @@ def week_start(d: datetime) -> date:
     return dd - timedelta(days=dd.weekday())
 
 
-def _nice_axis_max(peak: float) -> int:
+def _nice_axis_max(peak: int) -> int:
     """Подгоняет верхнюю границу оси Y, чтобы графики выглядели сопоставимо."""
-    peak = max(float(peak), 1.0)
+    peak = max(int(peak), 1)
     padded = peak * 1.15
     if padded <= 5:
         return 5
@@ -33,11 +33,7 @@ def _nice_axis_max(peak: float) -> int:
     return int(math.ceil(padded))
 
 
-def _chart_bundle(
-    series: dict[str, list[float | int]],
-    allowed: frozenset[str],
-    top_n: int = 7,
-) -> dict:
+def _chart_bundle(series: dict[str, list[int]], allowed: frozenset[str], top_n: int = 7) -> dict:
     scored = []
     for tag, arr in series.items():
         if tag not in allowed:
@@ -57,56 +53,13 @@ def _chart_bundle(
     }
 
 
-def weekly_share_series_from_archive(weeks: int = 13) -> dict | None:
-    """Недельные доли тегов (%) из архива — сопоставимые графики без raw-bias."""
-    from .archive import last_complete_week_start, load_weekly_snapshots
-
-    snaps = {s["week_start"]: s for s in load_weekly_snapshots()}
-    if not snaps:
-        return None
-    last = last_complete_week_start()
-    labels = [(last - timedelta(weeks=weeks - 1 - i)).isoformat() for i in range(weeks)]
-    # Нужен хотя бы половина недель с данными, иначе fallback на живую БД.
-    covered = sum(1 for lab in labels if snaps.get(lab, {}).get("documents", 0) > 0)
-    if covered < max(weeks // 2, 3):
-        return None
-
-    series: dict[str, list[float]] = defaultdict(lambda: [0.0] * weeks)
-    totals = [0] * weeks
-    for i, label in enumerate(labels):
-        snap = snaps.get(label)
-        if not snap:
-            continue
-        total = int(snap.get("documents", 0) or 0)
-        totals[i] = total
-        if total <= 0:
-            continue
-        for tag, meta in snap.get("tags", {}).items():
-            if "share" in meta:
-                pct = 100.0 * float(meta["share"])
-            else:
-                pct = 100.0 * float(meta.get("count", 0)) / total
-            series[tag][i] = round(pct, 3)
-
-    series_dict = dict(series)
-    return {
-        "weeks": labels,
-        "series": series_dict,
-        "totals": totals,
-        "unit": "share_pct",
-        "charts": {
-            "general": _chart_bundle(series_dict, TREND_CHART_GENERAL),
-            "special": _chart_bundle(series_dict, TREND_CHART_SPECIAL),
-        },
-    }
-
-
 def weekly_tag_counts(session, weeks: int = 13) -> dict:
-    """Недельные ряды + чарты. Предпочтительно доли (%) из архива."""
-    archived = weekly_share_series_from_archive(weeks=weeks)
-    if archived is not None:
-        return archived
+    """Возвращает недельные ряды по всем источникам корпуса + два чарта.
 
+    totals — общее число документов в корпусе за неделю: нужно для нормализации,
+    потому что глубина выборки по неделям неравномерна (RSS отдают только хвост,
+    arXiv — последние N статей).
+    """
     since = utcnow() - timedelta(weeks=weeks)
     docs = session.scalars(
         select(Document).where(Document.published_at >= since)
@@ -117,7 +70,7 @@ def weekly_tag_counts(session, weeks: int = 13) -> dict:
     week_labels = [(first_week + timedelta(weeks=i)).isoformat() for i in range(n_buckets)]
     index = {label: i for i, label in enumerate(week_labels)}
 
-    counts: dict[str, list[int]] = defaultdict(lambda: [0] * n_buckets)
+    series: dict[str, list[int]] = defaultdict(lambda: [0] * n_buckets)
     totals = [0] * n_buckets
     totals_by_source: dict[str, list[int]] = defaultdict(lambda: [0] * n_buckets)
     for doc in docs:
@@ -127,23 +80,17 @@ def weekly_tag_counts(session, weeks: int = 13) -> dict:
         totals[index[label]] += 1
         totals_by_source[doc.source_id][index[label]] += 1
         for tag in doc.tags:
-            counts[tag][index[label]] += 1
+            series[tag][index[label]] += 1
 
-    # Fallback: доли от живой БД (всё ещё лучше сырых счётчиков при разной плотности).
-    series_pct: dict[str, list[float]] = {}
-    for tag, arr in counts.items():
-        series_pct[tag] = [
-            round(100.0 * c / t, 3) if t else 0.0 for c, t in zip(arr, totals)
-        ]
+    series_dict = dict(series)
     return {
         "weeks": week_labels,
-        "series": series_pct,
+        "series": series_dict,
         "totals": totals,
         "totals_by_source": dict(totals_by_source),
-        "unit": "share_pct",
         "charts": {
-            "general": _chart_bundle(series_pct, TREND_CHART_GENERAL),
-            "special": _chart_bundle(series_pct, TREND_CHART_SPECIAL),
+            "general": _chart_bundle(series_dict, TREND_CHART_GENERAL),
+            "special": _chart_bundle(series_dict, TREND_CHART_SPECIAL),
         },
     }
 
