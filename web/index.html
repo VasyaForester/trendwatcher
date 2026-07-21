@@ -72,6 +72,8 @@
   th.sortable .sort-ind { opacity: .45; font-size: 10px; margin-left: 2px; }
   th.sortable.active { color: var(--accent); }
   th.sortable.active .sort-ind { opacity: 1; }
+  th.sortable::after { content: ""; } /* keep layout stable */
+  .signals-table thead th.sortable { position: relative; padding-right: 14px; }
   .chart-panel { margin-bottom: 18px; }
   .chart-panel canvas { max-height: 300px; }
   .chart-grid, .signals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
@@ -131,10 +133,10 @@
       <h2>Сигналы: общие темы <span class="hint">jailbreak, agent_security… · 90д/90д · доля</span></h2>
       <table class="signals-table" id="signalsTableGeneral" data-group="general">
         <thead><tr>
-          <th class="sortable" data-sort="tag">Тема <span class="sort-ind"></span></th>
-          <th class="sortable" data-sort="level">Уровень <span class="sort-ind"></span></th>
-          <th class="sortable" data-sort="recent" title="публикаций с тегом за последние 90 дней">Публ. <span class="sort-ind"></span></th>
-          <th class="sortable" data-sort="velocity" title="изменение доли темы в корпусе: последние 90д к предыдущим 90д">Динамика <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="tag" title="Сортировать по теме">Тема <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="level" title="Сортировать по уровню">Уровень <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="recent" title="Сортировать по числу публикаций за 90 дней">Публ. <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="velocity" title="Сортировать по динамике доли 90д/90д">Динамика <span class="sort-ind"></span></th>
           <th class="col-dismiss"></th>
         </tr></thead>
         <tbody id="signalsGeneral"></tbody>
@@ -144,10 +146,10 @@
       <h2>Сигналы: специальные / новые <span class="hint">self-evolving, swarm, RAG… · 90д/90д · доля</span></h2>
       <table class="signals-table" id="signalsTableSpecial" data-group="special">
         <thead><tr>
-          <th class="sortable" data-sort="tag">Тема <span class="sort-ind"></span></th>
-          <th class="sortable" data-sort="level">Уровень <span class="sort-ind"></span></th>
-          <th class="sortable" data-sort="recent" title="публикаций с тегом за последние 90 дней">Публ. <span class="sort-ind"></span></th>
-          <th class="sortable" data-sort="velocity" title="изменение доли темы в корпусе: последние 90д к предыдущим 90д">Динамика <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="tag" title="Сортировать по теме">Тема <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="level" title="Сортировать по уровню">Уровень <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="recent" title="Сортировать по числу публикаций за 90 дней">Публ. <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="velocity" title="Сортировать по динамике доли 90д/90д">Динамика <span class="sort-ind"></span></th>
           <th class="col-dismiss"></th>
         </tr></thead>
         <tbody id="signalsSpecial"></tbody>
@@ -211,7 +213,7 @@
 // (raw.githubusercontent.com отдает CORS * и обновляет кеш за ~5 минут)
 // ============================================================================
 // Версия в query сбрасывает CDN/браузерный кеш raw.githubusercontent.com (max-age=300).
-const DATA_URL = "https://raw.githubusercontent.com/VasyaForester/trendwatcher/main/data.json?v=2026-07-21-signals-split";
+const DATA_URL = "https://raw.githubusercontent.com/VasyaForester/trendwatcher/main/data.json?v=2026-07-21-sort";
 </script>
 <script>
 // Дашборд работает с единым снапшотом data.json — одинаково в динамическом
@@ -257,48 +259,73 @@ const SIGNAL_LEVEL_ORDER = {
   strong: 0, emerging: 1, research: 2, spike: 3, weak: 4, stable: 5, declining: 6,
 };
 const SIGNAL_SORT_DEFAULT_DIR = { tag: 1, level: 1, recent: -1, velocity: -1 };
-let signalSort = { col: null, dir: 1 };
+// Независимая сортировка для каждой таблицы сигналов.
+const signalSortByGroup = {
+  general: { col: "level", dir: 1 },
+  special: { col: "level", dir: 1 },
+};
+let signalSortBound = false;
 
-function sortSignalsList(signals) {
-  if (!signalSort.col) return signals;
-  const dir = signalSort.dir;
+function sortSignalsList(signals, group) {
+  const state = signalSortByGroup[group] || { col: "level", dir: 1 };
+  const col = state.col || "level";
+  const dir = state.dir || 1;
   return [...signals].sort((a, b) => {
     let cmp = 0;
-    if (signalSort.col === "tag") cmp = a.tag.localeCompare(b.tag);
-    else if (signalSort.col === "level") {
+    if (col === "tag") cmp = a.tag.localeCompare(b.tag);
+    else if (col === "level") {
       cmp = (SIGNAL_LEVEL_ORDER[a.level] ?? 99) - (SIGNAL_LEVEL_ORDER[b.level] ?? 99);
-    } else if (signalSort.col === "recent") cmp = a.recent - b.recent;
-    else if (signalSort.col === "velocity") cmp = a.velocity - b.velocity;
+      if (cmp === 0) cmp = b.recent - a.recent;
+    } else if (col === "recent") cmp = a.recent - b.recent;
+    else if (col === "velocity") cmp = a.velocity - b.velocity;
+    if (cmp === 0) cmp = a.tag.localeCompare(b.tag);
     return cmp * dir;
   });
 }
 
 function updateSignalSortHeaders() {
-  document.querySelectorAll(".signals-table th.sortable").forEach(th => {
-    const col = th.dataset.sort;
-    const active = signalSort.col === col;
-    th.classList.toggle("active", active);
-    const ind = th.querySelector(".sort-ind");
-    if (!ind) return;
-    if (!active) { ind.textContent = ""; return; }
-    ind.textContent = signalSort.dir > 0 ? "▲" : "▼";
+  document.querySelectorAll(".signals-table").forEach(table => {
+    const group = table.dataset.group;
+    const state = signalSortByGroup[group] || {};
+    table.querySelectorAll("th.sortable").forEach(th => {
+      const col = th.dataset.sort;
+      const active = state.col === col;
+      th.classList.toggle("active", active);
+      const ind = th.querySelector(".sort-ind");
+      if (!ind) return;
+      if (!active) { ind.textContent = "↕"; return; }
+      ind.textContent = state.dir > 0 ? "▲" : "▼";
+    });
   });
 }
 
-function onSignalSortClick(col) {
-  if (signalSort.col === col) signalSort.dir *= -1;
+function onSignalSortClick(group, col) {
+  const state = signalSortByGroup[group] || (signalSortByGroup[group] = { col: "level", dir: 1 });
+  if (state.col === col) state.dir *= -1;
   else {
-    signalSort.col = col;
-    signalSort.dir = SIGNAL_SORT_DEFAULT_DIR[col] ?? -1;
+    state.col = col;
+    state.dir = SIGNAL_SORT_DEFAULT_DIR[col] ?? -1;
   }
   updateSignalSortHeaders();
   renderSignals();
 }
 
 function initSignalSort() {
-  document.querySelectorAll(".signals-table th.sortable").forEach(th => {
-    th.addEventListener("click", () => onSignalSortClick(th.dataset.sort));
+  if (signalSortBound) {
+    updateSignalSortHeaders();
+    return;
+  }
+  document.querySelectorAll(".signals-table").forEach(table => {
+    const group = table.dataset.group;
+    table.querySelectorAll("th.sortable").forEach(th => {
+      th.addEventListener("click", (e) => {
+        e.preventDefault();
+        onSignalSortClick(group, th.dataset.sort);
+      });
+    });
   });
+  signalSortBound = true;
+  updateSignalSortHeaders();
 }
 
 function saveHiddenSignals() {
@@ -396,11 +423,12 @@ function signalRowHtml(s) {
   </tr>`;
 }
 
-function renderSignalsGroup(tbodyId, allowed) {
+function renderSignalsGroup(tbodyId, allowed, group) {
   const tbody = document.getElementById(tbodyId);
   if (!tbody) return;
   const signals = sortSignalsList(
-    (DATA.signals || []).filter(s => !hiddenSignals.has(s.tag) && allowed.has(s.tag))
+    (DATA.signals || []).filter(s => !hiddenSignals.has(s.tag) && allowed.has(s.tag)),
+    group,
   );
   if (!signals.length) {
     tbody.innerHTML = '<tr><td colspan="5" class="empty">Нет данных</td></tr>';
@@ -413,8 +441,8 @@ function renderSignals() {
   updateSignalSortHeaders();
   const restoreBtn = document.getElementById("restoreSignals");
   if (restoreBtn) restoreBtn.style.display = hiddenSignals.size ? "inline-block" : "none";
-  renderSignalsGroup("signalsGeneral", TREND_CHART_GENERAL);
-  renderSignalsGroup("signalsSpecial", TREND_CHART_SPECIAL);
+  renderSignalsGroup("signalsGeneral", TREND_CHART_GENERAL, "general");
+  renderSignalsGroup("signalsSpecial", TREND_CHART_SPECIAL, "special");
 }
 
 let chartGeneral = null;
