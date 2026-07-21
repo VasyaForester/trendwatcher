@@ -74,8 +74,10 @@
   th.sortable.active .sort-ind { opacity: 1; }
   .chart-panel { margin-bottom: 18px; }
   .chart-panel canvas { max-height: 300px; }
-  .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
-  @media (max-width: 980px) { .chart-grid { grid-template-columns: 1fr; } }
+  .chart-grid, .signals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+  @media (max-width: 980px) {
+    .chart-grid, .signals-grid { grid-template-columns: 1fr; }
+  }
   .controls { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
   select, input[type=text] {
     background: var(--panel2); color: var(--text); border: 1px solid var(--border);
@@ -118,13 +120,16 @@
   </header>
 
   <div class="grid">
-    <div class="panel">
+    <div class="panel" style="grid-column: 1 / -1">
       <h2>Топ событий <span class="hint">только arXiv · TBSF ↓ · полный текст</span></h2>
       <div id="topEvents"><div class="empty">Загрузка…</div></div>
     </div>
+  </div>
+
+  <div class="signals-grid">
     <div class="panel">
-      <h2>Сигналы <span class="hint">90д vs пред. 90д · прирост доли в корпусе = сила сигнала</span></h2>
-      <table id="signalsTable">
+      <h2>Сигналы: общие темы <span class="hint">jailbreak, agent_security… · 90д/90д · доля</span></h2>
+      <table class="signals-table" id="signalsTableGeneral" data-group="general">
         <thead><tr>
           <th class="sortable" data-sort="tag">Тема <span class="sort-ind"></span></th>
           <th class="sortable" data-sort="level">Уровень <span class="sort-ind"></span></th>
@@ -132,19 +137,31 @@
           <th class="sortable" data-sort="velocity" title="изменение доли темы в корпусе: последние 90д к предыдущим 90д">Динамика <span class="sort-ind"></span></th>
           <th class="col-dismiss"></th>
         </tr></thead>
-        <tbody id="signals"></tbody>
+        <tbody id="signalsGeneral"></tbody>
       </table>
-      <div class="legend-note">
-        <span class="cat-dot security"></span>AI security&nbsp;&nbsp;
-        <span class="cat-dot ai_tech"></span>AI-тренды (self-evolving / computer-use / long-context).
-        <b>research</b> — тема пока только в исследованиях, потенциально перспективная;
-        <b>spike</b> — разовая вспышка (инфоповод/артефакт), не тренд;
-        <b>stable</b> — долгоиграющая тема на базовом уровне.
-        Наведите курсор на уровень — увидите обоснование.
-        Скрытые сигналы (×) — только в этом браузере.
-        <button type="button" id="restoreSignals" class="signal-dismiss" style="display:none;width:auto;padding:2px 8px;font-size:11px;margin-left:6px" title="Показать скрытые сигналы">Показать скрытые</button>
-      </div>
     </div>
+    <div class="panel">
+      <h2>Сигналы: специальные / новые <span class="hint">self-evolving, swarm, RAG… · 90д/90д · доля</span></h2>
+      <table class="signals-table" id="signalsTableSpecial" data-group="special">
+        <thead><tr>
+          <th class="sortable" data-sort="tag">Тема <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="level">Уровень <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="recent" title="публикаций с тегом за последние 90 дней">Публ. <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="velocity" title="изменение доли темы в корпусе: последние 90д к предыдущим 90д">Динамика <span class="sort-ind"></span></th>
+          <th class="col-dismiss"></th>
+        </tr></thead>
+        <tbody id="signalsSpecial"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="legend-note" style="margin:-6px 0 18px;padding:0 4px">
+    <span class="cat-dot security"></span>AI security&nbsp;&nbsp;
+    <span class="cat-dot ai_tech"></span>AI-тренды.
+    <b>research</b> — пока только в исследованиях;
+    <b>spike</b> — разовая вспышка;
+    <b>stable</b> — на базовом уровне.
+    Группы совпадают с графиками ниже. Скрытые (×) — только в этом браузере.
+    <button type="button" id="restoreSignals" class="signal-dismiss" style="display:none;width:auto;padding:2px 8px;font-size:11px;margin-left:6px" title="Показать скрытые сигналы">Показать скрытые</button>
   </div>
 
   <div class="chart-grid">
@@ -194,7 +211,7 @@
 // (raw.githubusercontent.com отдает CORS * и обновляет кеш за ~5 минут)
 // ============================================================================
 // Версия в query сбрасывает CDN/браузерный кеш raw.githubusercontent.com (max-age=300).
-const DATA_URL = "https://raw.githubusercontent.com/VasyaForester/trendwatcher/main/data.json?v=2026-07-20-revert";
+const DATA_URL = "https://raw.githubusercontent.com/VasyaForester/trendwatcher/main/data.json?v=2026-07-21-signals-split";
 </script>
 <script>
 // Дашборд работает с единым снапшотом data.json — одинаково в динамическом
@@ -205,6 +222,19 @@ let DATA = null;
 const HIDDEN_SIGNALS_KEY = "trendwatcher_hidden_signals";
 // Ключевые AI-тренды: всегда видны, нельзя скрыть; снимаем из localStorage при загрузке.
 const PINNED_SIGNAL_TAGS = new Set(["self_evolving_agents", "computer_use_agents", "long_context_memory"]);
+
+// Те же группы, что у графиков динамики.
+const TREND_CHART_GENERAL = new Set([
+  "jailbreak","prompt_injection","agent_security","mcp_security","guardrails_defense",
+  "indirect_prompt_injection","data_poisoning","red_teaming","governance_regulation",
+  "data_exfiltration",
+]);
+const TREND_CHART_SPECIAL = new Set([
+  "self_evolving_agents","agent_swarm_security","computer_use_agents","rag_security",
+  "model_theft","model_supply_chain","model_drift","agent_identity_trust","agent_permissions",
+  "inference_integrity","long_context_memory","agent_memory_security","tool_calling_security",
+  "ai_codegen_security","autonomous_cyber_offense","model_context_poisoning","multimodal_injection",
+]);
 
 function loadHiddenSignals() {
   try {
@@ -244,7 +274,7 @@ function sortSignalsList(signals) {
 }
 
 function updateSignalSortHeaders() {
-  document.querySelectorAll("#signalsTable th.sortable").forEach(th => {
+  document.querySelectorAll(".signals-table th.sortable").forEach(th => {
     const col = th.dataset.sort;
     const active = signalSort.col === col;
     th.classList.toggle("active", active);
@@ -266,7 +296,7 @@ function onSignalSortClick(col) {
 }
 
 function initSignalSort() {
-  document.querySelectorAll("#signalsTable th.sortable").forEach(th => {
+  document.querySelectorAll(".signals-table th.sortable").forEach(th => {
     th.addEventListener("click", () => onSignalSortClick(th.dataset.sort));
   });
 }
@@ -332,65 +362,63 @@ function renderTopEvents() {
     </div>`).join("");
 }
 
-function renderSignals() {
-  const signals = sortSignalsList(DATA.signals.filter(s => !hiddenSignals.has(s.tag)));
-  updateSignalSortHeaders();
-  const restoreBtn = document.getElementById("restoreSignals");
-  if (restoreBtn) restoreBtn.style.display = hiddenSignals.size ? "inline-block" : "none";
-  const tbody = document.getElementById("signals");
+function signalRowHtml(s) {
+  const v = Math.round(s.velocity * 100);
+  let velHtml;
+  if (!s.velocity_source) {
+    velHtml = `<span class="vel-na" title="нет базы для сравнения (prior=0)">н/д</span>`;
+  } else if (Math.abs(s.velocity) >= 2.99) {
+    velHtml = `<span class="vel-up" title="изменение доли в корпусе 90д/90д">${s.velocity > 0 ? "≥+300%" : "≤−300%"}</span>`;
+  } else if (v > 0) {
+    velHtml = `<span class="vel-up">+${v}%</span>`;
+  } else if (v < 0) {
+    velHtml = `<span class="vel-down">${v}%</span>`;
+  } else {
+    velHtml = "0%";
+  }
+  const reason = (s.reason || "").replace(/"/g, "&quot;");
+  const confirming = pendingDismissTag === s.tag;
+  const pinned = PINNED_SIGNAL_TAGS.has(s.tag);
+  const dismissTitle = pinned
+    ? "Ключевой тренд — скрыть нельзя"
+    : confirming
+    ? "Нажмите ещё раз, чтобы скрыть"
+    : "Скрыть сигнал (только в этом браузере)";
+  const dismissBtn = pinned
+    ? `<span class="signal-dismiss" style="opacity:.25;cursor:default" title="${dismissTitle}">×</span>`
+    : `<button type="button" class="signal-dismiss${confirming ? " confirm" : ""}" title="${dismissTitle}" onclick="dismissSignal('${s.tag}')">×</button>`;
+  return `<tr>
+    <td><span class="cat-dot ${s.category}"></span><span class="chip tag" onclick="filterTag('${s.tag}')">${s.tag}</span></td>
+    <td><span class="lvl ${s.level}" title="${reason}">${s.level}</span></td>
+    <td>${s.recent}</td>
+    <td class="signal-row-dynamics"><span>${velHtml}</span></td>
+    <td>${dismissBtn}</td>
+  </tr>`;
+}
+
+function renderSignalsGroup(tbodyId, allowed) {
+  const tbody = document.getElementById(tbodyId);
+  if (!tbody) return;
+  const signals = sortSignalsList(
+    (DATA.signals || []).filter(s => !hiddenSignals.has(s.tag) && allowed.has(s.tag))
+  );
   if (!signals.length) {
     tbody.innerHTML = '<tr><td colspan="5" class="empty">Нет данных</td></tr>';
     return;
   }
-  tbody.innerHTML = signals.slice(0, 25).map(s => {
-    const v = Math.round(s.velocity * 100);
-    let velHtml;
-    if (!s.velocity_source) {
-      velHtml = `<span class="vel-na" title="нет базы для сравнения (prior=0)">н/д</span>`;
-    } else if (Math.abs(s.velocity) >= 2.99) {
-      velHtml = `<span class="vel-up" title="изменение доли в корпусе 90д/90д">${s.velocity > 0 ? "≥+300%" : "≤−300%"}</span>`;
-    } else if (v > 0) {
-      velHtml = `<span class="vel-up">+${v}%</span>`;
-    } else if (v < 0) {
-      velHtml = `<span class="vel-down">${v}%</span>`;
-    } else {
-      velHtml = "0%";
-    }
-    const reason = (s.reason || "").replace(/"/g, "&quot;");
-    const confirming = pendingDismissTag === s.tag;
-    const pinned = PINNED_SIGNAL_TAGS.has(s.tag);
-    const dismissTitle = pinned
-      ? "Ключевой тренд — скрыть нельзя"
-      : confirming
-      ? "Нажмите ещё раз, чтобы скрыть"
-      : "Скрыть сигнал (только в этом браузере)";
-    const dismissBtn = pinned
-      ? `<span class="signal-dismiss" style="opacity:.25;cursor:default" title="${dismissTitle}">×</span>`
-      : `<button type="button" class="signal-dismiss${confirming ? " confirm" : ""}" title="${dismissTitle}" onclick="dismissSignal('${s.tag}')">×</button>`;
-    return `<tr>
-      <td><span class="cat-dot ${s.category}"></span><span class="chip tag" onclick="filterTag('${s.tag}')">${s.tag}</span></td>
-      <td><span class="lvl ${s.level}" title="${reason}">${s.level}</span></td>
-      <td>${s.recent}</td>
-      <td class="signal-row-dynamics"><span>${velHtml}</span></td>
-      <td>${dismissBtn}</td>
-    </tr>`;
-  }).join("");
+  tbody.innerHTML = signals.map(signalRowHtml).join("");
+}
+
+function renderSignals() {
+  updateSignalSortHeaders();
+  const restoreBtn = document.getElementById("restoreSignals");
+  if (restoreBtn) restoreBtn.style.display = hiddenSignals.size ? "inline-block" : "none";
+  renderSignalsGroup("signalsGeneral", TREND_CHART_GENERAL);
+  renderSignalsGroup("signalsSpecial", TREND_CHART_SPECIAL);
 }
 
 let chartGeneral = null;
 let chartSpecial = null;
-
-const TREND_CHART_GENERAL = new Set([
-  "jailbreak","prompt_injection","agent_security","mcp_security","guardrails_defense",
-  "indirect_prompt_injection","data_poisoning","red_teaming","governance_regulation",
-  "data_exfiltration",
-]);
-const TREND_CHART_SPECIAL = new Set([
-  "self_evolving_agents","agent_swarm_security","computer_use_agents","rag_security",
-  "model_theft","model_supply_chain","model_drift","agent_identity_trust","agent_permissions",
-  "inference_integrity","long_context_memory","agent_memory_security","tool_calling_security",
-  "ai_codegen_security","autonomous_cyber_offense","model_context_poisoning","multimodal_injection",
-]);
 
 function buildFallbackBundle(series, isGeneral) {
   const allowed = isGeneral ? TREND_CHART_GENERAL : TREND_CHART_SPECIAL;
