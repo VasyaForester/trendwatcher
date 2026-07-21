@@ -39,9 +39,9 @@ def velocity_from_shares(
     *,
     max_abs: float = MAX_VELOCITY,
 ) -> tuple[float, str | None]:
-    """Velocity по долям (вспомогательно)."""
+    """Velocity по долям корпуса. Возвращает (velocity, source_label)."""
     if recent_share is not None and prior_share is not None and prior_share > 0:
-        return cap_velocity(pct_change(recent_share, prior_share), max_abs), "archive"
+        return cap_velocity(pct_change(recent_share, prior_share), max_abs), "share_90d"
     return 0.0, None
 
 
@@ -50,6 +50,9 @@ def velocity_label(velocity: float, source: str | None) -> str:
         return "н/д"
     pct = round(velocity * 100)
     sign = "+" if velocity > 0 else ""
+    if source in {"share_90d", "archive", "baseline"}:
+        return f"{sign}{pct}% доли"
     if source == "counts_90d":
-        return f"{sign}{pct}% сообщений (90д)"
-    return f"{sign}{pct}% доля"
+        return f"{sign}{pct}% сообщений"
+    return f"{sign}{pct}%"
+

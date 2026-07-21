@@ -31,7 +31,7 @@ class TestPctChange(unittest.TestCase):
     def test_velocity_from_shares(self):
         v, src = velocity_from_shares(0.03, 0.02)
         self.assertAlmostEqual(v, 0.5)
-        self.assertEqual(src, "archive")
+        self.assertEqual(src, "share_90d")
 
     def test_velocity_from_shares_zero_prior(self):
         v, src = velocity_from_shares(0.03, 0.0)
@@ -39,7 +39,7 @@ class TestPctChange(unittest.TestCase):
         self.assertIsNone(src)
 
     def test_velocity_label(self):
-        self.assertIn("сообщений", velocity_label(0.5, "counts_90d"))
+        self.assertIn("доли", velocity_label(0.5, "share_90d"))
         self.assertEqual(velocity_label(0.0, None), "н/д")
 
     def test_velocity_from_counts(self):
@@ -49,6 +49,43 @@ class TestPctChange(unittest.TestCase):
         v, src = velocity_from_counts(5, 0)
         self.assertEqual(v, 0.0)
         self.assertIsNone(src)
+
+
+class TestLevelFromVelocity(unittest.TestCase):
+    def test_positive_velocity_never_declining(self):
+        from trendwatcher.analytics.signals import level_from_velocity
+
+        level, _ = level_from_velocity(
+            velocity=0.8,
+            vel_source="share_90d",
+            recent=20,
+            prior=10,
+            n_types=2,
+            week_conc=0.3,
+            genuinely_new=False,
+            research_share_alltime=0.5,
+            age_weeks=30,
+            coverage_weeks=40,
+        )
+        self.assertNotEqual(level, "declining")
+        self.assertIn(level, {"strong", "emerging"})
+
+    def test_decline_only_when_negative(self):
+        from trendwatcher.analytics.signals import level_from_velocity
+
+        level, _ = level_from_velocity(
+            velocity=-0.4,
+            vel_source="share_90d",
+            recent=10,
+            prior=20,
+            n_types=2,
+            week_conc=0.2,
+            genuinely_new=False,
+            research_share_alltime=0.5,
+            age_weeks=40,
+            coverage_weeks=50,
+        )
+        self.assertEqual(level, "declining")
 
 class TestTagFilter(unittest.TestCase):
     def test_signal_tags(self):
