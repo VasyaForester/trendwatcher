@@ -70,3 +70,40 @@ def rescore_all(session, fetch_fulltext: bool = True) -> int:
             print(f"  TBSF: {i}/{total}", flush=True)
     session.commit()
     return total
+
+
+def rescore_recent(
+    session,
+    *,
+    days: int = FULLTEXT_DAYS,
+    budget: int = 250,
+) -> int:
+    """Пересчёт TBSF с full_text для окна топ-событий (свежий arXiv)."""
+    from datetime import timedelta
+
+    _reset_fulltext_budget(budget)
+    since = utcnow() - timedelta(days=days)
+    docs = session.scalars(
+        select(Document)
+        .where(
+            Document.source_type == "research",
+            Document.published_at >= since,
+        )
+        .order_by(Document.published_at.desc())
+    ).all()
+    docs = list(docs)
+    # Приоритет: arXiv без full_text (им нужен fetch), затем остальные по дате.
+    docs.sort(
+        key=lambda d: (
+            0 if (is_arxiv_url(d.url) and not d.full_text) else 1,
+            -(d.published_at.timestamp() if d.published_at else 0),
+        )
+    )
+    total = len(docs)
+    for i, doc in enumerate(docs, 1):
+        apply_tbsf(doc, fetch_body=True)
+        if i % 10 == 0 or i == total:
+            session.commit()
+            print(f"  TBSF recent: {i}/{total} (budget left={_fulltext_budget})", flush=True)
+    session.commit()
+    return total

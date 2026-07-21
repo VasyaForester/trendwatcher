@@ -92,14 +92,18 @@ def main() -> None:
     elif args.command == "score-tbsf":
         from trendwatcher.db import get_session, init_db
         from trendwatcher.ingestion.compact import diet_documents, vacuum_db
-        from trendwatcher.tbsf.batch import rescore_all
+        from trendwatcher.tbsf.batch import rescore_all, rescore_recent
 
         init_db()
         with get_session() as s:
-            n = rescore_all(s)
-            diet_documents(s)
+            # Сначала окно топ-событий с full_text, затем лёгкий проход по остальному.
+            n_recent = rescore_recent(s, days=35, budget=250)
+            n_all = rescore_all(s, fetch_fulltext=False)
+            diet = diet_documents(s)
         vacuum_db()
-        print(f"scored {n} research documents with TBSF; diet applied")
+        print(
+            f"scored recent={n_recent} all={n_all}; diet={diet}"
+        )
     elif args.command == "archive":
         from trendwatcher.analytics.archive import update_archive
         from trendwatcher.db import get_session, init_db

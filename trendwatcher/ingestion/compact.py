@@ -33,16 +33,29 @@ def has_signal_tag(tags: list[str]) -> bool:
 
 
 def diet_documents(session, *, summary_cap: int = SUMMARY_CAP) -> dict:
-    """Сжимает уже лежащие документы: без full_text, короткий summary, без entities."""
+    """Сжимает документы: короткий summary, без entities.
+
+    full_text оставляем только у свежих research (окно топ-событий / TBSF);
+    у более старых — удаляем, чтобы БД не раздувалась.
+    """
+    from ..tbsf.batch import FULLTEXT_DAYS
+    from ..db import utcnow
+
     docs = session.scalars(select(Document)).all()
     changed = 0
     dropped_ft = 0
+    kept_ft = 0
+    now = utcnow()
     for doc in docs:
         dirty = False
         if doc.full_text:
-            doc.full_text = None
-            dropped_ft += 1
-            dirty = True
+            age_days = (now - doc.published_at).days
+            if age_days > FULLTEXT_DAYS:
+                doc.full_text = None
+                dropped_ft += 1
+                dirty = True
+            else:
+                kept_ft += 1
         compact = compact_summary(doc.summary, summary_cap)
         if compact != doc.summary:
             doc.summary = compact
@@ -50,8 +63,6 @@ def diet_documents(session, *, summary_cap: int = SUMMARY_CAP) -> dict:
         if doc.entities_json and doc.entities_json != "[]":
             doc.entities = []
             dirty = True
-        # Исторический research для сигналов — оставляем только SIGNAL_TAGS,
-        # если после фильтра тег ещё есть; лента/новости не трогаем по тегам.
         if doc.source_type == "research" and doc.tags:
             slim = signal_tags_only(doc.tags)
             if slim and slim != doc.tags:
@@ -60,7 +71,12 @@ def diet_documents(session, *, summary_cap: int = SUMMARY_CAP) -> dict:
         if dirty:
             changed += 1
     session.commit()
-    return {"changed": changed, "dropped_full_text": dropped_ft, "total": len(docs)}
+    return {
+        "changed": changed,
+        "dropped_full_text": dropped_ft,
+        "kept_full_text": kept_ft,
+        "total": len(docs),
+    }
 
 
 def vacuum_db() -> None:
