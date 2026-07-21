@@ -79,6 +79,33 @@ class TestStrictRelevance(unittest.TestCase):
         text = "TuxBot v3 Evolution Shows Signs of LLM-Assisted IoT Botnet Development"
         self.assertFalse(is_feed_relevant(text))
 
+    def test_llm_for_classic_vuln_remediation_rejected(self):
+        text = "Remediating Vulnerabilities With LLMs: Inside Ivanti's Automation Push"
+        self.assertFalse(is_feed_relevant(text))
+
+    def test_weekly_recap_rejected(self):
+        text = (
+            "Weekly Recap: WordPress RCE, SonicWall 0-Days, AI Service Attacks, "
+            "SharePoint 0-Day and More"
+        )
+        self.assertFalse(is_feed_relevant(text))
+
+    def test_servicenow_rce_as_ai_platform_accepted(self):
+        text = "ServiceNow’s sandbox escape RCE hole now exploited in the wild"
+        self.assertTrue(is_feed_relevant(text))
+
+    def test_howto_steps_rejected(self):
+        text = "5 steps to secure your infrastructure in the frontier model era"
+        self.assertFalse(is_feed_relevant(text))
+
+    def test_vendor_product_ad_rejected(self):
+        text = "Hardware-Rooted AI Security That Won't Slow You Down"
+        self.assertFalse(is_feed_relevant(text))
+
+    def test_monthly_security_digest_rejected(self):
+        text = "This month in security with Tony Anscombe – May 2026 edition"
+        self.assertFalse(is_feed_relevant(text))
+
     def test_agent_data_injection_accepted(self):
         text = "New Agent Data Injection Attack Can Make AI Agents Misclick or Run Attacker Commands"
         self.assertTrue(is_feed_relevant(text))

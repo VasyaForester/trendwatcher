@@ -265,6 +265,18 @@ FEED_REJECT_PATTERNS: list[str] = [
     r"^quoting\b",
     r"\bweeknotes?\b",
     r"\bscorecard\b",
+    # Подборки / дайджесты — нужны только конкретные события
+    r"weekly recap",
+    r"\b(security|cyber|threat)\s+roundup\b",
+    r"\bnews\s+roundup\b",
+    r"\bin\s+case\s+you\s+missed\b",
+    r"\bthis\s+week\s+in\b",
+    r"\bthis\s+month\s+in\s+(security|cyber)\b",
+    r"\bmonth\s+in\s+security\b",
+    r"\btop\s+\d+\s+(security|cyber|ai)\b",
+    r"\band more\b.{0,20}$",
+    r"\b\d+\s+steps?\s+to\b",
+    r"\bhow to (secure|protect|defend)\b",
     r"\b\d+\s+kinds of\b",
     r"\bhow (cios?|leaders|companies|executives) should\b",
     r"\bissues impacting\b",
@@ -282,11 +294,28 @@ FEED_REJECT_PATTERNS: list[str] = [
     r"llm[- ]assisted.{0,80}(botnet|iot|malware|ransomware)",
     r"(botnet|iot|malware|ransomware).{0,80}llm[- ]assisted",
     r"signs of llm[- ]assisted",
+    # LLM/агент как инструмент классической offensive/defensive security — не релевантно
+    r"remediat(ing|e|ion).{0,60}(vulnerabilit|cve|patch).{0,40}(llm|large language|gpt|copilot)",
+    r"(llm|large language|gpt|copilot).{0,60}remediat(ing|e|ion).{0,40}(vulnerabilit|cve|patch)",
+    r"(llm|gpt|copilot|ai).{0,40}(for |to )?(vuln(erability)? (scan|manag|remediat)|soc automation|siem|xdr)",
+    r"(using|with) (llms?|gpt|copilot).{0,50}(penetration|pentest|red team|malware analysis|threat hunting)",
+    r"(penetration|pentest|malware analysis|threat hunting).{0,50}(using|with) (llms?|gpt|copilot)",
+    r"automation push.{0,40}(llm|vulnerabilit)",
+    r"vulnerabilit.{0,50}(llms?|gpt).{0,40}automation",
     # Product drops without security event wording
     r"^introducing (claude|gemini|gpt|llama|sonnet|opus|haiku)\b",
     r"^introducing real world\b",
     r"expanding managed agents",
     r"create, edit and star",
+    # Opinion / commentary columns (не конкретное событие)
+    r"/meinung/",
+    r"\b(op[- ]?ed|opinion):\b",
+    r"\bals notwehr\b",
+    # Vendor product marketing / реклама (не событие)
+    r"won'?t slow you down",
+    r"hardware[- ]rooted ai security",
+    r"\b(buy|try|get started with|announcing our)\b.{0,40}(security|platform|solution)",
+    r"\b(introducing|meet|discover)\b.{0,30}(our |the )?(new )?(ai )?security (platform|solution|suite|product)",
 ]
 
 # AI-сигнал (уже, чем любой «AI»): модель/агент/LLM/MCP в security-контексте.
@@ -295,6 +324,10 @@ FEED_AI_ANCHOR_PATTERNS: list[str] = [
     r"\bagentic\b", r"ai[- ]agent", r"\bmcp\b", r"model context protocol",
     r"prompt injection", r"\bjailbreak\b", r"\bprompty\b", r"hugging ?face",
     r"openai|anthropic|claude|gemini|copilot|chatgpt",
+    # AI-платформы: CVE/breach на них считаем AI-security событием
+    r"\bservicenow\b", r"\bnow assist\b", r"\bsalesforce\b.{0,20}\beinstein\b",
+    r"\bdatabricks\b", r"\bsageemaker\b", r"\bazure (ai|openai)\b",
+    r"\bvertex ai\b", r"\bbedrock\b",
 ]
 
 # Известные сущности (вендоры, продукты, модели) для простого извлечения.
