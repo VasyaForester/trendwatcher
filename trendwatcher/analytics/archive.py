@@ -132,6 +132,24 @@ def backfill_weekly_snapshots(session, max_weeks: int = 104) -> int:
     return written
 
 
+def rebuild_weekly_snapshots(session, weeks: int = 52) -> int:
+    """Перезаписывает снимки последних N завершённых недель (после signal backfill)."""
+    stats = _load_weekly_stats()
+    existing = stats.get("weeks", {})
+    last = last_complete_week_start()
+    earliest = last - timedelta(weeks=weeks - 1)
+    written = 0
+    for week in iter_weeks_between(earliest, last):
+        snap = week_snapshot(session, week)
+        if snap["documents"] == 0:
+            continue
+        existing[week.isoformat()] = snap
+        written += 1
+    stats["weeks"] = existing
+    _save_weekly_stats(stats)
+    return written
+
+
 def load_weekly_snapshots() -> list[dict]:
     stats = _load_weekly_stats()
     weeks = stats.get("weeks", {})
@@ -140,9 +158,16 @@ def load_weekly_snapshots() -> list[dict]:
 
 def append_document_ledger(session) -> int:
     """Append-only экспорт новых документов с тегами."""
+    from sqlalchemy import func
+
     _ensure_dirs()
     manifest = _load_manifest()
     last_id = manifest.get("last_doc_id", 0)
+    max_id = session.scalar(select(func.max(Document.id))) or 0
+    if last_id > max_id:
+        if DOC_LEDGER.exists():
+            DOC_LEDGER.write_text("", encoding="utf-8")
+        last_id = 0
     docs = session.scalars(
         select(Document).where(Document.id > last_id).order_by(Document.id)
     ).all()
@@ -210,12 +235,16 @@ def archive_tag_windows(recent_weeks: int = SIGNAL_WINDOW_WEEKS) -> dict[str, di
     return out
 
 
-def update_archive(session) -> dict:
+def update_archive(session, *, rebuild_weeks: int | None = None) -> dict:
     ledger = append_document_ledger(session)
-    weeks = backfill_weekly_snapshots(session)
+    if rebuild_weeks:
+        weeks = rebuild_weekly_snapshots(session, weeks=rebuild_weeks)
+    else:
+        weeks = backfill_weekly_snapshots(session)
     snaps = load_weekly_snapshots()
     return {
         "ledger_appended": ledger,
         "weeks_written": weeks,
         "weeks_total": len(snaps),
+        "rebuilt": bool(rebuild_weeks),
     }
