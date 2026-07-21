@@ -32,9 +32,10 @@ from ..db import Document, utcnow
 from ..enrichment.tag_filter import SIGNAL_AI_TAGS, is_signal_tag
 from ..enrichment.taxonomy import AI_TECH_TAGS
 from .archive import archive_tag_windows
-from .constants import SIGNAL_WINDOW_WEEKS
+from .constants import SIGNAL_WINDOW_DAYS, SIGNAL_WINDOW_WEEKS
 from .timeseries import tag_profiles, week_start
-from .velocity import cap_velocity, pct_change, velocity_from_shares, velocity_label
+from .velocity import cap_velocity, pct_change, velocity_from_counts, velocity_label
+
 
 LEVEL_ORDER = {
     "strong": 0, "emerging": 1, "research": 2, "spike": 3,
@@ -54,15 +55,23 @@ MIN_STABLE_BASE = 10        # документов источника в baselin
 MIN_STABLE_RECENT = 5       # документов источника в recent для «стабильности»
 
 
-def _window_label(weeks: int) -> str:
-    return "3 мес." if weeks == SIGNAL_WINDOW_WEEKS else f"{weeks} нед."
+def _window_label(days: int = SIGNAL_WINDOW_DAYS) -> str:
+    return "90 дн." if days == SIGNAL_WINDOW_DAYS else f"{days} дн."
 
 
 def classify_signals(
     session,
-    recent_weeks: int = SIGNAL_WINDOW_WEEKS,
+    recent_days: int = SIGNAL_WINDOW_DAYS,
+    recent_weeks: int | None = None,
     retro_weeks: int = 26,
 ) -> list[dict]:
+    """Классификация сигналов.
+
+    Динамика (velocity) — прирост числа публикаций за последние `recent_days`
+    к предыдущим `recent_days` (по умолчанию 90/90).
+    """
+    if recent_weeks is not None:
+        recent_days = recent_weeks * 7
     now = utcnow()
     since = now - timedelta(weeks=retro_weeks)
     docs = session.scalars(
@@ -73,6 +82,7 @@ def classify_signals(
 
     n_buckets = retro_weeks + 1
     first_week = week_start(since)
+    recent_weeks_buckets = SIGNAL_WINDOW_WEEKS
 
     def bucket(dt) -> int:
         return (week_start(dt) - first_week).days // 7
@@ -84,7 +94,7 @@ def classify_signals(
         if 0 <= b < n_buckets:
             src_totals[doc.source_id][b] += 1
 
-    split = n_buckets - recent_weeks
+    split = n_buckets - recent_weeks_buckets
     stable_sources = {
         sid
         for sid, t in src_totals.items()
@@ -94,9 +104,9 @@ def classify_signals(
         sum(src_totals[sid][i] for sid in stable_sources) for i in range(n_buckets)
     ]
 
-    # --- Счетчики по тегам ---
-    recent_from = now - timedelta(weeks=recent_weeks)
-    prior_from = now - timedelta(weeks=recent_weeks * 2)
+    # --- Счетчики по тегам: окна ровно 90 / предыдущие 90 дней ---
+    recent_from = now - timedelta(days=recent_days)
+    prior_from = now - timedelta(days=recent_days * 2)
     tag_series: dict[str, list[int]] = defaultdict(lambda: [0] * n_buckets)
     recent_cnt: dict[str, int] = defaultdict(int)
     prior_cnt: dict[str, int] = defaultdict(int)
@@ -123,7 +133,6 @@ def classify_signals(
         return num / den if den else None
 
     signals = []
-    archive_stats = archive_tag_windows(recent_weeks)
     for tag in set(recent_cnt) | set(prior_cnt):
         if not is_signal_tag(tag):
             continue
@@ -161,18 +170,8 @@ def classify_signals(
         n_types = len(src_types.get(tag, set()))
         research_share = by_src_type[tag].get("research", 0) / r if r else 0.0
 
-        arch = archive_stats.get(tag, {})
-        recent_share_arch = arch.get("recent_share")
-        prior_share_arch = arch.get("prior_share")
-        if arch.get("share_velocity") is not None:
-            velocity, vel_source = cap_velocity(arch["share_velocity"]), "archive"
-        elif recent_share_arch is not None and prior_share_arch is not None:
-            velocity, vel_source = velocity_from_shares(recent_share_arch, prior_share_arch)
-        elif recent_share is not None and base_share and base_share > 0:
-            velocity = cap_velocity(pct_change(recent_share, base_share))
-            vel_source = "baseline"
-        else:
-            velocity, vel_source = 0.0, None
+        # Динамика UI: прирост числа сообщений 90д / предыдущие 90д.
+        velocity, vel_source = velocity_from_counts(r, p)
         vel_label = velocity_label(velocity, vel_source)
 
         # 1. Research-сигнал: действительно новая тема, живущая в исследованиях.
@@ -206,7 +205,7 @@ def classify_signals(
                     # покрытия; вывод о спаде был бы артефактом сбора данных.
                     level = "weak"
                     reason = (
-                        f"{r} публ. за {_window_label(recent_weeks)}, но все из источников с "
+                        f"{r} публ. за {_window_label(recent_days)}, но все из источников с "
                         "недостаточной глубиной покрытия — надежно оценить тренд нельзя"
                     )
                 else:
@@ -228,19 +227,19 @@ def classify_signals(
             )
         elif r >= 8 and n_types >= 3 and velocity >= 0:
             level = "strong"
-            reason = f"{r} публ. за {_window_label(recent_weeks)}, {n_types} типа источников"
+            reason = f"{r} публ. за {_window_label(recent_days)}, {n_types} типа источников"
         elif r >= 3 and n_types >= 2 and velocity > 0.25:
             level = "emerging"
             reason = (
-                f"{r} публ. за {_window_label(recent_weeks)}, {vel_label}, "
+                f"{r} публ. за {_window_label(recent_days)}, {vel_label}, "
                 f"{n_types} тип(а) источников"
             )
         elif velocity < -0.3 and p >= 5:
             level = "declining"
-            reason = f"спад {vel_label} к прошлому периоду ({_window_label(recent_weeks)})"
+            reason = f"спад {vel_label} к прошлому периоду ({_window_label(recent_days)})"
         else:
             level = "weak"
-            reason = f"{r} публ. за {_window_label(recent_weeks)}, {n_types} тип(а) источников"
+            reason = f"{r} публ. за {_window_label(recent_days)}, {n_types} тип(а) источников"
 
         signals.append(
             {
@@ -259,7 +258,8 @@ def classify_signals(
                 "recent_share": round(recent_share, 4) if recent_share is not None else None,
                 "baseline_share": round(base_share, 4) if base_share is not None else None,
                 "research_share": round(research_share, 2),
-                "window_weeks": recent_weeks,
+                "window_days": recent_days,
+                "window_weeks": SIGNAL_WINDOW_WEEKS,
             }
         )
 

@@ -6,6 +6,7 @@ from trendwatcher.analytics.velocity import (
     MAX_VELOCITY,
     cap_velocity,
     pct_change,
+    velocity_from_counts,
     velocity_from_shares,
     velocity_label,
 )
@@ -38,8 +39,16 @@ class TestPctChange(unittest.TestCase):
         self.assertIsNone(src)
 
     def test_velocity_label(self):
-        self.assertIn("+50%", velocity_label(0.5, "archive"))
+        self.assertIn("сообщений", velocity_label(0.5, "counts_90d"))
+        self.assertEqual(velocity_label(0.0, None), "н/д")
 
+    def test_velocity_from_counts(self):
+        v, src = velocity_from_counts(15, 10)
+        self.assertAlmostEqual(v, 0.5)
+        self.assertEqual(src, "counts_90d")
+        v, src = velocity_from_counts(5, 0)
+        self.assertEqual(v, 0.0)
+        self.assertIsNone(src)
 
 class TestTagFilter(unittest.TestCase):
     def test_signal_tags(self):

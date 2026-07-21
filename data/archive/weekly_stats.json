@@ -899,24 +899,32 @@
     },
     "2025-12-22": {
       "week_start": "2025-12-22",
-      "captured_at": "2026-07-14T09:02:56.920486",
-      "documents": 3,
+      "captured_at": "2026-07-21T07:57:47.584342",
+      "documents": 2,
       "by_source_type": {
-        "vendor": 2,
-        "standards": 1
+        "vendor": 1,
+        "news": 1
       },
       "tags": {
         "agent_security": {
           "count": 1,
-          "share": 0.333333
+          "share": 0.5
+        },
+        "computer_use_agents": {
+          "count": 1,
+          "share": 0.5
         },
         "prompt_injection": {
           "count": 1,
-          "share": 0.333333
+          "share": 0.5
         },
         "red_teaming": {
           "count": 1,
-          "share": 0.333333
+          "share": 0.5
+        },
+        "vulnerability_cve": {
+          "count": 1,
+          "share": 0.5
         }
       }
     },
@@ -931,7 +939,7 @@
     },
     "2026-01-05": {
       "week_start": "2026-01-05",
-      "captured_at": "2026-07-21T07:01:05.142273",
+      "captured_at": "2026-07-21T07:57:47.586241",
       "documents": 62,
       "by_source_type": {
         "research": 62
@@ -1001,7 +1009,7 @@
     },
     "2026-01-12": {
       "week_start": "2026-01-12",
-      "captured_at": "2026-07-21T07:01:05.144282",
+      "captured_at": "2026-07-21T07:57:47.586241",
       "documents": 44,
       "by_source_type": {
         "research": 44
@@ -1055,7 +1063,7 @@
     },
     "2026-01-19": {
       "week_start": "2026-01-19",
-      "captured_at": "2026-07-21T07:01:05.146924",
+      "captured_at": "2026-07-21T07:57:47.598928",
       "documents": 72,
       "by_source_type": {
         "research": 72
@@ -1125,69 +1133,74 @@
     },
     "2026-01-26": {
       "week_start": "2026-01-26",
-      "captured_at": "2026-07-21T07:01:05.146924",
-      "documents": 42,
+      "captured_at": "2026-07-21T07:57:47.600582",
+      "documents": 43,
       "by_source_type": {
-        "research": 42
+        "research": 42,
+        "vendor": 1
       },
       "tags": {
         "agent_memory_security": {
           "count": 1,
-          "share": 0.02381
+          "share": 0.023256
         },
         "agent_security": {
           "count": 2,
-          "share": 0.047619
+          "share": 0.046512
         },
         "agent_swarm_security": {
           "count": 1,
-          "share": 0.02381
+          "share": 0.023256
+        },
+        "data_exfiltration": {
+          "count": 1,
+          "share": 0.023256
         },
         "governance_regulation": {
           "count": 3,
-          "share": 0.071429
+          "share": 0.069767
         },
         "guardrails_defense": {
           "count": 1,
-          "share": 0.02381
+          "share": 0.023256
         },
         "jailbreak": {
           "count": 2,
-          "share": 0.047619
+          "share": 0.046512
         },
         "long_context_memory": {
           "count": 9,
-          "share": 0.214286
+          "share": 0.209302
         },
         "mcp_security": {
           "count": 1,
-          "share": 0.02381
+          "share": 0.023256
         },
         "model_drift": {
           "count": 1,
-          "share": 0.02381
+          "share": 0.023256
         },
         "prompt_injection": {
-          "count": 1,
-          "share": 0.02381
+          "count": 2,
+          "share": 0.046512
         },
         "rag_security": {
           "count": 18,
-          "share": 0.428571
+          "share": 0.418605
         },
         "red_teaming": {
           "count": 2,
-          "share": 0.047619
+          "share": 0.046512
         },
         "self_evolving_agents": {
           "count": 4,
-          "share": 0.095238
+          "share": 0.093023
         }
       }
     },
     "2026-02-02": {
       "week_start": "2026-02-02",
-      "captured_at": "2026-07-21T07:01:05.146924",
+      "captured_at": "2026-07-21T07:57:47.602586",
       "documents": 47,
       "by_source_type": {
         "research": 47
@@ -1249,599 +1262,103 @@
     },
     "2026-02-09": {
       "week_start": "2026-02-09",
-      "captured_at": "2026-07-21T07:01:05.146924",
-      "documents": 62,
+      "captured_at": "2026-07-21T07:57:47.602586",
+      "documents": 63,
       "by_source_type": {
-        "research": 62
+        "research": 62,
+        "vendor": 1
       },
       "tags": {
         "agent_identity_trust": {
           "count": 1,
-          "share": 0.016129
+          "share": 0.015873
         },
         "agent_security": {
           "count": 4,
-          "share": 0.064516
+          "share": 0.063492
         },
         "computer_use_agents": {
           "count": 3,
-          "share": 0.048387
+          "share": 0.047619
         },
         "data_exfiltration": {
-          "count": 1,
-          "share": 0.016129
+          "count": 2,
+          "share": 0.031746
         },
         "data_poisoning": {
           "count": 1,
-          "share": 0.016129
+          "share": 0.015873
         },
         "governance_regulation": {
           "count": 2,
-          "share": 0.032258
+          "share": 0.031746
         },
         "guardrails_defense": {
           "count": 3,
-          "share": 0.048387
+          "share": 0.047619
         },
         "indirect_prompt_injection": {
           "count": 4,
-          "share": 0.064516
+          "share": 0.063492
         },
         "jailbreak": {
           "count": 6,
-          "share": 0.096774
+          "share": 0.095238
         },
         "long_context_memory": {
           "count": 15,
-          "share": 0.241935
+          "share": 0.238095
         },
         "model_drift": {
           "count": 3,
-          "share": 0.048387
+          "share": 0.047619
         },
         "model_theft": {
           "count": 1,
-          "share": 0.016129
+          "share": 0.015873
         },
         "prompt_injection": {
-          "count": 7,
-          "share": 0.112903
+          "count": 8,
+          "share": 0.126984
         },
         "rag_security": {
           "count": 17,
-          "share": 0.274194
+          "share": 0.269841
         },
         "red_teaming": {
           "count": 5,
-          "share": 0.080645
+          "share": 0.079365
         },
         "self_evolving_agents": {
           "count": 7,
-          "share": 0.112903
+          "share": 0.111111
         }
       }
     },
     "2026-02-16": {
       "week_start": "2026-02-16",
-      "captured_at": "2026-07-21T07:01:05.146924",
-      "documents": 63,
-      "by_source_type": {
-        "research": 63
-      },
-      "tags": {
-        "agent_memory_security": {
-          "count": 2,
-          "share": 0.031746
-        },
-        "agent_security": {
-          "count": 3,
-          "share": 0.047619
-        },
-        "agent_swarm_security": {
-          "count": 3,
-          "share": 0.047619
-        },
-        "computer_use_agents": {
-          "count": 1,
-          "share": 0.015873
-        },
-        "data_exfiltration": {
-          "count": 1,
-          "share": 0.015873
-        },
-        "data_poisoning": {
-          "count": 2,
-          "share": 0.031746
-        },
-        "governance_regulation": {
-          "count": 1,
-          "share": 0.015873
-        },
-        "guardrails_defense": {
-          "count": 6,
-          "share": 0.095238
-        },
-        "indirect_prompt_injection": {
-          "count": 2,
-          "share": 0.031746
-        },
-        "jailbreak": {
-          "count": 7,
-          "share": 0.111111
-        },
-        "long_context_memory": {
-          "count": 13,
-          "share": 0.206349
-        },
-        "model_drift": {
-          "count": 1,
-          "share": 0.015873
-        },
-        "model_supply_chain": {
-          "count": 1,
-          "share": 0.015873
-        },
-        "model_theft": {
-          "count": 1,
-          "share": 0.015873
-        },
-        "prompt_injection": {
-          "count": 3,
-          "share": 0.047619
-        },
-        "rag_security": {
-          "count": 22,
-          "share": 0.349206
-        },
-        "red_teaming": {
-          "count": 4,
-          "share": 0.063492
-        },
-        "self_evolving_agents": {
-          "count": 4,
-          "share": 0.063492
-        }
-      }
-    },
-    "2026-02-23": {
-      "week_start": "2026-02-23",
-      "captured_at": "2026-07-21T07:01:05.146924",
-      "documents": 41,
-      "by_source_type": {
-        "research": 41
-      },
-      "tags": {
-        "agent_memory_security": {
-          "count": 2,
-          "share": 0.04878
-        },
-        "data_poisoning": {
-          "count": 2,
-          "share": 0.04878
-        },
-        "governance_regulation": {
-          "count": 1,
-          "share": 0.02439
-        },
-        "indirect_prompt_injection": {
-          "count": 2,
-          "share": 0.04878
-        },
-        "jailbreak": {
-          "count": 3,
-          "share": 0.073171
-        },
-        "long_context_memory": {
-          "count": 9,
-          "share": 0.219512
-        },
-        "model_theft": {
-          "count": 2,
-          "share": 0.04878
-        },
-        "prompt_injection": {
-          "count": 6,
-          "share": 0.146341
-        },
-        "rag_security": {
-          "count": 14,
-          "share": 0.341463
-        },
-        "red_teaming": {
-          "count": 4,
-          "share": 0.097561
-        },
-        "self_evolving_agents": {
-          "count": 2,
-          "share": 0.04878
-        }
-      }
-    },
-    "2026-03-02": {
-      "week_start": "2026-03-02",
-      "captured_at": "2026-07-21T07:01:05.146924",
-      "documents": 60,
-      "by_source_type": {
-        "research": 60
-      },
-      "tags": {
-        "agent_identity_trust": {
-          "count": 1,
-          "share": 0.016667
-        },
-        "agent_security": {
-          "count": 2,
-          "share": 0.033333
-        },
-        "agent_swarm_security": {
-          "count": 1,
-          "share": 0.016667
-        },
-        "data_poisoning": {
-          "count": 1,
-          "share": 0.016667
-        },
-        "guardrails_defense": {
-          "count": 3,
-          "share": 0.05
-        },
-        "jailbreak": {
-          "count": 4,
-          "share": 0.066667
-        },
-        "long_context_memory": {
-          "count": 15,
-          "share": 0.25
-        },
-        "model_drift": {
-          "count": 2,
-          "share": 0.033333
-        },
-        "prompt_injection": {
-          "count": 2,
-          "share": 0.033333
-        },
-        "rag_security": {
-          "count": 27,
-          "share": 0.45
-        },
-        "red_teaming": {
-          "count": 2,
-          "share": 0.033333
-        },
-        "self_evolving_agents": {
-          "count": 7,
-          "share": 0.116667
-        }
-      }
-    },
-    "2026-03-09": {
-      "week_start": "2026-03-09",
-      "captured_at": "2026-07-21T07:01:05.146924",
-      "documents": 61,
-      "by_source_type": {
-        "research": 61
-      },
-      "tags": {
-        "agent_memory_security": {
-          "count": 1,
-          "share": 0.016393
-        },
-        "agent_security": {
-          "count": 7,
-          "share": 0.114754
-        },
-        "agent_swarm_security": {
-          "count": 1,
-          "share": 0.016393
-        },
-        "computer_use_agents": {
-          "count": 5,
-          "share": 0.081967
-        },
-        "data_exfiltration": {
-          "count": 1,
-          "share": 0.016393
-        },
-        "data_poisoning": {
-          "count": 1,
-          "share": 0.016393
-        },
-        "governance_regulation": {
-          "count": 5,
-          "share": 0.081967
-        },
-        "guardrails_defense": {
-          "count": 1,
-          "share": 0.016393
-        },
-        "indirect_prompt_injection": {
-          "count": 1,
-          "share": 0.016393
-        },
-        "jailbreak": {
-          "count": 7,
-          "share": 0.114754
-        },
-        "long_context_memory": {
-          "count": 9,
-          "share": 0.147541
-        },
-        "mcp_security": {
-          "count": 2,
-          "share": 0.032787
-        },
-        "model_drift": {
-          "count": 2,
-          "share": 0.032787
-        },
-        "prompt_injection": {
-          "count": 2,
-          "share": 0.032787
-        },
-        "rag_security": {
-          "count": 23,
-          "share": 0.377049
-        },
-        "red_teaming": {
-          "count": 3,
-          "share": 0.04918
-        },
-        "self_evolving_agents": {
-          "count": 5,
-          "share": 0.081967
-        }
-      }
-    },
-    "2026-03-16": {
-      "week_start": "2026-03-16",
-      "captured_at": "2026-07-21T07:01:05.155949",
-      "documents": 46,
-      "by_source_type": {
-        "research": 46
-      },
-      "tags": {
-        "agent_memory_security": {
-          "count": 1,
-          "share": 0.021739
-        },
-        "agent_security": {
-          "count": 2,
-          "share": 0.043478
-        },
-        "agent_swarm_security": {
-          "count": 2,
-          "share": 0.043478
-        },
-        "computer_use_agents": {
-          "count": 1,
-          "share": 0.021739
-        },
-        "data_poisoning": {
-          "count": 1,
-          "share": 0.021739
-        },
-        "guardrails_defense": {
-          "count": 3,
-          "share": 0.065217
-        },
-        "jailbreak": {
-          "count": 5,
-          "share": 0.108696
-        },
-        "long_context_memory": {
-          "count": 15,
-          "share": 0.326087
-        },
-        "model_context_poisoning": {
-          "count": 1,
-          "share": 0.021739
-        },
-        "model_drift": {
-          "count": 1,
-          "share": 0.021739
-        },
-        "prompt_injection": {
-          "count": 3,
-          "share": 0.065217
-        },
-        "rag_security": {
-          "count": 15,
-          "share": 0.326087
-        },
-        "red_teaming": {
-          "count": 3,
-          "share": 0.065217
-        },
-        "self_evolving_agents": {
-          "count": 2,
-          "share": 0.043478
-        }
-      }
-    },
-    "2026-03-23": {
-      "week_start": "2026-03-23",
-      "captured_at": "2026-07-21T07:01:05.155949",
-      "documents": 54,
-      "by_source_type": {
-        "research": 54
-      },
-      "tags": {
-        "agent_identity_trust": {
-          "count": 2,
-          "share": 0.037037
-        },
-        "agent_security": {
-          "count": 3,
-          "share": 0.055556
-        },
-        "agent_swarm_security": {
-          "count": 1,
-          "share": 0.018519
-        },
-        "computer_use_agents": {
-          "count": 3,
-          "share": 0.055556
-        },
-        "data_exfiltration": {
-          "count": 1,
-          "share": 0.018519
-        },
-        "data_poisoning": {
-          "count": 1,
-          "share": 0.018519
-        },
-        "governance_regulation": {
-          "count": 4,
-          "share": 0.074074
-        },
-        "guardrails_defense": {
-          "count": 1,
-          "share": 0.018519
-        },
-        "indirect_prompt_injection": {
-          "count": 2,
-          "share": 0.037037
-        },
-        "jailbreak": {
-          "count": 7,
-          "share": 0.12963
-        },
-        "long_context_memory": {
-          "count": 7,
-          "share": 0.12963
-        },
-        "mcp_security": {
-          "count": 1,
-          "share": 0.018519
-        },
-        "model_context_poisoning": {
-          "count": 1,
-          "share": 0.018519
-        },
-        "model_drift": {
-          "count": 1,
-          "share": 0.018519
-        },
-        "prompt_injection": {
-          "count": 5,
-          "share": 0.092593
-        },
-        "rag_security": {
-          "count": 22,
-          "share": 0.407407
-        },
-        "red_teaming": {
-          "count": 1,
-          "share": 0.018519
-        },
-        "self_evolving_agents": {
-          "count": 7,
-          "share": 0.12963
-        },
-        "tool_calling_security": {
-          "count": 1,
-          "share": 0.018519
-        }
-      }
-    },
-    "2026-03-30": {
-      "week_start": "2026-03-30",
-      "captured_at": "2026-07-21T07:01:05.155949",
-      "documents": 33,
-      "by_source_type": {
-        "research": 33
-      },
-      "tags": {
-        "agent_memory_security": {
-          "count": 1,
-          "share": 0.030303
-        },
-        "agent_permissions": {
-          "count": 1,
-          "share": 0.030303
-        },
-        "agent_security": {
-          "count": 3,
-          "share": 0.090909
-        },
-        "computer_use_agents": {
-          "count": 2,
-          "share": 0.060606
-        },
-        "data_exfiltration": {
-          "count": 2,
-          "share": 0.060606
-        },
-        "governance_regulation": {
-          "count": 1,
-          "share": 0.030303
-        },
-        "guardrails_defense": {
-          "count": 2,
-          "share": 0.060606
-        },
-        "indirect_prompt_injection": {
-          "count": 1,
-          "share": 0.030303
-        },
-        "jailbreak": {
-          "count": 3,
-          "share": 0.090909
-        },
-        "long_context_memory": {
-          "count": 5,
-          "share": 0.151515
-        },
-        "prompt_injection": {
-          "count": 4,
-          "share": 0.121212
-        },
-        "rag_security": {
-          "count": 12,
-          "share": 0.363636
-        },
-        "red_teaming": {
-          "count": 1,
-          "share": 0.030303
-        },
-        "self_evolving_agents": {
-          "count": 2,
-          "share": 0.060606
-        },
-        "tool_calling_security": {
-          "count": 1,
-          "share": 0.030303
-        }
-      }
-    },
-    "2026-04-06": {
-      "week_start": "2026-04-06",
-      "captured_at": "2026-07-21T07:01:05.155949",
+      "captured_at": "2026-07-21T07:57:47.602586",
       "documents": 64,
       "by_source_type": {
-        "research": 64
+        "research": 63,
+        "vendor": 1
       },
       "tags": {
-        "agent_identity_trust": {
-          "count": 1,
-          "share": 0.015625
-        },
         "agent_memory_security": {
-          "count": 1,
-          "share": 0.015625
-        },
-        "agent_security": {
-          "count": 5,
-          "share": 0.078125
-        },
-        "agent_swarm_security": {
-          "count": 1,
-          "share": 0.015625
-        },
-        "computer_use_agents": {
           "count": 2,
           "share": 0.03125
+        },
+        "agent_security": {
+          "count": 3,
+          "share": 0.046875
+        },
+        "agent_swarm_security": {
+          "count": 3,
+          "share": 0.046875
+        },
+        "computer_use_agents": {
+          "count": 1,
+          "share": 0.015625
         },
         "data_exfiltration": {
           "count": 1,
@@ -1852,1594 +1369,2238 @@
           "share": 0.03125
         },
         "governance_regulation": {
-          "count": 4,
-          "share": 0.0625
+          "count": 1,
+          "share": 0.015625
         },
         "guardrails_defense": {
-          "count": 4,
-          "share": 0.0625
+          "count": 6,
+          "share": 0.09375
         },
-        "jailbreak": {
+        "indirect_prompt_injection": {
           "count": 2,
           "share": 0.03125
+        },
+        "jailbreak": {
+          "count": 7,
+          "share": 0.109375
         },
         "long_context_memory": {
           "count": 13,
           "share": 0.203125
         },
-        "mcp_security": {
-          "count": 1,
-          "share": 0.015625
-        },
         "model_drift": {
           "count": 1,
           "share": 0.015625
+        },
+        "model_supply_chain": {
+          "count": 1,
+          "share": 0.015625
+        },
+        "model_theft": {
+          "count": 1,
+          "share": 0.015625
+        },
+        "prompt_injection": {
+          "count": 3,
+          "share": 0.046875
+        },
+        "rag_security": {
+          "count": 22,
+          "share": 0.34375
+        },
+        "red_teaming": {
+          "count": 4,
+          "share": 0.0625
+        },
+        "self_evolving_agents": {
+          "count": 4,
+          "share": 0.0625
+        }
+      }
+    },
+    "2026-02-23": {
+      "week_start": "2026-02-23",
+      "captured_at": "2026-07-21T07:57:47.615915",
+      "documents": 42,
+      "by_source_type": {
+        "research": 41,
+        "vendor": 1
+      },
+      "tags": {
+        "agent_memory_security": {
+          "count": 3,
+          "share": 0.071429
+        },
+        "data_poisoning": {
+          "count": 2,
+          "share": 0.047619
+        },
+        "governance_regulation": {
+          "count": 1,
+          "share": 0.02381
+        },
+        "indirect_prompt_injection": {
+          "count": 2,
+          "share": 0.047619
+        },
+        "jailbreak": {
+          "count": 3,
+          "share": 0.071429
+        },
+        "long_context_memory": {
+          "count": 9,
+          "share": 0.214286
+        },
+        "model_theft": {
+          "count": 2,
+          "share": 0.047619
+        },
+        "prompt_injection": {
+          "count": 6,
+          "share": 0.142857
+        },
+        "rag_security": {
+          "count": 14,
+          "share": 0.333333
+        },
+        "red_teaming": {
+          "count": 4,
+          "share": 0.095238
+        },
+        "self_evolving_agents": {
+          "count": 2,
+          "share": 0.047619
+        }
+      }
+    },
+    "2026-03-02": {
+      "week_start": "2026-03-02",
+      "captured_at": "2026-07-21T07:57:47.617344",
+      "documents": 61,
+      "by_source_type": {
+        "research": 60,
+        "vendor": 1
+      },
+      "tags": {
+        "agent_identity_trust": {
+          "count": 1,
+          "share": 0.016393
+        },
+        "agent_security": {
+          "count": 2,
+          "share": 0.032787
+        },
+        "agent_swarm_security": {
+          "count": 1,
+          "share": 0.016393
+        },
+        "ai_codegen_security": {
+          "count": 1,
+          "share": 0.016393
+        },
+        "data_poisoning": {
+          "count": 1,
+          "share": 0.016393
+        },
+        "guardrails_defense": {
+          "count": 3,
+          "share": 0.04918
+        },
+        "jailbreak": {
+          "count": 4,
+          "share": 0.065574
+        },
+        "long_context_memory": {
+          "count": 15,
+          "share": 0.245902
+        },
+        "model_drift": {
+          "count": 2,
+          "share": 0.032787
+        },
+        "prompt_injection": {
+          "count": 2,
+          "share": 0.032787
+        },
+        "rag_security": {
+          "count": 27,
+          "share": 0.442623
+        },
+        "red_teaming": {
+          "count": 2,
+          "share": 0.032787
+        },
+        "self_evolving_agents": {
+          "count": 7,
+          "share": 0.114754
+        }
+      }
+    },
+    "2026-03-09": {
+      "week_start": "2026-03-09",
+      "captured_at": "2026-07-21T07:57:47.617344",
+      "documents": 64,
+      "by_source_type": {
+        "research": 61,
+        "vendor": 3
+      },
+      "tags": {
+        "agent_memory_security": {
+          "count": 1,
+          "share": 0.015625
+        },
+        "agent_security": {
+          "count": 7,
+          "share": 0.109375
+        },
+        "agent_swarm_security": {
+          "count": 1,
+          "share": 0.015625
+        },
+        "computer_use_agents": {
+          "count": 5,
+          "share": 0.078125
+        },
+        "data_exfiltration": {
+          "count": 1,
+          "share": 0.015625
+        },
+        "data_poisoning": {
+          "count": 1,
+          "share": 0.015625
+        },
+        "governance_regulation": {
+          "count": 5,
+          "share": 0.078125
+        },
+        "guardrails_defense": {
+          "count": 2,
+          "share": 0.03125
+        },
+        "indirect_prompt_injection": {
+          "count": 1,
+          "share": 0.015625
+        },
+        "jailbreak": {
+          "count": 7,
+          "share": 0.109375
+        },
+        "long_context_memory": {
+          "count": 9,
+          "share": 0.140625
+        },
+        "mcp_security": {
+          "count": 2,
+          "share": 0.03125
+        },
+        "model_drift": {
+          "count": 2,
+          "share": 0.03125
         },
         "prompt_injection": {
           "count": 4,
           "share": 0.0625
         },
         "rag_security": {
-          "count": 30,
-          "share": 0.46875
+          "count": 23,
+          "share": 0.359375
         },
         "red_teaming": {
-          "count": 2,
-          "share": 0.03125
+          "count": 3,
+          "share": 0.046875
         },
         "self_evolving_agents": {
+          "count": 5,
+          "share": 0.078125
+        }
+      }
+    },
+    "2026-03-16": {
+      "week_start": "2026-03-16",
+      "captured_at": "2026-07-21T07:57:47.617344",
+      "documents": 48,
+      "by_source_type": {
+        "vendor": 2,
+        "research": 46
+      },
+      "tags": {
+        "agent_memory_security": {
           "count": 1,
-          "share": 0.015625
+          "share": 0.020833
+        },
+        "agent_security": {
+          "count": 3,
+          "share": 0.0625
+        },
+        "agent_swarm_security": {
+          "count": 2,
+          "share": 0.041667
+        },
+        "ai_codegen_security": {
+          "count": 1,
+          "share": 0.020833
+        },
+        "computer_use_agents": {
+          "count": 2,
+          "share": 0.041667
+        },
+        "data_poisoning": {
+          "count": 1,
+          "share": 0.020833
+        },
+        "guardrails_defense": {
+          "count": 3,
+          "share": 0.0625
+        },
+        "jailbreak": {
+          "count": 5,
+          "share": 0.104167
+        },
+        "long_context_memory": {
+          "count": 15,
+          "share": 0.3125
+        },
+        "model_context_poisoning": {
+          "count": 1,
+          "share": 0.020833
+        },
+        "model_drift": {
+          "count": 1,
+          "share": 0.020833
+        },
+        "prompt_injection": {
+          "count": 3,
+          "share": 0.0625
+        },
+        "rag_security": {
+          "count": 15,
+          "share": 0.3125
+        },
+        "red_teaming": {
+          "count": 3,
+          "share": 0.0625
+        },
+        "self_evolving_agents": {
+          "count": 2,
+          "share": 0.041667
+        }
+      }
+    },
+    "2026-03-23": {
+      "week_start": "2026-03-23",
+      "captured_at": "2026-07-21T07:57:47.632553",
+      "documents": 67,
+      "by_source_type": {
+        "research": 54,
+        "vulnerability": 11,
+        "vendor": 2
+      },
+      "tags": {
+        "agent_identity_trust": {
+          "count": 2,
+          "share": 0.029851
+        },
+        "agent_security": {
+          "count": 3,
+          "share": 0.044776
+        },
+        "agent_swarm_security": {
+          "count": 1,
+          "share": 0.014925
+        },
+        "computer_use_agents": {
+          "count": 3,
+          "share": 0.044776
+        },
+        "data_exfiltration": {
+          "count": 2,
+          "share": 0.029851
+        },
+        "data_poisoning": {
+          "count": 1,
+          "share": 0.014925
+        },
+        "governance_regulation": {
+          "count": 4,
+          "share": 0.059701
+        },
+        "guardrails_defense": {
+          "count": 1,
+          "share": 0.014925
+        },
+        "indirect_prompt_injection": {
+          "count": 3,
+          "share": 0.044776
+        },
+        "jailbreak": {
+          "count": 7,
+          "share": 0.104478
+        },
+        "long_context_memory": {
+          "count": 7,
+          "share": 0.104478
+        },
+        "mcp_security": {
+          "count": 1,
+          "share": 0.014925
+        },
+        "model_context_poisoning": {
+          "count": 1,
+          "share": 0.014925
+        },
+        "model_drift": {
+          "count": 1,
+          "share": 0.014925
+        },
+        "model_supply_chain": {
+          "count": 1,
+          "share": 0.014925
+        },
+        "prompt_injection": {
+          "count": 7,
+          "share": 0.104478
+        },
+        "rag_security": {
+          "count": 23,
+          "share": 0.343284
+        },
+        "red_teaming": {
+          "count": 1,
+          "share": 0.014925
+        },
+        "self_evolving_agents": {
+          "count": 7,
+          "share": 0.104478
         },
         "tool_calling_security": {
           "count": 1,
-          "share": 0.015625
+          "share": 0.014925
+        },
+        "vulnerability_cve": {
+          "count": 11,
+          "share": 0.164179
+        }
+      }
+    },
+    "2026-03-30": {
+      "week_start": "2026-03-30",
+      "captured_at": "2026-07-21T07:57:47.633916",
+      "documents": 46,
+      "by_source_type": {
+        "vulnerability": 11,
+        "vendor": 2,
+        "research": 33
+      },
+      "tags": {
+        "adversarial_ml": {
+          "count": 1,
+          "share": 0.021739
+        },
+        "agent_memory_security": {
+          "count": 1,
+          "share": 0.021739
+        },
+        "agent_permissions": {
+          "count": 1,
+          "share": 0.021739
+        },
+        "agent_security": {
+          "count": 3,
+          "share": 0.065217
+        },
+        "computer_use_agents": {
+          "count": 2,
+          "share": 0.043478
+        },
+        "data_exfiltration": {
+          "count": 2,
+          "share": 0.043478
+        },
+        "governance_regulation": {
+          "count": 1,
+          "share": 0.021739
+        },
+        "guardrails_defense": {
+          "count": 2,
+          "share": 0.043478
+        },
+        "indirect_prompt_injection": {
+          "count": 2,
+          "share": 0.043478
+        },
+        "jailbreak": {
+          "count": 3,
+          "share": 0.065217
+        },
+        "long_context_memory": {
+          "count": 5,
+          "share": 0.108696
+        },
+        "mcp_security": {
+          "count": 1,
+          "share": 0.021739
+        },
+        "multimodal_ai": {
+          "count": 4,
+          "share": 0.086957
+        },
+        "prompt_injection": {
+          "count": 6,
+          "share": 0.130435
+        },
+        "rag_security": {
+          "count": 12,
+          "share": 0.26087
+        },
+        "red_teaming": {
+          "count": 2,
+          "share": 0.043478
+        },
+        "self_evolving_agents": {
+          "count": 2,
+          "share": 0.043478
+        },
+        "synthetic_data": {
+          "count": 1,
+          "share": 0.021739
+        },
+        "tool_calling_security": {
+          "count": 1,
+          "share": 0.021739
+        },
+        "vulnerability_cve": {
+          "count": 11,
+          "share": 0.23913
+        }
+      }
+    },
+    "2026-04-06": {
+      "week_start": "2026-04-06",
+      "captured_at": "2026-07-21T07:57:47.653327",
+      "documents": 81,
+      "by_source_type": {
+        "research": 64,
+        "vulnerability": 14,
+        "vendor": 3
+      },
+      "tags": {
+        "agent_identity_trust": {
+          "count": 1,
+          "share": 0.012346
+        },
+        "agent_memory_security": {
+          "count": 1,
+          "share": 0.012346
+        },
+        "agent_security": {
+          "count": 5,
+          "share": 0.061728
+        },
+        "agent_swarm_security": {
+          "count": 1,
+          "share": 0.012346
+        },
+        "agentic_ai": {
+          "count": 2,
+          "share": 0.024691
+        },
+        "computer_use_agents": {
+          "count": 2,
+          "share": 0.024691
+        },
+        "data_exfiltration": {
+          "count": 1,
+          "share": 0.012346
+        },
+        "data_poisoning": {
+          "count": 2,
+          "share": 0.024691
+        },
+        "governance_regulation": {
+          "count": 4,
+          "share": 0.049383
+        },
+        "guardrails_defense": {
+          "count": 4,
+          "share": 0.049383
+        },
+        "jailbreak": {
+          "count": 2,
+          "share": 0.024691
+        },
+        "long_context_memory": {
+          "count": 13,
+          "share": 0.160494
+        },
+        "mcp_security": {
+          "count": 1,
+          "share": 0.012346
+        },
+        "model_drift": {
+          "count": 1,
+          "share": 0.012346
+        },
+        "multimodal_ai": {
+          "count": 1,
+          "share": 0.012346
+        },
+        "prompt_injection": {
+          "count": 4,
+          "share": 0.049383
+        },
+        "rag_security": {
+          "count": 30,
+          "share": 0.37037
+        },
+        "red_teaming": {
+          "count": 2,
+          "share": 0.024691
+        },
+        "self_evolving_agents": {
+          "count": 1,
+          "share": 0.012346
+        },
+        "tool_calling_security": {
+          "count": 2,
+          "share": 0.024691
+        },
+        "vulnerability_cve": {
+          "count": 15,
+          "share": 0.185185
         }
       }
     },
     "2026-04-13": {
       "week_start": "2026-04-13",
-      "captured_at": "2026-07-21T07:01:05.155949",
-      "documents": 42,
+      "captured_at": "2026-07-21T07:57:47.661354",
+      "documents": 45,
       "by_source_type": {
+        "vulnerability": 2,
+        "vendor": 1,
         "research": 42
       },
       "tags": {
         "agent_identity_trust": {
           "count": 1,
-          "share": 0.02381
+          "share": 0.022222
         },
         "agent_security": {
-          "count": 4,
-          "share": 0.095238
+          "count": 5,
+          "share": 0.111111
         },
         "agent_swarm_security": {
           "count": 1,
-          "share": 0.02381
+          "share": 0.022222
         },
         "guardrails_defense": {
           "count": 3,
-          "share": 0.071429
+          "share": 0.066667
         },
         "jailbreak": {
           "count": 6,
-          "share": 0.142857
+          "share": 0.133333
         },
         "long_context_memory": {
           "count": 5,
-          "share": 0.119048
+          "share": 0.111111
         },
         "mcp_security": {
           "count": 1,
-          "share": 0.02381
+          "share": 0.022222
         },
         "prompt_injection": {
           "count": 3,
-          "share": 0.071429
+          "share": 0.066667
         },
         "rag_security": {
           "count": 17,
-          "share": 0.404762
+          "share": 0.377778
         },
         "self_evolving_agents": {
           "count": 7,
-          "share": 0.166667
+          "share": 0.155556
         },
         "tool_calling_security": {
           "count": 3,
-          "share": 0.071429
+          "share": 0.066667
+        },
+        "vulnerability_cve": {
+          "count": 2,
+          "share": 0.044444
         }
       }
     },
     "2026-04-20": {
       "week_start": "2026-04-20",
-      "captured_at": "2026-07-21T07:01:05.162913",
-      "documents": 98,
+      "captured_at": "2026-07-21T07:57:47.669256",
+      "documents": 129,
       "by_source_type": {
-        "research": 98
+        "research": 98,
+        "vulnerability": 30,
+        "vendor": 1
       },
       "tags": {
         "adversarial_ml": {
           "count": 1,
-          "share": 0.010204
+          "share": 0.007752
         },
         "agent_memory_security": {
           "count": 1,
-          "share": 0.010204
+          "share": 0.007752
         },
         "agent_security": {
           "count": 4,
-          "share": 0.040816
+          "share": 0.031008
         },
         "agent_swarm_security": {
           "count": 3,
-          "share": 0.030612
+          "share": 0.023256
         },
         "agentic_ai": {
           "count": 1,
-          "share": 0.010204
+          "share": 0.007752
         },
         "computer_use_agents": {
           "count": 1,
-          "share": 0.010204
+          "share": 0.007752
         },
         "data_exfiltration": {
-          "count": 3,
-          "share": 0.030612
+          "count": 6,
+          "share": 0.046512
         },
         "data_poisoning": {
           "count": 6,
-          "share": 0.061224
+          "share": 0.046512
         },
         "governance_regulation": {
           "count": 3,
-          "share": 0.030612
+          "share": 0.023256
         },
         "guardrails_defense": {
-          "count": 10,
-          "share": 0.102041
+          "count": 12,
+          "share": 0.093023
         },
         "indirect_prompt_injection": {
-          "count": 2,
-          "share": 0.020408
+          "count": 4,
+          "share": 0.031008
         },
         "jailbreak": {
-          "count": 23,
-          "share": 0.234694
+          "count": 24,
+          "share": 0.186047
         },
         "long_context_memory": {
           "count": 16,
-          "share": 0.163265
+          "share": 0.124031
         },
         "mcp_security": {
-          "count": 1,
-          "share": 0.010204
+          "count": 2,
+          "share": 0.015504
         },
         "model_theft": {
           "count": 3,
-          "share": 0.030612
+          "share": 0.023256
         },
         "multimodal_ai": {
+          "count": 3,
+          "share": 0.023256
+        },
+        "open_weights": {
           "count": 1,
-          "share": 0.010204
+          "share": 0.007752
         },
         "prompt_injection": {
-          "count": 8,
-          "share": 0.081633
+          "count": 12,
+          "share": 0.093023
         },
         "rag_security": {
           "count": 26,
-          "share": 0.265306
+          "share": 0.20155
         },
         "red_teaming": {
           "count": 6,
-          "share": 0.061224
+          "share": 0.046512
         },
         "self_evolving_agents": {
           "count": 5,
-          "share": 0.05102
+          "share": 0.03876
         },
         "tool_calling_security": {
-          "count": 1,
-          "share": 0.010204
+          "count": 2,
+          "share": 0.015504
+        },
+        "vulnerability_cve": {
+          "count": 30,
+          "share": 0.232558
         }
       }
     },
     "2026-04-27": {
       "week_start": "2026-04-27",
-      "captured_at": "2026-07-21T07:01:05.162913",
-      "documents": 275,
+      "captured_at": "2026-07-21T07:57:47.682469",
+      "documents": 277,
       "by_source_type": {
-        "research": 275
+        "research": 275,
+        "vulnerability": 2
       },
       "tags": {
         "adversarial_ml": {
           "count": 1,
-          "share": 0.003636
+          "share": 0.00361
         },
         "agent_identity_trust": {
           "count": 1,
-          "share": 0.003636
+          "share": 0.00361
         },
         "agent_memory_security": {
           "count": 6,
-          "share": 0.021818
+          "share": 0.021661
         },
         "agent_security": {
           "count": 10,
-          "share": 0.036364
+          "share": 0.036101
         },
         "agent_swarm_security": {
           "count": 4,
-          "share": 0.014545
+          "share": 0.01444
         },
         "agentic_ai": {
           "count": 53,
-          "share": 0.192727
+          "share": 0.191336
         },
         "autonomous_cyber_offense": {
           "count": 1,
-          "share": 0.003636
+          "share": 0.00361
         },
         "bias_fairness": {
           "count": 4,
-          "share": 0.014545
+          "share": 0.01444
         },
         "computer_use_agents": {
           "count": 6,
-          "share": 0.021818
+          "share": 0.021661
         },
         "data_exfiltration": {
           "count": 4,
-          "share": 0.014545
+          "share": 0.01444
         },
         "data_poisoning": {
           "count": 9,
-          "share": 0.032727
+          "share": 0.032491
         },
         "governance_regulation": {
           "count": 5,
-          "share": 0.018182
+          "share": 0.018051
         },
         "guardrails_defense": {
           "count": 19,
-          "share": 0.069091
+          "share": 0.068592
         },
         "indirect_prompt_injection": {
           "count": 3,
-          "share": 0.010909
+          "share": 0.01083
         },
         "jailbreak": {
           "count": 19,
-          "share": 0.069091
+          "share": 0.068592
         },
         "long_context_memory": {
           "count": 14,
-          "share": 0.050909
+          "share": 0.050542
         },
         "misinformation": {
           "count": 6,
-          "share": 0.021818
+          "share": 0.021661
         },
         "model_drift": {
           "count": 9,
-          "share": 0.032727
+          "share": 0.032491
         },
         "model_efficiency": {
           "count": 13,
-          "share": 0.047273
+          "share": 0.046931
         },
         "multimodal_ai": {
           "count": 19,
-          "share": 0.069091
+          "share": 0.068592
         },
         "on_device_ai": {
           "count": 5,
-          "share": 0.018182
+          "share": 0.018051
         },
         "open_weights": {
           "count": 8,
-          "share": 0.029091
+          "share": 0.028881
         },
         "privacy": {
           "count": 1,
-          "share": 0.003636
+          "share": 0.00361
         },
         "prompt_injection": {
           "count": 14,
-          "share": 0.050909
+          "share": 0.050542
         },
         "rag_security": {
           "count": 32,
-          "share": 0.116364
+          "share": 0.115523
         },
         "reasoning_models": {
           "count": 14,
-          "share": 0.050909
+          "share": 0.050542
         },
         "red_teaming": {
           "count": 5,
-          "share": 0.018182
+          "share": 0.018051
         },
         "self_evolving_agents": {
           "count": 4,
-          "share": 0.014545
+          "share": 0.01444
         },
         "synthetic_data": {
           "count": 3,
-          "share": 0.010909
+          "share": 0.01083
         },
         "tool_calling_security": {
           "count": 1,
-          "share": 0.003636
+          "share": 0.00361
+        },
+        "vulnerability_cve": {
+          "count": 2,
+          "share": 0.00722
         },
         "world_models": {
           "count": 9,
-          "share": 0.032727
+          "share": 0.032491
         }
       }
     },
     "2026-05-04": {
       "week_start": "2026-05-04",
-      "captured_at": "2026-07-21T07:01:05.171934",
-      "documents": 151,
+      "captured_at": "2026-07-21T07:57:47.690256",
+      "documents": 164,
       "by_source_type": {
-        "research": 151
+        "research": 151,
+        "vulnerability": 12,
+        "vendor": 1
       },
       "tags": {
         "agent_memory_security": {
           "count": 8,
-          "share": 0.05298
+          "share": 0.04878
         },
         "agent_security": {
           "count": 11,
-          "share": 0.072848
+          "share": 0.067073
         },
         "agentic_ai": {
-          "count": 10,
-          "share": 0.066225
+          "count": 11,
+          "share": 0.067073
         },
         "computer_use_agents": {
           "count": 6,
-          "share": 0.039735
+          "share": 0.036585
         },
         "data_exfiltration": {
           "count": 2,
-          "share": 0.013245
+          "share": 0.012195
         },
         "data_poisoning": {
           "count": 13,
-          "share": 0.086093
+          "share": 0.079268
         },
         "governance_regulation": {
           "count": 1,
-          "share": 0.006623
+          "share": 0.006098
         },
         "guardrails_defense": {
           "count": 16,
-          "share": 0.10596
+          "share": 0.097561
         },
         "indirect_prompt_injection": {
           "count": 5,
-          "share": 0.033113
+          "share": 0.030488
         },
         "jailbreak": {
           "count": 30,
-          "share": 0.198675
+          "share": 0.182927
         },
         "long_context_memory": {
           "count": 7,
-          "share": 0.046358
+          "share": 0.042683
         },
         "misinformation": {
           "count": 1,
-          "share": 0.006623
+          "share": 0.006098
         },
         "model_drift": {
           "count": 1,
-          "share": 0.006623
+          "share": 0.006098
         },
         "model_efficiency": {
           "count": 3,
-          "share": 0.019868
+          "share": 0.018293
         },
         "multimodal_ai": {
-          "count": 1,
-          "share": 0.006623
+          "count": 3,
+          "share": 0.018293
         },
         "on_device_ai": {
           "count": 3,
-          "share": 0.019868
+          "share": 0.018293
         },
         "open_weights": {
-          "count": 1,
-          "share": 0.006623
+          "count": 3,
+          "share": 0.018293
         },
         "prompt_injection": {
-          "count": 18,
-          "share": 0.119205
+          "count": 19,
+          "share": 0.115854
         },
         "rag_security": {
           "count": 23,
-          "share": 0.152318
+          "share": 0.140244
         },
         "reasoning_models": {
           "count": 5,
-          "share": 0.033113
+          "share": 0.030488
         },
         "red_teaming": {
           "count": 9,
-          "share": 0.059603
+          "share": 0.054878
         },
         "self_evolving_agents": {
           "count": 2,
-          "share": 0.013245
+          "share": 0.012195
         },
         "tool_calling_security": {
           "count": 1,
-          "share": 0.006623
+          "share": 0.006098
+        },
+        "vulnerability_cve": {
+          "count": 12,
+          "share": 0.073171
         },
         "world_models": {
           "count": 1,
-          "share": 0.006623
+          "share": 0.006098
         }
       }
     },
     "2026-05-11": {
       "week_start": "2026-05-11",
-      "captured_at": "2026-07-21T07:01:05.176379",
-      "documents": 237,
+      "captured_at": "2026-07-21T07:57:47.703516",
+      "documents": 308,
       "by_source_type": {
-        "research": 237
+        "research": 237,
+        "vulnerability": 71
       },
       "tags": {
         "adversarial_ml": {
           "count": 1,
-          "share": 0.004219
+          "share": 0.003247
         },
         "agent_identity_trust": {
           "count": 1,
-          "share": 0.004219
+          "share": 0.003247
         },
         "agent_memory_security": {
           "count": 3,
-          "share": 0.012658
+          "share": 0.00974
         },
         "agent_security": {
           "count": 10,
-          "share": 0.042194
+          "share": 0.032468
         },
         "agent_swarm_security": {
           "count": 2,
-          "share": 0.008439
+          "share": 0.006494
         },
         "agentic_ai": {
-          "count": 33,
-          "share": 0.139241
+          "count": 34,
+          "share": 0.11039
         },
         "bias_fairness": {
           "count": 2,
-          "share": 0.008439
+          "share": 0.006494
         },
         "computer_use_agents": {
           "count": 9,
-          "share": 0.037975
+          "share": 0.029221
         },
         "data_poisoning": {
           "count": 14,
-          "share": 0.059072
+          "share": 0.045455
         },
         "governance_regulation": {
           "count": 4,
-          "share": 0.016878
+          "share": 0.012987
         },
         "guardrails_defense": {
           "count": 19,
-          "share": 0.080169
+          "share": 0.061688
         },
         "indirect_prompt_injection": {
           "count": 3,
-          "share": 0.012658
+          "share": 0.00974
         },
         "jailbreak": {
           "count": 22,
-          "share": 0.092827
+          "share": 0.071429
         },
         "long_context_memory": {
           "count": 18,
-          "share": 0.075949
+          "share": 0.058442
+        },
+        "mcp_security": {
+          "count": 1,
+          "share": 0.003247
         },
         "misinformation": {
           "count": 3,
-          "share": 0.012658
+          "share": 0.00974
         },
         "model_drift": {
           "count": 2,
-          "share": 0.008439
+          "share": 0.006494
         },
         "model_efficiency": {
           "count": 14,
-          "share": 0.059072
+          "share": 0.045455
+        },
+        "model_supply_chain": {
+          "count": 2,
+          "share": 0.006494
         },
         "model_theft": {
           "count": 2,
-          "share": 0.008439
+          "share": 0.006494
         },
         "multimodal_ai": {
-          "count": 10,
-          "share": 0.042194
+          "count": 11,
+          "share": 0.035714
         },
         "multimodal_injection": {
           "count": 1,
-          "share": 0.004219
+          "share": 0.003247
         },
         "on_device_ai": {
           "count": 2,
-          "share": 0.008439
+          "share": 0.006494
         },
         "open_weights": {
           "count": 5,
-          "share": 0.021097
+          "share": 0.016234
         },
         "prompt_injection": {
           "count": 13,
-          "share": 0.054852
+          "share": 0.042208
         },
         "rag_security": {
           "count": 16,
-          "share": 0.067511
+          "share": 0.051948
         },
         "reasoning_models": {
           "count": 10,
-          "share": 0.042194
+          "share": 0.032468
         },
         "red_teaming": {
           "count": 7,
-          "share": 0.029536
+          "share": 0.022727
         },
         "self_evolving_agents": {
           "count": 11,
-          "share": 0.046414
+          "share": 0.035714
         },
         "synthetic_data": {
           "count": 1,
-          "share": 0.004219
+          "share": 0.003247
         },
         "tool_calling_security": {
           "count": 1,
-          "share": 0.004219
+          "share": 0.003247
         },
         "vulnerability_cve": {
-          "count": 1,
-          "share": 0.004219
+          "count": 72,
+          "share": 0.233766
         },
         "world_models": {
           "count": 15,
-          "share": 0.063291
+          "share": 0.048701
         }
       }
     },
     "2026-05-18": {
       "week_start": "2026-05-18",
-      "captured_at": "2026-07-21T07:01:05.179742",
-      "documents": 182,
+      "captured_at": "2026-07-21T07:57:47.713564",
+      "documents": 187,
       "by_source_type": {
-        "research": 182
+        "research": 182,
+        "vulnerability": 5
       },
       "tags": {
         "agent_security": {
           "count": 7,
-          "share": 0.038462
+          "share": 0.037433
         },
         "agent_swarm_security": {
           "count": 1,
-          "share": 0.005495
+          "share": 0.005348
         },
         "agentic_ai": {
           "count": 18,
-          "share": 0.098901
+          "share": 0.096257
         },
         "bias_fairness": {
           "count": 1,
-          "share": 0.005495
+          "share": 0.005348
         },
         "computer_use_agents": {
           "count": 4,
-          "share": 0.021978
+          "share": 0.02139
         },
         "data_poisoning": {
           "count": 11,
-          "share": 0.06044
+          "share": 0.058824
         },
         "governance_regulation": {
           "count": 1,
-          "share": 0.005495
+          "share": 0.005348
         },
         "guardrails_defense": {
           "count": 19,
-          "share": 0.104396
+          "share": 0.101604
         },
         "indirect_prompt_injection": {
           "count": 3,
-          "share": 0.016484
+          "share": 0.016043
         },
         "inference_integrity": {
           "count": 1,
-          "share": 0.005495
+          "share": 0.005348
         },
         "jailbreak": {
           "count": 28,
-          "share": 0.153846
+          "share": 0.149733
         },
         "long_context_memory": {
           "count": 20,
-          "share": 0.10989
+          "share": 0.106952
         },
         "mcp_security": {
           "count": 2,
-          "share": 0.010989
+          "share": 0.010695
         },
         "misinformation": {
           "count": 2,
-          "share": 0.010989
+          "share": 0.010695
         },
         "model_drift": {
           "count": 3,
-          "share": 0.016484
+          "share": 0.016043
         },
         "model_efficiency": {
           "count": 11,
-          "share": 0.06044
+          "share": 0.058824
         },
         "model_theft": {
           "count": 1,
-          "share": 0.005495
+          "share": 0.005348
         },
         "multimodal_ai": {
           "count": 8,
-          "share": 0.043956
+          "share": 0.042781
         },
         "multimodal_injection": {
           "count": 2,
-          "share": 0.010989
+          "share": 0.010695
         },
         "on_device_ai": {
           "count": 1,
-          "share": 0.005495
+          "share": 0.005348
         },
         "open_weights": {
           "count": 2,
-          "share": 0.010989
+          "share": 0.010695
         },
         "prompt_injection": {
           "count": 11,
-          "share": 0.06044
+          "share": 0.058824
         },
         "rag_security": {
           "count": 26,
-          "share": 0.142857
+          "share": 0.139037
         },
         "reasoning_models": {
           "count": 4,
-          "share": 0.021978
+          "share": 0.02139
         },
         "red_teaming": {
           "count": 6,
-          "share": 0.032967
+          "share": 0.032086
         },
         "self_evolving_agents": {
           "count": 12,
-          "share": 0.065934
+          "share": 0.064171
         },
         "synthetic_data": {
           "count": 2,
-          "share": 0.010989
+          "share": 0.010695
+        },
+        "vulnerability_cve": {
+          "count": 5,
+          "share": 0.026738
         },
         "world_models": {
           "count": 5,
-          "share": 0.027473
+          "share": 0.026738
         }
       }
     },
     "2026-05-25": {
       "week_start": "2026-05-25",
-      "captured_at": "2026-07-21T07:01:05.183760",
-      "documents": 239,
+      "captured_at": "2026-07-21T07:57:47.728793",
+      "documents": 255,
       "by_source_type": {
-        "research": 239
+        "research": 239,
+        "vulnerability": 15,
+        "news": 1
       },
       "tags": {
         "adversarial_ml": {
           "count": 1,
-          "share": 0.004184
+          "share": 0.003922
         },
         "agent_identity_trust": {
           "count": 1,
-          "share": 0.004184
+          "share": 0.003922
         },
         "agent_memory_security": {
           "count": 2,
-          "share": 0.008368
+          "share": 0.007843
         },
         "agent_security": {
           "count": 8,
-          "share": 0.033473
+          "share": 0.031373
         },
         "agent_swarm_security": {
           "count": 2,
-          "share": 0.008368
+          "share": 0.007843
         },
         "agentic_ai": {
           "count": 35,
-          "share": 0.146444
+          "share": 0.137255
         },
         "computer_use_agents": {
           "count": 3,
-          "share": 0.012552
+          "share": 0.011765
         },
         "data_poisoning": {
           "count": 9,
-          "share": 0.037657
+          "share": 0.035294
         },
         "guardrails_defense": {
           "count": 17,
-          "share": 0.07113
+          "share": 0.066667
         },
         "indirect_prompt_injection": {
           "count": 3,
-          "share": 0.012552
+          "share": 0.011765
         },
         "jailbreak": {
           "count": 25,
-          "share": 0.104603
+          "share": 0.098039
         },
         "long_context_memory": {
           "count": 16,
-          "share": 0.066946
+          "share": 0.062745
         },
         "mcp_security": {
           "count": 1,
-          "share": 0.004184
+          "share": 0.003922
         },
         "misinformation": {
           "count": 4,
-          "share": 0.016736
+          "share": 0.015686
         },
         "model_context_poisoning": {
           "count": 2,
-          "share": 0.008368
+          "share": 0.007843
         },
         "model_drift": {
           "count": 5,
-          "share": 0.020921
+          "share": 0.019608
         },
         "model_efficiency": {
           "count": 21,
-          "share": 0.087866
+          "share": 0.082353
         },
         "model_theft": {
           "count": 2,
-          "share": 0.008368
+          "share": 0.007843
         },
         "multimodal_ai": {
-          "count": 11,
-          "share": 0.046025
+          "count": 17,
+          "share": 0.066667
         },
         "on_device_ai": {
           "count": 5,
-          "share": 0.020921
+          "share": 0.019608
         },
         "open_weights": {
           "count": 2,
-          "share": 0.008368
+          "share": 0.007843
         },
         "privacy": {
           "count": 1,
-          "share": 0.004184
+          "share": 0.003922
         },
         "prompt_injection": {
           "count": 22,
-          "share": 0.09205
+          "share": 0.086275
         },
         "rag_security": {
-          "count": 12,
-          "share": 0.050209
+          "count": 13,
+          "share": 0.05098
         },
         "reasoning_models": {
           "count": 9,
-          "share": 0.037657
+          "share": 0.035294
         },
         "red_teaming": {
           "count": 5,
-          "share": 0.020921
+          "share": 0.019608
         },
         "self_evolving_agents": {
           "count": 8,
-          "share": 0.033473
+          "share": 0.031373
         },
         "synthetic_data": {
           "count": 5,
-          "share": 0.020921
+          "share": 0.019608
+        },
+        "vulnerability_cve": {
+          "count": 16,
+          "share": 0.062745
         },
         "world_models": {
           "count": 6,
-          "share": 0.025105
+          "share": 0.023529
         }
       }
     },
     "2026-06-01": {
       "week_start": "2026-06-01",
-      "captured_at": "2026-07-21T07:01:05.189784",
-      "documents": 200,
+      "captured_at": "2026-07-21T07:57:47.739220",
+      "documents": 203,
       "by_source_type": {
-        "research": 200
+        "research": 200,
+        "vulnerability": 2,
+        "vendor": 1
       },
       "tags": {
         "agent_identity_trust": {
           "count": 1,
-          "share": 0.005
+          "share": 0.004926
         },
         "agent_memory_security": {
           "count": 2,
-          "share": 0.01
+          "share": 0.009852
         },
         "agent_permissions": {
           "count": 1,
-          "share": 0.005
+          "share": 0.004926
         },
         "agent_security": {
-          "count": 12,
-          "share": 0.06
+          "count": 13,
+          "share": 0.064039
         },
         "agent_swarm_security": {
           "count": 2,
-          "share": 0.01
+          "share": 0.009852
         },
         "agentic_ai": {
           "count": 14,
-          "share": 0.07
+          "share": 0.068966
         },
         "autonomous_cyber_offense": {
           "count": 1,
-          "share": 0.005
+          "share": 0.004926
         },
         "bias_fairness": {
           "count": 1,
-          "share": 0.005
+          "share": 0.004926
         },
         "computer_use_agents": {
-          "count": 3,
-          "share": 0.015
+          "count": 4,
+          "share": 0.019704
         },
         "data_exfiltration": {
           "count": 4,
-          "share": 0.02
+          "share": 0.019704
         },
         "data_poisoning": {
           "count": 8,
-          "share": 0.04
+          "share": 0.039409
         },
         "governance_regulation": {
           "count": 4,
-          "share": 0.02
+          "share": 0.019704
         },
         "guardrails_defense": {
           "count": 26,
-          "share": 0.13
+          "share": 0.128079
         },
         "indirect_prompt_injection": {
           "count": 4,
-          "share": 0.02
+          "share": 0.019704
         },
         "jailbreak": {
           "count": 24,
-          "share": 0.12
+          "share": 0.118227
         },
         "long_context_memory": {
           "count": 15,
-          "share": 0.075
+          "share": 0.073892
         },
         "misinformation": {
           "count": 1,
-          "share": 0.005
+          "share": 0.004926
         },
         "model_context_poisoning": {
           "count": 2,
-          "share": 0.01
+          "share": 0.009852
         },
         "model_drift": {
           "count": 5,
-          "share": 0.025
+          "share": 0.024631
         },
         "model_efficiency": {
           "count": 7,
-          "share": 0.035
+          "share": 0.034483
         },
         "model_theft": {
           "count": 4,
-          "share": 0.02
+          "share": 0.019704
         },
         "multimodal_ai": {
           "count": 9,
-          "share": 0.045
+          "share": 0.044335
         },
         "on_device_ai": {
           "count": 2,
-          "share": 0.01
+          "share": 0.009852
         },
         "open_weights": {
           "count": 2,
-          "share": 0.01
+          "share": 0.009852
         },
         "privacy": {
           "count": 1,
-          "share": 0.005
+          "share": 0.004926
         },
         "prompt_injection": {
-          "count": 14,
-          "share": 0.07
+          "count": 15,
+          "share": 0.073892
         },
         "rag_security": {
           "count": 25,
-          "share": 0.125
+          "share": 0.123153
         },
         "reasoning_models": {
           "count": 7,
-          "share": 0.035
+          "share": 0.034483
         },
         "red_teaming": {
           "count": 6,
-          "share": 0.03
+          "share": 0.029557
         },
         "self_evolving_agents": {
           "count": 24,
-          "share": 0.12
+          "share": 0.118227
         },
         "synthetic_data": {
           "count": 3,
-          "share": 0.015
+          "share": 0.014778
         },
         "tool_calling_security": {
           "count": 1,
-          "share": 0.005
+          "share": 0.004926
+        },
+        "vulnerability_cve": {
+          "count": 2,
+          "share": 0.009852
         },
         "world_models": {
           "count": 7,
-          "share": 0.035
+          "share": 0.034483
         }
       }
     },
     "2026-06-08": {
       "week_start": "2026-06-08",
-      "captured_at": "2026-07-21T07:01:05.193799",
-      "documents": 228,
+      "captured_at": "2026-07-21T07:57:47.751343",
+      "documents": 246,
       "by_source_type": {
-        "research": 228
+        "research": 228,
+        "vulnerability": 17,
+        "standards": 1
       },
       "tags": {
         "agent_identity_trust": {
           "count": 3,
-          "share": 0.013158
+          "share": 0.012195
         },
         "agent_security": {
           "count": 7,
-          "share": 0.030702
+          "share": 0.028455
         },
         "agent_swarm_security": {
           "count": 2,
-          "share": 0.008772
+          "share": 0.00813
         },
         "agentic_ai": {
           "count": 32,
-          "share": 0.140351
+          "share": 0.130081
         },
         "bias_fairness": {
           "count": 1,
-          "share": 0.004386
+          "share": 0.004065
         },
         "computer_use_agents": {
           "count": 3,
-          "share": 0.013158
+          "share": 0.012195
         },
         "data_exfiltration": {
           "count": 1,
-          "share": 0.004386
+          "share": 0.004065
         },
         "data_poisoning": {
           "count": 10,
-          "share": 0.04386
+          "share": 0.04065
         },
         "governance_regulation": {
           "count": 4,
-          "share": 0.017544
+          "share": 0.01626
         },
         "guardrails_defense": {
           "count": 18,
-          "share": 0.078947
+          "share": 0.073171
         },
         "indirect_prompt_injection": {
           "count": 7,
-          "share": 0.030702
+          "share": 0.028455
         },
         "jailbreak": {
           "count": 17,
-          "share": 0.074561
+          "share": 0.069106
         },
         "long_context_memory": {
           "count": 9,
-          "share": 0.039474
+          "share": 0.036585
         },
         "misinformation": {
           "count": 4,
-          "share": 0.017544
+          "share": 0.01626
         },
         "model_context_poisoning": {
           "count": 2,
-          "share": 0.008772
+          "share": 0.00813
         },
         "model_drift": {
           "count": 3,
-          "share": 0.013158
+          "share": 0.012195
         },
         "model_efficiency": {
           "count": 22,
-          "share": 0.096491
+          "share": 0.089431
         },
         "model_theft": {
           "count": 3,
-          "share": 0.013158
+          "share": 0.012195
         },
         "multimodal_ai": {
           "count": 11,
-          "share": 0.048246
+          "share": 0.044715
         },
         "multimodal_injection": {
           "count": 1,
-          "share": 0.004386
+          "share": 0.004065
         },
         "on_device_ai": {
           "count": 2,
-          "share": 0.008772
+          "share": 0.00813
         },
         "open_weights": {
           "count": 4,
-          "share": 0.017544
+          "share": 0.01626
         },
         "privacy": {
           "count": 1,
-          "share": 0.004386
+          "share": 0.004065
         },
         "prompt_injection": {
           "count": 19,
-          "share": 0.083333
+          "share": 0.077236
         },
         "rag_security": {
           "count": 10,
-          "share": 0.04386
+          "share": 0.04065
         },
         "reasoning_models": {
           "count": 13,
-          "share": 0.057018
+          "share": 0.052846
         },
         "red_teaming": {
           "count": 4,
-          "share": 0.017544
+          "share": 0.01626
         },
         "self_evolving_agents": {
           "count": 3,
-          "share": 0.013158
+          "share": 0.012195
         },
         "synthetic_data": {
           "count": 3,
-          "share": 0.013158
+          "share": 0.012195
         },
         "tool_calling_security": {
           "count": 2,
-          "share": 0.008772
+          "share": 0.00813
         },
         "vulnerability_cve": {
-          "count": 2,
-          "share": 0.008772
+          "count": 19,
+          "share": 0.077236
         },
         "world_models": {
           "count": 11,
-          "share": 0.048246
+          "share": 0.044715
         }
       }
     },
     "2026-06-15": {
       "week_start": "2026-06-15",
-      "captured_at": "2026-07-21T07:01:05.199253",
-      "documents": 118,
+      "captured_at": "2026-07-21T07:57:47.757257",
+      "documents": 132,
       "by_source_type": {
-        "research": 118
+        "research": 118,
+        "vulnerability": 13,
+        "vendor": 1
       },
       "tags": {
         "adversarial_ml": {
           "count": 1,
-          "share": 0.008475
+          "share": 0.007576
         },
         "agent_memory_security": {
           "count": 1,
-          "share": 0.008475
+          "share": 0.007576
         },
         "agent_security": {
           "count": 4,
-          "share": 0.033898
+          "share": 0.030303
         },
         "agent_swarm_security": {
           "count": 1,
-          "share": 0.008475
+          "share": 0.007576
         },
         "agentic_ai": {
           "count": 13,
-          "share": 0.110169
+          "share": 0.098485
         },
         "computer_use_agents": {
-          "count": 3,
-          "share": 0.025424
+          "count": 4,
+          "share": 0.030303
         },
         "data_exfiltration": {
-          "count": 1,
-          "share": 0.008475
+          "count": 2,
+          "share": 0.015152
         },
         "data_poisoning": {
           "count": 8,
-          "share": 0.067797
+          "share": 0.060606
         },
         "governance_regulation": {
           "count": 1,
-          "share": 0.008475
+          "share": 0.007576
         },
         "guardrails_defense": {
           "count": 12,
-          "share": 0.101695
+          "share": 0.090909
         },
         "indirect_prompt_injection": {
-          "count": 5,
-          "share": 0.042373
+          "count": 6,
+          "share": 0.045455
         },
         "jailbreak": {
           "count": 14,
-          "share": 0.118644
+          "share": 0.106061
         },
         "long_context_memory": {
           "count": 10,
-          "share": 0.084746
+          "share": 0.075758
         },
         "misinformation": {
           "count": 1,
-          "share": 0.008475
+          "share": 0.007576
         },
         "model_context_poisoning": {
           "count": 2,
-          "share": 0.016949
+          "share": 0.015152
         },
         "model_drift": {
           "count": 6,
-          "share": 0.050847
+          "share": 0.045455
         },
         "model_efficiency": {
           "count": 7,
-          "share": 0.059322
+          "share": 0.05303
         },
         "model_supply_chain": {
           "count": 2,
-          "share": 0.016949
+          "share": 0.015152
         },
         "multimodal_ai": {
           "count": 6,
-          "share": 0.050847
+          "share": 0.045455
         },
         "multimodal_injection": {
           "count": 1,
-          "share": 0.008475
+          "share": 0.007576
         },
         "on_device_ai": {
           "count": 2,
-          "share": 0.016949
+          "share": 0.015152
         },
         "open_weights": {
-          "count": 2,
-          "share": 0.016949
+          "count": 3,
+          "share": 0.022727
         },
         "prompt_injection": {
-          "count": 15,
-          "share": 0.127119
+          "count": 17,
+          "share": 0.128788
         },
         "rag_security": {
           "count": 4,
-          "share": 0.033898
+          "share": 0.030303
         },
         "reasoning_models": {
           "count": 6,
-          "share": 0.050847
+          "share": 0.045455
         },
         "red_teaming": {
           "count": 2,
-          "share": 0.016949
+          "share": 0.015152
         },
         "self_evolving_agents": {
           "count": 3,
-          "share": 0.025424
+          "share": 0.022727
         },
         "synthetic_data": {
           "count": 2,
-          "share": 0.016949
+          "share": 0.015152
         },
         "vulnerability_cve": {
-          "count": 1,
-          "share": 0.008475
+          "count": 14,
+          "share": 0.106061
         },
         "world_models": {
           "count": 7,
-          "share": 0.059322
+          "share": 0.05303
         }
       }
     },
     "2026-06-22": {
       "week_start": "2026-06-22",
-      "captured_at": "2026-07-21T07:01:05.200809",
-      "documents": 238,
+      "captured_at": "2026-07-21T07:57:47.774167",
+      "documents": 282,
       "by_source_type": {
-        "research": 238
+        "research": 238,
+        "vendor": 3,
+        "vulnerability": 41
       },
       "tags": {
         "adversarial_ml": {
           "count": 2,
-          "share": 0.008403
+          "share": 0.007092
         },
         "agent_identity_trust": {
           "count": 1,
-          "share": 0.004202
+          "share": 0.003546
         },
         "agent_memory_security": {
           "count": 1,
-          "share": 0.004202
+          "share": 0.003546
         },
         "agent_security": {
           "count": 10,
-          "share": 0.042017
+          "share": 0.035461
         },
         "agent_swarm_security": {
           "count": 3,
-          "share": 0.012605
+          "share": 0.010638
         },
         "agentic_ai": {
           "count": 34,
-          "share": 0.142857
+          "share": 0.120567
+        },
+        "ai_codegen_security": {
+          "count": 1,
+          "share": 0.003546
         },
         "computer_use_agents": {
           "count": 5,
-          "share": 0.021008
+          "share": 0.01773
+        },
+        "data_exfiltration": {
+          "count": 1,
+          "share": 0.003546
         },
         "data_poisoning": {
           "count": 9,
-          "share": 0.037815
+          "share": 0.031915
         },
         "deepfake_fraud": {
           "count": 1,
-          "share": 0.004202
+          "share": 0.003546
         },
         "governance_regulation": {
           "count": 3,
-          "share": 0.012605
+          "share": 0.010638
         },
         "guardrails_defense": {
           "count": 18,
-          "share": 0.07563
+          "share": 0.06383
         },
         "indirect_prompt_injection": {
           "count": 3,
-          "share": 0.012605
+          "share": 0.010638
         },
         "jailbreak": {
           "count": 18,
-          "share": 0.07563
+          "share": 0.06383
         },
         "long_context_memory": {
           "count": 13,
-          "share": 0.054622
+          "share": 0.046099
         },
         "mcp_security": {
           "count": 1,
-          "share": 0.004202
+          "share": 0.003546
         },
         "misinformation": {
           "count": 3,
-          "share": 0.012605
+          "share": 0.010638
         },
         "model_context_poisoning": {
           "count": 2,
-          "share": 0.008403
+          "share": 0.007092
         },
         "model_drift": {
           "count": 5,
-          "share": 0.021008
+          "share": 0.01773
         },
         "model_efficiency": {
-          "count": 12,
-          "share": 0.05042
+          "count": 13,
+          "share": 0.046099
+        },
+        "model_supply_chain": {
+          "count": 2,
+          "share": 0.007092
         },
         "multimodal_ai": {
           "count": 19,
-          "share": 0.079832
+          "share": 0.067376
         },
         "multimodal_injection": {
           "count": 1,
-          "share": 0.004202
+          "share": 0.003546
         },
         "on_device_ai": {
           "count": 4,
-          "share": 0.016807
+          "share": 0.014184
         },
         "open_weights": {
-          "count": 6,
-          "share": 0.02521
+          "count": 9,
+          "share": 0.031915
         },
         "privacy": {
           "count": 1,
-          "share": 0.004202
+          "share": 0.003546
         },
         "prompt_injection": {
           "count": 15,
-          "share": 0.063025
+          "share": 0.053191
         },
         "rag_security": {
           "count": 7,
-          "share": 0.029412
+          "share": 0.024823
         },
         "reasoning_models": {
           "count": 14,
-          "share": 0.058824
+          "share": 0.049645
         },
         "red_teaming": {
           "count": 3,
-          "share": 0.012605
+          "share": 0.010638
         },
         "self_evolving_agents": {
           "count": 8,
-          "share": 0.033613
+          "share": 0.028369
         },
         "synthetic_data": {
           "count": 1,
-          "share": 0.004202
+          "share": 0.003546
         },
         "tool_calling_security": {
           "count": 1,
-          "share": 0.004202
+          "share": 0.003546
+        },
+        "vulnerability_cve": {
+          "count": 41,
+          "share": 0.14539
         },
         "world_models": {
           "count": 21,
-          "share": 0.088235
+          "share": 0.074468
         }
       }
     },
     "2026-06-29": {
       "week_start": "2026-06-29",
-      "captured_at": "2026-07-21T07:01:05.204126",
-      "documents": 96,
+      "captured_at": "2026-07-21T07:57:47.778218",
+      "documents": 100,
       "by_source_type": {
-        "research": 96
+        "research": 96,
+        "vulnerability": 2,
+        "vendor": 2
       },
       "tags": {
         "adversarial_ml": {
           "count": 1,
-          "share": 0.010417
+          "share": 0.01
         },
         "agent_memory_security": {
           "count": 3,
-          "share": 0.03125
+          "share": 0.03
         },
         "agent_security": {
           "count": 8,
-          "share": 0.083333
+          "share": 0.08
         },
         "agentic_ai": {
           "count": 10,
-          "share": 0.104167
+          "share": 0.1
         },
         "computer_use_agents": {
           "count": 3,
-          "share": 0.03125
+          "share": 0.03
         },
         "data_poisoning": {
           "count": 8,
-          "share": 0.083333
+          "share": 0.08
         },
         "guardrails_defense": {
           "count": 8,
-          "share": 0.083333
+          "share": 0.08
         },
         "indirect_prompt_injection": {
           "count": 3,
-          "share": 0.03125
+          "share": 0.03
         },
         "jailbreak": {
-          "count": 8,
-          "share": 0.083333
+          "count": 9,
+          "share": 0.09
         },
         "long_context_memory": {
           "count": 4,
-          "share": 0.041667
+          "share": 0.04
         },
         "misinformation": {
           "count": 2,
-          "share": 0.020833
+          "share": 0.02
         },
         "model_drift": {
           "count": 1,
-          "share": 0.010417
+          "share": 0.01
         },
         "model_efficiency": {
           "count": 8,
-          "share": 0.083333
+          "share": 0.08
         },
         "multimodal_ai": {
           "count": 7,
-          "share": 0.072917
+          "share": 0.07
         },
         "open_weights": {
           "count": 2,
-          "share": 0.020833
+          "share": 0.02
         },
         "prompt_injection": {
           "count": 5,
-          "share": 0.052083
+          "share": 0.05
         },
         "rag_security": {
           "count": 3,
-          "share": 0.03125
+          "share": 0.03
         },
         "reasoning_models": {
           "count": 2,
-          "share": 0.020833
+          "share": 0.02
         },
         "red_teaming": {
           "count": 3,
-          "share": 0.03125
+          "share": 0.03
         },
         "self_evolving_agents": {
           "count": 4,
-          "share": 0.041667
+          "share": 0.04
+        },
+        "vulnerability_cve": {
+          "count": 2,
+          "share": 0.02
         },
         "world_models": {
           "count": 5,
-          "share": 0.052083
+          "share": 0.05
         }
       }
     },
     "2026-07-06": {
       "week_start": "2026-07-06",
-      "captured_at": "2026-07-21T07:01:05.204126",
-      "documents": 221,
+      "captured_at": "2026-07-21T07:57:47.792365",
+      "documents": 257,
       "by_source_type": {
-        "research": 221
+        "vulnerability": 31,
+        "research": 221,
+        "news": 4,
+        "vendor": 1
       },
       "tags": {
         "agent_identity_trust": {
           "count": 1,
-          "share": 0.004525
+          "share": 0.003891
         },
         "agent_memory_security": {
           "count": 3,
-          "share": 0.013575
+          "share": 0.011673
         },
         "agent_permissions": {
           "count": 1,
-          "share": 0.004525
+          "share": 0.003891
         },
         "agent_security": {
           "count": 3,
-          "share": 0.013575
+          "share": 0.011673
         },
         "agent_swarm_security": {
           "count": 1,
-          "share": 0.004525
+          "share": 0.003891
         },
         "agentic_ai": {
-          "count": 37,
-          "share": 0.167421
+          "count": 38,
+          "share": 0.14786
         },
         "ai_codegen_security": {
           "count": 1,
-          "share": 0.004525
+          "share": 0.003891
         },
         "data_exfiltration": {
-          "count": 1,
-          "share": 0.004525
+          "count": 4,
+          "share": 0.015564
         },
         "data_poisoning": {
           "count": 8,
-          "share": 0.036199
+          "share": 0.031128
         },
         "deepfake_fraud": {
           "count": 1,
-          "share": 0.004525
+          "share": 0.003891
         },
         "governance_regulation": {
           "count": 2,
-          "share": 0.00905
+          "share": 0.007782
         },
         "guardrails_defense": {
-          "count": 11,
-          "share": 0.049774
+          "count": 13,
+          "share": 0.050584
         },
         "indirect_prompt_injection": {
           "count": 5,
-          "share": 0.022624
+          "share": 0.019455
         },
         "jailbreak": {
           "count": 9,
-          "share": 0.040724
+          "share": 0.035019
         },
         "long_context_memory": {
           "count": 20,
-          "share": 0.090498
+          "share": 0.077821
         },
         "misinformation": {
           "count": 5,
-          "share": 0.022624
+          "share": 0.019455
         },
         "model_drift": {
           "count": 6,
-          "share": 0.027149
+          "share": 0.023346
         },
         "model_efficiency": {
-          "count": 12,
-          "share": 0.054299
+          "count": 14,
+          "share": 0.054475
         },
         "model_supply_chain": {
           "count": 1,
-          "share": 0.004525
+          "share": 0.003891
         },
         "multimodal_ai": {
           "count": 19,
-          "share": 0.085973
+          "share": 0.07393
         },
         "multimodal_injection": {
           "count": 1,
-          "share": 0.004525
+          "share": 0.003891
         },
         "on_device_ai": {
           "count": 2,
-          "share": 0.00905
+          "share": 0.007782
         },
         "open_weights": {
-          "count": 1,
-          "share": 0.004525
+          "count": 5,
+          "share": 0.019455
         },
         "prompt_injection": {
-          "count": 8,
-          "share": 0.036199
+          "count": 10,
+          "share": 0.038911
         },
         "rag_security": {
-          "count": 5,
-          "share": 0.022624
+          "count": 6,
+          "share": 0.023346
         },
         "reasoning_models": {
           "count": 9,
-          "share": 0.040724
+          "share": 0.035019
         },
         "red_teaming": {
           "count": 1,
-          "share": 0.004525
+          "share": 0.003891
         },
         "self_evolving_agents": {
           "count": 6,
-          "share": 0.027149
+          "share": 0.023346
         },
         "synthetic_data": {
           "count": 4,
-          "share": 0.0181
+          "share": 0.015564
+        },
+        "tool_calling_security": {
+          "count": 1,
+          "share": 0.003891
         },
         "vulnerability_cve": {
-          "count": 1,
-          "share": 0.004525
+          "count": 34,
+          "share": 0.132296
         },
         "world_models": {
           "count": 12,
-          "share": 0.054299
+          "share": 0.046693
         }
       }
     },
@@ -3495,142 +3656,145 @@
     },
     "2026-07-13": {
       "week_start": "2026-07-13",
-      "captured_at": "2026-07-21T07:01:05.204126",
-      "documents": 320,
+      "captured_at": "2026-07-21T07:57:47.809748",
+      "documents": 369,
       "by_source_type": {
-        "research": 320
+        "research": 320,
+        "news": 41,
+        "vendor": 4,
+        "vulnerability": 4
       },
       "tags": {
         "adversarial_ml": {
           "count": 2,
-          "share": 0.00625
+          "share": 0.00542
         },
         "agent_memory_security": {
-          "count": 5,
-          "share": 0.015625
+          "count": 6,
+          "share": 0.01626
         },
         "agent_permissions": {
-          "count": 1,
-          "share": 0.003125
+          "count": 2,
+          "share": 0.00542
         },
         "agent_security": {
-          "count": 11,
-          "share": 0.034375
+          "count": 13,
+          "share": 0.03523
         },
         "agent_swarm_security": {
           "count": 1,
-          "share": 0.003125
+          "share": 0.00271
         },
         "agentic_ai": {
           "count": 50,
-          "share": 0.15625
+          "share": 0.135501
         },
         "bias_fairness": {
           "count": 3,
-          "share": 0.009375
+          "share": 0.00813
         },
         "computer_use_agents": {
           "count": 5,
-          "share": 0.015625
+          "share": 0.01355
         },
         "data_exfiltration": {
-          "count": 2,
-          "share": 0.00625
+          "count": 3,
+          "share": 0.00813
         },
         "data_poisoning": {
           "count": 4,
-          "share": 0.0125
+          "share": 0.01084
         },
         "governance_regulation": {
           "count": 4,
-          "share": 0.0125
+          "share": 0.01084
         },
         "guardrails_defense": {
-          "count": 10,
-          "share": 0.03125
+          "count": 11,
+          "share": 0.02981
         },
         "indirect_prompt_injection": {
           "count": 2,
-          "share": 0.00625
+          "share": 0.00542
         },
         "jailbreak": {
           "count": 7,
-          "share": 0.021875
+          "share": 0.01897
         },
         "long_context_memory": {
           "count": 22,
-          "share": 0.06875
+          "share": 0.059621
         },
         "misinformation": {
           "count": 6,
-          "share": 0.01875
+          "share": 0.01626
         },
         "model_context_poisoning": {
           "count": 1,
-          "share": 0.003125
+          "share": 0.00271
         },
         "model_drift": {
           "count": 3,
-          "share": 0.009375
+          "share": 0.00813
         },
         "model_efficiency": {
           "count": 22,
-          "share": 0.06875
+          "share": 0.059621
         },
         "model_theft": {
           "count": 1,
-          "share": 0.003125
+          "share": 0.00271
         },
         "multimodal_ai": {
           "count": 39,
-          "share": 0.121875
+          "share": 0.105691
         },
         "on_device_ai": {
           "count": 7,
-          "share": 0.021875
+          "share": 0.01897
         },
         "open_weights": {
           "count": 12,
-          "share": 0.0375
+          "share": 0.03252
         },
         "privacy": {
           "count": 1,
-          "share": 0.003125
+          "share": 0.00271
         },
         "prompt_injection": {
-          "count": 10,
-          "share": 0.03125
+          "count": 14,
+          "share": 0.03794
         },
         "rag_security": {
           "count": 6,
-          "share": 0.01875
+          "share": 0.01626
         },
         "reasoning_models": {
           "count": 18,
-          "share": 0.05625
+          "share": 0.04878
         },
         "red_teaming": {
-          "count": 5,
-          "share": 0.015625
+          "count": 10,
+          "share": 0.0271
         },
         "self_evolving_agents": {
-          "count": 22,
-          "share": 0.06875
+          "count": 23,
+          "share": 0.062331
         },
         "tool_calling_security": {
           "count": 3,
-          "share": 0.009375
+          "share": 0.00813
         },
         "vulnerability_cve": {
-          "count": 1,
-          "share": 0.003125
+          "count": 21,
+          "share": 0.056911
         },
         "world_models": {
           "count": 25,
-          "share": 0.078125
+          "share": 0.067751
         }
       }
     }
   },
-  "updated_at": "2026-07-21T07:46:14.345172"
+  "updated_at": "2026-07-21T07:58:01.832941"
 }

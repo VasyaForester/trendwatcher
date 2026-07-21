@@ -157,42 +157,62 @@ def load_weekly_snapshots() -> list[dict]:
 
 
 def append_document_ledger(session) -> int:
-    """Append-only экспорт новых документов с тегами."""
+    """Append-only по URL: никогда не затирает историю при пересоздании SQLite."""
     from sqlalchemy import func
 
     _ensure_dirs()
-    manifest = _load_manifest()
-    last_id = manifest.get("last_doc_id", 0)
-    max_id = session.scalar(select(func.max(Document.id))) or 0
-    if last_id > max_id:
-        if DOC_LEDGER.exists():
-            DOC_LEDGER.write_text("", encoding="utf-8")
-        last_id = 0
-    docs = session.scalars(
-        select(Document).where(Document.id > last_id).order_by(Document.id)
-    ).all()
-    if not docs:
-        return 0
+    known_urls: set[str] = set()
+    if DOC_LEDGER.exists():
+        with open(DOC_LEDGER, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    row = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                url = row.get("url")
+                if url:
+                    known_urls.add(url)
+
+    docs = session.scalars(select(Document).order_by(Document.id)).all()
+    appended = 0
+    max_id = 0
     with open(DOC_LEDGER, "a", encoding="utf-8") as f:
         for doc in docs:
+            max_id = max(max_id, doc.id)
+            if doc.url in known_urls:
+                continue
             row = {
                 "id": doc.id,
                 "url": doc.url,
                 "title": doc.title,
-                "summary": doc.summary[:500],
+                "summary": (doc.summary or "")[:500],
                 "published_at": doc.published_at.isoformat(),
                 "fetched_at": doc.fetched_at.isoformat(),
                 "source_id": doc.source_id,
+                "source_name": doc.source_name,
                 "source_type": doc.source_type,
                 "doc_type": doc.doc_type,
                 "tags": doc.tags,
+                "trust": doc.trust,
+                "severity": doc.severity,
             }
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
-            last_id = doc.id
-    manifest["last_doc_id"] = last_id
+            known_urls.add(doc.url)
+            appended += 1
+
+    manifest = _load_manifest()
+    manifest["last_doc_id"] = max(
+        manifest.get("last_doc_id", 0),
+        max_id,
+        session.scalar(select(func.max(Document.id))) or 0,
+    )
+    manifest["ledger_urls"] = len(known_urls)
     manifest["weeks_in_archive"] = len(_load_weekly_stats().get("weeks", {}))
     _save_manifest(manifest)
-    return len(docs)
+    return appended
 
 
 def archive_tag_windows(recent_weeks: int = SIGNAL_WINDOW_WEEKS) -> dict[str, dict]:

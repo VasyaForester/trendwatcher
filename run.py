@@ -20,6 +20,7 @@ def main() -> None:
             "archive",
             "backfill-signals",
             "diet",
+            "restore-db",
         ],
     )
     parser.add_argument("--port", type=int, default=8000)
@@ -64,6 +65,11 @@ def main() -> None:
                 indent=2,
             )
         )
+    elif args.command == "restore-db":
+        from trendwatcher.ingestion.restore import restore_db_from_ledger
+
+        info = restore_db_from_ledger(replace=True)
+        print(json.dumps(info, ensure_ascii=False, indent=2))
     elif args.command == "diet":
         from trendwatcher.db import get_session, init_db
         from trendwatcher.ingestion.compact import compact_stats, diet_documents, vacuum_db

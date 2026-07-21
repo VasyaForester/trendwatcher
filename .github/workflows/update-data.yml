@@ -1,20 +1,16 @@
 # Автообновление данных TrendWatcher без участия человека и без изменения хостинга.
 #
-# Раз в сутки: собирает публикации из источников, пересчитывает аналитику и
-# коммитит свежие data.json + архив обратно в репозиторий.
-# SQLite-база (data/trendwatcher.db) в git НЕ коммитится — она быстро превышает
-# лимит GitHub 100 MB из‑за full_text статей; сайту достаточно data.json.
-# Сайт на хостинге читает data.json по raw-ссылке (см. DATA_URL в web/index.html).
-#
-# Установка: запушить проект в GitHub-репозиторий — больше ничего настраивать
-# не требуется (права на коммит даются блоком permissions ниже).
+# Раз в сутки: восстанавливает широкий корпус из compact ledger (JSONL в git),
+# добирает свежий хвост источников, пересчитывает аналитику и коммитит
+# data.json + архив. SQLite в git НЕ коммитится (лимит 100 MB).
+# Сайт читает data.json по raw-ссылке (DATA_URL в web/index.html).
 
 name: Update trend data
 
 on:
   schedule:
     - cron: "0 5 * * *"   # каждый день в 05:00 UTC
-  workflow_dispatch:        # плюс ручной запуск кнопкой в GitHub
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -23,8 +19,6 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      # ref: main — иначе перезапуск (Re-run) старого запуска возьмет устаревший
-      # снимок репозитория и push будет отклонен
       - uses: actions/checkout@v4
         with:
           ref: main
@@ -37,10 +31,12 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Ingest sources and export snapshot
+      - name: Restore corpus, ingest, export
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
+          # Широкая история из Git (documents.jsonl), иначе data.json схлопывается до хвоста.
+          python run.py restore-db
           python run.py ingest
           python run.py score-tbsf
           python run.py export
@@ -50,7 +46,6 @@ jobs:
         run: |
           git config user.name "trendwatcher-bot"
           git config user.email "actions@github.com"
-          # БД больше не коммитим (лимит GitHub 100 MB). Если она ещё в дереве — убрать.
           git rm -f --ignore-unmatch data/trendwatcher.db
           git add data.json data/archive/
           git diff --cached --quiet || git commit -m "data: auto-update $(date -u +%Y-%m-%d)"

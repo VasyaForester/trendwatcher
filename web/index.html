@@ -57,6 +57,7 @@
   td { padding: 7px 8px; border-bottom: 1px solid var(--border); }
   tr:last-child td { border-bottom: none; }
   .vel-up { color: var(--green); } .vel-down { color: var(--red); }
+  .vel-na { color: var(--muted); font-style: italic; }
   .signal-row-dynamics { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .signal-dismiss {
     background: transparent; border: 1px solid var(--border); color: var(--muted);
@@ -122,13 +123,13 @@
       <div id="topEvents"><div class="empty">Загрузка…</div></div>
     </div>
     <div class="panel">
-      <h2>Сигналы <span class="hint">3 мес. · curated AI security + breakthrough · архив</span></h2>
+      <h2>Сигналы <span class="hint">90д vs пред. 90д · прирост числа публикаций · curated</span></h2>
       <table id="signalsTable">
         <thead><tr>
           <th class="sortable" data-sort="tag">Тема <span class="sort-ind"></span></th>
           <th class="sortable" data-sort="level">Уровень <span class="sort-ind"></span></th>
-          <th class="sortable" data-sort="recent" title="за 3 месяца">Публ. <span class="sort-ind"></span></th>
-          <th class="sortable" data-sort="velocity">Динамика <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="recent" title="за последние 90 дней">Публ. <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="velocity" title="прирост числа публикаций к предыдущим 90 дням">Динамика <span class="sort-ind"></span></th>
           <th class="col-dismiss"></th>
         </tr></thead>
         <tbody id="signals"></tbody>
@@ -343,9 +344,18 @@ function renderSignals() {
   }
   tbody.innerHTML = signals.slice(0, 25).map(s => {
     const v = Math.round(s.velocity * 100);
-    const velHtml = Math.abs(s.velocity) >= 2.99
-      ? `<span class="vel-up" title="по доле в корпусе (архив)">${s.velocity > 0 ? "≥+300%" : "≤−300%"}</span>`
-      : v > 0 ? `<span class="vel-up">+${v}%</span>` : v < 0 ? `<span class="vel-down">${v}%</span>` : "0%";
+    let velHtml;
+    if (!s.velocity_source) {
+      velHtml = `<span class="vel-na" title="нет базы для сравнения (prior=0)">н/д</span>`;
+    } else if (Math.abs(s.velocity) >= 2.99) {
+      velHtml = `<span class="vel-up" title="прирост публикаций 90д/90д">${s.velocity > 0 ? "≥+300%" : "≤−300%"}</span>`;
+    } else if (v > 0) {
+      velHtml = `<span class="vel-up">+${v}%</span>`;
+    } else if (v < 0) {
+      velHtml = `<span class="vel-down">${v}%</span>`;
+    } else {
+      velHtml = "0%";
+    }
     const reason = (s.reason || "").replace(/"/g, "&quot;");
     const confirming = pendingDismissTag === s.tag;
     const pinned = PINNED_SIGNAL_TAGS.has(s.tag);
