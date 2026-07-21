@@ -39,7 +39,7 @@ class TestPctChange(unittest.TestCase):
         self.assertIsNone(src)
 
     def test_velocity_label(self):
-        self.assertIn("сообщений", velocity_label(0.5, "counts_90d"))
+        self.assertIn("доли", velocity_label(0.5, "share_90d"))
         self.assertEqual(velocity_label(0.0, None), "н/д")
 
     def test_velocity_from_counts(self):
@@ -57,7 +57,7 @@ class TestLevelFromVelocity(unittest.TestCase):
 
         level, _ = level_from_velocity(
             velocity=0.8,
-            vel_source="counts_90d",
+            vel_source="share_90d",
             recent=20,
             prior=10,
             n_types=2,
@@ -75,7 +75,7 @@ class TestLevelFromVelocity(unittest.TestCase):
 
         level, _ = level_from_velocity(
             velocity=-0.4,
-            vel_source="counts_90d",
+            vel_source="share_90d",
             recent=10,
             prior=20,
             n_types=2,
