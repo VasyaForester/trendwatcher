@@ -7,6 +7,7 @@ from .arxiv_text import (
     arxiv_id_from_url,
     fetch_fulltext,
     is_arxiv_url,
+    read_fulltext_cache,
     scoring_text,
 )
 from .service import score_research_paper
@@ -28,10 +29,15 @@ def _ensure_fulltext(doc: Document) -> None:
         return
     if (utcnow() - doc.published_at).days > FULLTEXT_DAYS:
         return
-    if _fulltext_budget <= 0:
-        return
     aid = arxiv_id_from_url(doc.url)
     if not aid:
+        return
+    # Кэш не тратит сетевой бюджет (важно для CI после restore без full_text в БД).
+    cached = read_fulltext_cache(aid)
+    if cached:
+        doc.full_text = cached
+        return
+    if _fulltext_budget <= 0:
         return
     doc.full_text = fetch_fulltext(aid) or None
     _fulltext_budget -= 1

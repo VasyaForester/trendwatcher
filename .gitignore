@@ -6,3 +6,4 @@ data/*
 !data/archive/**
 dist/
 .env
+data/fulltext_cache/

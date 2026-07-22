@@ -9,7 +9,8 @@ from ..db import Document, get_session, init_db
 from ..enrichment.tagger import enrich, is_feed_relevant
 from ..tbsf.batch import apply_tbsf
 from . import arxiv, nvd, rss
-from .dedup import normalize_url, title_fingerprint
+from .dedup import normalize_url, title_fingerprint, titles_near_duplicate
+
 
 log = logging.getLogger("trendwatcher.ingest")
 
@@ -21,11 +22,9 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
     items = CONNECTORS[source.type](source)
     # URL и отпечатки заголовков — по всей базе (перепечатки из разных лент).
     existing_urls = {normalize_url(u) for u in session.scalars(select(Document.url)).all()}
-    existing_titles = {
-        title_fingerprint(t)
-        for t in session.scalars(select(Document.title)).all()
-        if title_fingerprint(t)
-    }
+    all_titles = [t for t in session.scalars(select(Document.title)).all() if t]
+    existing_titles = {title_fingerprint(t) for t in all_titles if title_fingerprint(t)}
+    existing_title_raw = list(all_titles)
     added = 0
     for item in items:
         url = normalize_url(item["url"])
@@ -33,6 +32,9 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
         if not url or url in existing_urls:
             continue
         if title_key and title_key in existing_titles:
+            continue
+        # Перепечатки одной истории из разных СМИ (разные формулировки заголовка).
+        if any(titles_near_duplicate(item["title"], t) for t in existing_title_raw):
             continue
         text = f"{item['title']}\n{item['summary']}"
         meta = enrich(item["title"], item["summary"], source.source_type)
@@ -57,11 +59,13 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
         )
         doc.tags = meta["tags"]
         doc.entities = meta["entities"]
-        apply_tbsf(doc)
+        # Fulltext только в score-tbsf (бюджет/throttle arXiv) — иначе CI тянет PDF по 3с/статью.
+        apply_tbsf(doc, fetch_body=False)
         session.add(doc)
         existing_urls.add(url)
         if title_key:
             existing_titles.add(title_key)
+        existing_title_raw.append(item["title"])
         added += 1
     session.commit()
     return added, len(items)

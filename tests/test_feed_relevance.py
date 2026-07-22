@@ -9,7 +9,7 @@ from trendwatcher.enrichment.tagger import (
     is_ai_related,
     is_feed_relevant,
 )
-from trendwatcher.ingestion.dedup import normalize_url, title_fingerprint
+from trendwatcher.ingestion.dedup import normalize_url, title_fingerprint, titles_near_duplicate
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -106,6 +106,23 @@ class TestStrictRelevance(unittest.TestCase):
         text = "This month in security with Tony Anscombe – May 2026 edition"
         self.assertFalse(is_feed_relevant(text))
 
+    def test_classic_sharepoint_rce_rejected(self):
+        text = (
+            "Public PoC Triggers Active Exploitation of Critical SharePoint RCE "
+            "Vulnerability CVE-2026-50522"
+        )
+        self.assertFalse(is_feed_relevant(text, ["vulnerability_cve"]))
+
+    def test_classic_nuget_trojan_rejected(self):
+        text = "Trojanized Newtonsoft.Json Fork Hides RAT Payload in NuGet Package"
+        self.assertFalse(is_feed_relevant(text, ["malware_abuse", "vulnerability_cve"]))
+
+    def test_classic_sharepoint_keys_rejected(self):
+        text = "Critical SharePoint RCE flaw exploited to steal machine keys"
+        self.assertFalse(
+            is_feed_relevant(text, ["vulnerability_cve"], source_name="BleepingComputer")
+        )
+
     def test_agent_data_injection_accepted(self):
         text = "New Agent Data Injection Attack Can Make AI Agents Misclick or Run Attacker Commands"
         self.assertTrue(is_feed_relevant(text))
@@ -144,6 +161,23 @@ class TestDedup(unittest.TestCase):
         a = title_fingerprint("OpenAI Launches New Agentic Model!!!")
         b = title_fingerprint("openai launches new agentic model")
         self.assertEqual(a, b)
+
+    def test_openai_huggingface_wire_copies_near_duplicate(self):
+        titles = [
+            "OpenAI says Hugging Face was breached by its pre-release models",
+            "OpenAI models escaped containment and hacked Hugging Face",
+            "OpenAI says AI models went rogue during testing triggering unprecedented breach at startup",
+            "OpenAI says its AI models hacked Hugging Face during testing",
+            "OpenAI Hugging Face hack: what we know about the AI containment failure",
+        ]
+        for i, a in enumerate(titles):
+            for b in titles[i + 1 :]:
+                self.assertTrue(titles_near_duplicate(a, b), msg=f"{a!r} vs {b!r}")
+
+    def test_unrelated_openai_stories_not_near_duplicate(self):
+        a = "OpenAI Unveils GPT-Red to Test AI Model Safety"
+        b = "OpenAI says its AI models hacked Hugging Face during testing"
+        self.assertFalse(titles_near_duplicate(a, b))
 
 
 if __name__ == "__main__":

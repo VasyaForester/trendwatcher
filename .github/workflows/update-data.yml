@@ -31,14 +31,26 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Restore corpus, ingest, export
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      # Fulltext не в ledger/git — кэш между прогонами, иначе каждый CI качает arXiv по ~3с/статью.
+      - name: Restore arXiv fulltext cache
+        uses: actions/cache@v4
+        with:
+          path: data/fulltext_cache
+          key: arxiv-fulltext-${{ github.run_id }}
+          restore-keys: |
+            arxiv-fulltext-
+
+      - name: Restore corpus from ledger
+        run: python run.py restore-db
+
+      - name: Ingest sources
+        run: python run.py ingest
+
+      - name: Score TBSF
+        run: python run.py score-tbsf
+
+      - name: Export data.json
         run: |
-          # Широкая история из Git (documents.jsonl), иначе data.json схлопывается до хвоста.
-          python run.py restore-db
-          python run.py ingest
-          python run.py score-tbsf
           python run.py export
           cp dist/site/data.json data.json
 

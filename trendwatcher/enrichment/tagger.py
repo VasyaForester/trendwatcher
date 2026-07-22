@@ -54,14 +54,16 @@ def is_feed_relevant(
     """Лента: только AI-security события/артефакты (по разметке batch1).
 
     Нужны: AI-якорь + event-сигнал (инцидент/CVE/jailbreak/prompt injection/…).
-    Отвергаем: opinion, product launch, scorecard, обзоры «N kinds of».
+    Отвергаем: opinion, product launch, scorecard, обзоры «N kinds of»,
+    классические CVE без AI/LLM/агентов.
     """
     if any(rx.search(text) for rx in _FEED_REJECT_RX):
         return False
 
     tag_set = set(tags) if tags is not None else set(extract_tags(text))
-    # Высокосигнальные security-теги (не privacy/governance сами по себе)
-    hard_sec = tag_set & {
+    # AI-native security-теги (НЕ весь SECURITY_TAGS: vulnerability_cve/malware
+    # срабатывают и на SharePoint/NuGet без AI).
+    ai_sec = tag_set & {
         "prompt_injection",
         "indirect_prompt_injection",
         "jailbreak",
@@ -69,9 +71,7 @@ def is_feed_relevant(
         "mcp_security",
         "data_poisoning",
         "model_supply_chain",
-        "malware_abuse",
         "red_teaming",
-        "vulnerability_cve",
         "inference_integrity",
         "agent_identity_trust",
         "agent_permissions",
@@ -85,22 +85,34 @@ def is_feed_relevant(
         "rag_security",
         "data_exfiltration",
         "model_theft",
+        "guardrails_defense",
+        "model_drift",
     }
 
-    has_ai = bool(tag_set & (SECURITY_TAGS | BREAKTHROUGH_AI_TAGS)) or any(
+    has_ai = bool(ai_sec | (tag_set & BREAKTHROUGH_AI_TAGS)) or any(
         rx.search(text) for rx in _FEED_AI_RX
     )
     if not has_ai and source_name:
+        # Узкий allowlist: блог сам по себе AI/standards, не «Microsoft/Google security».
         if re.search(
-            r"hugging\s?face|openai|anthropic|google|microsoft|nvidia|nist|owasp|cisa",
+            r"hugging\s?face|openai|anthropic|nist|owasp",
             source_name,
             re.I,
         ):
-            # Vendor/standards blog: AI-контекст из источника, если есть security-event
             has_ai = True
     if not has_ai:
         return False
 
+    hard_sec = ai_sec | (
+        tag_set
+        & {
+            "vulnerability_cve",
+            "malware_abuse",
+            "data_exfiltration",
+            "model_theft",
+            "model_supply_chain",
+        }
+    )
     has_event = bool(hard_sec) or any(rx.search(text) for rx in _FEED_EVENT_RX)
     if _CVE_RX.search(text):
         has_event = True

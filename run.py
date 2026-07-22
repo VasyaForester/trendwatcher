@@ -97,7 +97,8 @@ def main() -> None:
         init_db()
         with get_session() as s:
             # Сначала окно топ-событий с full_text, затем лёгкий проход по остальному.
-            n_recent = rescore_recent(s, days=35, budget=250)
+            # Бюджет сетевых скачиваний: кэш на диске/Actions закрывает повторные прогоны.
+            n_recent = rescore_recent(s, days=35, budget=80)
             n_all = rescore_all(s, fetch_fulltext=False)
             diet = diet_documents(s)
         vacuum_db()

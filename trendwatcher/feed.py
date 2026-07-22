@@ -8,7 +8,7 @@ from sqlalchemy import select
 
 from .db import Document
 from .enrichment.tagger import is_feed_relevant
-from .ingestion.dedup import normalize_url, title_fingerprint
+from .ingestion.dedup import normalize_url, title_fingerprint, titles_near_duplicate
 from .tbsf.arxiv_text import is_arxiv_url
 
 FEED_SCAN_LIMIT = 8000
@@ -89,6 +89,7 @@ def build_feed(session, limit: int = 600) -> list[dict]:
     eligible: list[Document] = []
     seen_urls: set[str] = set()
     seen_titles: set[str] = set()
+    seen_title_raw: list[str] = []
     for d in docs:
         if d.source_type == "research" or is_arxiv_url(d.url):
             continue
@@ -100,10 +101,13 @@ def build_feed(session, limit: int = 600) -> list[dict]:
             continue
         if title_key and title_key in seen_titles:
             continue
+        if any(titles_near_duplicate(d.title, prev) for prev in seen_title_raw):
+            continue
         if url_key:
             seen_urls.add(url_key)
         if title_key:
             seen_titles.add(title_key)
+        seen_title_raw.append(d.title or "")
         eligible.append(d)
 
     mixed = diversify_feed(eligible, limit)
