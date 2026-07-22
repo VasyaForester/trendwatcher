@@ -17,7 +17,10 @@ TAXONOMY: dict[str, list[str]] = {
     ],
     "model_supply_chain": [
         r"model supply chain", r"malicious (model|checkpoint|weights)", r"pickle (exploit|deserial)",
-        r"hugging\s?face.{0,40}(malicious|vulnerab|attack)", r"typosquat", r"dependency confusion",
+        r"hugging\s?face.{0,40}(malicious|vulnerab|attack)",
+        # typosquat — только в AI/ML-реестрах, не любой NuGet/npm
+        r"typosquat.{0,60}(model|hugging|pytorch|tensorflow|onnx|safetensor|llm|ai[- ]?package|ml package)",
+        r"(model|hugging|pytorch|tensorflow|onnx|safetensor|llm).{0,60}typosquat",
         r"(model|ai) (attest|provenance|sbom)", r"supply chain.{0,25}(attest|provenance)",
         r"verifiable (model|weights|checkpoint)",
     ],
@@ -316,11 +319,16 @@ FEED_REJECT_PATTERNS: list[str] = [
     r"hardware[- ]rooted ai security",
     r"\b(buy|try|get started with|announcing our)\b.{0,40}(security|platform|solution)",
     r"\b(introducing|meet|discover)\b.{0,30}(our |the )?(new )?(ai )?security (platform|solution|suite|product)",
+    # AI без кибербеза / не breakthrough: видеонаблюдение, кампус и т.п.
+    r"ai (video )?surveillance",
+    r"surveillance cameras?",
+    r"hotbed of ai",
+    r"\bcctv\b",
 ]
 
-# AI-сигнал (уже, чем любой «AI»): модель/агент/LLM/MCP в security-контексте.
+# AI-сигнал: сильные якоря (LLM/агент/платформа). Голое «AI» — отдельно, мягче.
 FEED_AI_ANCHOR_PATTERNS: list[str] = [
-    r"\bai\b", r"artificial intelligence", r"\bllm(s)?\b", r"large language model",
+    r"\bllm(s)?\b", r"large language model",
     r"\bagentic\b", r"ai[- ]agent", r"\bmcp\b", r"model context protocol",
     r"prompt injection", r"\bjailbreak\b", r"\bprompty\b", r"hugging ?face",
     r"openai|anthropic|claude|gemini|copilot|chatgpt",
@@ -328,6 +336,13 @@ FEED_AI_ANCHOR_PATTERNS: list[str] = [
     r"\bservicenow\b", r"\bnow assist\b", r"\bsalesforce\b.{0,20}\beinstein\b",
     r"\bdatabricks\b", r"\bsageemaker\b", r"\bazure (ai|openai)\b",
     r"\bvertex ai\b", r"\bbedrock\b",
+    r"artificial intelligence", r"gen(erative)?[- ]ai", r"\bai security\b",
+    r"\bai[- ](?:model|system|service)s?\b",
+]
+
+# Слишком широко само по себе — только вместе с AI-native security-событием.
+FEED_SOFT_AI_PATTERNS: list[str] = [
+    r"\bai\b",
 ]
 
 # Известные сущности (вендоры, продукты, модели) для простого извлечения.

@@ -123,6 +123,23 @@ class TestStrictRelevance(unittest.TestCase):
             is_feed_relevant(text, ["vulnerability_cve"], source_name="BleepingComputer")
         )
 
+    def test_nuget_typosquat_not_model_supply_chain(self):
+        text = (
+            "Trojanized Newtonsoft.Json Fork Hides Game-Rigging Code in a Working Library. "
+            "Cybersecurity researchers have discovered a NuGet typosquat."
+        )
+        self.assertNotIn("model_supply_chain", extract_tags(text))
+        self.assertFalse(is_feed_relevant(text, ["model_supply_chain"]))
+
+    def test_ai_surveillance_campus_rejected(self):
+        text = (
+            "MIT to Become Hotbed of AI Video Surveillance. "
+            "MIT is spending over $3 million on more than 500 AI surveillance cameras."
+        )
+        self.assertFalse(
+            is_feed_relevant(text, ["vulnerability_cve"], source_name="Schneier on Security")
+        )
+
     def test_agent_data_injection_accepted(self):
         text = "New Agent Data Injection Attack Can Make AI Agents Misclick or Run Attacker Commands"
         self.assertTrue(is_feed_relevant(text))
