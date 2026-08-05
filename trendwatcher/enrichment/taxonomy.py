@@ -132,6 +132,14 @@ TAXONOMY: dict[str, list[str]] = {
         r"agent memory (poison|inject|attack|leak|security)", r"memory (poison|inject).{0,20}agent",
         r"false memor", r"memghost", r"persistent.{0,20}(false )?memor",
     ],
+    "agentic_skill_security": [
+        r"\bagent(?:ic)? skill security\b", r"\bsecurity of (?:llm |ai )?agent skills\b",
+        r"\b(?:malicious|untrusted|poisoned|trojan(?:ized)?) agent skills?\b",
+        r"\bagent skills?.{0,35}(?:attack|poison|security|risk|audit|trust failure|exfiltrat)",
+        r"\bskill poison(?:ing|ed)?.{0,30}(?:agent|llm)\b",
+        r"\b(?:skill marketplace|third[- ]party skills?).{0,40}(?:security|risk|malicious|attack)",
+        r"\bskill\.md\b.{0,40}(?:security|attack|malicious|untrusted)",
+    ],
     "tool_calling_security": [
         r"tool[- ]call(ing)?.{0,30}(security|attack|abuse|hijack|vulnerab)",
         r"function[- ]call(ing)?.{0,30}(security|attack|abuse|hijack)",

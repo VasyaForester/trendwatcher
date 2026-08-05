@@ -58,6 +58,7 @@ _AI_NATIVE_TAGS = {
     "agent_permissions",
     "agent_swarm_security",
     "agent_memory_security",
+    "agentic_skill_security",
     "tool_calling_security",
     "ai_codegen_security",
     "autonomous_cyber_offense",

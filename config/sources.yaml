@@ -19,7 +19,8 @@ sources:
       (abs:"prompt injection" OR abs:"jailbreak" OR abs:"LLM security" OR
        abs:"adversarial attack on language model" OR abs:"data poisoning" OR
        abs:"model extraction" OR abs:"AI red teaming" OR abs:"agent security" OR
-       abs:"backdoor attack" OR abs:"guardrails")
+       abs:"backdoor attack" OR abs:"guardrails" OR abs:"agent skill security" OR
+       abs:"malicious agent skill" OR abs:"skill poisoning")
 
   - id: arxiv_ai_general
     name: "arXiv — AI general trends"
@@ -36,7 +37,8 @@ sources:
        abs:"model context protocol" OR abs:"MCP server" OR abs:"tool-using agent" OR
        abs:"computer-use agent" OR abs:"browser agent" OR abs:"autonomous cyber" OR
        abs:"indirect prompt injection" OR abs:"multimodal injection" OR
-       abs:"harness engineering" OR abs:"agentic harness" OR abs:"agent harness")
+       abs:"harness engineering" OR abs:"agentic harness" OR abs:"agent harness" OR
+       abs:"agent skill security" OR abs:"malicious agent skill")
 
   - id: nvd_ai
     name: "NVD — CVE по AI-продуктам"

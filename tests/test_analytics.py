@@ -94,6 +94,7 @@ class TestTagFilter(unittest.TestCase):
         self.assertTrue(is_signal_tag("self_evolving_agents"))
         self.assertTrue(is_signal_tag("computer_use_agents"))
         self.assertTrue(is_signal_tag("agent_harness"))
+        self.assertTrue(is_signal_tag("agentic_skill_security"))
         self.assertTrue(is_signal_tag("ai_codegen_security"))
         self.assertFalse(is_signal_tag("agentic_ai"))
         self.assertFalse(is_signal_tag("vulnerability_cve"))
@@ -123,6 +124,14 @@ class TestTagFilter(unittest.TestCase):
         self.assertIn(
             "agent_harness",
             extract_tags("Self-Evolving Agent Harnesses via Gated Quality-Diversity"),
+        )
+        self.assertIn(
+            "agentic_skill_security",
+            extract_tags("Detecting Malicious Agent Skills in the Wild"),
+        )
+        self.assertIn(
+            "agentic_skill_security",
+            extract_tags("Agent Skill Security: Threat Models, Attacks, and Defenses"),
         )
 
 
