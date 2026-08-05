@@ -104,7 +104,7 @@ def render_template(facts: dict) -> list[str]:
         trend = "падает" if (m.get("velocity") or 0) < -0.05 else "стабилизируется"
         p4 = (
             f"Тема «{m['label']}» остаётся одной из наиболее часто упоминаемых "
-            f"({m['recent']} публ. за ~3 месяца), однако число/доля таких публикаций {trend} "
+            f"({m['recent']} публ. за ~3 месяца), однако доля среди отслеживаемых трендов {trend} "
             f"({m.get('velocity_label', '')})."
         )
     elif sec:

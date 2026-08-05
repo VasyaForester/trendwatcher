@@ -125,6 +125,11 @@ def level_from_velocity(
     )
 
 
+def signal_mention_total(counts: dict[str, int]) -> int:
+    """Знаменатель динамики: только упоминания отслеживаемых signal-тегов."""
+    return sum(count for tag, count in counts.items() if is_signal_tag(tag))
+
+
 def classify_signals(
     session,
     recent_days: int = SIGNAL_WINDOW_DAYS,
@@ -133,8 +138,10 @@ def classify_signals(
 ) -> list[dict]:
     """Классификация сигналов.
 
-    Динамика — изменение доли темы в корпусе за последние `recent_days`
-    относительно предыдущих `recent_days` (по умолчанию 90/90).
+    Динамика — изменение доли темы среди всех отслеживаемых signal-тегов
+    за последние `recent_days` относительно предыдущих `recent_days`
+    (по умолчанию 90/90). Общий корпус не используется как знаменатель:
+    его состав меняется при расширении источников и backfill.
     """
     if recent_weeks is not None:
         recent_days = recent_weeks * 7
@@ -180,6 +187,8 @@ def classify_signals(
                 prior_cnt[tag] += 1
 
     signals = []
+    signal_mentions_recent = signal_mention_total(recent_cnt)
+    signal_mentions_prior = signal_mention_total(prior_cnt)
     for tag in set(recent_cnt) | set(prior_cnt):
         if not is_signal_tag(tag):
             continue
@@ -204,8 +213,8 @@ def classify_signals(
         n_types = len(src_types.get(tag, set()))
         research_share = by_src_type[tag].get("research", 0) / r if r else 0.0
 
-        recent_share = (r / corpus_recent) if corpus_recent else None
-        prior_share = (p / corpus_prior) if corpus_prior else None
+        recent_share = (r / signal_mentions_recent) if signal_mentions_recent else None
+        prior_share = (p / signal_mentions_prior) if signal_mentions_prior else None
         velocity, vel_source = velocity_from_shares(recent_share, prior_share)
         if vel_source:
             vel_source = "share_90d"
@@ -239,6 +248,9 @@ def classify_signals(
                 "age_weeks": age_weeks,
                 "recent_share": round(recent_share, 4) if recent_share is not None else None,
                 "baseline_share": round(prior_share, 4) if prior_share is not None else None,
+                "share_denominator": "signal_mentions",
+                "signal_mentions_recent": signal_mentions_recent,
+                "signal_mentions_prior": signal_mentions_prior,
                 "research_share": round(research_share, 2),
                 "window_days": recent_days,
                 "window_weeks": SIGNAL_WINDOW_WEEKS,

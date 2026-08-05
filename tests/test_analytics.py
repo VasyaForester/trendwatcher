@@ -87,6 +87,20 @@ class TestLevelFromVelocity(unittest.TestCase):
         )
         self.assertEqual(level, "declining")
 
+
+class TestSignalDenominator(unittest.TestCase):
+    def test_only_tracked_signal_mentions_enter_denominator(self):
+        from trendwatcher.analytics.signals import signal_mention_total
+
+        counts = {
+            "jailbreak": 10,
+            "agent_security": 5,
+            "vulnerability_cve": 100,
+            "agentic_ai": 50,
+        }
+        self.assertEqual(signal_mention_total(counts), 15)
+
+
 class TestTagFilter(unittest.TestCase):
     def test_signal_tags(self):
         self.assertTrue(is_signal_tag("prompt_injection"))

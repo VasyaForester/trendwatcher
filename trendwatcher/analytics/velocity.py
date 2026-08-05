@@ -1,7 +1,7 @@
 """Расчёт относительной динамики (pct_change) для сигналов.
 
-Динамика в UI — прирост числа публикаций за 90 дней к предыдущим 90 дням.
-При prior=0 возвращаем None → в UI «н/д», не бесконечность.
+Основная метрика UI — изменение доли тега среди всех отслеживаемых
+signal-упоминаний за 90 дней к предыдущим 90 дням.
 """
 
 MAX_VELOCITY = 3.0  # ±300% в UI
@@ -39,7 +39,7 @@ def velocity_from_shares(
     *,
     max_abs: float = MAX_VELOCITY,
 ) -> tuple[float, str | None]:
-    """Velocity по долям корпуса. Возвращает (velocity, source_label)."""
+    """Velocity по долям в выбранном сопоставимом знаменателе."""
     if recent_share is not None and prior_share is not None and prior_share > 0:
         return cap_velocity(pct_change(recent_share, prior_share), max_abs), "share_90d"
     return 0.0, None
