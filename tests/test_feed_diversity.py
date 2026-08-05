@@ -3,8 +3,9 @@
 import unittest
 from datetime import datetime, timedelta
 from types import SimpleNamespace
+from unittest.mock import MagicMock, patch
 
-from trendwatcher.feed import MAX_CVE_SHARE, diversify_feed
+from trendwatcher.feed import FEED_MAX_AGE_DAYS, MAX_CVE_SHARE, build_feed, diversify_feed
 
 
 def _doc(i: int, *, cve: bool, source: str, days_ago: int = 0):
@@ -18,7 +19,8 @@ def _doc(i: int, *, cve: bool, source: str, days_ago: int = 0):
         summary="",
         url=f"https://example.com/{i}",
         published_at=datetime(2026, 7, 20) - timedelta(days=days_ago),
-        tags=[],
+        tags=["prompt_injection"] if not cve else ["vulnerability_cve"],
+        to_dict=lambda self=None, **kw: {"id": i},
     )
 
 
@@ -40,6 +42,28 @@ class TestFeedDiversity(unittest.TestCase):
         sources = [d.source_id for d in out[:6]]
         # первые слоты не из одного источника подряд целиком
         self.assertGreater(len(set(sources)), 1)
+
+    def test_build_feed_drops_older_than_max_age(self):
+        fresh = _doc(1, cve=False, source="google", days_ago=10)
+        stale = _doc(2, cve=False, source="nist", days_ago=FEED_MAX_AGE_DAYS + 5)
+        stale.title = "Draft NIST Guidelines Rethink Cybersecurity for the AI Era"
+        stale.url = "https://nist.gov/old"
+        # to_dict on SimpleNamespace — build_feed calls d.to_dict()
+        fresh.to_dict = lambda: {"title": fresh.title, "published_at": fresh.published_at.isoformat()}
+        stale.to_dict = lambda: {"title": stale.title, "published_at": stale.published_at.isoformat()}
+
+        session = MagicMock()
+        # build_feed filters by SQL cutoff; mock returns both, Python filter also applies
+        session.scalars.return_value.all.return_value = [fresh, stale]
+
+        with patch("trendwatcher.feed.utcnow", return_value=datetime(2026, 7, 22)):
+            with patch("trendwatcher.feed._feed_eligible", return_value=True):
+                with patch("trendwatcher.feed.is_arxiv_url", return_value=False):
+                    out = build_feed(session, limit=10)
+
+        titles = [d["title"] for d in out]
+        self.assertIn(fresh.title, titles)
+        self.assertNotIn(stale.title, titles)
 
 
 if __name__ == "__main__":

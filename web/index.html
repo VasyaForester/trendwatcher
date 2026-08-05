@@ -223,7 +223,9 @@ const fmtDate = iso => iso ? new Date(iso).toLocaleDateString("ru-RU", {day:"num
 let DATA = null;
 const HIDDEN_SIGNALS_KEY = "trendwatcher_hidden_signals";
 // Ключевые AI-тренды: всегда видны, нельзя скрыть; снимаем из localStorage при загрузке.
-const PINNED_SIGNAL_TAGS = new Set(["self_evolving_agents", "computer_use_agents", "long_context_memory"]);
+const PINNED_SIGNAL_TAGS = new Set([
+  "self_evolving_agents","computer_use_agents","long_context_memory","agent_harness",
+]);
 
 // Те же группы, что у графиков динамики.
 const TREND_CHART_GENERAL = new Set([
@@ -236,6 +238,7 @@ const TREND_CHART_SPECIAL = new Set([
   "model_theft","model_supply_chain","model_drift","agent_identity_trust","agent_permissions",
   "inference_integrity","long_context_memory","agent_memory_security","tool_calling_security",
   "ai_codegen_security","autonomous_cyber_offense","model_context_poisoning","multimodal_injection",
+  "agent_harness",
 ]);
 
 function loadHiddenSignals() {

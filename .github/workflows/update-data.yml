@@ -9,7 +9,7 @@ name: Update trend data
 
 on:
   schedule:
-    - cron: "0 5 * * *"   # каждый день в 05:00 UTC
+    - cron: "0 5 * * *"   # 08:00 Москва (05:00 UTC); MSK = UTC+3, без DST
   workflow_dispatch:
 
 permissions:
@@ -45,6 +45,9 @@ jobs:
 
       - name: Ingest sources
         run: python run.py ingest
+
+      - name: Apply current trend taxonomy
+        run: python run.py retag
 
       - name: Score TBSF
         run: python run.py score-tbsf

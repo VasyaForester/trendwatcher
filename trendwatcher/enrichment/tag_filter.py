@@ -8,6 +8,7 @@ SIGNAL_AI_TAGS: frozenset[str] = frozenset(
         "self_evolving_agents",
         "computer_use_agents",
         "long_context_memory",
+        "agent_harness",
     }
 )
 
@@ -80,6 +81,7 @@ TREND_CHART_SPECIAL: frozenset[str] = frozenset(
         "autonomous_cyber_offense",
         "model_context_poisoning",
         "multimodal_injection",
+        "agent_harness",
     }
 )
 

@@ -35,7 +35,8 @@ sources:
        abs:"synthetic data generation" OR abs:"long context" OR abs:"agent memory" OR
        abs:"model context protocol" OR abs:"MCP server" OR abs:"tool-using agent" OR
        abs:"computer-use agent" OR abs:"browser agent" OR abs:"autonomous cyber" OR
-       abs:"indirect prompt injection" OR abs:"multimodal injection")
+       abs:"indirect prompt injection" OR abs:"multimodal injection" OR
+       abs:"harness engineering" OR abs:"agentic harness" OR abs:"agent harness")
 
   - id: nvd_ai
     name: "NVD — CVE по AI-продуктам"

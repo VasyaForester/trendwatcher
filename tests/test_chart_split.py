@@ -21,6 +21,7 @@ class TestChartSplit(unittest.TestCase):
         self.assertIn("self_evolving_agents", TREND_CHART_SPECIAL)
         self.assertIn("agent_swarm_security", TREND_CHART_SPECIAL)
         self.assertIn("rag_security", TREND_CHART_SPECIAL)
+        self.assertIn("agent_harness", TREND_CHART_SPECIAL)
         self.assertNotIn("agentic_ai", TREND_CHART_GENERAL | TREND_CHART_SPECIAL)
         self.assertNotIn("vulnerability_cve", TREND_CHART_GENERAL | TREND_CHART_SPECIAL)
         self.assertNotIn("open_weights", TREND_CHART_GENERAL | TREND_CHART_SPECIAL)

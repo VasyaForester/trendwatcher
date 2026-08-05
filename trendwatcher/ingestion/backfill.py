@@ -49,7 +49,8 @@ SIGNAL_ARXIV_QUERY = """
   abs:"code generation security" OR abs:"autonomous cyber" OR
   abs:"multimodal injection" OR abs:"data exfiltration" OR
   abs:"model drift" OR abs:"agent identity" OR abs:"agent permissions" OR
-  abs:"context poisoning" OR abs:"AI governance"
+  abs:"context poisoning" OR abs:"AI governance" OR
+  abs:"harness engineering" OR abs:"agentic harness" OR abs:"agent harness"
 )
 """
 

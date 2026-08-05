@@ -93,6 +93,7 @@ class TestTagFilter(unittest.TestCase):
         self.assertTrue(is_signal_tag("agent_security"))
         self.assertTrue(is_signal_tag("self_evolving_agents"))
         self.assertTrue(is_signal_tag("computer_use_agents"))
+        self.assertTrue(is_signal_tag("agent_harness"))
         self.assertTrue(is_signal_tag("ai_codegen_security"))
         self.assertFalse(is_signal_tag("agentic_ai"))
         self.assertFalse(is_signal_tag("vulnerability_cve"))
@@ -115,6 +116,14 @@ class TestTagFilter(unittest.TestCase):
         self.assertIn("computer_use_agents", extract_tags("OpenAI launches a computer-use agent for browsers"))
         self.assertIn("indirect_prompt_injection", extract_tags("Indirect prompt injection via malicious webpage"))
         self.assertIn("autonomous_cyber_offense", extract_tags("AI agents turned into attackers in autonomous intrusion"))
+        self.assertIn(
+            "agent_harness",
+            extract_tags("Agentic harness engineering improves long-running coding agents"),
+        )
+        self.assertIn(
+            "agent_harness",
+            extract_tags("Self-Evolving Agent Harnesses via Gated Quality-Diversity"),
+        )
 
 
 if __name__ == "__main__":

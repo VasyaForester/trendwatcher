@@ -3,15 +3,18 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from datetime import timedelta
 
 from sqlalchemy import select
 
-from .db import Document
+from .db import Document, utcnow
 from .enrichment.tagger import is_feed_relevant
 from .ingestion.dedup import normalize_url, title_fingerprint, titles_near_duplicate
 from .tbsf.arxiv_text import is_arxiv_url
 
 FEED_SCAN_LIMIT = 8000
+# Только свежие новости: иначе round-robin тащит старые посты vendor-блогов.
+FEED_MAX_AGE_DAYS = 45
 # Доля CVE/vulnerability в выдаче — не больше четверти (иначе NVD забивает ленту).
 MAX_CVE_SHARE = 0.25
 
@@ -82,8 +85,12 @@ def diversify_feed(docs: list[Document], limit: int) -> list[Document]:
 
 
 def build_feed(session, limit: int = 600) -> list[dict]:
+    cutoff = utcnow() - timedelta(days=FEED_MAX_AGE_DAYS)
     docs = session.scalars(
-        select(Document).order_by(Document.published_at.desc()).limit(FEED_SCAN_LIMIT)
+        select(Document)
+        .where(Document.published_at >= cutoff)
+        .order_by(Document.published_at.desc())
+        .limit(FEED_SCAN_LIMIT)
     ).all()
 
     eligible: list[Document] = []
@@ -92,6 +99,8 @@ def build_feed(session, limit: int = 600) -> list[dict]:
     seen_title_raw: list[str] = []
     for d in docs:
         if d.source_type == "research" or is_arxiv_url(d.url):
+            continue
+        if d.published_at is None or d.published_at < cutoff:
             continue
         if not _feed_eligible(d):
             continue

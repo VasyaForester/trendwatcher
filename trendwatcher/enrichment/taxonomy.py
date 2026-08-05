@@ -194,13 +194,21 @@ TAXONOMY: dict[str, list[str]] = {
         r"long[- ]context", r"context window", r"memory[- ]augmented",
         r"million[- ]token",
     ],
+    "agent_harness": [
+        r"\bharness engineering\b", r"\bagentic harness(?:es)?\b",
+        r"\bagent harness(?:es)?\b",
+        r"\b(?:ai|coding|software|autonomous) agent harness(?:es)?\b",
+        r"\bharness(?:es)? for (?:long[- ]running )?(?:ai |coding )?agents?\b",
+        r"\bself[- ]evolving harness(?:es)?\b",
+        r"\bharness (?:self[- ]improvement|evolution|design|optimization|architecture)\b",
+    ],
 }
 
 # Общие AI-темы: технологические тренды, а не поверхности атак.
 AI_TECH_TAGS: set[str] = {
     "self_evolving_agents", "agentic_ai", "computer_use_agents", "reasoning_models",
     "multimodal_ai", "world_models", "on_device_ai", "synthetic_data", "open_weights",
-    "model_efficiency", "long_context_memory",
+    "model_efficiency", "long_context_memory", "agent_harness",
 }
 SECURITY_TAGS: set[str] = set(TAXONOMY) - AI_TECH_TAGS
 
@@ -214,6 +222,7 @@ AI_RELEVANCE_PATTERNS: list[str] = [
     r"vibe coding", r"ai[- ]agent", r"self[- ]evolving", r"multi[- ]agent",
     r"reasoning model", r"open[- ]weight", r"self[- ]healing", r"mcp security",
     r"model context protocol", r"agent memory",
+    r"harness engineering", r"agentic harness", r"(ai|coding) agent harness",
 ]
 
 # Узкий фильтр для ленты и строгих новостных источников:
@@ -221,6 +230,7 @@ AI_RELEVANCE_PATTERNS: list[str] = [
 BREAKTHROUGH_AI_PATTERNS: list[str] = [
     r"\bagentic\b", r"ai[- ]agent(s)?\b", r"multi[- ]agent", r"self[- ]evolving",
     r"self[- ]improving agent", r"reasoning model", r"test[- ]time (compute|scaling)",
+    r"harness engineering", r"agentic harness", r"(ai|coding) agent harness",
     r"foundation model", r"world model", r"open[- ]weight", r"mixture[- ]of[- ]experts",
     r"model context protocol", r"\bmcp\b.{0,20}(server|security|tool)",
     r"\bllm(s)?\b", r"large language model", r"gen(erative)?[- ]ai",
@@ -232,7 +242,7 @@ BREAKTHROUGH_AI_PATTERNS: list[str] = [
 BREAKTHROUGH_AI_TAGS: set[str] = {
     "self_evolving_agents", "computer_use_agents", "long_context_memory",
     "agentic_ai", "reasoning_models", "multimodal_ai",
-    "world_models", "open_weights", "synthetic_data",
+    "world_models", "open_weights", "synthetic_data", "agent_harness",
 }
 
 # Лента: только AI-security СОБЫТИЯ / артефакты (не product marketing и не opinion).
