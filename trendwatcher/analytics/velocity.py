@@ -1,10 +1,11 @@
-"""Расчёт относительной динамики (pct_change) для сигналов.
+"""Расчёт динамики сигналов.
 
-Основная метрика UI — изменение доли тега среди всех отслеживаемых
-signal-упоминаний за 90 дней к предыдущим 90 дням.
+Основная метрика UI — сглаженное симметричное изменение абсолютного числа
+публикаций за 90 дней к предыдущим 90 дням.
 """
 
 MAX_VELOCITY = 3.0  # ±300% в UI
+COUNT_SMOOTHING = 25
 
 
 def pct_change(current: float, prior: float) -> float | None:
@@ -33,6 +34,23 @@ def velocity_from_counts(
     return cap_velocity(change, max_abs), "counts_90d"
 
 
+def velocity_from_smoothed_counts(
+    recent: int,
+    prior: int,
+    *,
+    smoothing: int = COUNT_SMOOTHING,
+) -> tuple[float, str]:
+    """Сглаженная симметричная динамика абсолютного числа публикаций.
+
+    (recent - prior) / (recent + prior + 2*smoothing) ограничена диапазоном
+    (-1, 1). Псевдосчётчик подавляет всплески вида 1→39, но сохраняет знак
+    фактического изменения публикаций.
+    """
+    denominator = recent + prior + 2 * smoothing
+    value = (recent - prior) / denominator if denominator else 0.0
+    return round(value, 3), "smoothed_counts_90d"
+
+
 def velocity_from_shares(
     recent_share: float | None,
     prior_share: float | None,
@@ -54,5 +72,7 @@ def velocity_label(velocity: float, source: str | None) -> str:
         return f"{sign}{pct}% доли"
     if source == "counts_90d":
         return f"{sign}{pct}% сообщений"
+    if source == "smoothed_counts_90d":
+        return f"{sign}{pct}% сглаженной динамики"
     return f"{sign}{pct}%"
 

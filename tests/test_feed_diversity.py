@@ -65,6 +65,29 @@ class TestFeedDiversity(unittest.TestCase):
         self.assertIn(fresh.title, titles)
         self.assertNotIn(stale.title, titles)
 
+    def test_build_feed_is_strictly_newest_first(self):
+        docs = [
+            _doc(1, cve=False, source="a", days_ago=3),
+            _doc(2, cve=False, source="b", days_ago=1),
+            _doc(3, cve=False, source="c", days_ago=2),
+        ]
+        for doc in docs:
+            doc.to_dict = lambda d=doc: {
+                "title": d.title,
+                "published_at": d.published_at.isoformat(),
+            }
+
+        session = MagicMock()
+        session.scalars.return_value.all.return_value = docs
+
+        with patch("trendwatcher.feed.utcnow", return_value=datetime(2026, 7, 22)):
+            with patch("trendwatcher.feed._feed_eligible", return_value=True):
+                with patch("trendwatcher.feed.is_arxiv_url", return_value=False):
+                    out = build_feed(session, limit=10)
+
+        dates = [d["published_at"] for d in out]
+        self.assertEqual(dates, sorted(dates, reverse=True))
+
 
 if __name__ == "__main__":
     unittest.main()

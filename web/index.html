@@ -130,26 +130,26 @@
 
   <div class="signals-grid">
     <div class="panel">
-      <h2>Сигналы: общие темы <span class="hint">jailbreak, agent_security… · 90д/90д · доля среди трендов</span></h2>
+      <h2>Сигналы: общие темы <span class="hint">jailbreak, agent_security… · 90д/90д · сглаженный рост публикаций</span></h2>
       <table class="signals-table" id="signalsTableGeneral" data-group="general">
         <thead><tr>
           <th class="sortable" data-sort="tag" title="Сортировать по теме">Тема <span class="sort-ind"></span></th>
           <th class="sortable" data-sort="level" title="Сортировать по уровню">Уровень <span class="sort-ind"></span></th>
           <th class="sortable" data-sort="recent" title="Сортировать по числу публикаций за 90 дней">Публ. <span class="sort-ind"></span></th>
-          <th class="sortable" data-sort="velocity" title="Сортировать по динамике доли среди отслеживаемых трендов 90д/90д">Динамика <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="velocity" title="Сортировать по сглаженной динамике числа публикаций 90д/90д">Динамика <span class="sort-ind"></span></th>
           <th class="col-dismiss"></th>
         </tr></thead>
         <tbody id="signalsGeneral"></tbody>
       </table>
     </div>
     <div class="panel">
-      <h2>Сигналы: специальные / новые <span class="hint">self-evolving, swarm, RAG… · 90д/90д · доля среди трендов</span></h2>
+      <h2>Сигналы: специальные / новые <span class="hint">self-evolving, swarm, RAG… · 90д/90д · сглаженный рост публикаций</span></h2>
       <table class="signals-table" id="signalsTableSpecial" data-group="special">
         <thead><tr>
           <th class="sortable" data-sort="tag" title="Сортировать по теме">Тема <span class="sort-ind"></span></th>
           <th class="sortable" data-sort="level" title="Сортировать по уровню">Уровень <span class="sort-ind"></span></th>
           <th class="sortable" data-sort="recent" title="Сортировать по числу публикаций за 90 дней">Публ. <span class="sort-ind"></span></th>
-          <th class="sortable" data-sort="velocity" title="Сортировать по динамике доли среди отслеживаемых трендов 90д/90д">Динамика <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="velocity" title="Сортировать по сглаженной динамике числа публикаций 90д/90д">Динамика <span class="sort-ind"></span></th>
           <th class="col-dismiss"></th>
         </tr></thead>
         <tbody id="signalsSpecial"></tbody>
@@ -398,8 +398,8 @@ function signalRowHtml(s) {
   let velHtml;
   if (!s.velocity_source) {
     velHtml = `<span class="vel-na" title="нет базы для сравнения (prior=0)">н/д</span>`;
-  } else if (Math.abs(s.velocity) >= 2.99) {
-    velHtml = `<span class="vel-up" title="изменение доли среди отслеживаемых трендов 90д/90д">${s.velocity > 0 ? "≥+300%" : "≤−300%"}</span>`;
+  } else if (Math.abs(s.velocity) >= 0.99) {
+    velHtml = `<span class="vel-up" title="сглаженная динамика числа публикаций 90д/90д">${s.velocity > 0 ? "≥+100%" : "≤−100%"}</span>`;
   } else if (v > 0) {
     velHtml = `<span class="vel-up">+${v}%</span>`;
   } else if (v < 0) {

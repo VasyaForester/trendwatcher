@@ -1,16 +1,16 @@
 """Классификация зрелости сигналов.
 
-Уровни привязаны к динамике (приросту доли темы в корпусе за 90д vs пред. 90д):
-- strong    — сильный рост доли + объём/корроборация;
-- emerging  — заметный рост доли;
+Уровни привязаны к сглаженной динамике числа публикаций за 90д vs пред. 90д:
+- strong    — сильный рост + объём/корроборация;
+- emerging  — заметный рост;
 - research  — молодая тема пока в основном в исследованиях;
 - spike     — разовый всплеск одной недели, не тренд;
-- stable    — доля около нуля изменения;
+- stable    — изменение около нуля;
 - weak      — мало данных;
-- declining — спад доли (только при отрицательной динамике).
+- declining — спад (только при отрицательной динамике).
 
-Динамика считается по ДОЛЕ темы в корпусе окна, не по абсолютным счётчикам:
-иначе неравномерная глубина сбора (тонкий prior / толстый recent) даёт ложные +200%.
+Коэффициент использует абсолютные счётчики с симметричным сглаживанием,
+чтобы малые базы не давали экстремальные проценты.
 """
 
 from __future__ import annotations
@@ -25,7 +25,7 @@ from ..enrichment.tag_filter import SIGNAL_AI_TAGS, is_signal_tag
 from ..enrichment.taxonomy import AI_TECH_TAGS
 from .constants import SIGNAL_WINDOW_DAYS, SIGNAL_WINDOW_WEEKS
 from .timeseries import tag_profiles, week_start
-from .velocity import velocity_from_shares, velocity_label
+from .velocity import velocity_from_smoothed_counts, velocity_label
 
 LEVEL_ORDER = {
     "strong": 0,
@@ -42,7 +42,7 @@ CENSOR_MARGIN_WEEKS = 4
 RESEARCH_SHARE = 0.8
 SPIKE_CONCENTRATION = 0.7
 
-# Пороги силы по приросту доли (velocity).
+# Пороги силы по сглаженной динамике публикаций (velocity).
 STRONG_VEL = 0.50      # +50% и выше
 EMERGING_VEL = 0.25    # +25%..+50%
 DECLINE_VEL = -0.25    # −25% и ниже
@@ -97,27 +97,27 @@ def level_from_velocity(
     if velocity >= STRONG_VEL and recent >= 8 and n_types >= 2:
         return (
             "strong",
-            f"сильный рост доли: {vel_label}, {recent} публ. за {_window_label()}, {n_types} тип(а) источников",
+            f"сильный рост публикаций: {vel_label}, {recent} публ. за {_window_label()}, {n_types} тип(а) источников",
         )
     if velocity >= STRONG_VEL and recent >= 5:
         return (
             "emerging",
-            f"рост доли {vel_label}, {recent} публ. за {_window_label()} — набирает силу",
+            f"рост публикаций {vel_label}, {recent} публ. за {_window_label()} — набирает силу",
         )
     if velocity >= EMERGING_VEL and recent >= 3:
         return (
             "emerging",
-            f"рост доли {vel_label}, {recent} публ. за {_window_label()}",
+            f"рост публикаций {vel_label}, {recent} публ. за {_window_label()}",
         )
     if velocity <= DECLINE_VEL and prior >= 5:
         return (
             "declining",
-            f"спад доли {vel_label} к предыдущим {_window_label()}",
+            f"спад публикаций {vel_label} к предыдущим {_window_label()}",
         )
     if abs(velocity) < STABLE_BAND and recent >= 5:
         return (
             "stable",
-            f"доля стабильна ({vel_label}), {recent} публ. за {_window_label()}",
+            f"динамика стабильна ({vel_label}), {recent} публ. за {_window_label()}",
         )
     return (
         "weak",
@@ -138,10 +138,8 @@ def classify_signals(
 ) -> list[dict]:
     """Классификация сигналов.
 
-    Динамика — изменение доли темы среди всех отслеживаемых signal-тегов
-    за последние `recent_days` относительно предыдущих `recent_days`
-    (по умолчанию 90/90). Общий корпус не используется как знаменатель:
-    его состав меняется при расширении источников и backfill.
+    Динамика — сглаженное изменение абсолютного числа публикаций за последние
+    `recent_days` относительно предыдущих `recent_days` (по умолчанию 90/90).
     """
     if recent_weeks is not None:
         recent_days = recent_weeks * 7
@@ -215,9 +213,7 @@ def classify_signals(
 
         recent_share = (r / signal_mentions_recent) if signal_mentions_recent else None
         prior_share = (p / signal_mentions_prior) if signal_mentions_prior else None
-        velocity, vel_source = velocity_from_shares(recent_share, prior_share)
-        if vel_source:
-            vel_source = "share_90d"
+        velocity, vel_source = velocity_from_smoothed_counts(r, p)
 
         level, reason = level_from_velocity(
             velocity=velocity,
@@ -249,6 +245,7 @@ def classify_signals(
                 "recent_share": round(recent_share, 4) if recent_share is not None else None,
                 "baseline_share": round(prior_share, 4) if prior_share is not None else None,
                 "share_denominator": "signal_mentions",
+                "velocity_method": "smoothed_counts",
                 "signal_mentions_recent": signal_mentions_recent,
                 "signal_mentions_prior": signal_mentions_prior,
                 "research_share": round(research_share, 2),

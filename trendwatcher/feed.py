@@ -120,4 +120,6 @@ def build_feed(session, limit: int = 600) -> list[dict]:
         eligible.append(d)
 
     mixed = diversify_feed(eligible, limit)
+    # Квота CVE и дедуп выбирают состав, но итоговая лента всегда строго по дате.
+    mixed.sort(key=lambda d: d.published_at, reverse=True)
     return [d.to_dict() for d in mixed]

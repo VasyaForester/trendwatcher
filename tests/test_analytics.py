@@ -7,6 +7,7 @@ from trendwatcher.analytics.velocity import (
     cap_velocity,
     pct_change,
     velocity_from_counts,
+    velocity_from_smoothed_counts,
     velocity_from_shares,
     velocity_label,
 )
@@ -40,6 +41,7 @@ class TestPctChange(unittest.TestCase):
 
     def test_velocity_label(self):
         self.assertIn("доли", velocity_label(0.5, "share_90d"))
+        self.assertIn("сглаженной", velocity_label(0.5, "smoothed_counts_90d"))
         self.assertEqual(velocity_label(0.0, None), "н/д")
 
     def test_velocity_from_counts(self):
@@ -50,6 +52,12 @@ class TestPctChange(unittest.TestCase):
         self.assertEqual(v, 0.0)
         self.assertIsNone(src)
 
+    def test_smoothed_counts_dampen_small_baseline(self):
+        v, src = velocity_from_smoothed_counts(39, 1)
+        self.assertAlmostEqual(v, 0.422)
+        self.assertEqual(src, "smoothed_counts_90d")
+        self.assertLess(abs(v), 1.0)
+
 
 class TestLevelFromVelocity(unittest.TestCase):
     def test_positive_velocity_never_declining(self):
@@ -57,7 +65,7 @@ class TestLevelFromVelocity(unittest.TestCase):
 
         level, _ = level_from_velocity(
             velocity=0.8,
-            vel_source="share_90d",
+            vel_source="smoothed_counts_90d",
             recent=20,
             prior=10,
             n_types=2,
@@ -75,7 +83,7 @@ class TestLevelFromVelocity(unittest.TestCase):
 
         level, _ = level_from_velocity(
             velocity=-0.4,
-            vel_source="share_90d",
+            vel_source="smoothed_counts_90d",
             recent=10,
             prior=20,
             n_types=2,
