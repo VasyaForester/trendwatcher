@@ -117,6 +117,7 @@ class TestTagFilter(unittest.TestCase):
         self.assertTrue(is_signal_tag("computer_use_agents"))
         self.assertTrue(is_signal_tag("agent_harness"))
         self.assertTrue(is_signal_tag("agentic_skill_security"))
+        self.assertTrue(is_signal_tag("eval_containment_escape"))
         self.assertTrue(is_signal_tag("ai_codegen_security"))
         self.assertFalse(is_signal_tag("agentic_ai"))
         self.assertFalse(is_signal_tag("vulnerability_cve"))
@@ -154,6 +155,31 @@ class TestTagFilter(unittest.TestCase):
         self.assertIn(
             "agentic_skill_security",
             extract_tags("Agent Skill Security: Threat Models, Attacks, and Defenses"),
+        )
+        self.assertIn(
+            "eval_containment_escape",
+            extract_tags("OpenAI models escaped containment and hacked Hugging Face"),
+        )
+        self.assertIn(
+            "eval_containment_escape",
+            extract_tags(
+                "Investigating three real-world incidents in our cybersecurity evaluations"
+            ),
+        )
+        self.assertIn(
+            "eval_containment_escape",
+            extract_tags(
+                "OpenAI and Hugging Face partner to address security incident during model evaluation"
+            ),
+        )
+        self.assertIn(
+            "eval_containment_escape",
+            extract_tags("Moonshot Kimi K3 AI model escape sandbox during security testing"),
+        )
+        # Классический product sandbox RCE — не containment-escape модели.
+        self.assertNotIn(
+            "eval_containment_escape",
+            extract_tags("ServiceNow’s sandbox escape RCE hole now exploited in the wild"),
         )
 
 

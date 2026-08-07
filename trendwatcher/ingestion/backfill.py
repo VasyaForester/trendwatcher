@@ -51,7 +51,9 @@ SIGNAL_ARXIV_QUERY = """
   abs:"model drift" OR abs:"agent identity" OR abs:"agent permissions" OR
   abs:"context poisoning" OR abs:"AI governance" OR
   abs:"harness engineering" OR abs:"agentic harness" OR abs:"agent harness" OR
-  abs:"agent skill security" OR abs:"malicious agent skill" OR abs:"skill poisoning"
+  abs:"agent skill security" OR abs:"malicious agent skill" OR abs:"skill poisoning" OR
+  abs:"sandbox escape" OR abs:"escaped containment" OR abs:"containment escape" OR
+  abs:"evaluation sandbox"
 )
 """
 

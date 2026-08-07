@@ -62,6 +62,7 @@ _AI_NATIVE_TAGS = {
     "tool_calling_security",
     "ai_codegen_security",
     "autonomous_cyber_offense",
+    "eval_containment_escape",
     "model_context_poisoning",
     "multimodal_injection",
     "rag_security",

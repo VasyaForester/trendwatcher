@@ -43,6 +43,7 @@ SIGNAL_TAGS: frozenset[str] = frozenset(
         "tool_calling_security",
         "ai_codegen_security",
         "autonomous_cyber_offense",
+        "eval_containment_escape",
     }
 ) | SIGNAL_AI_TAGS
 
@@ -81,6 +82,7 @@ TREND_CHART_SPECIAL: frozenset[str] = frozenset(
         "tool_calling_security",
         "ai_codegen_security",
         "autonomous_cyber_offense",
+        "eval_containment_escape",
         "model_context_poisoning",
         "multimodal_injection",
         "agent_harness",
