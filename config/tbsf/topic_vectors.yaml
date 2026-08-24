@@ -1,8 +1,9 @@
-# Topic scoring mode variant1: only ACTUAL vectors (+21 agent security OR +12 prompt/MCP).
-# Bonuses cyber_risk (+2) and offensive (+1) are additive. No stacking of keyword terms.
-# POTENTIAL/INDIRECT keywords are used for pre-filter only, not for Topic base score.
+# Topic scoring mode stacking (TBSF v3.2): ACTUAL vectors add
+# (agent security +21 AND prompt/MCP +12), then bonuses cyber_risk (+2)
+# and offensive (+1). Cap topic at 35.
+# POTENTIAL/INDIRECT — fallback base if no ACTUAL match.
 
-mode: variant1
+mode: stacking
 
 vectors:
   - id: agent_security

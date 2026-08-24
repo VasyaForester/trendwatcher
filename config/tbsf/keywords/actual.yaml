@@ -31,8 +31,16 @@ groups:
     - function hijacking
     - agentic model
     - agentic models
+    - agentic system
+    - agentic systems
     - web agent
     - web agents
+    - llm agent
+    - llm agents
+    - ai agent
+    - ai agents
+    - coding agent
+    - coding agents
     - misevolution
     - self-evolving llm agent
     - self-evolving llm agents

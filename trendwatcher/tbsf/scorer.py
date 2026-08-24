@@ -12,7 +12,9 @@ _SPACE_RE = re.compile(r"\s+")
 
 
 def normalize(text: str) -> str:
-    return _SPACE_RE.sub(" ", (text or "").lower()).strip()
+    t = (text or "").lower().replace("–", " ").replace("—", " ")
+    t = re.sub(r"[-_/]", " ", t)
+    return _SPACE_RE.sub(" ", t).strip()
 
 
 def keyword_hit(text_norm: str, keyword: str) -> bool:
@@ -44,6 +46,7 @@ class RepoInfo:
     outdated_dependencies: bool = False
     code_not_runnable: bool = False
     hidden_module: bool = False
+    license_missing: bool = False
 
 
 @dataclass
@@ -92,11 +95,34 @@ class PaperInput:
     offensive_override: bool | None = None
 
 
+def _vector_keywords(vector: TopicVector) -> tuple[str, ...]:
+    kws: list[str] = []
+    for group in vector.keyword_groups:
+        kws.extend(vector.keywords.get(group, ()))
+    return tuple(kws)
+
+
 class DeterministicScorer:
     def __init__(self, root: Path | None = None) -> None:
         self.root = root
         self.rubric = load_rubric(root)
-        self.vectors = load_topic_vectors(root)
+        self.vectors = load_topic_vectors(root, active_only=True)
+        active_ids = {v.id for v in self.vectors}
+        self.fallback_vectors = [
+            v
+            for v in load_topic_vectors(root, active_only=False)
+            if v.id not in active_ids
+        ]
+
+    def _evidence_blob(self, paper: PaperInput, limit: int = 2000) -> str:
+        """Заголовок + аффилиации + начало текста (без related work)."""
+        parts = [
+            paper.title,
+            " ".join(paper.affiliations),
+            " ".join(paper.authors),
+            (paper.text or "")[:limit],
+        ]
+        return " ".join(p for p in parts if p)
 
     def score_topic(
         self,
@@ -134,21 +160,29 @@ class DeterministicScorer:
             else any_keyword_hit(text_norm, offensive_kw)
         )
 
-        matched_vector: TopicVector | None = None
+        matched: list[TopicVector] = []
         for vector in self.vectors:
-            all_kws: list[str] = []
-            for group in vector.keyword_groups:
-                all_kws.extend(vector.keywords.get(group, ()))
-            if any_keyword_hit(text_norm, tuple(all_kws)):
-                matched_vector = vector
-                break
+            if any_keyword_hit(text_norm, _vector_keywords(vector)):
+                matched.append(vector)
 
         if topic_base_override is not None:
             base = topic_base_override
-            vector_id = matched_vector.id if matched_vector else "llm_override"
+            vector_id = matched[0].id if matched else "llm_override"
+        elif matched:
+            # v3.2: ACTUAL-векторы складываются (агенты + промпт/MCP), не XOR.
+            base = min(33, sum(v.score for v in matched))
+            vector_id = next(
+                (v.id for v in matched if v.id == "agent_security"),
+                matched[0].id,
+            )
         else:
-            base = matched_vector.score if matched_vector else 0
-            vector_id = matched_vector.id if matched_vector else None
+            base = 0
+            vector_id = None
+            for vector in self.fallback_vectors:
+                if any_keyword_hit(text_norm, _vector_keywords(vector)):
+                    base = vector.score
+                    vector_id = vector.id
+                    break
 
         bonuses = self._load_bonuses()
         cyber_bonus = bonuses["cyber_risk"] if has_cyber else 0
@@ -211,36 +245,61 @@ class DeterministicScorer:
             score += int(cfg.get("python_stack_bonus", 2))
         return min(int(self.rubric.raw["formula"]["components"]["code"]["max"]), score)
 
+    def _infer_dataset(self, repo: RepoInfo | None, text: str) -> tuple[int, int]:
+        size = repo.dataset_size if repo else 0
+        attack_types = repo.attack_types if repo else 0
+        if size > 0:
+            return size, attack_types
+        low = (text or "").lower()
+        if not re.search(r"\b(dataset|benchmark|corpus)\b", low):
+            return 0, 0
+        if re.search(r"\b([1-9]\d{3,}|[1-9]\d{0,2},\d{3})\b", text or ""):
+            size = 1000
+        else:
+            size = 500
+        if re.search(r"attack|jailbreak|injection|exploit", low):
+            attack_types = max(attack_types, 3)
+        return size, attack_types
+
     def score_dataset(self, repo: RepoInfo | None, text: str = "") -> int:
-        if repo is None:
-            return 0
         cfg = self.rubric.raw.get("dataset", {})
-        if repo.dataset_size <= 0:
+        size, attack_types = self._infer_dataset(repo, text)
+        if size <= 0:
             return 0
         score = int(cfg.get("present", 2))
         size_cfg = cfg.get("size", {})
-        if repo.dataset_size >= size_cfg.get("large", {}).get("min", 1000):
+        if size >= size_cfg.get("large", {}).get("min", 1000):
             score += int(size_cfg.get("large", {}).get("score", 3))
-        elif repo.dataset_size >= size_cfg.get("medium", {}).get("min", 500):
+        elif size >= size_cfg.get("medium", {}).get("min", 500):
             score += int(size_cfg.get("medium", {}).get("score", 2))
         else:
             score += int(size_cfg.get("small", {}).get("score", 1))
-        if repo.attack_types >= 3:
+        if attack_types >= 3:
             score += int(cfg.get("attack_diversity_bonus", 2))
         return min(int(self.rubric.raw["formula"]["components"]["dataset"]["max"]), score)
 
-    def score_license(self, repo: RepoInfo | None) -> int:
-        if repo is None:
-            return 0
+    def score_license(self, repo: RepoInfo | None, text: str = "") -> int:
         cfg = self.rubric.raw.get("license", {})
         score = 0
-        lic = (repo.license or "").upper().replace(" ", "")
-        if lic in ("MIT", "APACHE-2.0", "APACHE2.0"):
+        lic = ((repo.license if repo else None) or "")
+        if not lic and re.search(r"\bmit license\b|apache[- ]2(?:\.0)?|apache license", text or "", re.I):
+            lic = "MIT"
+        lic_n = lic.upper().replace(" ", "")
+        if lic_n in ("MIT", "APACHE-2.0", "APACHE2.0", "APACHE2"):
             score += int(cfg.get("mit_apache", 2))
-        elif lic:
+        elif lic_n:
             score += int(cfg.get("other_open", 1))
-        if repo.reproduction:
+        reproduction = bool(repo and repo.reproduction)
+        if not reproduction and re.search(
+            r"\b(reproduc(e|ible|ibility)|to reproduce|reproduction instructions)\b",
+            text or "",
+            re.I,
+        ):
+            reproduction = True
+        if reproduction:
             score += int(cfg.get("reproduction_instructions", 2))
+        if score == 0:
+            return 0
         return min(int(self.rubric.raw["formula"]["components"]["license"]["max"]), score)
 
     def score_penalties(
@@ -249,7 +308,7 @@ class DeterministicScorer:
         cfg = self.rubric.raw.get("penalties", {})
         total = 0
         if purely_defensive:
-            total += int(cfg.get("purely_defensive", 10))
+            total += int(cfg.get("purely_defensive", 0))
         if repo is None:
             max_pen = int(self.rubric.raw.get("formula", {}).get("penalties", {}).get("max", 10))
             return -min(max_pen, total) if total else 0
@@ -257,7 +316,8 @@ class DeterministicScorer:
             total += int(cfg.get("broken_links", 2))
         if repo.outdated_dependencies:
             total += int(cfg.get("outdated_dependencies", 2))
-        if repo.license is None and (repo.has_py or repo.has_ipynb):
+        # Штраф за лицензию — только если репозиторий реально проверен.
+        if getattr(repo, "license_missing", False):
             total += int(cfg.get("no_license", 3))
         if repo.code_not_runnable:
             total += int(cfg.get("code_not_runnable", 3))
@@ -271,14 +331,17 @@ class DeterministicScorer:
             return paper.author_score
         rubric = self.rubric.raw.get("author", {})
         top = [i.lower() for i in self.rubric.raw.get("top_institutions", [])]
-        aff_text = " ".join(paper.affiliations).lower()
+        blob = normalize(self._evidence_blob(paper))
         hint = normalize(paper.venue_hint)
         for inst in top:
-            if inst.lower() in aff_text:
+            if inst.lower() in blob:
                 if "arxiv" in hint or not hint or hint == "unknown":
                     return int(rubric.get("top_on_arxiv", rubric.get("world_leader", 12)))
                 return int(rubric.get("top_institution", 10))
-        if paper.authors:
+        if re.search(r"\buniversity\b|\binstitute of technology\b|\bdepartment of\b", blob):
+            return int(rubric.get("average", 5))
+        # arXiv preprint — верифицируемая публикация, не «неизвестный блог».
+        if "arxiv" in hint or paper.authors:
             return int(rubric.get("average", 5))
         return int(rubric.get("unverifiable", 0))
 
@@ -287,9 +350,32 @@ class DeterministicScorer:
             return paper.venue_score
         rubric = self.rubric.raw.get("venue", {})
         hint = normalize(paper.venue_hint)
-        top_vendors = ("openai", "google", "deepmind", "microsoft", "meta", "anthropic", "amazon")
-        if any(v in hint for v in top_vendors):
+        head = normalize(self._evidence_blob(paper, limit=800))
+        vendor_affil = (
+            r"\b(openai|anthropic|google deepmind|deepmind|microsoft research|meta ai)\b"
+            r".{0,50}(university|research|lab|institute|inc)"
+        )
+        if re.search(vendor_affil, head) or re.search(
+            r"(researchers? (at|from)|affiliated with).{0,40}"
+            r"\b(openai|anthropic|deepmind|microsoft research)\b",
+            head,
+        ):
             return int(rubric.get("top_vendor", 8))
+        conferences = (
+            "neurips",
+            "iclr",
+            "icml",
+            "acl",
+            "emnlp",
+            "ndss",
+            "usenix",
+            "acm ccs",
+            "ieee s&p",
+            "oakland",
+        )
+        blob = normalize(self._evidence_blob(paper) + " " + hint)
+        if any(c in blob for c in conferences):
+            return int(rubric.get("reputable", 6))
         if "arxiv" in hint and ("journal" in hint or "conference" in hint):
             return int(rubric.get("arxiv_and_journal", 4))
         if "arxiv" in hint or not hint:
@@ -314,7 +400,7 @@ class DeterministicScorer:
                 if paper.dataset_override is not None
                 else self.score_dataset(paper.repo, full_text)
             ),
-            license=self.score_license(paper.repo),
+            license=self.score_license(paper.repo, full_text),
             author=self.score_author_heuristic(paper),
             venue=self.score_venue_heuristic(paper),
             penalties=self.score_penalties(paper.repo, purely_defensive=purely_defensive),

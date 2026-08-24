@@ -1,4 +1,4 @@
-version: "1.1.0"
+version: "3.2.0"
 name: TBSF
 description: Threat-based Security Scoring Framework for GenAI/agent security publications
 
@@ -6,8 +6,8 @@ survey:
   use_case: table
   articles_per_week: "5-20"
   decision_mode: score_review
-  topic_logic: variant1
-  defensive_policy: penalty_10
+  topic_logic: stacking
+  defensive_policy: conservative
   mcp_without_code: llm_decides
   keywords_update: monthly
   keywords_language: en_only
@@ -34,7 +34,9 @@ thresholds:
   telegram_publish: 70
 
 topic:
-  mode: variant1
+  # v3.2: ACTUAL-векторы складываются (agent 21 + prompt/MCP 12), не XOR.
+  # Потенциал/инфраструктура — только fallback, если ACTUAL нет.
+  mode: stacking
   vectors:
     agent_security: 21
     prompt_mcp: 12
@@ -66,7 +68,7 @@ dataset:
     medium: { min: 500, score: 2 }
     small: { min: 0, score: 1 }
   attack_diversity_bonus: 2
-  described_only_score: 0
+  described_only_score: 2
 
 license:
   mit_apache: 2
@@ -96,7 +98,8 @@ penalties:
   no_license: 3
   code_not_runnable: 3
   hidden_module: 2
-  purely_defensive: 10
+  # v3.2: штрафы только при явных поломках артефакта, не за защитный фокус.
+  purely_defensive: 0
 
 topic_tags:
   - джейлбрейк

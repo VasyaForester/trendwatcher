@@ -7,21 +7,46 @@ from datetime import date, datetime
 
 from .scorer import DeterministicScorer, PaperInput, RepoInfo
 
-_GITHUB_RX = re.compile(r"github\.com/[\w\-]+/[\w\-.]+", re.I)
+_REPO_RX = re.compile(
+    r"github\.com/[\w\-]+/[\w\-.]+"
+    r"|gitlab\.com/[\w\-]+/[\w\-.]+"
+    r"|huggingface\.co/[\w\-]+/[\w\-.]+",
+    re.I,
+)
+_CODE_AVAILABLE_RX = re.compile(
+    r"code (is )?(publicly )?available"
+    r"|open[- ]source (code|implementation|release)"
+    r"|our (code|implementation) (is|will be)"
+    r"|artefacts? available"
+    r"|artifact available",
+    re.I,
+)
 
 
 def _repo_from_text(text: str) -> RepoInfo | None:
-    """Эвристика по abstract: ссылка на GitHub → частичный code/dataset бонус TBSF."""
-    if not _GITHUB_RX.search(text):
+    """Эвристика по тексту: репозиторий / «code available» → частичный code-бонус."""
+    has_link = bool(_REPO_RX.search(text))
+    code_available = bool(_CODE_AVAILABLE_RX.search(text))
+    if not has_link and not code_available:
         return None
     low = text.lower()
+    license_name = None
+    if re.search(r"\bmit license\b|licensed under mit", low):
+        license_name = "MIT"
+    elif re.search(r"apache[- ]2", low):
+        license_name = "Apache-2.0"
     return RepoInfo(
         has_py=True,
-        has_readme=True,
-        has_deps=bool(re.search(r"requirements\.txt|pyproject\.toml|setup\.py|environment\.yml", low)),
-        has_launch=bool(re.search(r"dockerfile|docker-compose|\.sh\b|makefile", low)),
+        has_readme=has_link,
+        has_deps=has_link
+        and bool(re.search(r"requirements\.txt|pyproject\.toml|setup\.py|environment\.yml", low)),
+        has_launch=has_link
+        and bool(re.search(r"dockerfile|docker-compose|\.sh\b|makefile", low)),
         python_stack=bool(re.search(r"\bpython\b|pytorch|tensorflow|jupyter", low)),
-        reproduction=bool(re.search(r"reproduc|benchmark|how to run|getting started", low)),
+        license=license_name,
+        reproduction=bool(
+            re.search(r"\breproduc|how to run|getting started|to reproduce\b", low)
+        ),
         dataset_size=500 if re.search(r"dataset|benchmark|corpus", low) else 0,
         attack_types=3 if re.search(r"attack|jailbreak|injection|exploit", low) else 0,
     )
