@@ -4418,7 +4418,172 @@
           "share": 0.060264
         }
       }
+    },
+    "2026-08-17": {
+      "week_start": "2026-08-17",
+      "captured_at": "2026-08-24T06:13:03.937231",
+      "documents": 475,
+      "by_source_type": {
+        "research": 360,
+        "news": 84,
+        "vendor": 23,
+        "vulnerability": 8
+      },
+      "tags": {
+        "agent_harness": {
+          "count": 11,
+          "share": 0.023158
+        },
+        "agent_identity_trust": {
+          "count": 1,
+          "share": 0.002105
+        },
+        "agent_memory_security": {
+          "count": 6,
+          "share": 0.012632
+        },
+        "agent_security": {
+          "count": 10,
+          "share": 0.021053
+        },
+        "agent_swarm_security": {
+          "count": 5,
+          "share": 0.010526
+        },
+        "agentic_ai": {
+          "count": 65,
+          "share": 0.136842
+        },
+        "agentic_skill_security": {
+          "count": 1,
+          "share": 0.002105
+        },
+        "ai_codegen_security": {
+          "count": 2,
+          "share": 0.004211
+        },
+        "bias_fairness": {
+          "count": 1,
+          "share": 0.002105
+        },
+        "computer_use_agents": {
+          "count": 4,
+          "share": 0.008421
+        },
+        "data_exfiltration": {
+          "count": 2,
+          "share": 0.004211
+        },
+        "data_poisoning": {
+          "count": 4,
+          "share": 0.008421
+        },
+        "deepfake_fraud": {
+          "count": 1,
+          "share": 0.002105
+        },
+        "governance_regulation": {
+          "count": 1,
+          "share": 0.002105
+        },
+        "guardrails_defense": {
+          "count": 10,
+          "share": 0.021053
+        },
+        "indirect_prompt_injection": {
+          "count": 4,
+          "share": 0.008421
+        },
+        "jailbreak": {
+          "count": 7,
+          "share": 0.014737
+        },
+        "long_context_memory": {
+          "count": 19,
+          "share": 0.04
+        },
+        "malware_abuse": {
+          "count": 1,
+          "share": 0.002105
+        },
+        "mcp_security": {
+          "count": 1,
+          "share": 0.002105
+        },
+        "misinformation": {
+          "count": 3,
+          "share": 0.006316
+        },
+        "model_context_poisoning": {
+          "count": 1,
+          "share": 0.002105
+        },
+        "model_drift": {
+          "count": 2,
+          "share": 0.004211
+        },
+        "model_efficiency": {
+          "count": 13,
+          "share": 0.027368
+        },
+        "model_supply_chain": {
+          "count": 2,
+          "share": 0.004211
+        },
+        "multimodal_ai": {
+          "count": 22,
+          "share": 0.046316
+        },
+        "on_device_ai": {
+          "count": 7,
+          "share": 0.014737
+        },
+        "open_weights": {
+          "count": 11,
+          "share": 0.023158
+        },
+        "privacy": {
+          "count": 2,
+          "share": 0.004211
+        },
+        "prompt_injection": {
+          "count": 8,
+          "share": 0.016842
+        },
+        "rag_security": {
+          "count": 12,
+          "share": 0.025263
+        },
+        "reasoning_models": {
+          "count": 12,
+          "share": 0.025263
+        },
+        "red_teaming": {
+          "count": 2,
+          "share": 0.004211
+        },
+        "self_evolving_agents": {
+          "count": 8,
+          "share": 0.016842
+        },
+        "synthetic_data": {
+          "count": 2,
+          "share": 0.004211
+        },
+        "tool_calling_security": {
+          "count": 1,
+          "share": 0.002105
+        },
+        "vulnerability_cve": {
+          "count": 14,
+          "share": 0.029474
+        },
+        "world_models": {
+          "count": 22,
+          "share": 0.046316
+        }
+      }
     }
   },
-  "updated_at": "2026-08-23T05:49:32.729102"
+  "updated_at": "2026-08-24T06:13:03.937833"
 }
