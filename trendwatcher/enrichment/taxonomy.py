@@ -363,6 +363,21 @@ FEED_REJECT_PATTERNS: list[str] = [
     r"surveillance cameras?",
     r"hotbed of ai",
     r"\bcctv\b",
+    # Бизнес / железо / how-to без security-события
+    r"\bvaluation\b",
+    r"\$[0-9.]+\s*[bBmM]\b",
+    r"\b(series [a-c]|backed .{0,40} at )\b",
+    r"\bper watt\b",
+    r"\bwork per watt\b",
+    r"\befficiency standard\b",
+    r"\bperformance per watt\b",
+    r"\bagentic ai adoption\b",
+    r"\bworkforce to scale\b",
+    r"\breinvent their processes\b",
+    r"\bknowledge management system\b",
+    r"\bbuilding a .{0,60} with amazon\b",
+    r"\btelephony ai host\b",
+    r"\bpushes into robotics\b",
 ]
 
 # AI-сигнал: сильные якоря (LLM/агент/платформа). Голое «AI» — отдельно, мягче.

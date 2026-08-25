@@ -52,6 +52,12 @@ _PHRASE_MAP = (
     ("machine keys", "machinekeys"),
 )
 
+# Слишком общие токены: не считаем «той же историей» сами по себе.
+_GENERIC_TOKENS = {
+    "ai", "ml", "llm", "model", "models", "agent", "agents", "agentic",
+    "standard", "new", "sets", "set",
+}
+
 
 def normalize_url(url: str) -> str:
     """Канонический URL: без фрагмента, tracking-параметров, лишнего слэша."""
@@ -76,6 +82,7 @@ def normalize_url(url: str) -> str:
 def title_fingerprint(title: str) -> str:
     """Грубый ключ заголовка для ловли перепечаток одной новости."""
     t = (title or "").lower().replace("ё", "е")
+    t = re.sub(r"(?<![a-z])vidia\b", "nvidia", t)
     for src, dst in _PHRASE_MAP:
         t = t.replace(src, dst)
     t = _PUNCT_RX.sub(" ", t)
@@ -126,6 +133,10 @@ def titles_near_duplicate(a: str, b: str, *, jaccard_min: float = 0.42) -> bool:
 
     evt_a, evt_b = _event_hit(a), _event_hit(b)
     orgs = (ta & tb) & _ORG_TOKENS
+    distinctive = (ta & tb) - _ORG_TOKENS - _GENERIC_TOKENS
+    # Одна линейка продукта (Vera Rubin, один org) — даже без security-слов.
+    if orgs and len(distinctive) >= 2:
+        return True
     if orgs and evt_a and evt_b:
         # 2+ общих org (OpenAI+HuggingFace) — достаточно.
         if len(orgs) >= 2:

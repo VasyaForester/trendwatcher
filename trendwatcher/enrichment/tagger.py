@@ -6,6 +6,7 @@ LLM-обогащение подключается позже как второй
 
 import re
 
+from .doc_type import classify_doc_type
 from .tag_filter import normalize_tags
 from .taxonomy import (
     AI_RELEVANCE_PATTERNS,
@@ -40,6 +41,20 @@ _AI_SOFT_SECURITY_RX = re.compile(
     r"inject|jailbreak|malware|red[- ]team|incident|compromis))"
     r"|((attack|defense|threat|vulnerab|security|breach|hack|exploit|"
     r"inject|jailbreak|malware|red[- ]team|incident|compromis).{0,60}\bai\b)",
+    re.I,
+)
+# «Событие безопасности», не просто агентский продукт / LLM / Hugging Face.
+_FEED_SECURITY_EVENT_RX = re.compile(
+    r"prompt injection|indirect prompt|\bjailbreak\b"
+    r"|system prompt (leak|extract)"
+    r"|data poisoning|model (poison|theft|extraction)"
+    r"|red[- ]team.{0,20}(ai|llm|model)"
+    r"|ai (threats?|security|red team)"
+    r"|\bmcp\b.{0,20}(cve|vulnerab|security|attack|exploit)"
+    r"|(cve|vulnerab).{0,20}\bmcp\b"
+    r"|agent (hijack|attack|vulnerab|security|injection)"
+    r"|sandbox escape|escaped? containment|containment (escape|failure)"
+    r"|security incident|incident disclosure",
     re.I,
 )
 _ENTITY_RX = [(e, re.compile(r"\b" + re.escape(e) + r"\b", re.I)) for e in KNOWN_ENTITIES]
@@ -126,16 +141,10 @@ def is_feed_relevant(
     if "vulnerability_cve" in classic_sec_tags and not vuln_in_text:
         classic_sec_tags = classic_sec_tags - {"vulnerability_cve"}
 
-    # AI-native события: теги + характерные паттерны (не любой breach/CVE).
-    ai_event_hint = re.compile(
-        r"prompt injection|jailbreak|ai agent|agentic|mcp\b|model (poison|theft|supply)|"
-        r"hugging\s?face|llm|data poisoning|red[- ]team.{0,20}(ai|llm|model)|"
-        r"ai (threats?|security|red team)|system prompt",
-        re.I,
-    )
+    # AI-native security: теги поверхностей атак, не «agentic/LLM» как продукт.
     has_ai_native_event = (
         bool(ai_native)
-        or bool(ai_event_hint.search(text))
+        or bool(_FEED_SECURITY_EVENT_RX.search(text))
         or bool(_AI_SOFT_SECURITY_RX.search(text))
     )
 
@@ -166,25 +175,6 @@ def extract_entities(text: str) -> list[str]:
 
 def severity_score(text: str) -> float:
     return max((score for rx, score in _SEVERITY_RX if rx.search(text)), default=0.0)
-
-
-def classify_doc_type(text: str, source_type: str) -> str:
-    t = text.lower()
-    if source_type == "research":
-        return "research"
-    if source_type == "vulnerability" or _CVE_RX.search(text):
-        return "vulnerability"
-    if re.search(r"ai act|regulation|executive order|law|legislation|compliance deadline", t):
-        return "regulation"
-    if source_type == "standards" and re.search(r"framework|guidance|standard|guideline|profile", t):
-        return "framework"
-    if re.search(r"breach|hacked|compromised|incident|attack (on|against)|leaked", t):
-        return "incident"
-    if re.search(r"attack.{0,40}(ai|llm|agent|model)|ai agents?.{0,25}attack", t):
-        return "incident"
-    if re.search(r"releases?|launch(es|ed)?|announc(es|ed)|open[- ]sourc|introduc(es|ed)|new tool", t):
-        return "tool_release"
-    return "news"
 
 
 def enrich(title: str, summary: str, source_type: str) -> dict:

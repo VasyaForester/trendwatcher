@@ -167,6 +167,18 @@ class TestStrictRelevance(unittest.TestCase):
         total = sum(1 for i in items if i.get("label") in ("relevant", "irrelevant"))
         self.assertEqual(ok, total, f"only {ok}/{total} match: {mismatches}")
 
+    def test_non_security_agentic_product_rejected(self):
+        cases = [
+            "Businesses must reinvent their processes and workforce to scale agentic AI adoption",
+            "Democratizing institutional knowledge: Building an AI-powered knowledge management system with AWS",
+            "Building a restaurant telephony AI host with Amazon Connect",
+            "Valor, Point72 back General Intuition at $6B valuation as AI startup pushes into robotics",
+            "Up to 30x More Work Per Watt: NVIDIA Vera Rubin NVL72 Sets a New Efficiency Standard for AI Agents",
+            "NVIDIA Vera Rubin and Blackwell Set a New Standard for Agentic AI Performance per Watt",
+        ]
+        for text in cases:
+            self.assertFalse(is_feed_relevant(text), msg=text)
+
 
 class TestDedup(unittest.TestCase):
     def test_normalize_url_strips_tracking(self):
@@ -190,6 +202,11 @@ class TestDedup(unittest.TestCase):
         for i, a in enumerate(titles):
             for b in titles[i + 1 :]:
                 self.assertTrue(titles_near_duplicate(a, b), msg=f"{a!r} vs {b!r}")
+
+    def test_nvidia_vera_rubin_wire_copies_near_duplicate(self):
+        a = "Up to 30x More Work Per Watt: NVIDIA Vera Rubin NVL72 Sets a New Efficiency Standard for AI Agents"
+        b = "NVIDIA Vera Rubin and Blackwell Set a New Standard for Agentic AI Performance per Watt"
+        self.assertTrue(titles_near_duplicate(a, b))
 
     def test_unrelated_openai_stories_not_near_duplicate(self):
         a = "OpenAI Unveils GPT-Red to Test AI Model Safety"
