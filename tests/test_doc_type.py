@@ -71,6 +71,27 @@ class TestDocTypeEssence(unittest.TestCase):
     def test_tagger_reexports_classifier(self):
         self.assertIs(tagger_classify, classify_doc_type)
 
+    def test_top_source_overrides_title_genre(self):
+        self.assertEqual(
+            classify_doc_type("Introducing GPT-5", "vendor", source_id="openai_news"),
+            "top",
+        )
+        self.assertEqual(
+            classify_doc_type("Microsoft launches its first cybersecurity model", "news", source_id="microsoft_security"),
+            "top",
+        )
+        self.assertNotEqual(
+            classify_doc_type("Introducing GPT-5", "vendor"),
+            "top",
+        )
+
+    def test_yaml_top_flag_matches_ids(self):
+        from trendwatcher.config import load_sources
+        from trendwatcher.enrichment.doc_type import TOP_SOURCE_IDS
+
+        yaml_ids = {s.id for s in load_sources() if s.top}
+        self.assertEqual(yaml_ids, set(TOP_SOURCE_IDS))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -5,6 +5,7 @@
 # filter_ai: true — строгий отсев: только AI security / breakthrough AI
 #   (не любое упоминание «AI»). Сайты без публичного RSS сюда не входят:
 #   Bloomberg/WSJ/многие paywall и HTML-only страницы не парсятся.
+# top: true — официальные лаборатории/стандарты; в Ленте тип TOP, без отсева.
 
 sources:
   # --- Research / CVE ---
@@ -286,7 +287,8 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.85
-    filter_ai: true
+    filter_ai: false
+    top: true
     url: "https://security.googleblog.com/feeds/posts/default"
 
   - id: google_ai_blog
@@ -302,7 +304,8 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.85
-    filter_ai: true
+    filter_ai: false
+    top: true
     url: "https://www.microsoft.com/en-us/security/blog/feed/"
 
   - id: aws_ml_blog
@@ -334,7 +337,8 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.7
-    filter_ai: true
+    filter_ai: false
+    top: true
     url: "https://developer.nvidia.com/blog/feed"
 
   - id: apple_newsroom
@@ -350,7 +354,8 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.8
-    filter_ai: true
+    filter_ai: false
+    top: true
     url: "https://openai.com/news/rss.xml"
 
   - id: anthropic_news
@@ -358,8 +363,55 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.8
-    filter_ai: true
+    filter_ai: false
+    top: true
     url: "https://raw.githubusercontent.com/taobojlen/anthropic-rss-feed/main/anthropic_news_rss.xml"
+
+  - id: anthropic_research
+    name: "Anthropic Research"
+    type: rss
+    source_type: vendor
+    trust: 0.85
+    filter_ai: false
+    top: true
+    url: "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_anthropic_research.xml"
+
+  - id: meta_ai
+    name: "Meta AI Blog"
+    type: rss
+    source_type: vendor
+    trust: 0.8
+    filter_ai: false
+    top: true
+    url: "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_meta_ai.xml"
+
+  - id: transformer_circuits
+    name: "Transformer Circuits"
+    type: rss
+    source_type: vendor
+    trust: 0.9
+    filter_ai: false
+    top: true
+    url: "https://transformer-circuits.pub/feed.xml"
+
+  - id: owasp_genai
+    name: "OWASP GenAI"
+    type: rss
+    source_type: standards
+    trust: 0.95
+    filter_ai: false
+    top: true
+    url: "https://genai.owasp.org/feed/"
+
+  - id: mitre_atlas
+    name: "MITRE ATLAS Updates"
+    type: rss
+    source_type: standards
+    trust: 0.95
+    filter_ai: false
+    top: true
+    # У atlas.mitre.org/resources/updates нет RSS; зеркало — релизы atlas-data.
+    url: "https://github.com/mitre-atlas/atlas-data/releases.atom"
 
   - id: anthropic_engineering
     name: "Anthropic Engineering"

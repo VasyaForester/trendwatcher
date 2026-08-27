@@ -3,6 +3,7 @@
 import json
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 from trendwatcher.enrichment.tagger import (
     extract_tags,
@@ -212,6 +213,35 @@ class TestDedup(unittest.TestCase):
         a = "OpenAI Unveils GPT-Red to Test AI Model Safety"
         b = "OpenAI says its AI models hacked Hugging Face during testing"
         self.assertFalse(titles_near_duplicate(a, b))
+
+
+class TestTopFeedSources(unittest.TestCase):
+    def test_top_source_bypasses_security_filter(self):
+        from trendwatcher.feed import _feed_eligible
+
+        launch = SimpleNamespace(
+            source_id="openai_news",
+            doc_type="top",
+            title="Introducing GPT-5",
+            summary="A new flagship model",
+            source_name="OpenAI News",
+            tags=[],
+        )
+        self.assertTrue(_feed_eligible(launch))
+        self.assertFalse(is_feed_relevant("Introducing GPT-5\nA new flagship model"))
+
+    def test_ordinary_launch_still_rejected(self):
+        from trendwatcher.feed import _feed_eligible
+
+        launch = SimpleNamespace(
+            source_id="techcrunch",
+            doc_type="news",
+            title="Introducing GPT-5",
+            summary="A new flagship model",
+            source_name="TechCrunch",
+            tags=[],
+        )
+        self.assertFalse(_feed_eligible(launch))
 
 
 if __name__ == "__main__":

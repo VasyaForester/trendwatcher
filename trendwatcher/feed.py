@@ -9,6 +9,7 @@ from sqlalchemy import select
 
 from .db import Document, utcnow
 from .enrichment.tagger import is_feed_relevant
+from .enrichment.doc_type import is_top_source
 from .ingestion.dedup import normalize_url, title_fingerprint, titles_near_duplicate
 from .tbsf.arxiv_text import is_arxiv_url
 
@@ -20,6 +21,8 @@ MAX_CVE_SHARE = 0.25
 
 
 def _feed_eligible(doc: Document) -> bool:
+    if is_top_source(doc.source_id) or doc.doc_type == "top":
+        return True
     text = f"{doc.title}\n{doc.summary}"
     return is_feed_relevant(text, doc.tags or [], source_name=doc.source_name or "")
 
@@ -98,8 +101,9 @@ def build_feed(session, limit: int = 600) -> list[dict]:
     seen_titles: set[str] = set()
     seen_title_raw: list[str] = []
     for d in docs:
-        if d.source_type == "research" or is_arxiv_url(d.url):
-            continue
+        if not (is_top_source(d.source_id) or d.doc_type == "top"):
+            if d.source_type == "research" or is_arxiv_url(d.url):
+                continue
         if d.published_at is None or d.published_at < cutoff:
             continue
         if not _feed_eligible(d):

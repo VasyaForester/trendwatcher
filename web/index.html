@@ -96,6 +96,7 @@
   .t-regulation { background: rgba(157,107,255,.15); color: var(--accent2); }
   .t-framework { background: rgba(61,220,151,.15); color: var(--green); }
   .t-tool_release { background: rgba(255,206,86,.15); color: var(--yellow); }
+  .t-top { background: rgba(255,196,72,.22); color: #ffc448; }
   .empty { color: var(--muted); font-size: 13px; padding: 12px 0; }
   .trend-brief { margin-bottom: 18px; }
   .trend-brief .brief-body { font-size: 13.5px; line-height: 1.65; color: var(--text); }
@@ -178,11 +179,12 @@
   </div>
 
   <div class="panel">
-      <h2>Лента <span class="hint">AI-security события · дедуп · ≤25% CVE · разные источники</span></h2>
+      <h2>Лента <span class="hint">AI-security события · TOP лаборатории · дедуп · ≤25% CVE</span></h2>
     <div class="controls">
       <select id="tagFilter"><option value="">Все теги</option></select>
       <select id="typeFilter">
         <option value="">Все типы</option>
+        <option value="top">TOP</option>
         <option value="incident">Инциденты</option>
         <option value="vulnerability">Уязвимости</option>
         <option value="regulation">Регуляторика</option>

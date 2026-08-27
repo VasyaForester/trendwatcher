@@ -177,11 +177,11 @@ def severity_score(text: str) -> float:
     return max((score for rx, score in _SEVERITY_RX if rx.search(text)), default=0.0)
 
 
-def enrich(title: str, summary: str, source_type: str) -> dict:
+def enrich(title: str, summary: str, source_type: str, source_id: str = "") -> dict:
     text = f"{title}\n{summary}"
     return {
         "tags": extract_tags(text),
         "entities": extract_entities(text),
         "severity": severity_score(text),
-        "doc_type": classify_doc_type(text, source_type),
+        "doc_type": classify_doc_type(text, source_type, source_id=source_id),
     }

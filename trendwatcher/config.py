@@ -19,6 +19,7 @@ class SourceConfig:
     query: str | None = None
     keywords: list[str] = field(default_factory=list)
     filter_ai: bool = False
+    top: bool = False
     max_results: int = 200
     days_back: int = 120
 

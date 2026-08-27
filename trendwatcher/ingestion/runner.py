@@ -37,8 +37,8 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
         if any(titles_near_duplicate(item["title"], t) for t in existing_title_raw):
             continue
         text = f"{item['title']}\n{item['summary']}"
-        meta = enrich(item["title"], item["summary"], source.source_type)
-        if source.filter_ai and not is_feed_relevant(
+        meta = enrich(item["title"], item["summary"], source.source_type, source.id)
+        if source.filter_ai and not source.top and not is_feed_relevant(
             text, meta["tags"], source_name=source.name
         ):
             continue
@@ -78,7 +78,7 @@ def retag_all() -> None:
     with get_session() as session:
         docs = session.scalars(select(Document)).all()
         for doc in docs:
-            meta = enrich(doc.title, doc.summary, doc.source_type)
+            meta = enrich(doc.title, doc.summary, doc.source_type, doc.source_id)
             doc.tags = meta["tags"]
             doc.entities = meta["entities"]
             doc.doc_type = meta["doc_type"]

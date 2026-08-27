@@ -109,7 +109,7 @@ def ingest_signal_items(source: SourceConfig, items: list[dict], session) -> tup
         if title_key and title_key in existing_titles:
             continue
         summary = compact_summary(item.get("summary", ""), SUMMARY_CAP)
-        meta = enrich(item["title"], summary, source.source_type)
+        meta = enrich(item["title"], summary, source.source_type, source.id)
         if not has_signal_tag(meta["tags"]):
             skipped_no_signal += 1
             continue

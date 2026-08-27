@@ -8,6 +8,27 @@ from __future__ import annotations
 
 import re
 
+# Источники раздела Лента с типом TOP (официальные лаборатории / стандарты).
+TOP_SOURCE_IDS: frozenset[str] = frozenset(
+    {
+        "openai_news",
+        "owasp_genai",
+        "google_security",
+        "microsoft_security",
+        "nvidia_developer",
+        "meta_ai",
+        "anthropic_news",
+        "anthropic_research",
+        "transformer_circuits",
+        "mitre_atlas",
+    }
+)
+
+
+def is_top_source(source_id: str) -> bool:
+    return bool(source_id) and source_id in TOP_SOURCE_IDS
+
+
 _CVE_RX = re.compile(r"CVE-\d{4}-\d{3,}", re.I)
 
 # Разбор/инструкция/мнение — даже если в тексте есть incident/attack.
@@ -183,8 +204,10 @@ def _is_product_launch(title: str) -> bool:
     return bool(_LAUNCH.search(title))
 
 
-def classify_doc_type(text: str, source_type: str) -> str:
+def classify_doc_type(text: str, source_type: str, source_id: str = "") -> str:
     """Определяет жанр материала по источнику и сути заголовка."""
+    if is_top_source(source_id):
+        return "top"
     if source_type == "research":
         return "research"
     if source_type == "vulnerability" or _CVE_RX.search(text or ""):
