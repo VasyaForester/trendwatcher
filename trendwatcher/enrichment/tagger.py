@@ -6,7 +6,7 @@ LLM-обогащение подключается позже как второй
 
 import re
 
-from .doc_type import classify_doc_type
+from .doc_type import classify_doc_type, is_top_source
 from .tag_filter import normalize_tags
 from .taxonomy import (
     AI_RELEVANCE_PATTERNS,
@@ -106,6 +106,7 @@ def is_feed_relevant(
     tags: list[str] | None = None,
     *,
     source_name: str = "",
+    source_id: str = "",
 ) -> bool:
     """Лента: только AI-security события/артефакты.
 
@@ -115,6 +116,9 @@ def is_feed_relevant(
     """
     if any(rx.search(text) for rx in _FEED_REJECT_RX):
         return False
+    # Весь источник — AI security (стандарты/фреймворки), не общий вендорный блог.
+    if source_id in {"owasp_genai", "mitre_atlas"}:
+        return True
 
     tag_set = set(tags) if tags is not None else set(extract_tags(text))
     ai_native = tag_set & _AI_NATIVE_TAGS
@@ -122,8 +126,9 @@ def is_feed_relevant(
     has_strong_ai = bool(ai_native | (tag_set & BREAKTHROUGH_AI_TAGS)) or any(
         rx.search(text) for rx in _FEED_AI_RX
     )
-    if not has_strong_ai and source_name:
-        if re.search(r"hugging\s?face|openai|anthropic|nist|owasp", source_name, re.I):
+    origin = f"{source_name} {source_id}"
+    if not has_strong_ai and origin.strip():
+        if re.search(r"hugging\s?face|openai|anthropic|nist|owasp", origin, re.I):
             has_strong_ai = True
 
     has_soft_ai = any(rx.search(text) for rx in _FEED_SOFT_AI_RX)
@@ -179,9 +184,15 @@ def severity_score(text: str) -> float:
 
 def enrich(title: str, summary: str, source_type: str, source_id: str = "") -> dict:
     text = f"{title}\n{summary}"
+    tags = extract_tags(text)
+    doc_type = classify_doc_type(text, source_type, source_id=source_id)
+    if is_top_source(source_id) and is_feed_relevant(
+        text, tags, source_name=source_id, source_id=source_id
+    ):
+        doc_type = "top"
     return {
-        "tags": extract_tags(text),
+        "tags": tags,
         "entities": extract_entities(text),
         "severity": severity_score(text),
-        "doc_type": classify_doc_type(text, source_type, source_id=source_id),
+        "doc_type": doc_type,
     }

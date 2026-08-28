@@ -21,10 +21,13 @@ MAX_CVE_SHARE = 0.25
 
 
 def _feed_eligible(doc: Document) -> bool:
-    if is_top_source(doc.source_id) or doc.doc_type == "top":
-        return True
     text = f"{doc.title}\n{doc.summary}"
-    return is_feed_relevant(text, doc.tags or [], source_name=doc.source_name or "")
+    return is_feed_relevant(
+        text,
+        doc.tags or [],
+        source_name=doc.source_name or "",
+        source_id=doc.source_id or "",
+    )
 
 
 def _is_cve_like(doc: Document) -> bool:

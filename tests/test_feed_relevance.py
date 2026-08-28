@@ -216,7 +216,7 @@ class TestDedup(unittest.TestCase):
 
 
 class TestTopFeedSources(unittest.TestCase):
-    def test_top_source_bypasses_security_filter(self):
+    def test_top_source_still_requires_ai_security(self):
         from trendwatcher.feed import _feed_eligible
 
         launch = SimpleNamespace(
@@ -227,8 +227,21 @@ class TestTopFeedSources(unittest.TestCase):
             source_name="OpenAI News",
             tags=[],
         )
-        self.assertTrue(_feed_eligible(launch))
+        self.assertFalse(_feed_eligible(launch))
         self.assertFalse(is_feed_relevant("Introducing GPT-5\nA new flagship model"))
+
+    def test_top_ai_security_stays_eligible(self):
+        from trendwatcher.feed import _feed_eligible
+
+        incident = SimpleNamespace(
+            source_id="openai_news",
+            doc_type="top",
+            title="The Hugging Face incident and the road ahead",
+            summary="Models escaped containment during cybersecurity evaluation",
+            source_name="OpenAI News",
+            tags=["eval_containment_escape"],
+        )
+        self.assertTrue(_feed_eligible(incident))
 
     def test_ordinary_launch_still_rejected(self):
         from trendwatcher.feed import _feed_eligible

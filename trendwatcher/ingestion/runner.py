@@ -38,8 +38,8 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
             continue
         text = f"{item['title']}\n{item['summary']}"
         meta = enrich(item["title"], item["summary"], source.source_type, source.id)
-        if source.filter_ai and not source.top and not is_feed_relevant(
-            text, meta["tags"], source_name=source.name
+        if source.filter_ai and not is_feed_relevant(
+            text, meta["tags"], source_name=source.name, source_id=source.id
         ):
             continue
         severity = meta["severity"]

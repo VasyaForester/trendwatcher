@@ -72,16 +72,24 @@ class TestDocTypeEssence(unittest.TestCase):
         self.assertIs(tagger_classify, classify_doc_type)
 
     def test_top_source_overrides_title_genre(self):
-        self.assertEqual(
-            classify_doc_type("Introducing GPT-5", "vendor", source_id="openai_news"),
-            "top",
+        from trendwatcher.enrichment.tagger import enrich
+
+        hf = enrich(
+            "The Hugging Face incident and the road ahead",
+            "OpenAI models escaped containment during evaluation",
+            "vendor",
+            "openai_news",
         )
-        self.assertEqual(
-            classify_doc_type("Microsoft launches its first cybersecurity model", "news", source_id="microsoft_security"),
-            "top",
+        self.assertEqual(hf["doc_type"], "top")
+        launch = enrich(
+            "Introducing GPT-5",
+            "A new flagship model",
+            "vendor",
+            "openai_news",
         )
+        self.assertNotEqual(launch["doc_type"], "top")
         self.assertNotEqual(
-            classify_doc_type("Introducing GPT-5", "vendor"),
+            classify_doc_type("Introducing GPT-5", "vendor", source_id="openai_news"),
             "top",
         )
 

@@ -5,7 +5,7 @@
 # filter_ai: true — строгий отсев: только AI security / breakthrough AI
 #   (не любое упоминание «AI»). Сайты без публичного RSS сюда не входят:
 #   Bloomberg/WSJ/многие paywall и HTML-only страницы не парсятся.
-# top: true — официальные лаборатории/стандарты; в Ленте тип TOP, без отсева.
+# top: true — официальные лаборатории/стандарты; в Ленте тип TOP, только AI security.
 
 sources:
   # --- Research / CVE ---
@@ -287,7 +287,7 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.85
-    filter_ai: false
+    filter_ai: true
     top: true
     url: "https://security.googleblog.com/feeds/posts/default"
 
@@ -304,7 +304,7 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.85
-    filter_ai: false
+    filter_ai: true
     top: true
     url: "https://www.microsoft.com/en-us/security/blog/feed/"
 
@@ -337,7 +337,7 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.7
-    filter_ai: false
+    filter_ai: true
     top: true
     url: "https://developer.nvidia.com/blog/feed"
 
@@ -354,7 +354,7 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.8
-    filter_ai: false
+    filter_ai: true
     top: true
     url: "https://openai.com/news/rss.xml"
 
@@ -363,7 +363,7 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.8
-    filter_ai: false
+    filter_ai: true
     top: true
     url: "https://raw.githubusercontent.com/taobojlen/anthropic-rss-feed/main/anthropic_news_rss.xml"
 
@@ -372,7 +372,7 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.85
-    filter_ai: false
+    filter_ai: true
     top: true
     url: "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_anthropic_research.xml"
 
@@ -381,7 +381,7 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.8
-    filter_ai: false
+    filter_ai: true
     top: true
     url: "https://raw.githubusercontent.com/Olshansk/rss-feeds/main/feeds/feed_meta_ai.xml"
 
@@ -390,7 +390,7 @@ sources:
     type: rss
     source_type: vendor
     trust: 0.9
-    filter_ai: false
+    filter_ai: true
     top: true
     url: "https://transformer-circuits.pub/feed.xml"
 
@@ -399,7 +399,7 @@ sources:
     type: rss
     source_type: standards
     trust: 0.95
-    filter_ai: false
+    filter_ai: true
     top: true
     url: "https://genai.owasp.org/feed/"
 
@@ -408,7 +408,7 @@ sources:
     type: rss
     source_type: standards
     trust: 0.95
-    filter_ai: false
+    filter_ai: true
     top: true
     # У atlas.mitre.org/resources/updates нет RSS; зеркало — релизы atlas-data.
     url: "https://github.com/mitre-atlas/atlas-data/releases.atom"

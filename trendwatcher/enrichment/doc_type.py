@@ -205,9 +205,10 @@ def _is_product_launch(title: str) -> bool:
 
 
 def classify_doc_type(text: str, source_type: str, source_id: str = "") -> str:
-    """Определяет жанр материала по источнику и сути заголовка."""
-    if is_top_source(source_id):
-        return "top"
+    """Определяет жанр материала по источнику и сути заголовка.
+
+    Тип TOP ставит enrich() только если источник TOP и текст — AI security.
+    """
     if source_type == "research":
         return "research"
     if source_type == "vulnerability" or _CVE_RX.search(text or ""):
