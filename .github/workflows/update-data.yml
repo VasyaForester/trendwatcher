@@ -1,6 +1,6 @@
 # Автообновление данных TrendWatcher без участия человека и без изменения хостинга.
 #
-# Раз в сутки: восстанавливает широкий корпус из compact ledger (JSONL в git),
+# Дважды в сутки (09:00 и 15:00 Москва): восстанавливает широкий корпус из compact ledger (JSONL в git),
 # добирает свежий хвост источников, пересчитывает аналитику и коммитит
 # data.json + архив. SQLite в git НЕ коммитится (лимит 100 MB).
 # Сайт читает data.json по raw-ссылке (DATA_URL в web/index.html).
@@ -9,7 +9,8 @@ name: Update trend data
 
 on:
   schedule:
-    - cron: "0 5 * * *"   # 08:00 Москва (05:00 UTC); MSK = UTC+3, без DST
+    - cron: "0 6 * * *"    # 09:00 Москва (06:00 UTC); MSK = UTC+3, без DST
+    - cron: "0 12 * * *"   # 15:00 Москва (12:00 UTC)
   workflow_dispatch:
     inputs:
       backfill_signals:
