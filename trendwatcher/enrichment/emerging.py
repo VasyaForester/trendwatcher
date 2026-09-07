@@ -39,6 +39,7 @@ _STOP = frozenset(
     when while if but yet so nor vs versus per
     these those which who whom whose here there where
     such both each every other another
+    through throughout among between during
     """.split()
 )
 # Служебные глаголы: «agents can…» — не тема, а синтаксис заголовка.
@@ -61,7 +62,8 @@ _GENERIC_CONTENT = frozenset(
     "agent agents llm llms model models ai system systems data paper study research".split()
 )
 _JUNK_SLUG_RX = re.compile(
-    r"(^|_)(can|cannot|cant|could|should|would|will|shall|may|might|must)(_|$)"
+    r"(^|_)(can|cannot|cant|could|should|would|will|shall|may|might|must|"
+    r"through|onto|with|from|for|on|via|by|of)(_|$)"
 )
 # Коммерческие продукты/линейки — это не тренд, а бренд.
 _PRODUCT_TOKENS = frozenset(
@@ -82,19 +84,32 @@ _GENERIC_MODIFIERS = frozenset(
     """
     coding code search chat conversational language software
     autonomous deep neural reinforcement learning
-    management evaluation eval benchmark framework architecture
+    management evaluation eval benchmark benchmarks framework architecture
     optimization observability operations support
     retrieval selection routing composition utilization matching ranking
     server servers client clients sdk api gateway host hosts
-    term
+    term long horizon horizons
+    use using tool tools
+    context graph graphs commerce
+    workflow workflows planning reasoning orchestration
+    world environment environments
     """.split()
 )
+_WEAK_COMPANIONS = frozenset(
+    {
+        "long-horizon",
+        "longhorizon",
+        "agentic",
+        *_GENERIC_MODIFIERS,
+    }
+)
 _BROAD_SEEDS = frozenset(
-    "agent agents llm llms model models ai memory skill skills mcp tool tools eval".split()
+    "agent agents agentic llm llms model models ai memory skill skills mcp tool tools eval".split()
 )
 _BLOCKED_SLUGS = frozenset(
     {
         "agents_can",
+        "agents_through",
         "bedrock_agentcore",
         "skill_retrieval",
         "skill_selection",
@@ -108,6 +123,15 @@ _BLOCKED_SLUGS = frozenset(
         "agent_evaluation",
         "memory_for_llm_agents",
         "reinforcement_learning_agents",
+        "long_horizon_agents",
+        "tool_use_agent",
+        "tool_use_agents",
+        "agents_on_long_horizon",
+        "agentic_optimization",
+        "agentic_commerce",
+        "agentic_context",
+        "agentic_graph",
+        "benchmark_for_agentic",
     }
 )
 _SEED_EXACT = frozenset({"a2a", "mcp", "rag", "rce", "ssrf"})
@@ -136,6 +160,7 @@ Rules:
 - drop commercial product names (Bedrock, AgentCore, Copilot, Claude, Gemini, LangChain, …)
 - drop subprocesses of agent skills (skill retrieval/selection) — that is agentic_skill_security
 - drop vague role labels (coding agent, search agents, mcp server, memory management, agent evaluation)
+- drop grammar scraps and fluff (agents through, long-horizon agents, tool-use agent, agentic X, benchmarks)
 - tag: lowercase snake_case, ascii, max 40 chars
 - patterns: 1-3 regexes matching the phrase in titles (case-insensitive)
 - drop duplicates of known topics: prompt injection, jailbreak, MCP security, RAG, generic agentic
@@ -251,16 +276,26 @@ def _is_product_gram(gram: list[str]) -> bool:
 
 
 def _too_generic(gram: list[str]) -> bool:
-    """Роли/инфра без новой поверхности: coding agent, mcp server, skill retrieval."""
+    """Роли/инфра без новой поверхности: coding agent, agentic X, long-horizon agents."""
     content = [t for t in gram if t not in _STOP]
     if not content:
         return True
-    allowed_generic = _BROAD_SEEDS | _GENERIC_MODIFIERS | _GENERIC_CONTENT
-    if all(t in allowed_generic for t in content):
+    allowed_generic = _BROAD_SEEDS | _GENERIC_MODIFIERS | _GENERIC_CONTENT | _WEAK_COMPANIONS
+
+    def _generic_tok(t: str) -> bool:
+        core = t.replace("-", "")
+        return (
+            t in allowed_generic
+            or core in allowed_generic
+            or t.startswith("agent")
+            or core.startswith("agent")
+        )
+
+    if all(_generic_tok(t) for t in content):
         return True
     if any(t in {"skill", "skills"} for t in content):
         rest = [t for t in content if t not in {"skill", "skills"}]
-        if rest and all(t in allowed_generic for t in rest):
+        if rest and all(_generic_tok(t) for t in rest):
             return True
     return False
 
