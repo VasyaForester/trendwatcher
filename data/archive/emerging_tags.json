@@ -1,0 +1,197 @@
+{
+  "generated_at": "2026-09-07T13:13:36.858958",
+  "tags": [
+    {
+      "tag": "coding_agent",
+      "label": "coding agent",
+      "patterns": [
+        "\\bcoding[- ]+agent\\b"
+      ],
+      "category": "security",
+      "recent": 17,
+      "prior": 0,
+      "examples": [
+        "ClayBuddy: A Framework, Evaluation, & Mitigation of Coding Agent Failures",
+        "AgentLens: Interpretable Safety Steering via Mechanistic Subspaces for Multi-Turn Coding Agent",
+        "When Does Restricting a Coding Agent to execute_code Help? A Regime $\\times$ Agent-Design Ablation"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "bedrock_agentcore",
+      "label": "bedrock agentcore",
+      "patterns": [
+        "\\bbedrock[- ]+agentcore\\b"
+      ],
+      "category": "security",
+      "recent": 16,
+      "prior": 0,
+      "examples": [
+        "Detecting silent agent failures with Amazon Bedrock AgentCore optimization",
+        "Optimizing production agents with Amazon Bedrock AgentCore Observability",
+        "How Mobileye transformed support operations using Amazon Bedrock AgentCore"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "search_agents",
+      "label": "search agents",
+      "patterns": [
+        "\\bsearch[- ]+agents\\b"
+      ],
+      "category": "security",
+      "recent": 29,
+      "prior": 1,
+      "examples": [
+        "ProMSA:Progressive Multimodal Search Agents for Knowledge-Based Visual Question Answering",
+        "When Search Agents Should Ask: DiscoBench for Clarification-Aware Deep Search",
+        "STAMP: Provenance-Guided Credit Assignment for Deep Search Agents"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agent_evaluation",
+      "label": "agent evaluation",
+      "patterns": [
+        "\\bagent[- ]+evaluation\\b"
+      ],
+      "category": "security",
+      "recent": 9,
+      "prior": 0,
+      "examples": [
+        "The Hidden Footprint: Making Storage a First-Class Metric for LLM Agent Evaluation",
+        "Success Is Not Self-Explanatory: Auditing Success Provenance in Agent Evaluation",
+        "Messier: A High-Resolution Corpus for Cross-Benchmark Agent Evaluation"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "mcp_server",
+      "label": "mcp server",
+      "patterns": [
+        "\\bmcp[- ]+server\\b"
+      ],
+      "category": "security",
+      "recent": 8,
+      "prior": 0,
+      "examples": [
+        "MCP Server Architecture Patterns for LLM-Integrated Applications",
+        "CVE-2026-58446: Presenton before 0.8.8-beta bundles an MCP server that, on server/Docker deployments configured with session authenticat",
+        "CVE-2026-46341: The Apify MCP server enables AI agents to extract data from websites using ready-made scrapers, crawlers, and automation"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "memory_management",
+      "label": "memory management",
+      "patterns": [
+        "\\bmemory[- ]+management\\b"
+      ],
+      "category": "security",
+      "recent": 8,
+      "prior": 0,
+      "examples": [
+        "SWE-MeM: Learning Adaptive Memory Management for Long-Horizon Coding Agents",
+        "Memory as a Controlled Process: Learned Adaptive Memory Management for LLM Agents",
+        "CMI-Mem: Toward Generalizable Long-Term Memory Management via CMI-Augmented Reinforcement Learning"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "skill_retrieval",
+      "label": "skill retrieval",
+      "patterns": [
+        "\\bskill[- ]+retrieval\\b"
+      ],
+      "category": "security",
+      "recent": 7,
+      "prior": 0,
+      "examples": [
+        "SkillSight: Seeing Through Shared Descriptions for Accurate Skill Retrieval",
+        "SkillSight: Calibrating Generic Content Bias for Skill Retrieval",
+        "Field Aware Agent Skill Retrieval"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "long_horizon_agents",
+      "label": "long-horizon agents",
+      "patterns": [
+        "\\blong\\-horizon[- ]+agents\\b"
+      ],
+      "category": "security",
+      "recent": 19,
+      "prior": 2,
+      "examples": [
+        "HiMPO: Hindsight-Informed Memory Policy Optimization for Less-Entangled Credit in Long-Horizon Agents",
+        "Remember When It Matters: Proactive Memory Agent for Long-Horizon Agents",
+        "TRACE: Turn-level Reward Assignment via Credit Estimation for Long-Horizon Agents"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agents_can",
+      "label": "agents can",
+      "patterns": [
+        "\\bagents[- ]+can\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "From Overload to Insights: How AI Agents Can Support Scientists in Analyzing Complex Data",
+        "AI agents can escape sandboxes without ever breaking them",
+        "AgentForger proves AI agents can become persistent insider threats"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "memory_for_llm_agents",
+      "label": "memory for llm agents",
+      "patterns": [
+        "\\bmemory[- ]+for[- ]+llm[- ]+agents\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "Filesystem-Based Memory for LLM Agents: Organization, Evolution, and Sustainability",
+        "MemSIF: From Structured Interactions to Dual-Track Fact Memory for LLM Agents",
+        "LeanMem: Simple and Efficient Long-Term Memory for LLM Agents"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "reinforcement_learning_agents",
+      "label": "reinforcement learning agents",
+      "patterns": [
+        "\\breinforcement[- ]+learning[- ]+agents\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "Explaining Reinforcement Learning Agents via Inductive Logic Programming",
+        "Evaluating Fuzz Testing for Reinforcement Learning Agents",
+        "Distilling Knowledge from Large Language Models into Lightweight Reinforcement Learning Agents for Autonomous Cyber Operations"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "skill_selection",
+      "label": "skill selection",
+      "patterns": [
+        "\\bskill[- ]+selection\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "daVinci-kernel: Co-Evolving Skill Selection, Summarization, and Utilization via RL for GPU Kernel Optimization",
+        "Don't Offer What Can't Be Done: Deterministic Executability Gating for LLM Skill Selection at Scale",
+        "Emotion2Skill: Model-Internal Emotion Signals for Adaptive Skill Selection and Evolution"
+      ],
+      "source": "heuristic"
+    }
+  ]
+}
