@@ -1,118 +1,6 @@
 {
-  "generated_at": "2026-09-07T14:05:15.293269",
+  "generated_at": "2026-09-07T14:43:59.283849",
   "tags": [
-    {
-      "tag": "coding_agent",
-      "label": "coding agent",
-      "patterns": [
-        "\\bcoding[- ]+agent\\b"
-      ],
-      "category": "security",
-      "recent": 17,
-      "prior": 0,
-      "examples": [
-        "ClayBuddy: A Framework, Evaluation, & Mitigation of Coding Agent Failures",
-        "AgentLens: Interpretable Safety Steering via Mechanistic Subspaces for Multi-Turn Coding Agent",
-        "When Does Restricting a Coding Agent to execute_code Help? A Regime $\\times$ Agent-Design Ablation"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "bedrock_agentcore",
-      "label": "bedrock agentcore",
-      "patterns": [
-        "\\bbedrock[- ]+agentcore\\b"
-      ],
-      "category": "security",
-      "recent": 16,
-      "prior": 0,
-      "examples": [
-        "Detecting silent agent failures with Amazon Bedrock AgentCore optimization",
-        "Optimizing production agents with Amazon Bedrock AgentCore Observability",
-        "How Mobileye transformed support operations using Amazon Bedrock AgentCore"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "search_agents",
-      "label": "search agents",
-      "patterns": [
-        "\\bsearch[- ]+agents\\b"
-      ],
-      "category": "security",
-      "recent": 29,
-      "prior": 1,
-      "examples": [
-        "ProMSA:Progressive Multimodal Search Agents for Knowledge-Based Visual Question Answering",
-        "When Search Agents Should Ask: DiscoBench for Clarification-Aware Deep Search",
-        "STAMP: Provenance-Guided Credit Assignment for Deep Search Agents"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agent_evaluation",
-      "label": "agent evaluation",
-      "patterns": [
-        "\\bagent[- ]+evaluation\\b"
-      ],
-      "category": "security",
-      "recent": 9,
-      "prior": 0,
-      "examples": [
-        "The Hidden Footprint: Making Storage a First-Class Metric for LLM Agent Evaluation",
-        "Success Is Not Self-Explanatory: Auditing Success Provenance in Agent Evaluation",
-        "Messier: A High-Resolution Corpus for Cross-Benchmark Agent Evaluation"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "mcp_server",
-      "label": "mcp server",
-      "patterns": [
-        "\\bmcp[- ]+server\\b"
-      ],
-      "category": "security",
-      "recent": 8,
-      "prior": 0,
-      "examples": [
-        "MCP Server Architecture Patterns for LLM-Integrated Applications",
-        "CVE-2026-58446: Presenton before 0.8.8-beta bundles an MCP server that, on server/Docker deployments configured with session authenticat",
-        "CVE-2026-46341: The Apify MCP server enables AI agents to extract data from websites using ready-made scrapers, crawlers, and automation"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "memory_management",
-      "label": "memory management",
-      "patterns": [
-        "\\bmemory[- ]+management\\b"
-      ],
-      "category": "security",
-      "recent": 8,
-      "prior": 0,
-      "examples": [
-        "SWE-MeM: Learning Adaptive Memory Management for Long-Horizon Coding Agents",
-        "Memory as a Controlled Process: Learned Adaptive Memory Management for LLM Agents",
-        "CMI-Mem: Toward Generalizable Long-Term Memory Management via CMI-Augmented Reinforcement Learning"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "skill_retrieval",
-      "label": "skill retrieval",
-      "patterns": [
-        "\\bskill[- ]+retrieval\\b"
-      ],
-      "category": "security",
-      "recent": 7,
-      "prior": 0,
-      "examples": [
-        "SkillSight: Seeing Through Shared Descriptions for Accurate Skill Retrieval",
-        "SkillSight: Calibrating Generic Content Bias for Skill Retrieval",
-        "Field Aware Agent Skill Retrieval"
-      ],
-      "source": "heuristic"
-    },
     {
       "tag": "long_horizon_agents",
       "label": "long-horizon agents",
@@ -130,54 +18,6 @@
       "source": "heuristic"
     },
     {
-      "tag": "memory_for_llm_agents",
-      "label": "memory for llm agents",
-      "patterns": [
-        "\\bmemory[- ]+for[- ]+llm[- ]+agents\\b"
-      ],
-      "category": "security",
-      "recent": 6,
-      "prior": 0,
-      "examples": [
-        "Filesystem-Based Memory for LLM Agents: Organization, Evolution, and Sustainability",
-        "MemSIF: From Structured Interactions to Dual-Track Fact Memory for LLM Agents",
-        "LeanMem: Simple and Efficient Long-Term Memory for LLM Agents"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "reinforcement_learning_agents",
-      "label": "reinforcement learning agents",
-      "patterns": [
-        "\\breinforcement[- ]+learning[- ]+agents\\b"
-      ],
-      "category": "security",
-      "recent": 6,
-      "prior": 0,
-      "examples": [
-        "Explaining Reinforcement Learning Agents via Inductive Logic Programming",
-        "Evaluating Fuzz Testing for Reinforcement Learning Agents",
-        "Distilling Knowledge from Large Language Models into Lightweight Reinforcement Learning Agents for Autonomous Cyber Operations"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "skill_selection",
-      "label": "skill selection",
-      "patterns": [
-        "\\bskill[- ]+selection\\b"
-      ],
-      "category": "security",
-      "recent": 6,
-      "prior": 0,
-      "examples": [
-        "daVinci-kernel: Co-Evolving Skill Selection, Summarization, and Utilization via RL for GPU Kernel Optimization",
-        "Don't Offer What Can't Be Done: Deterministic Executability Gating for LLM Skill Selection at Scale",
-        "Emotion2Skill: Model-Internal Emotion Signals for Adaptive Skill Selection and Evolution"
-      ],
-      "source": "heuristic"
-    },
-    {
       "tag": "tool_use_agents",
       "label": "tool-use agents",
       "patterns": [
@@ -190,6 +30,166 @@
         "PACT: Privileged Trace Co-Training for Multi-Turn Tool-Use Agents",
         "E-Bench: Benchmarking Multi-Step Tool-Use Agents in Real-World Product Scenarios",
         "LAVE: Latent Visual Evidence-Enhanced Planning for Video Tool-use Agents"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agentic_reasoning",
+      "label": "agentic reasoning",
+      "patterns": [
+        "\\bagentic[- ]+reasoning\\b"
+      ],
+      "category": "security",
+      "recent": 11,
+      "prior": 1,
+      "examples": [
+        "Nemotron 3 Ultra: Open, Efficient Mixture-of-Experts Hybrid Mamba-Transformer Model for Agentic Reasoning",
+        "Evidence-Grounded Verified Agentic Reasoning: A Path Toward Eliminating LLM Hallucination in Empirical Inference via Tool-Attested Kernel Proofs",
+        "The Emerging Paradigm of Geospatial Foundation Models: From Pre-Training to Agentic Reasoning"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agents_through",
+      "label": "agents through",
+      "patterns": [
+        "\\bagents[- ]+through\\b"
+      ],
+      "category": "security",
+      "recent": 10,
+      "prior": 1,
+      "examples": [
+        "PVDetector: Detecting Prompt Injection Attacks on Purpose-Specific LLM Agents through Policy-Violation Concept Analysis",
+        "PhoneHarness: Harnessing Phone-Use Agents through Mixed GUI, CLI, and Tool Actions",
+        "MedEvoEval: Evaluating Continual Evolution of Doctor Agents through Simulated Clinical Episodes"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agentic_commerce",
+      "label": "agentic commerce",
+      "patterns": [
+        "\\bagentic[- ]+commerce\\b"
+      ],
+      "category": "security",
+      "recent": 5,
+      "prior": 0,
+      "examples": [
+        "A Decision-Centered Reference Architecture for Trustworthy Agentic Commerce",
+        "Protocol-Level Attacks on Agentic Commerce Platforms: A Cross-Platform Taxonomy, AIP-Bench, and Unified Defense",
+        "Agentic Commerce World: An Auditable and Verifiable Environment for Vibe Commerce"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agentic_context",
+      "label": "agentic context",
+      "patterns": [
+        "\\bagentic[- ]+context\\b"
+      ],
+      "category": "security",
+      "recent": 5,
+      "prior": 0,
+      "examples": [
+        "Scoped Verification for Reliable Long-Horizon Agentic Context Evolution under Distribution Shift",
+        "Agentic Context Learning with Self-Discovered Specification",
+        "Agentic Context Management: Solving Agent Memory and Cost by Treating Them as Lifecycle and Architecture Problems"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agentic_graph",
+      "label": "agentic graph",
+      "patterns": [
+        "\\bagentic[- ]+graph\\b"
+      ],
+      "category": "security",
+      "recent": 5,
+      "prior": 0,
+      "examples": [
+        "PathRouter: Aligning Rewards with Retrieval Quality in Agentic Graph Retrieval-Augmented Generation",
+        "SAGA: Synthetic Agentic Graph Architecture for Temporal Benchmark Generation",
+        "Agentic Graph Token Reasoning"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agentic_optimization",
+      "label": "agentic optimization",
+      "patterns": [
+        "\\bagentic[- ]+optimization\\b"
+      ],
+      "category": "security",
+      "recent": 5,
+      "prior": 0,
+      "examples": [
+        "Beyond Trial-and-Error: Agentic Optimization for Image-to-Video Adherence",
+        "SCOPE: Score-Isolated Agentic Optimization for Video World Models",
+        "LLM4LLM: Bridging Kernel Benchmarks and Real Deployment via Closed-Loop Agentic Optimization"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agents_on_long_horizon",
+      "label": "agents on long-horizon",
+      "patterns": [
+        "\\bagents[- ]+on[- ]+long\\-horizon\\b"
+      ],
+      "category": "security",
+      "recent": 5,
+      "prior": 0,
+      "examples": [
+        "OSWorld 2.0: Benchmarking Computer Use Agents on Long-Horizon Real-World Tasks",
+        "Long-Horizon-Terminal-Bench: Testing the Limits of Agents on Long-Horizon Terminal Tasks with Dense Reward-Based Grading",
+        "OmegaUse-OfficeVal: Benchmarking LLM Agents on Long-Horizon Office-Suite Tasks with Economic Grounding"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "bench_evaluating",
+      "label": "bench evaluating",
+      "patterns": [
+        "\\bbench[- ]+evaluating\\b"
+      ],
+      "category": "security",
+      "recent": 5,
+      "prior": 0,
+      "examples": [
+        "Agent Retrieval Bench: Evaluating Repository Context Retrieval for Coding Agents",
+        "Avalon-ToM-Bench: Evaluating Fine-Grained Theory of Mind via Asymmetric Game Mechanics",
+        "Hack-Verifiable Terminal Bench: Evaluating Reward Hacking in Terminal Tasks"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "benchmark_for_agentic",
+      "label": "benchmark for agentic",
+      "patterns": [
+        "\\bbenchmark[- ]+for[- ]+agentic\\b"
+      ],
+      "category": "security",
+      "recent": 5,
+      "prior": 0,
+      "examples": [
+        "LayerRAG-Bench: A Cross-Layer Reliability Benchmark for Agentic Retrieval-Augmented Generation",
+        "Can LLM Agents Price Competitively? A Dynamic Multi-Attribute Auction Benchmark for Agentic Commerce",
+        "TimeSage-EV: A Live Benchmark for Agentic Time Series Analysis in Evolving Environments"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "episodic_memory",
+      "label": "episodic memory",
+      "patterns": [
+        "\\bepisodic[- ]+memory\\b"
+      ],
+      "category": "security",
+      "recent": 5,
+      "prior": 0,
+      "examples": [
+        "Bridging Inference-Time Scaling and Episodic Memory with Action-Centric Graphs",
+        "Caching for the Future: Scrub Jay Episodic Memory Principles for Agent Memory Systems",
+        "Causal Episodic Memory for Feedback-Driven Agent Repair"
       ],
       "source": "heuristic"
     }
