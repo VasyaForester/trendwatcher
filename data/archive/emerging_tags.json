@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-07T13:13:36.858958",
+  "generated_at": "2026-09-07T14:05:15.293269",
   "tags": [
     {
       "tag": "coding_agent",
@@ -130,22 +130,6 @@
       "source": "heuristic"
     },
     {
-      "tag": "agents_can",
-      "label": "agents can",
-      "patterns": [
-        "\\bagents[- ]+can\\b"
-      ],
-      "category": "security",
-      "recent": 6,
-      "prior": 0,
-      "examples": [
-        "From Overload to Insights: How AI Agents Can Support Scientists in Analyzing Complex Data",
-        "AI agents can escape sandboxes without ever breaking them",
-        "AgentForger proves AI agents can become persistent insider threats"
-      ],
-      "source": "heuristic"
-    },
-    {
       "tag": "memory_for_llm_agents",
       "label": "memory for llm agents",
       "patterns": [
@@ -190,6 +174,22 @@
         "daVinci-kernel: Co-Evolving Skill Selection, Summarization, and Utilization via RL for GPU Kernel Optimization",
         "Don't Offer What Can't Be Done: Deterministic Executability Gating for LLM Skill Selection at Scale",
         "Emotion2Skill: Model-Internal Emotion Signals for Adaptive Skill Selection and Evolution"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "tool_use_agents",
+      "label": "tool-use agents",
+      "patterns": [
+        "\\btool\\-use[- ]+agents\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "PACT: Privileged Trace Co-Training for Multi-Turn Tool-Use Agents",
+        "E-Bench: Benchmarking Multi-Step Tool-Use Agents in Real-World Product Scenarios",
+        "LAVE: Latent Visual Evidence-Enhanced Planning for Video Tool-use Agents"
       ],
       "source": "heuristic"
     }
