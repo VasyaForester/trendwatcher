@@ -6,7 +6,6 @@ import json
 import logging
 import os
 import re
-from collections import defaultdict
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Iterable
@@ -35,7 +34,34 @@ _STOP = frozenset(
     toward towards across within without into onto from into
     large language model models llm ai gen generative intelligence system
     systems data training open source company companies research
+    can cannot can't could should would will shall may might must
+    do does did doing have has had having
+    when while if but yet so nor vs versus per
+    these those which who whom whose here there where
+    such both each every other another
     """.split()
+)
+# Служебные глаголы: «agents can…» — не тема, а синтаксис заголовка.
+_AUX = frozenset(
+    """
+    can cannot can't could should would will shall may might must
+    do does did have has had
+    """.split()
+)
+_LIGHT_TAIL = frozenset(
+    """
+    support supports supporting enable enables enabling
+    help helps helping become becomes becoming
+    allow allows allowing use uses used
+    make makes made prove proves proved
+    need needs needed show shows showing
+    """.split()
+)
+_GENERIC_CONTENT = frozenset(
+    "agent agents llm llms model models ai system systems data paper study research".split()
+)
+_JUNK_SLUG_RX = re.compile(
+    r"(^|_)(can|cannot|cant|could|should|would|will|shall|may|might|must)(_|$)"
 )
 _SEED_EXACT = frozenset({"a2a", "mcp", "rag", "rce", "ssrf"})
 _SEED_PREFIX = (
@@ -90,6 +116,7 @@ def load_emerging_tags(path: Path | None = None) -> list[dict]:
             items = list(raw.get("tags") or [])
         except (OSError, json.JSONDecodeError):
             items = []
+    items = [t for t in items if not _is_junk_tag(t)]
     if path is None:
         _cache = items
     return items
@@ -102,14 +129,15 @@ def emerging_tag_ids(path: Path | None = None) -> frozenset[str]:
 def save_emerging_tags(items: list[dict], path: Path | None = None) -> Path:
     p = emerging_path(path)
     p.parent.mkdir(parents=True, exist_ok=True)
+    items = [t for t in items if not _is_junk_tag(t)][:MAX_TAGS]
     payload = {
         "generated_at": utcnow().isoformat(),
-        "tags": items[:MAX_TAGS],
+        "tags": items,
     }
     p.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if path is None:
         clear_emerging_cache()
-        _cache_set(items[:MAX_TAGS])
+        _cache_set(items)
     return p
 
 
@@ -168,15 +196,38 @@ def _ngrams(tokens: list[str], n: int) -> list[list[str]]:
     return [tokens[i : i + n] for i in range(len(tokens) - n + 1)]
 
 
+def _is_junk_gram(gram: list[str]) -> bool:
+    """Отсекает обрезки вроде 'agents can' / 'agents can support'."""
+    if not gram or gram[0] in _STOP or gram[-1] in _STOP:
+        return True
+    if any(t in _AUX for t in gram):
+        return True
+    if gram[-1] in _LIGHT_TAIL:
+        return True
+    if _JUNK_SLUG_RX.search(_slug(gram)):
+        return True
+    content = [t for t in gram if t not in _STOP]
+    if len(content) < 2 or not _interesting(content):
+        return True
+    if all(t in _GENERIC_CONTENT for t in content):
+        return True
+    return False
+
+
+def _is_junk_tag(item: dict) -> bool:
+    tag = str(item.get("tag") or "")
+    if not tag or _JUNK_SLUG_RX.search(tag):
+        return True
+    label = str(item.get("label") or tag.replace("_", " "))
+    return _is_junk_gram(_tokens(label))
+
+
 def _phrase_candidates(title: str) -> list[list[str]]:
     toks = [t for t in _tokens(title) if len(t) > 1]
     out: list[list[str]] = []
     for n in (2, 3, 4):
         for gram in _ngrams(toks, n):
-            if gram[0] in _STOP or gram[-1] in _STOP:
-                continue
-            content = [t for t in gram if t not in _STOP]
-            if len(content) < 2 or not _interesting(content):
+            if _is_junk_gram(gram):
                 continue
             phrase = " ".join(gram)
             if _covered_by_taxonomy(phrase):
@@ -310,6 +361,8 @@ def _llm_refine(candidates: list[dict], api_key: str) -> list[dict] | None:
             continue
         tag = str(item.get("tag") or "")
         if not re.fullmatch(r"[a-z][a-z0-9_]{1,47}", tag) or tag in TAXONOMY:
+            continue
+        if _JUNK_SLUG_RX.search(tag):
             continue
         patterns = [str(p) for p in (item.get("patterns") or []) if p]
         base = by_old.get(tag) or next((c for c in candidates if c["label"] in tag.replace("_", " ")), None)

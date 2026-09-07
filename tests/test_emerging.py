@@ -83,6 +83,41 @@ class TestEmergingDiscovery(unittest.TestCase):
             )
             self.assertIn("agent_to_agent_protocol", found)
 
+    def test_rejects_grammar_fragments_like_agents_can(self):
+        now = datetime(2026, 9, 7)
+        titles = [
+            "From Overload to Insights: How AI Agents Can Support Scientists in Analyzing Complex Data",
+            "AI agents can escape sandboxes without ever breaking them",
+            "AgentForge proves AI agents can become persistent insider threats",
+            "Why agents can take over your browser session",
+            "Vendors adopt agent to agent protocol for tool sharing",
+            "Security review of the agent to agent protocol in production",
+            "New agent to agent protocol enables delegated credentials",
+        ]
+        docs = [_doc(t, i, now) for i, t in enumerate(titles)]
+        tags = discover_emerging_tags(docs, now=now, use_llm=False)
+        slugs = {t["tag"] for t in tags}
+        self.assertNotIn("agents_can", slugs)
+        self.assertFalse(any("_can" in s or s.endswith("can") for s in slugs), msg=slugs)
+        self.assertTrue(
+            any("agent_to_agent" in s or "protocol" in s for s in slugs),
+            msg=slugs,
+        )
+
+    def test_load_drops_persisted_junk_slug(self):
+        with TemporaryDirectory() as tmp:
+            path = Path(tmp) / "emerging_tags.json"
+            path.write_text(
+                '{"tags":[{"tag":"agents_can","label":"agents can","patterns":["\\\\bagents[- ]+can\\\\b"]},'
+                '{"tag":"agent_to_agent_protocol","label":"agent to agent protocol",'
+                '"patterns":["\\\\bagent[- ]+to[- ]+agent[- ]+protocol\\\\b"]}]}',
+                encoding="utf-8",
+            )
+            loaded = load_emerging_tags(path)
+            slugs = {t["tag"] for t in loaded}
+            self.assertNotIn("agents_can", slugs)
+            self.assertIn("agent_to_agent_protocol", slugs)
+
 
 if __name__ == "__main__":
     unittest.main()
