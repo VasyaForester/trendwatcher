@@ -68,6 +68,8 @@ jobs:
         run: python run.py score-tbsf
 
       - name: Export data.json
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           python run.py export
           cp dist/site/data.json data.json

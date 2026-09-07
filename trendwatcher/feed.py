@@ -8,9 +8,9 @@ from datetime import timedelta
 from sqlalchemy import select
 
 from .db import Document, utcnow
-from .enrichment.tagger import is_feed_relevant
 from .enrichment.doc_type import is_top_source
 from .ingestion.dedup import normalize_url, title_fingerprint, titles_near_duplicate
+from .relevance.classifier import LlmBudget, classify_document
 from .tbsf.arxiv_text import is_arxiv_url
 
 FEED_SCAN_LIMIT = 8000
@@ -20,14 +20,9 @@ FEED_MAX_AGE_DAYS = 45
 MAX_CVE_SHARE = 0.25
 
 
-def _feed_eligible(doc: Document) -> bool:
-    text = f"{doc.title}\n{doc.summary}"
-    return is_feed_relevant(
-        text,
-        doc.tags or [],
-        source_name=doc.source_name or "",
-        source_id=doc.source_id or "",
-    )
+def _feed_eligible(doc: Document, *, corpus_titles: list[str] | None = None, **kwargs) -> bool:
+    rel = classify_document(doc, corpus_titles=corpus_titles, use_llm=False, **kwargs)
+    return rel.in_feed()
 
 
 def _is_cve_like(doc: Document) -> bool:
@@ -99,17 +94,25 @@ def build_feed(session, limit: int = 600) -> list[dict]:
         .limit(FEED_SCAN_LIMIT)
     ).all()
 
-    eligible: list[Document] = []
-    seen_urls: set[str] = set()
-    seen_titles: set[str] = set()
-    seen_title_raw: list[str] = []
+    fresh: list[Document] = []
     for d in docs:
         if not (is_top_source(d.source_id) or d.doc_type == "top"):
             if d.source_type == "research" or is_arxiv_url(d.url):
                 continue
         if d.published_at is None or d.published_at < cutoff:
             continue
-        if not _feed_eligible(d):
+        fresh.append(d)
+
+    corpus_titles = [d.title or "" for d in fresh]
+    budget = LlmBudget()
+    eligible: list[Document] = []
+    rel_by_obj: dict[int, object] = {}
+    seen_urls: set[str] = set()
+    seen_titles: set[str] = set()
+    seen_title_raw: list[str] = []
+    for d in fresh:
+        rel = classify_document(d, corpus_titles=corpus_titles, llm_budget=budget)
+        if not rel.in_feed():
             continue
         url_key = normalize_url(d.url)
         title_key = title_fingerprint(d.title)
@@ -125,8 +128,15 @@ def build_feed(session, limit: int = 600) -> list[dict]:
             seen_titles.add(title_key)
         seen_title_raw.append(d.title or "")
         eligible.append(d)
+        rel_by_obj[id(d)] = rel
 
     mixed = diversify_feed(eligible, limit)
-    # Квота CVE и дедуп выбирают состав, но итоговая лента всегда строго по дате.
     mixed.sort(key=lambda d: d.published_at, reverse=True)
-    return [d.to_dict() for d in mixed]
+    out: list[dict] = []
+    for d in mixed:
+        row = d.to_dict()
+        rel = rel_by_obj.get(id(d))
+        if rel is not None:
+            row.update(rel.to_feed_fields())
+        out.append(row)
+    return out

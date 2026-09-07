@@ -1,0 +1,50 @@
+{"title":"New MemGhost attack plants false memories via prompt injection in AI agents","expected":"security"}
+{"title":"CVE-2026-46341: The Apify MCP server enables AI agents to extract data from websites","expected":"security"}
+{"title":"Security incident disclosure — July 2026","source_name":"Hugging Face Blog","expected":"security"}
+{"title":"ServiceNow’s sandbox escape RCE hole now exploited in the wild","expected":"security"}
+{"title":"New Agent Data Injection Attack Can Make AI Agents Misclick or Run Attacker Commands","expected":"security"}
+{"title":"The Hugging Face incident and the road ahead","summary":"Models escaped containment during cybersecurity evaluation","source_id":"openai_news","expected":"security"}
+{"title":"OpenAI says its AI models hacked Hugging Face during testing","expected":"security"}
+{"title":"Investigating three real-world incidents in our cybersecurity evaluations","source_id":"anthropic_news","expected":"security"}
+{"title":"Indirect prompt injection against autonomous browser agents","expected":"security"}
+{"title":"Where Security Fits in an AI Agent Stack","source_id":"nvidia_developer","expected":"security"}
+{"title":"Least privilege for AI agents: Identity, access, and tool binding","source_id":"microsoft_security","expected":"security"}
+{"title":"Introducing the Model Context Protocol for connecting agents to arbitrary external tools","expected":"breakthrough"}
+{"title":"New protocol allows LLM agents to invoke arbitrary external tools","expected":"breakthrough"}
+{"title":"New persistent agent memory architecture for autonomous systems","expected":"breakthrough"}
+{"title":"AI system can autonomously spawn other agents and delegate tasks","expected":"breakthrough"}
+{"title":"AI agents can now autonomously modify production infrastructure","expected":"breakthrough"}
+{"title":"Agent-to-agent communication protocol for delegated credentials","expected":"breakthrough"}
+{"title":"Model can rewrite its own tools at runtime","expected":"breakthrough"}
+{"title":"Introducing Claude Sonnet 5","expected":"noise"}
+{"title":"OpenAI released model X with 15% better coding benchmark","expected":"noise"}
+{"title":"Google released another multimodal model","expected":"noise"}
+{"title":"Anthropic improved Claude's reasoning","expected":"noise"}
+{"title":"New AI coding assistant","expected":"noise"}
+{"title":"Expanding Managed Agents in Gemini API: background tasks, remote MCP and more","expected":"noise"}
+{"title":"Another company launched an agentic framework","expected":"noise"}
+{"title":"Better answers, broader thinking: What students gain from ChatGPT","source_id":"openai_news","expected":"noise"}
+{"title":"Expanding OpenAI’s presence in Brazil","source_id":"openai_news","expected":"noise"}
+{"title":"Up to 30x More Work Per Watt: NVIDIA Vera Rubin NVL72 Sets a New Efficiency Standard for AI Agents","expected":"noise"}
+{"title":"Valor, Point72 back General Intuition at $6B valuation as AI startup pushes into robotics","expected":"noise"}
+{"title":"Building a restaurant telephony AI host with Amazon Connect","expected":"noise"}
+{"title":"Hardware-Rooted AI Security That Won't Slow You Down","expected":"noise"}
+{"title":"Weekly Recap: WordPress RCE, SonicWall 0-Days, AI Service Attacks and More","expected":"noise"}
+{"title":"TuxBot v3 Evolution Shows Signs of LLM-Assisted IoT Botnet Development","expected":"noise"}
+{"title":"Remediating Vulnerabilities With LLMs: Inside Ivanti's Automation Push","expected":"noise"}
+{"title":"Public PoC Triggers Active Exploitation of Critical SharePoint RCE Vulnerability CVE-2026-50522","expected":"noise"}
+{"title":"Trojanized Newtonsoft.Json Fork Hides RAT Payload in NuGet Package","expected":"noise"}
+{"title":"MIT to Become Hotbed of AI Video Surveillance","expected":"noise"}
+{"title":"Company improves machine learning pipeline for ad targeting","expected":"noise"}
+{"title":"Weeknotes: miscellaneous web tooling, a few thoughts on AI productivity","expected":"noise"}
+{"title":"Microsoft named a Leader in the 2026 IDC MarketScape for MDR/MXDR","source_id":"microsoft_security","expected":"noise"}
+{"title":"The patch window is collapsing: Why security needs a new control plane","source_id":"microsoft_security","expected":"noise"}
+{"title":"CUDA Python 1.0: Stable APIs, One Foundation, Full Platform Access","source_id":"nvidia_developer","expected":"noise"}
+{"title":"How to Train a Cross-Embodiment Robot Navigation Policy with AI Agents","source_id":"nvidia_developer","expected":"noise"}
+{"title":"5 steps to secure your infrastructure in the frontier model era","expected":"noise"}
+{"title":"Offering Zero Data Retention for frontier models","source_id":"openai_news","expected":"noise"}
+{"title":"Funding better evaluations of AI’s impact on wellbeing","source_id":"anthropic_news","expected":"noise"}
+{"title":"Characterizing interference weights in a tiny language model","source_id":"transformer_circuits","expected":"noise"}
+{"title":"When AI infrastructure becomes the target: Securing gateways and control points","source_id":"microsoft_security","expected":"security"}
+{"title":"Advance Zero Trust for AI: New tools and guidance to secure AI agents","source_id":"microsoft_security","expected":"security"}
+{"title":"Enhancing AI security through global AI red teaming","source_id":"microsoft_security","expected":"security"}

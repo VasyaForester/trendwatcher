@@ -97,6 +97,9 @@
   .t-framework { background: rgba(61,220,151,.15); color: var(--green); }
   .t-tool_release { background: rgba(255,206,86,.15); color: var(--yellow); }
   .t-top { background: rgba(255,196,72,.22); color: #ffc448; }
+  .t-breakthrough { background: rgba(157,107,255,.18); color: var(--accent2); }
+  .rel-signal { outline: 1px solid rgba(255,107,122,.45); border-radius: 8px; padding: 8px 6px; }
+  .rel-reason { font-size: 11px; color: var(--muted); margin-top: 3px; }
   .empty { color: var(--muted); font-size: 13px; padding: 12px 0; }
   .trend-brief { margin-bottom: 18px; }
   .trend-brief .brief-body { font-size: 13.5px; line-height: 1.65; color: var(--text); }
@@ -179,7 +182,7 @@
   </div>
 
   <div class="panel">
-      <h2>Лента <span class="hint">AI-security события · TOP лаборатории · дедуп · ≤25% CVE</span></h2>
+      <h2>Лента <span class="hint">security-события · breakthrough-поверхности · TOP · ≤25% CVE</span></h2>
     <div class="controls">
       <select id="tagFilter"><option value="">Все теги</option></select>
       <select id="typeFilter">
@@ -191,6 +194,7 @@
         <option value="framework">Фреймворки</option>
         <option value="tool_release">Инструменты</option>
         <option value="news">Новости</option>
+        <option value="breakthrough">Breakthrough</option>
       </select>
       <input type="text" id="searchBox" placeholder="Поиск по заголовку и тексту…">
     </div>
@@ -552,16 +556,18 @@ function renderFeed() {
   const q = document.getElementById("searchBox").value.trim().toLowerCase();
   const items = DATA.feed.filter(d =>
     (!tag || d.tags.includes(tag)) &&
-    (!type || d.doc_type === type) &&
+    (!type || d.doc_type === type || (type === "breakthrough" && d.relevance_class === "breakthrough")) &&
     (!q || (d.title + " " + d.summary).toLowerCase().includes(q))
   );
   const shown = items.slice(0, 60);
   const el = document.getElementById("feed");
   if (!shown.length) { el.innerHTML = '<div class="empty">Ничего не найдено</div>'; return; }
   el.innerHTML = shown.map(d => `
-    <div class="feed-item">
+    <div class="feed-item${d.relevance_decision==='signal' ? ' rel-signal' : ''}">
       <span class="type-badge t-${d.doc_type}">${d.doc_type}</span>
+      ${d.relevance_class === "breakthrough" ? `<span class="type-badge t-breakthrough">breakthrough</span>` : ""}
       <a href="${d.url}" target="_blank" rel="noopener" style="color:var(--text);text-decoration:none;font-weight:600">${d.title}</a>
+      ${d.relevance_reason ? `<div class="rel-reason">${esc(d.relevance_reason)}</div>` : ""}
       <div class="meta" style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;font-size:11px;color:var(--muted)">
         <span>${d.source_name}</span><span>·</span><span>${fmtDate(d.published_at)}</span>
         ${d.tbsf_score != null ? `<span class="score ${d.tbsf_level==='🔴'?'tbsf-priority':d.tbsf_level==='🟡'?'tbsf-reserve':'tbsf-low'}">${d.tbsf_level} ${d.tbsf_score}%</span>` : ""}

@@ -57,7 +57,10 @@ class TestFeedDiversity(unittest.TestCase):
         session.scalars.return_value.all.return_value = [fresh, stale]
 
         with patch("trendwatcher.feed.utcnow", return_value=datetime(2026, 7, 22)):
-            with patch("trendwatcher.feed._feed_eligible", return_value=True):
+            with patch("trendwatcher.feed.classify_document") as classify:
+                from trendwatcher.relevance.schema import Relevance
+
+                classify.return_value = Relevance(decision="feed", relevance_class="security")
                 with patch("trendwatcher.feed.is_arxiv_url", return_value=False):
                     out = build_feed(session, limit=10)
 
@@ -81,7 +84,10 @@ class TestFeedDiversity(unittest.TestCase):
         session.scalars.return_value.all.return_value = docs
 
         with patch("trendwatcher.feed.utcnow", return_value=datetime(2026, 7, 22)):
-            with patch("trendwatcher.feed._feed_eligible", return_value=True):
+            with patch("trendwatcher.feed.classify_document") as classify:
+                from trendwatcher.relevance.schema import Relevance
+
+                classify.return_value = Relevance(decision="feed", relevance_class="security")
                 with patch("trendwatcher.feed.is_arxiv_url", return_value=False):
                     out = build_feed(session, limit=10)
 

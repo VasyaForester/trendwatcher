@@ -6,7 +6,8 @@ from sqlalchemy import select
 
 from ..config import SourceConfig, load_sources
 from ..db import Document, get_session, init_db
-from ..enrichment.tagger import enrich, is_feed_relevant
+from ..enrichment.tagger import enrich
+from ..relevance.classifier import is_relevance_candidate
 from ..tbsf.batch import apply_tbsf
 from . import arxiv, nvd, rss
 from .dedup import normalize_url, title_fingerprint, titles_near_duplicate
@@ -38,7 +39,7 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
             continue
         text = f"{item['title']}\n{item['summary']}"
         meta = enrich(item["title"], item["summary"], source.source_type, source.id)
-        if source.filter_ai and not is_feed_relevant(
+        if source.filter_ai and not is_relevance_candidate(
             text, meta["tags"], source_name=source.name, source_id=source.id
         ):
             continue
