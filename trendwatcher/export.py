@@ -16,6 +16,7 @@ from .analytics.timeseries import weekly_tag_counts
 from .analytics.archive import update_archive
 from .config import PROJECT_ROOT
 from .db import Document, get_session, init_db, utcnow
+from .enrichment.emerging import load_emerging_tags
 from .feed import build_feed
 from .synthesis.narrative import build_trend_brief
 
@@ -55,6 +56,7 @@ def build_snapshot(session, feed_limit: int = FEED_LIMIT) -> dict:
         "signals": signals,
         "feed": feed,
         "trend_brief": trend_brief,
+        "emerging_tags": load_emerging_tags(),
     }
 
 

@@ -58,14 +58,14 @@ python -m venv .venv
 
 ```
 config/
-  sources.yaml          # RSS, arXiv, NVD — добавление источников без кода
+  sources.yaml          # RSS, arXiv, NVD, Google/Bing News search, HN
   tbsf/                 # рубрика TBSF (синхрон с проектом TBSF)
 data/
   trendwatcher.db       # SQLite-корпус
   archive/              # weekly_stats.json + documents.jsonl (immutable baseline для трендов)
   data.json             # снапшот для статического сайта
 trendwatcher/
-  ingestion/            # RSS, arXiv API, NVD 2.0, дедупликация
+  ingestion/            # RSS, arXiv, NVD, Google/Bing/HN search, дедупликация
   enrichment/           # rule-based теги AI security / AI tech
   tbsf/                 # TBSF v1.1 для arXiv (🔴/🟡/⚪, full-text fetch)
   analytics/            # временные ряды, сигналы, архив, топ событий
@@ -79,7 +79,7 @@ run.py                  # CLI
 
 ## Источники (MVP)
 
-arXiv (security + general AI), NVD (CVE по AI), The Hacker News, BleepingComputer, Simon Willison, Schneier, Google Security Blog, OpenAI News, NIST News. CISA RSS — 403, в работе.
+arXiv (security + general AI), NVD (CVE по AI), профильные RSS (THN, BleepingComputer, Schneier, Unit 42, Trail of Bits и др.), плюс поисковое покрытие: Google News, Bing News и Hacker News (Algolia). Поиск только находит статьи — в ленту сохраняется URL издателя, не страница выдачи.
 
 ## TBSF
 

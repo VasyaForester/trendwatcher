@@ -1,11 +1,12 @@
 # Декларативный конфиг источников TrendWatcher.
-# type: rss | arxiv | nvd — определяет коннектор.
+# type: rss | arxiv | nvd | gnews | bingnews | hn — определяет коннектор.
 # source_type: news | research | vulnerability | vendor | standards | incident
 # trust: вес доверия источника (0..1), влияет на скоринг событий.
 # filter_ai: true — строгий отсев: только AI security / breakthrough AI
 #   (не любое упоминание «AI»). Сайты без публичного RSS сюда не входят:
 #   Bloomberg/WSJ/многие paywall и HTML-only страницы не парсятся.
 # top: true — официальные лаборатории/стандарты; в Ленте тип TOP, только AI security.
+# gnews/bingnews/hn — поисковое покрытие; в БД сохраняется URL издателя, не SERP.
 
 sources:
   # --- Research / CVE ---
@@ -453,3 +454,95 @@ sources:
     trust: 0.95
     filter_ai: true
     url: "https://www.cisa.gov/cybersecurity-advisories/all.xml"
+
+  # --- Labs / trade press not covered by the lists above ---
+  - id: simonwillison
+    name: "Simon Willison"
+    type: rss
+    source_type: news
+    trust: 0.85
+    filter_ai: true
+    url: "https://simonwillison.net/atom.xml"
+
+  - id: arstechnica
+    name: "Ars Technica"
+    type: rss
+    source_type: news
+    trust: 0.7
+    filter_ai: true
+    url: "https://feeds.arstechnica.com/arstechnica/index"
+
+  - id: securityweek
+    name: "SecurityWeek"
+    type: rss
+    source_type: news
+    trust: 0.6
+    filter_ai: true
+    url: "https://www.securityweek.com/feed/"
+
+  - id: unit42
+    name: "Palo Alto Unit 42"
+    type: rss
+    source_type: vendor
+    trust: 0.8
+    filter_ai: true
+    url: "https://unit42.paloaltonetworks.com/feed/"
+
+  - id: trailofbits
+    name: "Trail of Bits Blog"
+    type: rss
+    source_type: vendor
+    trust: 0.85
+    filter_ai: true
+    url: "https://blog.trailofbits.com/feed/"
+
+  - id: github_security
+    name: "GitHub Security Blog"
+    type: rss
+    source_type: vendor
+    trust: 0.8
+    filter_ai: true
+    url: "https://github.blog/security/feed/"
+
+  # --- Search discovery: query → publisher article URL (never SERP) ---
+  - id: gnews_ai_security
+    name: "Google News — AI security"
+    type: gnews
+    source_type: news
+    trust: 0.55
+    filter_ai: true
+    max_results: 40
+    queries:
+      - '"prompt injection" OR "indirect prompt injection" when:14d'
+      - '(jailbreak OR jailbreaking) (LLM OR GPT OR chatbot) when:14d'
+      - '("model context protocol" OR "MCP server") (security OR vulnerability OR exploit) when:14d'
+      - '("sandbox escape" OR "agent skill") (AI OR LLM OR agent) when:14d'
+      - '("AI agent" OR agentic) (exploit OR vulnerability OR "prompt injection") when:14d'
+
+  - id: bing_ai_security
+    name: "Bing News — AI security"
+    type: bingnews
+    source_type: news
+    trust: 0.5
+    filter_ai: true
+    max_results: 30
+    queries:
+      - '"prompt injection" LLM'
+      - 'LLM jailbreak security'
+      - '"model context protocol" vulnerability'
+      - '"AI agent" exploit OR "sandbox escape"'
+
+  - id: hn_ai_security
+    name: "Hacker News"
+    type: hn
+    source_type: news
+    trust: 0.5
+    filter_ai: true
+    max_results: 40
+    days_back: 21
+    queries:
+      - prompt injection
+      - LLM jailbreak
+      - MCP security
+      - AI agent exploit
+      - sandbox escape LLM

@@ -1,5 +1,6 @@
 """Фильтрация и валидация тегов таксономии."""
 
+from .emerging import emerging_tag_ids
 from .taxonomy import AI_TECH_TAGS, SECURITY_TAGS, TAXONOMY
 
 # AI-тренды, которые показываем в блоке «Сигналы» (по разметке пользователя).
@@ -94,18 +95,19 @@ ALL_TAXONOMY_TAGS: frozenset[str] = frozenset(TAXONOMY)
 
 
 def normalize_tags(tags: list[str]) -> list[str]:
-    """Оставляет только известные теги таксономии, без дубликатов, стабильный порядок."""
+    """Оставляет теги таксономии и автотеги, без дубликатов."""
+    allowed = ALL_TAXONOMY_TAGS | emerging_tag_ids()
     seen: set[str] = set()
     out: list[str] = []
     for tag in tags:
-        if tag in ALL_TAXONOMY_TAGS and tag not in seen:
+        if tag in allowed and tag not in seen:
             seen.add(tag)
             out.append(tag)
     return out
 
 
 def is_signal_tag(tag: str) -> bool:
-    return tag in SIGNAL_TAGS
+    return tag in SIGNAL_TAGS or tag in emerging_tag_ids()
 
 
 def is_security_tag(tag: str) -> bool:

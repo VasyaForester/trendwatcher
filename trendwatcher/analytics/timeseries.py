@@ -9,6 +9,7 @@ from datetime import date, datetime, timedelta
 from sqlalchemy import select
 
 from ..db import Document, utcnow
+from ..enrichment.emerging import emerging_tag_ids
 from ..enrichment.tag_filter import TREND_CHART_GENERAL, TREND_CHART_SPECIAL
 from .velocity import cap_velocity, pct_change
 
@@ -83,6 +84,7 @@ def weekly_tag_counts(session, weeks: int = 13) -> dict:
             series[tag][index[label]] += 1
 
     series_dict = dict(series)
+    special_allowed = TREND_CHART_SPECIAL | emerging_tag_ids()
     return {
         "weeks": week_labels,
         "series": series_dict,
@@ -90,7 +92,7 @@ def weekly_tag_counts(session, weeks: int = 13) -> dict:
         "totals_by_source": dict(totals_by_source),
         "charts": {
             "general": _chart_bundle(series_dict, TREND_CHART_GENERAL),
-            "special": _chart_bundle(series_dict, TREND_CHART_SPECIAL),
+            "special": _chart_bundle(series_dict, special_allowed),
         },
     }
 

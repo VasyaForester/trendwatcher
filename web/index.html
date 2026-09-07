@@ -51,6 +51,8 @@
   .cat-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
   .cat-dot.ai_tech { background: var(--accent2); }
   .cat-dot.security { background: var(--accent); }
+  .cat-dot.emerging { background: #ffc448; }
+  .chip.auto { color: #ffc448; }
   .legend-note { font-size: 11px; color: var(--muted); margin-top: 10px; line-height: 1.6; }
   table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
   th { text-align: left; color: var(--muted); font-size: 11px; text-transform: uppercase; padding: 6px 8px; border-bottom: 1px solid var(--border); }
@@ -147,7 +149,7 @@
       </table>
     </div>
     <div class="panel">
-      <h2>Сигналы: специальные / новые <span class="hint">self-evolving, swarm, RAG… · 90д/90д · сглаженный рост публикаций</span></h2>
+      <h2>Сигналы: специальные / новые <span class="hint">self-evolving, swarm, RAG… · автотеги · 90д/90д</span></h2>
       <table class="signals-table" id="signalsTableSpecial" data-group="special">
         <thead><tr>
           <th class="sortable" data-sort="tag" title="Сортировать по теме">Тема <span class="sort-ind"></span></th>
@@ -163,6 +165,7 @@
   <div class="legend-note" style="margin:-6px 0 18px;padding:0 4px">
     <span class="cat-dot security"></span>AI security&nbsp;&nbsp;
     <span class="cat-dot ai_tech"></span>AI-тренды.
+    <span class="cat-dot emerging"></span>автотег (#)&nbsp;&nbsp;
     <b>research</b> — пока только в исследованиях;
     <b>spike</b> — разовая вспышка;
     <b>stable</b> — на базовом уровне.
@@ -248,6 +251,10 @@ const TREND_CHART_SPECIAL = new Set([
   "model_context_poisoning","multimodal_injection",
   "agent_harness",
 ]);
+function specialTagSet() {
+  const extra = (DATA.emerging_tags || []).map(t => t.tag).filter(Boolean);
+  return new Set([...TREND_CHART_SPECIAL, ...extra]);
+}
 
 function loadHiddenSignals() {
   try {
@@ -426,7 +433,7 @@ function signalRowHtml(s) {
     ? `<span class="signal-dismiss" style="opacity:.25;cursor:default" title="${dismissTitle}">×</span>`
     : `<button type="button" class="signal-dismiss${confirming ? " confirm" : ""}" title="${dismissTitle}" onclick="dismissSignal('${s.tag}')">×</button>`;
   return `<tr>
-    <td><span class="cat-dot ${s.category}"></span><span class="chip tag" onclick="filterTag('${s.tag}')">${s.tag}</span></td>
+    <td><span class="cat-dot ${s.category}"></span><span class="chip tag${s.origin==='emerging' ? ' auto' : ''}" onclick="filterTag('${s.tag}')">${s.origin==='emerging' ? '#' : ''}${s.tag}</span></td>
     <td><span class="lvl ${s.level}" title="${reason}">${s.level}</span></td>
     <td>${s.recent}</td>
     <td class="signal-row-dynamics"><span>${velHtml}</span></td>
@@ -453,14 +460,14 @@ function renderSignals() {
   const restoreBtn = document.getElementById("restoreSignals");
   if (restoreBtn) restoreBtn.style.display = hiddenSignals.size ? "inline-block" : "none";
   renderSignalsGroup("signalsGeneral", TREND_CHART_GENERAL, "general");
-  renderSignalsGroup("signalsSpecial", TREND_CHART_SPECIAL, "special");
+  renderSignalsGroup("signalsSpecial", specialTagSet(), "special");
 }
 
 let chartGeneral = null;
 let chartSpecial = null;
 
 function buildFallbackBundle(series, isGeneral) {
-  const allowed = isGeneral ? TREND_CHART_GENERAL : TREND_CHART_SPECIAL;
+  const allowed = isGeneral ? TREND_CHART_GENERAL : specialTagSet();
   const scored = Object.entries(series || {})
     .filter(([tag]) => allowed.has(tag))
     .map(([tag, arr]) => [tag, arr.reduce((a,b)=>a+b,0), Math.max(0, ...arr)])
@@ -476,7 +483,7 @@ function buildFallbackBundle(series, isGeneral) {
 }
 
 function sanitizeChartBundle(bundle, isGeneral) {
-  const allowed = isGeneral ? TREND_CHART_GENERAL : TREND_CHART_SPECIAL;
+  const allowed = isGeneral ? TREND_CHART_GENERAL : specialTagSet();
   if (!bundle || !bundle.tags) return { tags: [], series: {}, y_max: 5 };
   const tags = bundle.tags.filter(t => allowed.has(t));
   const series = {};

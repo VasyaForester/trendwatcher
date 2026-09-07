@@ -6,16 +6,25 @@ from sqlalchemy import select
 
 from ..config import SourceConfig, load_sources
 from ..db import Document, get_session, init_db
+from ..enrichment.emerging import discover_emerging_tags, save_emerging_tags
 from ..enrichment.tagger import enrich
 from ..relevance.classifier import is_relevance_candidate
 from ..tbsf.batch import apply_tbsf
-from . import arxiv, nvd, rss
+from . import arxiv, bingnews, gnews, hn, nvd, rss
 from .dedup import normalize_url, title_fingerprint, titles_near_duplicate
+from .resolve import is_aggregator_url
 
 
 log = logging.getLogger("trendwatcher.ingest")
 
-CONNECTORS = {"rss": rss.fetch, "arxiv": arxiv.fetch, "nvd": nvd.fetch}
+CONNECTORS = {
+    "rss": rss.fetch,
+    "arxiv": arxiv.fetch,
+    "nvd": nvd.fetch,
+    "gnews": gnews.fetch,
+    "bingnews": bingnews.fetch,
+    "hn": hn.fetch,
+}
 
 
 def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
@@ -28,9 +37,11 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
     existing_title_raw = list(all_titles)
     added = 0
     for item in items:
+        if is_aggregator_url(item["url"]):
+            continue
         url = normalize_url(item["url"])
         title_key = title_fingerprint(item["title"])
-        if not url or url in existing_urls:
+        if not url or is_aggregator_url(url) or url in existing_urls:
             continue
         if title_key and title_key in existing_titles:
             continue
@@ -48,7 +59,7 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
             severity = max(severity, item["cvss"] / 10.0)
         doc = Document(
             source_id=source.id,
-            source_name=source.name,
+            source_name=(item.get("source_name") or source.name)[:128],
             source_type=source.source_type,
             doc_type=meta["doc_type"],
             url=url or item["url"],
@@ -78,6 +89,9 @@ def retag_all() -> None:
     init_db()
     with get_session() as session:
         docs = session.scalars(select(Document)).all()
+        overlay = discover_emerging_tags(docs, use_llm=None)
+        save_emerging_tags(overlay)
+        log.info("emerging tags: %s", [t["tag"] for t in overlay])
         for doc in docs:
             meta = enrich(doc.title, doc.summary, doc.source_type, doc.source_id)
             doc.tags = meta["tags"]
