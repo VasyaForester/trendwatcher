@@ -63,6 +63,53 @@ _GENERIC_CONTENT = frozenset(
 _JUNK_SLUG_RX = re.compile(
     r"(^|_)(can|cannot|cant|could|should|would|will|shall|may|might|must)(_|$)"
 )
+# Коммерческие продукты/линейки — это не тренд, а бренд.
+_PRODUCT_TOKENS = frozenset(
+    """
+    bedrock agentcore sagemaker copilot chatgpt claude sonnet opus gemini
+    watsonx cortex snowflake databricks nvidia nemotron langchain langgraph
+    autogen crewai openai anthropic mistral grok llama qwen kimi deepseek
+    antigravity vertex sagemaker azure openai
+    """.split()
+)
+_PRODUCT_SLUG_RX = re.compile(
+    r"(bedrock|agentcore|sagemaker|copilot|chatgpt|claude|gemini|watsonx|"
+    r"langchain|langgraph|autogen|crewai|nvidia|databricks|snowflake|"
+    r"openai|anthropic|mistral|antigravity|vertex|nemotron)"
+)
+# Уже покрыто широким тегом agentic_skill_security / mcp_security / memory.
+_GENERIC_MODIFIERS = frozenset(
+    """
+    coding code search chat conversational language software
+    autonomous deep neural reinforcement learning
+    management evaluation eval benchmark framework architecture
+    optimization observability operations support
+    retrieval selection routing composition utilization matching ranking
+    server servers client clients sdk api gateway host hosts
+    term
+    """.split()
+)
+_BROAD_SEEDS = frozenset(
+    "agent agents llm llms model models ai memory skill skills mcp tool tools eval".split()
+)
+_BLOCKED_SLUGS = frozenset(
+    {
+        "agents_can",
+        "bedrock_agentcore",
+        "skill_retrieval",
+        "skill_selection",
+        "search_agents",
+        "search_agent",
+        "mcp_server",
+        "mcp_servers",
+        "coding_agent",
+        "coding_agents",
+        "memory_management",
+        "agent_evaluation",
+        "memory_for_llm_agents",
+        "reinforcement_learning_agents",
+    }
+)
 _SEED_EXACT = frozenset({"a2a", "mcp", "rag", "rce", "ssrf"})
 _SEED_PREFIX = (
     "agent", "protocol", "memory", "sandbox", "jailbreak", "inject", "poison",
@@ -86,6 +133,9 @@ Return JSON: {"tags":[{"tag":"snake_case","keep":true,"category":"security"|"ai_
 
 Rules:
 - keep only phrases that are a NEW attack surface / protocol / agent capability, not a product or benchmark
+- drop commercial product names (Bedrock, AgentCore, Copilot, Claude, Gemini, LangChain, …)
+- drop subprocesses of agent skills (skill retrieval/selection) — that is agentic_skill_security
+- drop vague role labels (coding agent, search agents, mcp server, memory management, agent evaluation)
 - tag: lowercase snake_case, ascii, max 40 chars
 - patterns: 1-3 regexes matching the phrase in titles (case-insensitive)
 - drop duplicates of known topics: prompt injection, jailbreak, MCP security, RAG, generic agentic
@@ -196,30 +246,56 @@ def _ngrams(tokens: list[str], n: int) -> list[list[str]]:
     return [tokens[i : i + n] for i in range(len(tokens) - n + 1)]
 
 
+def _is_product_gram(gram: list[str]) -> bool:
+    return any(t.replace("-", "") in _PRODUCT_TOKENS or t in _PRODUCT_TOKENS for t in gram)
+
+
+def _too_generic(gram: list[str]) -> bool:
+    """Роли/инфра без новой поверхности: coding agent, mcp server, skill retrieval."""
+    content = [t for t in gram if t not in _STOP]
+    if not content:
+        return True
+    allowed_generic = _BROAD_SEEDS | _GENERIC_MODIFIERS | _GENERIC_CONTENT
+    if all(t in allowed_generic for t in content):
+        return True
+    if any(t in {"skill", "skills"} for t in content):
+        rest = [t for t in content if t not in {"skill", "skills"}]
+        if rest and all(t in allowed_generic for t in rest):
+            return True
+    return False
+
+
 def _is_junk_gram(gram: list[str]) -> bool:
-    """Отсекает обрезки вроде 'agents can' / 'agents can support'."""
+    """Отсекает обрезки, бренды и слишком общие n-граммы."""
     if not gram or gram[0] in _STOP or gram[-1] in _STOP:
         return True
     if any(t in _AUX for t in gram):
         return True
     if gram[-1] in _LIGHT_TAIL:
         return True
-    if _JUNK_SLUG_RX.search(_slug(gram)):
+    slug = _slug(gram)
+    if slug in _BLOCKED_SLUGS or _JUNK_SLUG_RX.search(slug) or _PRODUCT_SLUG_RX.search(slug):
+        return True
+    if _is_product_gram(gram):
         return True
     content = [t for t in gram if t not in _STOP]
     if len(content) < 2 or not _interesting(content):
         return True
     if all(t in _GENERIC_CONTENT for t in content):
         return True
+    if _too_generic(gram):
+        return True
     return False
 
 
 def _is_junk_tag(item: dict) -> bool:
     tag = str(item.get("tag") or "")
-    if not tag or _JUNK_SLUG_RX.search(tag):
+    if not tag or tag in _BLOCKED_SLUGS or _JUNK_SLUG_RX.search(tag) or _PRODUCT_SLUG_RX.search(tag):
         return True
     label = str(item.get("label") or tag.replace("_", " "))
-    return _is_junk_gram(_tokens(label))
+    if _is_junk_gram(_tokens(label)):
+        return True
+    return _is_junk_gram(tag.split("_"))
 
 
 def _phrase_candidates(title: str) -> list[list[str]]:
@@ -362,7 +438,7 @@ def _llm_refine(candidates: list[dict], api_key: str) -> list[dict] | None:
         tag = str(item.get("tag") or "")
         if not re.fullmatch(r"[a-z][a-z0-9_]{1,47}", tag) or tag in TAXONOMY:
             continue
-        if _JUNK_SLUG_RX.search(tag):
+        if _is_junk_tag({"tag": tag, "label": str(item.get("label") or tag)}):
             continue
         patterns = [str(p) for p in (item.get("patterns") or []) if p]
         base = by_old.get(tag) or next((c for c in candidates if c["label"] in tag.replace("_", " ")), None)

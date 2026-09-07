@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import unittest
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -104,19 +105,86 @@ class TestEmergingDiscovery(unittest.TestCase):
             msg=slugs,
         )
 
+    def test_rejects_products_skill_parts_and_vague_roles(self):
+        now = datetime(2026, 9, 7)
+        titles = [
+            "Optimizing production agents with Amazon Bedrock AgentCore Observability",
+            "Detecting silent agent failures with Amazon Bedrock AgentCore",
+            "How Mobileye transformed support using Amazon Bedrock AgentCore",
+            "SkillSight: Seeing Through Shared Descriptions for Accurate Skill Retrieval",
+            "Field Aware Agent Skill Retrieval",
+            "Calibrating Generic Content Bias for Skill Retrieval",
+            "Deterministic Executability Gating for LLM Skill Selection at Scale",
+            "Co-Evolving Skill Selection and Utilization via RL",
+            "Emotion2Skill: Adaptive Skill Selection and Evolution",
+            "Progressive Multimodal Search Agents for Visual Question Answering",
+            "When Search Agents Should Ask: DiscoBench",
+            "Provenance-Guided Credit Assignment for Deep Search Agents",
+            "MCP Server Architecture Patterns for LLM-Integrated Applications",
+            "The Apify MCP server enables AI agents to extract data",
+            "Presenton bundles an MCP server for Docker deployments",
+            "A Framework for Coding Agent Failures",
+            "Safety Steering for Multi-Turn Coding Agent",
+            "Restricting a Coding Agent to execute_code",
+            "Learning Adaptive Memory Management for Long-Horizon Coding Agents",
+            "Learned Adaptive Memory Management for LLM Agents",
+            "Generalizable Long-Term Memory Management via RL",
+            "Vendors adopt agent to agent protocol for tool sharing",
+            "Security review of the agent to agent protocol in production",
+            "New agent to agent protocol enables delegated credentials",
+        ]
+        docs = [_doc(t, i, now) for i, t in enumerate(titles)]
+        slugs = {t["tag"] for t in discover_emerging_tags(docs, now=now, use_llm=False)}
+        banned = {
+            "bedrock_agentcore",
+            "skill_retrieval",
+            "skill_selection",
+            "search_agents",
+            "mcp_server",
+            "coding_agent",
+            "memory_management",
+        }
+        self.assertTrue(banned.isdisjoint(slugs), msg=slugs)
+        self.assertTrue(
+            any("agent_to_agent" in s or "protocol" in s for s in slugs),
+            msg=slugs,
+        )
+
     def test_load_drops_persisted_junk_slug(self):
         with TemporaryDirectory() as tmp:
             path = Path(tmp) / "emerging_tags.json"
+            junk = [
+                ("agents_can", "agents can"),
+                ("bedrock_agentcore", "bedrock agentcore"),
+                ("skill_retrieval", "skill retrieval"),
+                ("skill_selection", "skill selection"),
+                ("search_agents", "search agents"),
+                ("mcp_server", "mcp server"),
+                ("coding_agent", "coding agent"),
+                ("memory_management", "memory management"),
+            ]
+            tags = [
+                {
+                    "tag": slug,
+                    "label": label,
+                    "patterns": [rf"\\b{label.replace(' ', '[- ]+')}\\b"],
+                }
+                for slug, label in junk
+            ]
+            tags.append(
+                {
+                    "tag": "agent_to_agent_protocol",
+                    "label": "agent to agent protocol",
+                    "patterns": [r"\bagent[- ]+to[- ]+agent[- ]+protocol\b"],
+                }
+            )
             path.write_text(
-                '{"tags":[{"tag":"agents_can","label":"agents can","patterns":["\\\\bagents[- ]+can\\\\b"]},'
-                '{"tag":"agent_to_agent_protocol","label":"agent to agent protocol",'
-                '"patterns":["\\\\bagent[- ]+to[- ]+agent[- ]+protocol\\\\b"]}]}',
+                json.dumps({"tags": tags}),
                 encoding="utf-8",
             )
             loaded = load_emerging_tags(path)
             slugs = {t["tag"] for t in loaded}
-            self.assertNotIn("agents_can", slugs)
-            self.assertIn("agent_to_agent_protocol", slugs)
+            self.assertEqual(slugs, {"agent_to_agent_protocol"})
 
 
 if __name__ == "__main__":
