@@ -1,150 +1,6 @@
 {
-  "generated_at": "2026-09-07T14:43:59.283849",
+  "generated_at": "2026-09-07T15:41:21.634127",
   "tags": [
-    {
-      "tag": "long_horizon_agents",
-      "label": "long-horizon agents",
-      "patterns": [
-        "\\blong\\-horizon[- ]+agents\\b"
-      ],
-      "category": "security",
-      "recent": 19,
-      "prior": 2,
-      "examples": [
-        "HiMPO: Hindsight-Informed Memory Policy Optimization for Less-Entangled Credit in Long-Horizon Agents",
-        "Remember When It Matters: Proactive Memory Agent for Long-Horizon Agents",
-        "TRACE: Turn-level Reward Assignment via Credit Estimation for Long-Horizon Agents"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "tool_use_agents",
-      "label": "tool-use agents",
-      "patterns": [
-        "\\btool\\-use[- ]+agents\\b"
-      ],
-      "category": "security",
-      "recent": 6,
-      "prior": 0,
-      "examples": [
-        "PACT: Privileged Trace Co-Training for Multi-Turn Tool-Use Agents",
-        "E-Bench: Benchmarking Multi-Step Tool-Use Agents in Real-World Product Scenarios",
-        "LAVE: Latent Visual Evidence-Enhanced Planning for Video Tool-use Agents"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agentic_reasoning",
-      "label": "agentic reasoning",
-      "patterns": [
-        "\\bagentic[- ]+reasoning\\b"
-      ],
-      "category": "security",
-      "recent": 11,
-      "prior": 1,
-      "examples": [
-        "Nemotron 3 Ultra: Open, Efficient Mixture-of-Experts Hybrid Mamba-Transformer Model for Agentic Reasoning",
-        "Evidence-Grounded Verified Agentic Reasoning: A Path Toward Eliminating LLM Hallucination in Empirical Inference via Tool-Attested Kernel Proofs",
-        "The Emerging Paradigm of Geospatial Foundation Models: From Pre-Training to Agentic Reasoning"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agents_through",
-      "label": "agents through",
-      "patterns": [
-        "\\bagents[- ]+through\\b"
-      ],
-      "category": "security",
-      "recent": 10,
-      "prior": 1,
-      "examples": [
-        "PVDetector: Detecting Prompt Injection Attacks on Purpose-Specific LLM Agents through Policy-Violation Concept Analysis",
-        "PhoneHarness: Harnessing Phone-Use Agents through Mixed GUI, CLI, and Tool Actions",
-        "MedEvoEval: Evaluating Continual Evolution of Doctor Agents through Simulated Clinical Episodes"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agentic_commerce",
-      "label": "agentic commerce",
-      "patterns": [
-        "\\bagentic[- ]+commerce\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "A Decision-Centered Reference Architecture for Trustworthy Agentic Commerce",
-        "Protocol-Level Attacks on Agentic Commerce Platforms: A Cross-Platform Taxonomy, AIP-Bench, and Unified Defense",
-        "Agentic Commerce World: An Auditable and Verifiable Environment for Vibe Commerce"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agentic_context",
-      "label": "agentic context",
-      "patterns": [
-        "\\bagentic[- ]+context\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "Scoped Verification for Reliable Long-Horizon Agentic Context Evolution under Distribution Shift",
-        "Agentic Context Learning with Self-Discovered Specification",
-        "Agentic Context Management: Solving Agent Memory and Cost by Treating Them as Lifecycle and Architecture Problems"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agentic_graph",
-      "label": "agentic graph",
-      "patterns": [
-        "\\bagentic[- ]+graph\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "PathRouter: Aligning Rewards with Retrieval Quality in Agentic Graph Retrieval-Augmented Generation",
-        "SAGA: Synthetic Agentic Graph Architecture for Temporal Benchmark Generation",
-        "Agentic Graph Token Reasoning"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agentic_optimization",
-      "label": "agentic optimization",
-      "patterns": [
-        "\\bagentic[- ]+optimization\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "Beyond Trial-and-Error: Agentic Optimization for Image-to-Video Adherence",
-        "SCOPE: Score-Isolated Agentic Optimization for Video World Models",
-        "LLM4LLM: Bridging Kernel Benchmarks and Real Deployment via Closed-Loop Agentic Optimization"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agents_on_long_horizon",
-      "label": "agents on long-horizon",
-      "patterns": [
-        "\\bagents[- ]+on[- ]+long\\-horizon\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "OSWorld 2.0: Benchmarking Computer Use Agents on Long-Horizon Real-World Tasks",
-        "Long-Horizon-Terminal-Bench: Testing the Limits of Agents on Long-Horizon Terminal Tasks with Dense Reward-Based Grading",
-        "OmegaUse-OfficeVal: Benchmarking LLM Agents on Long-Horizon Office-Suite Tasks with Economic Grounding"
-      ],
-      "source": "heuristic"
-    },
     {
       "tag": "bench_evaluating",
       "label": "bench evaluating",
@@ -162,22 +18,6 @@
       "source": "heuristic"
     },
     {
-      "tag": "benchmark_for_agentic",
-      "label": "benchmark for agentic",
-      "patterns": [
-        "\\bbenchmark[- ]+for[- ]+agentic\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "LayerRAG-Bench: A Cross-Layer Reliability Benchmark for Agentic Retrieval-Augmented Generation",
-        "Can LLM Agents Price Competitively? A Dynamic Multi-Attribute Auction Benchmark for Agentic Commerce",
-        "TimeSage-EV: A Live Benchmark for Agentic Time Series Analysis in Evolving Environments"
-      ],
-      "source": "heuristic"
-    },
-    {
       "tag": "episodic_memory",
       "label": "episodic memory",
       "patterns": [
@@ -190,6 +30,134 @@
         "Bridging Inference-Time Scaling and Episodic Memory with Action-Centric Graphs",
         "Caching for the Future: Scrub Jay Episodic Memory Principles for Agent Memory Systems",
         "Causal Episodic Memory for Feedback-Driven Agent Repair"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "rogue_ai_agents",
+      "label": "rogue ai agents",
+      "patterns": [
+        "\\brogue[- ]+ai[- ]+agents\\b"
+      ],
+      "category": "security",
+      "recent": 5,
+      "prior": 0,
+      "examples": [
+        "IT leaders confident but cooked when it comes to rogue AI agents",
+        "Is open source the answer to rogue AI agents? Nvidia's new alliance says yes",
+        "OK, Well, Rogue AI Agents Are Hacking Again"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "tool_calling_agents",
+      "label": "tool-calling agents",
+      "patterns": [
+        "\\btool\\-calling[- ]+agents\\b"
+      ],
+      "category": "security",
+      "recent": 5,
+      "prior": 0,
+      "examples": [
+        "CacheRL:Multi-Turn Tool-Calling Agents via Cached Rollouts and Hybrid Reward",
+        "MM-ToolSandBox: A Unified Framework for Evaluating Visual Tool-Calling Agents",
+        "DART-SD: Diamond-topology Aware Retrieval and Tuning for Self-Distillation of Multi-Turn Tool-Calling Agents"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "voice_agents",
+      "label": "voice agents",
+      "patterns": [
+        "\\bvoice[- ]+agents\\b"
+      ],
+      "category": "security",
+      "recent": 5,
+      "prior": 0,
+      "examples": [
+        "A Reliability Assessment of LALM Audio Judges for Full-Duplex Voice Agents",
+        "DuplexWorld: Can voice agents help you get through the day?",
+        "Beyond Fresh Starts: Stateful Inference for Streaming ASR in Conversational Voice Agents"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agent_failures",
+      "label": "agent failures",
+      "patterns": [
+        "\\bagent[- ]+failures\\b"
+      ],
+      "category": "security",
+      "recent": 9,
+      "prior": 1,
+      "examples": [
+        "ClayBuddy: A Framework, Evaluation, & Mitigation of Coding Agent Failures",
+        "From Agent Failures to Text Policies: What Works and What Breaks",
+        "Detecting silent agent failures with Amazon Bedrock AgentCore optimization"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "adaptive_memory",
+      "label": "adaptive memory",
+      "patterns": [
+        "\\badaptive[- ]+memory\\b"
+      ],
+      "category": "security",
+      "recent": 4,
+      "prior": 0,
+      "examples": [
+        "SWE-MeM: Learning Adaptive Memory Management for Long-Horizon Coding Agents",
+        "Memory as a Controlled Process: Learned Adaptive Memory Management for LLM Agents",
+        "ERSkill: Evolving for Skill-Guided Adaptive Memory Retrieval"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agent_networks",
+      "label": "agent networks",
+      "patterns": [
+        "\\bagent[- ]+networks\\b"
+      ],
+      "category": "security",
+      "recent": 4,
+      "prior": 0,
+      "examples": [
+        "When Unlearning Fails: Reliable Data Deletion under Post-Training in Agent Networks",
+        "WeClawArena: An Auditable Sandbox and Benchmark for Cross-User Agents Collaboration and Security in Human-Centered Agent Networks",
+        "Blockchain Empowered Trustworthy Agent Networks: Foundations, Taxonomy, and Future Directions"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agent_populations",
+      "label": "agent populations",
+      "patterns": [
+        "\\bagent[- ]+populations\\b"
+      ],
+      "category": "security",
+      "recent": 4,
+      "prior": 0,
+      "examples": [
+        "Everyone Conforms, No One Believes: Pluralistic Ignorance in LLM Agent Populations",
+        "Steganalysis of Adaptive Covert Collusion in Tool-Using Agent Populations: A Black-Box, Cross-Principal Approach",
+        "More is different when AI agent populations work together, study suggests"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agent_self_evolution",
+      "label": "agent self-evolution",
+      "patterns": [
+        "\\bagent[- ]+self\\-evolution\\b"
+      ],
+      "category": "security",
+      "recent": 4,
+      "prior": 0,
+      "examples": [
+        "AI Trading's Alpha Singularity: Emergent Market Reasoning through Agent-to-Agent Self-Evolution",
+        "SkillMentor: LLM Agent Self-Evolution via Learning Blind-Spot Diagnosis",
+        "GDPevo: Evaluating Agent Self-Evolution on Real Business Tasks"
       ],
       "source": "heuristic"
     }
