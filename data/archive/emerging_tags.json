@@ -1,6 +1,38 @@
 {
-  "generated_at": "2026-09-08T15:52:21.516608",
+  "generated_at": "2026-09-09T10:58:55.710575",
   "tags": [
+    {
+      "tag": "agent_failures",
+      "label": "agent failures",
+      "patterns": [
+        "\\bagent[- ]+failures\\b"
+      ],
+      "category": "security",
+      "recent": 10,
+      "prior": 1,
+      "examples": [
+        "ClayBuddy: A Framework, Evaluation, & Mitigation of Coding Agent Failures",
+        "From Agent Failures to Text Policies: What Works and What Breaks",
+        "Detecting silent agent failures with Amazon Bedrock AgentCore optimization"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agent_societies",
+      "label": "agent societies",
+      "patterns": [
+        "\\bagent[- ]+societies\\b"
+      ],
+      "category": "security",
+      "recent": 5,
+      "prior": 0,
+      "examples": [
+        "Formal Mechanisms for Market Stability in Self-Interested Agent Societies: A Marketplace Simulation Study",
+        "Predicting the scale limits of social mechanisms in agent societies",
+        "Benchmarking large language model agent societies against human behavioural distributions"
+      ],
+      "source": "heuristic"
+    },
     {
       "tag": "bench_evaluating",
       "label": "bench evaluating",
@@ -82,22 +114,6 @@
       "source": "heuristic"
     },
     {
-      "tag": "agent_failures",
-      "label": "agent failures",
-      "patterns": [
-        "\\bagent[- ]+failures\\b"
-      ],
-      "category": "security",
-      "recent": 9,
-      "prior": 1,
-      "examples": [
-        "ClayBuddy: A Framework, Evaluation, & Mitigation of Coding Agent Failures",
-        "From Agent Failures to Text Policies: What Works and What Breaks",
-        "Detecting silent agent failures with Amazon Bedrock AgentCore optimization"
-      ],
-      "source": "heuristic"
-    },
-    {
       "tag": "adaptive_memory",
       "label": "adaptive memory",
       "patterns": [
@@ -126,38 +142,6 @@
         "When Unlearning Fails: Reliable Data Deletion under Post-Training in Agent Networks",
         "WeClawArena: An Auditable Sandbox and Benchmark for Cross-User Agents Collaboration and Security in Human-Centered Agent Networks",
         "Blockchain Empowered Trustworthy Agent Networks: Foundations, Taxonomy, and Future Directions"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agent_populations",
-      "label": "agent populations",
-      "patterns": [
-        "\\bagent[- ]+populations\\b"
-      ],
-      "category": "security",
-      "recent": 4,
-      "prior": 0,
-      "examples": [
-        "Everyone Conforms, No One Believes: Pluralistic Ignorance in LLM Agent Populations",
-        "Steganalysis of Adaptive Covert Collusion in Tool-Using Agent Populations: A Black-Box, Cross-Principal Approach",
-        "More is different when AI agent populations work together, study suggests"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agent_self_evolution",
-      "label": "agent self-evolution",
-      "patterns": [
-        "\\bagent[- ]+self\\-evolution\\b"
-      ],
-      "category": "security",
-      "recent": 4,
-      "prior": 0,
-      "examples": [
-        "AI Trading's Alpha Singularity: Emergent Market Reasoning through Agent-to-Agent Self-Evolution",
-        "SkillMentor: LLM Agent Self-Evolution via Learning Blind-Spot Diagnosis",
-        "GDPevo: Evaluating Agent Self-Evolution on Real Business Tasks"
       ],
       "source": "heuristic"
     }
