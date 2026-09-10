@@ -1,6 +1,22 @@
 {
-  "generated_at": "2026-09-09T15:49:13.379298",
+  "generated_at": "2026-09-10T09:27:53.466771",
   "tags": [
+    {
+      "tag": "bench_evaluating",
+      "label": "bench evaluating",
+      "patterns": [
+        "\\bbench[- ]+evaluating\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "Agent Retrieval Bench: Evaluating Repository Context Retrieval for Coding Agents",
+        "Avalon-ToM-Bench: Evaluating Fine-Grained Theory of Mind via Asymmetric Game Mechanics",
+        "Hack-Verifiable Terminal Bench: Evaluating Reward Hacking in Terminal Tasks"
+      ],
+      "source": "heuristic"
+    },
     {
       "tag": "agent_failures",
       "label": "agent failures",
@@ -34,18 +50,18 @@
       "source": "heuristic"
     },
     {
-      "tag": "bench_evaluating",
-      "label": "bench evaluating",
+      "tag": "agents_know",
+      "label": "agents know",
       "patterns": [
-        "\\bbench[- ]+evaluating\\b"
+        "\\bagents[- ]+know\\b"
       ],
       "category": "security",
       "recent": 5,
       "prior": 0,
       "examples": [
-        "Agent Retrieval Bench: Evaluating Repository Context Retrieval for Coding Agents",
-        "Avalon-ToM-Bench: Evaluating Fine-Grained Theory of Mind via Asymmetric Game Mechanics",
-        "Hack-Verifiable Terminal Bench: Evaluating Reward Hacking in Terminal Tasks"
+        "Agentic Abstention: Do Agents Know When to Stop Instead of Act?",
+        "AgentAbstain: Do LLM Agents Know When Not to Act?",
+        "Do AI Agents Know When a Task Is Simple? Toward Complexity-Aware Reasoning and Execution"
       ],
       "source": "heuristic"
     },
@@ -78,22 +94,6 @@
         "IT leaders confident but cooked when it comes to rogue AI agents",
         "Is open source the answer to rogue AI agents? Nvidia's new alliance says yes",
         "OK, Well, Rogue AI Agents Are Hacking Again"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "tool_calling_agents",
-      "label": "tool-calling agents",
-      "patterns": [
-        "\\btool\\-calling[- ]+agents\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "CacheRL:Multi-Turn Tool-Calling Agents via Cached Rollouts and Hybrid Reward",
-        "MM-ToolSandBox: A Unified Framework for Evaluating Visual Tool-Calling Agents",
-        "DART-SD: Diamond-topology Aware Retrieval and Tuning for Self-Distillation of Multi-Turn Tool-Calling Agents"
       ],
       "source": "heuristic"
     },
