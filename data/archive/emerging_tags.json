@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-10T15:42:38.185071",
+  "generated_at": "2026-09-11T10:58:53.008081",
   "tags": [
     {
       "tag": "bench_evaluating",
@@ -24,7 +24,7 @@
         "\\bagent[- ]+failures\\b"
       ],
       "category": "security",
-      "recent": 10,
+      "recent": 11,
       "prior": 1,
       "examples": [
         "ClayBuddy: A Framework, Evaluation, & Mitigation of Coding Agent Failures",
