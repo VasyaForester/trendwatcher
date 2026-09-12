@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-11T15:45:22.448335",
+  "generated_at": "2026-09-12T10:25:52.118178",
   "tags": [
     {
       "tag": "bench_evaluating",
@@ -14,22 +14,6 @@
         "Agent Retrieval Bench: Evaluating Repository Context Retrieval for Coding Agents",
         "Avalon-ToM-Bench: Evaluating Fine-Grained Theory of Mind via Asymmetric Game Mechanics",
         "Hack-Verifiable Terminal Bench: Evaluating Reward Hacking in Terminal Tasks"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agent_failures",
-      "label": "agent failures",
-      "patterns": [
-        "\\bagent[- ]+failures\\b"
-      ],
-      "category": "security",
-      "recent": 11,
-      "prior": 1,
-      "examples": [
-        "ClayBuddy: A Framework, Evaluation, & Mitigation of Coding Agent Failures",
-        "From Agent Failures to Text Policies: What Works and What Breaks",
-        "Detecting silent agent failures with Amazon Bedrock AgentCore optimization"
       ],
       "source": "heuristic"
     },
@@ -142,6 +126,22 @@
         "When Unlearning Fails: Reliable Data Deletion under Post-Training in Agent Networks",
         "WeClawArena: An Auditable Sandbox and Benchmark for Cross-User Agents Collaboration and Security in Human-Centered Agent Networks",
         "Blockchain Empowered Trustworthy Agent Networks: Foundations, Taxonomy, and Future Directions"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agent_populations",
+      "label": "agent populations",
+      "patterns": [
+        "\\bagent[- ]+populations\\b"
+      ],
+      "category": "security",
+      "recent": 4,
+      "prior": 0,
+      "examples": [
+        "Everyone Conforms, No One Believes: Pluralistic Ignorance in LLM Agent Populations",
+        "Steganalysis of Adaptive Covert Collusion in Tool-Using Agent Populations: A Black-Box, Cross-Principal Approach",
+        "More is different when AI agent populations work together, study suggests"
       ],
       "source": "heuristic"
     }
