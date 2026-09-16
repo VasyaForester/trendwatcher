@@ -1,6 +1,22 @@
 {
-  "generated_at": "2026-09-15T16:12:43.388741",
+  "generated_at": "2026-09-16T11:15:28.551255",
   "tags": [
+    {
+      "tag": "voice_agents",
+      "label": "voice agents",
+      "patterns": [
+        "\\bvoice[- ]+agents\\b"
+      ],
+      "category": "security",
+      "recent": 7,
+      "prior": 0,
+      "examples": [
+        "A Reliability Assessment of LALM Audio Judges for Full-Duplex Voice Agents",
+        "DuplexWorld: Can voice agents help you get through the day?",
+        "Beyond Fresh Starts: Stateful Inference for Streaming ASR in Conversational Voice Agents"
+      ],
+      "source": "heuristic"
+    },
     {
       "tag": "bench_evaluating",
       "label": "bench evaluating",
@@ -82,18 +98,34 @@
       "source": "heuristic"
     },
     {
-      "tag": "voice_agents",
-      "label": "voice agents",
+      "tag": "tool_calls",
+      "label": "tool calls",
       "patterns": [
-        "\\bvoice[- ]+agents\\b"
+        "\\btool[- ]+calls\\b"
       ],
       "category": "security",
       "recent": 5,
       "prior": 0,
       "examples": [
-        "A Reliability Assessment of LALM Audio Judges for Full-Duplex Voice Agents",
-        "DuplexWorld: Can voice agents help you get through the day?",
-        "Beyond Fresh Starts: Stateful Inference for Streaming ASR in Conversational Voice Agents"
+        "Beyond Aggregate Risk: Role-Stratified Conformal Risk Control for LLM Tool Calls",
+        "Getting the Parameters Right: A Difficulty-Graded Benchmark and Probe-Guided Training for LLM Tool Calls",
+        "Verified Tool Calls Improve LLM Agent Reliability Under Non-Atomic Failures"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "supply_chain",
+      "label": "supply chain",
+      "patterns": [
+        "\\bsupply[- ]+chain\\b"
+      ],
+      "category": "security",
+      "recent": 12,
+      "prior": 2,
+      "examples": [
+        "Unpacking the AsyncAPI npm supply chain compromise and import-time payload delivery",
+        "Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks",
+        "AI in supply chain: from demand forecasting to AI agents"
       ],
       "source": "heuristic"
     },
@@ -110,38 +142,6 @@
         "SWE-MeM: Learning Adaptive Memory Management for Long-Horizon Coding Agents",
         "Memory as a Controlled Process: Learned Adaptive Memory Management for LLM Agents",
         "ERSkill: Evolving for Skill-Guided Adaptive Memory Retrieval"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agent_networks",
-      "label": "agent networks",
-      "patterns": [
-        "\\bagent[- ]+networks\\b"
-      ],
-      "category": "security",
-      "recent": 4,
-      "prior": 0,
-      "examples": [
-        "When Unlearning Fails: Reliable Data Deletion under Post-Training in Agent Networks",
-        "WeClawArena: An Auditable Sandbox and Benchmark for Cross-User Agents Collaboration and Security in Human-Centered Agent Networks",
-        "Blockchain Empowered Trustworthy Agent Networks: Foundations, Taxonomy, and Future Directions"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agent_populations",
-      "label": "agent populations",
-      "patterns": [
-        "\\bagent[- ]+populations\\b"
-      ],
-      "category": "security",
-      "recent": 4,
-      "prior": 0,
-      "examples": [
-        "Everyone Conforms, No One Believes: Pluralistic Ignorance in LLM Agent Populations",
-        "Steganalysis of Adaptive Covert Collusion in Tool-Using Agent Populations: A Black-Box, Cross-Principal Approach",
-        "More is different when AI agent populations work together, study suggests"
       ],
       "source": "heuristic"
     }
