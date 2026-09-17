@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-16T16:05:13.637302",
+  "generated_at": "2026-09-17T11:16:05.464391",
   "tags": [
     {
       "tag": "voice_agents",
@@ -30,6 +30,54 @@
         "Agent Retrieval Bench: Evaluating Repository Context Retrieval for Coding Agents",
         "Avalon-ToM-Bench: Evaluating Fine-Grained Theory of Mind via Asymmetric Game Mechanics",
         "Hack-Verifiable Terminal Bench: Evaluating Reward Hacking in Terminal Tasks"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "empirical_evaluation",
+      "label": "empirical evaluation",
+      "patterns": [
+        "\\bempirical[- ]+evaluation\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "An Empirical Evaluation of Prompt Injection Vulnerabilities in Large Language Models Across Multilingual and Obfuscated Attack Scenarios",
+        "Mitigating Fabrication in Multi-Stage LLM Pipelines for Hiring: An Empirical Evaluation of Prompt Guardrails and Human-in-the-Loop Checkpoints",
+        "An Empirical Evaluation of Cross-City POI Recommendation on a Large-Scale Benchmark"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "episodic_memory",
+      "label": "episodic memory",
+      "patterns": [
+        "\\bepisodic[- ]+memory\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "Bridging Inference-Time Scaling and Episodic Memory with Action-Centric Graphs",
+        "Caching for the Future: Scrub Jay Episodic Memory Principles for Agent Memory Systems",
+        "Causal Episodic Memory for Feedback-Driven Agent Repair"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "tool_calls",
+      "label": "tool calls",
+      "patterns": [
+        "\\btool[- ]+calls\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "Beyond Aggregate Risk: Role-Stratified Conformal Risk Control for LLM Tool Calls",
+        "Getting the Parameters Right: A Difficulty-Graded Benchmark and Probe-Guided Training for LLM Tool Calls",
+        "Verified Tool Calls Improve LLM Agent Reliability Under Non-Atomic Failures"
       ],
       "source": "heuristic"
     },
@@ -66,22 +114,6 @@
       "source": "heuristic"
     },
     {
-      "tag": "episodic_memory",
-      "label": "episodic memory",
-      "patterns": [
-        "\\bepisodic[- ]+memory\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "Bridging Inference-Time Scaling and Episodic Memory with Action-Centric Graphs",
-        "Caching for the Future: Scrub Jay Episodic Memory Principles for Agent Memory Systems",
-        "Causal Episodic Memory for Feedback-Driven Agent Repair"
-      ],
-      "source": "heuristic"
-    },
-    {
       "tag": "rogue_ai_agents",
       "label": "rogue ai agents",
       "patterns": [
@@ -98,22 +130,6 @@
       "source": "heuristic"
     },
     {
-      "tag": "tool_calls",
-      "label": "tool calls",
-      "patterns": [
-        "\\btool[- ]+calls\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "Beyond Aggregate Risk: Role-Stratified Conformal Risk Control for LLM Tool Calls",
-        "Getting the Parameters Right: A Difficulty-Graded Benchmark and Probe-Guided Training for LLM Tool Calls",
-        "Verified Tool Calls Improve LLM Agent Reliability Under Non-Atomic Failures"
-      ],
-      "source": "heuristic"
-    },
-    {
       "tag": "supply_chain",
       "label": "supply chain",
       "patterns": [
@@ -126,22 +142,6 @@
         "Unpacking the AsyncAPI npm supply chain compromise and import-time payload delivery",
         "Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks",
         "AI in supply chain: from demand forecasting to AI agents"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "adaptive_memory",
-      "label": "adaptive memory",
-      "patterns": [
-        "\\badaptive[- ]+memory\\b"
-      ],
-      "category": "security",
-      "recent": 4,
-      "prior": 0,
-      "examples": [
-        "SWE-MeM: Learning Adaptive Memory Management for Long-Horizon Coding Agents",
-        "Memory as a Controlled Process: Learned Adaptive Memory Management for LLM Agents",
-        "ERSkill: Evolving for Skill-Guided Adaptive Memory Retrieval"
       ],
       "source": "heuristic"
     }
