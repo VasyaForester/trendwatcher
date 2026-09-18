@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17T16:12:37.996985",
+  "generated_at": "2026-09-18T09:20:42.768635",
   "tags": [
     {
       "tag": "voice_agents",
@@ -8,12 +8,44 @@
         "\\bvoice[- ]+agents\\b"
       ],
       "category": "security",
-      "recent": 7,
+      "recent": 8,
       "prior": 0,
       "examples": [
         "A Reliability Assessment of LALM Audio Judges for Full-Duplex Voice Agents",
         "DuplexWorld: Can voice agents help you get through the day?",
         "Beyond Fresh Starts: Stateful Inference for Streaming ASR in Conversational Voice Agents"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "empirical_evaluation",
+      "label": "empirical evaluation",
+      "patterns": [
+        "\\bempirical[- ]+evaluation\\b"
+      ],
+      "category": "security",
+      "recent": 7,
+      "prior": 0,
+      "examples": [
+        "An Empirical Evaluation of Prompt Injection Vulnerabilities in Large Language Models Across Multilingual and Obfuscated Attack Scenarios",
+        "Mitigating Fabrication in Multi-Stage LLM Pipelines for Hiring: An Empirical Evaluation of Prompt Guardrails and Human-in-the-Loop Checkpoints",
+        "An Empirical Evaluation of Cross-City POI Recommendation on a Large-Scale Benchmark"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "tool_calls",
+      "label": "tool calls",
+      "patterns": [
+        "\\btool[- ]+calls\\b"
+      ],
+      "category": "security",
+      "recent": 7,
+      "prior": 0,
+      "examples": [
+        "Beyond Aggregate Risk: Role-Stratified Conformal Risk Control for LLM Tool Calls",
+        "Getting the Parameters Right: A Difficulty-Graded Benchmark and Probe-Guided Training for LLM Tool Calls",
+        "Verified Tool Calls Improve LLM Agent Reliability Under Non-Atomic Failures"
       ],
       "source": "heuristic"
     },
@@ -34,22 +66,6 @@
       "source": "heuristic"
     },
     {
-      "tag": "empirical_evaluation",
-      "label": "empirical evaluation",
-      "patterns": [
-        "\\bempirical[- ]+evaluation\\b"
-      ],
-      "category": "security",
-      "recent": 6,
-      "prior": 0,
-      "examples": [
-        "An Empirical Evaluation of Prompt Injection Vulnerabilities in Large Language Models Across Multilingual and Obfuscated Attack Scenarios",
-        "Mitigating Fabrication in Multi-Stage LLM Pipelines for Hiring: An Empirical Evaluation of Prompt Guardrails and Human-in-the-Loop Checkpoints",
-        "An Empirical Evaluation of Cross-City POI Recommendation on a Large-Scale Benchmark"
-      ],
-      "source": "heuristic"
-    },
-    {
       "tag": "episodic_memory",
       "label": "episodic memory",
       "patterns": [
@@ -62,22 +78,6 @@
         "Bridging Inference-Time Scaling and Episodic Memory with Action-Centric Graphs",
         "Caching for the Future: Scrub Jay Episodic Memory Principles for Agent Memory Systems",
         "Causal Episodic Memory for Feedback-Driven Agent Repair"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "tool_calls",
-      "label": "tool calls",
-      "patterns": [
-        "\\btool[- ]+calls\\b"
-      ],
-      "category": "security",
-      "recent": 6,
-      "prior": 0,
-      "examples": [
-        "Beyond Aggregate Risk: Role-Stratified Conformal Risk Control for LLM Tool Calls",
-        "Getting the Parameters Right: A Difficulty-Graded Benchmark and Probe-Guided Training for LLM Tool Calls",
-        "Verified Tool Calls Improve LLM Agent Reliability Under Non-Atomic Failures"
       ],
       "source": "heuristic"
     },
