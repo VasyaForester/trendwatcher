@@ -1,6 +1,22 @@
 {
-  "generated_at": "2026-09-21T12:23:06.629540",
+  "generated_at": "2026-09-21T17:37:15.967703",
   "tags": [
+    {
+      "tag": "tool_calls",
+      "label": "tool calls",
+      "patterns": [
+        "\\btool[- ]+calls\\b"
+      ],
+      "category": "security",
+      "recent": 8,
+      "prior": 0,
+      "examples": [
+        "Beyond Aggregate Risk: Role-Stratified Conformal Risk Control for LLM Tool Calls",
+        "Getting the Parameters Right: A Difficulty-Graded Benchmark and Probe-Guided Training for LLM Tool Calls",
+        "Verified Tool Calls Improve LLM Agent Reliability Under Non-Atomic Failures"
+      ],
+      "source": "heuristic"
+    },
     {
       "tag": "voice_agents",
       "label": "voice agents",
@@ -30,22 +46,6 @@
         "An Empirical Evaluation of Prompt Injection Vulnerabilities in Large Language Models Across Multilingual and Obfuscated Attack Scenarios",
         "Mitigating Fabrication in Multi-Stage LLM Pipelines for Hiring: An Empirical Evaluation of Prompt Guardrails and Human-in-the-Loop Checkpoints",
         "An Empirical Evaluation of Cross-City POI Recommendation on a Large-Scale Benchmark"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "tool_calls",
-      "label": "tool calls",
-      "patterns": [
-        "\\btool[- ]+calls\\b"
-      ],
-      "category": "security",
-      "recent": 7,
-      "prior": 0,
-      "examples": [
-        "Beyond Aggregate Risk: Role-Stratified Conformal Risk Control for LLM Tool Calls",
-        "Getting the Parameters Right: A Difficulty-Graded Benchmark and Probe-Guided Training for LLM Tool Calls",
-        "Verified Tool Calls Improve LLM Agent Reliability Under Non-Atomic Failures"
       ],
       "source": "heuristic"
     },
