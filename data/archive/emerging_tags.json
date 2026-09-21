@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-20T15:14:08.387725",
+  "generated_at": "2026-09-21T12:23:06.629540",
   "tags": [
     {
       "tag": "voice_agents",
@@ -114,6 +114,22 @@
       "source": "heuristic"
     },
     {
+      "tag": "evaluating_coding",
+      "label": "evaluating coding",
+      "patterns": [
+        "\\bevaluating[- ]+coding\\b"
+      ],
+      "category": "security",
+      "recent": 5,
+      "prior": 0,
+      "examples": [
+        "SWE-Together: Evaluating Coding Agents in Interactive User Sessions",
+        "Baselines Before Architecture: Evaluating Coding Agents for Autonomous Penetration Testing",
+        "ICAE-Bench: Evaluating Coding Agents as Interactive Project Builders"
+      ],
+      "source": "heuristic"
+    },
+    {
       "tag": "rogue_ai_agents",
       "label": "rogue ai agents",
       "patterns": [
@@ -126,22 +142,6 @@
         "IT leaders confident but cooked when it comes to rogue AI agents",
         "Is open source the answer to rogue AI agents? Nvidia's new alliance says yes",
         "OK, Well, Rogue AI Agents Are Hacking Again"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "supply_chain",
-      "label": "supply chain",
-      "patterns": [
-        "\\bsupply[- ]+chain\\b"
-      ],
-      "category": "security",
-      "recent": 12,
-      "prior": 2,
-      "examples": [
-        "Unpacking the AsyncAPI npm supply chain compromise and import-time payload delivery",
-        "Microsoft at Black Hat USA 2026: Defending trust in the age of AI and supply chain attacks",
-        "AI in supply chain: from demand forecasting to AI agents"
       ],
       "source": "heuristic"
     }
