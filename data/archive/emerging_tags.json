@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-22T16:17:39.596880",
+  "generated_at": "2026-09-23T11:12:25.540287",
   "tags": [
     {
       "tag": "tool_calls",
@@ -98,6 +98,38 @@
       "source": "heuristic"
     },
     {
+      "tag": "evaluating_coding",
+      "label": "evaluating coding",
+      "patterns": [
+        "\\bevaluating[- ]+coding\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "SWE-Together: Evaluating Coding Agents in Interactive User Sessions",
+        "Baselines Before Architecture: Evaluating Coding Agents for Autonomous Penetration Testing",
+        "ICAE-Bench: Evaluating Coding Agents as Interactive Project Builders"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "rogue_ai_agents",
+      "label": "rogue ai agents",
+      "patterns": [
+        "\\brogue[- ]+ai[- ]+agents\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "IT leaders confident but cooked when it comes to rogue AI agents",
+        "Is open source the answer to rogue AI agents? Nvidia's new alliance says yes",
+        "OK, Well, Rogue AI Agents Are Hacking Again"
+      ],
+      "source": "heuristic"
+    },
+    {
       "tag": "agent_networks",
       "label": "agent networks",
       "patterns": [
@@ -114,50 +146,18 @@
       "source": "heuristic"
     },
     {
-      "tag": "agent_teams",
-      "label": "agent teams",
+      "tag": "agent_populations",
+      "label": "agent populations",
       "patterns": [
-        "\\bagent[- ]+teams\\b"
+        "\\bagent[- ]+populations\\b"
       ],
       "category": "security",
       "recent": 5,
       "prior": 0,
       "examples": [
-        "LOGOS: A Living Logic for AI Agent Teams That Evolve With Humans",
-        "Agent Team Work Zone: An Automated, Persistent Workspace for Long-Lived Coding Agent Teams",
-        "Testing Interchangeability in LLM Agent Teams"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agentic_visual",
-      "label": "agentic visual",
-      "patterns": [
-        "\\bagentic[- ]+visual\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "Seeing What Is Actually There: PriVE-Bench and PriVE-Tools for Counterfactual Evaluation of Agentic Visual Evidence in VLMs",
-        "InSight-doc: Agentic Visual Perception for Long-Document Understanding",
-        "Navigating Sparse Evidence: Agentic Visual RAG via Explicit Context Selection and Consolidation"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agents_know",
-      "label": "agents know",
-      "patterns": [
-        "\\bagents[- ]+know\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "Agentic Abstention: Do Agents Know When to Stop Instead of Act?",
-        "AgentAbstain: Do LLM Agents Know When Not to Act?",
-        "Do AI Agents Know When a Task Is Simple? Toward Complexity-Aware Reasoning and Execution"
+        "Everyone Conforms, No One Believes: Pluralistic Ignorance in LLM Agent Populations",
+        "Steganalysis of Adaptive Covert Collusion in Tool-Using Agent Populations: A Black-Box, Cross-Principal Approach",
+        "More is different when AI agent populations work together, study suggests"
       ],
       "source": "heuristic"
     }
