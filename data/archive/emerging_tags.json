@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-23T15:57:09.459426",
+  "generated_at": "2026-09-24T11:27:53.359227",
   "tags": [
     {
       "tag": "tool_calls",
@@ -34,6 +34,22 @@
       "source": "heuristic"
     },
     {
+      "tag": "bench_evaluating",
+      "label": "bench evaluating",
+      "patterns": [
+        "\\bbench[- ]+evaluating\\b"
+      ],
+      "category": "security",
+      "recent": 7,
+      "prior": 0,
+      "examples": [
+        "Agent Retrieval Bench: Evaluating Repository Context Retrieval for Coding Agents",
+        "Avalon-ToM-Bench: Evaluating Fine-Grained Theory of Mind via Asymmetric Game Mechanics",
+        "Hack-Verifiable Terminal Bench: Evaluating Reward Hacking in Terminal Tasks"
+      ],
+      "source": "heuristic"
+    },
+    {
       "tag": "empirical_evaluation",
       "label": "empirical evaluation",
       "patterns": [
@@ -62,22 +78,6 @@
         "Formal Mechanisms for Market Stability in Self-Interested Agent Societies: A Marketplace Simulation Study",
         "Predicting the scale limits of social mechanisms in agent societies",
         "Benchmarking large language model agent societies against human behavioural distributions"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "bench_evaluating",
-      "label": "bench evaluating",
-      "patterns": [
-        "\\bbench[- ]+evaluating\\b"
-      ],
-      "category": "security",
-      "recent": 6,
-      "prior": 0,
-      "examples": [
-        "Agent Retrieval Bench: Evaluating Repository Context Retrieval for Coding Agents",
-        "Avalon-ToM-Bench: Evaluating Fine-Grained Theory of Mind via Asymmetric Game Mechanics",
-        "Hack-Verifiable Terminal Bench: Evaluating Reward Hacking in Terminal Tasks"
       ],
       "source": "heuristic"
     },
