@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-24T16:29:16.838939",
+  "generated_at": "2026-09-25T09:13:47.291394",
   "tags": [
     {
       "tag": "tool_calls",
@@ -66,6 +66,22 @@
       "source": "heuristic"
     },
     {
+      "tag": "agent_networks",
+      "label": "agent networks",
+      "patterns": [
+        "\\bagent[- ]+networks\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "When Unlearning Fails: Reliable Data Deletion under Post-Training in Agent Networks",
+        "WeClawArena: An Auditable Sandbox and Benchmark for Cross-User Agents Collaboration and Security in Human-Centered Agent Networks",
+        "Blockchain Empowered Trustworthy Agent Networks: Foundations, Taxonomy, and Future Directions"
+      ],
+      "source": "heuristic"
+    },
+    {
       "tag": "agent_societies",
       "label": "agent societies",
       "patterns": [
@@ -78,6 +94,22 @@
         "Formal Mechanisms for Market Stability in Self-Interested Agent Societies: A Marketplace Simulation Study",
         "Predicting the scale limits of social mechanisms in agent societies",
         "Benchmarking large language model agent societies against human behavioural distributions"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agentic_execution",
+      "label": "agentic execution",
+      "patterns": [
+        "\\bagentic[- ]+execution\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "Fidelity Is Not Safety: Gently-Compressed LLMs Pass Every Data-Free Quality Guard Yet Invent Procedure Steps in Agentic Execution",
+        "HALO: Heterogeneous Admission through Localized Obligations for Safe Agentic Execution",
+        "SkillTV-Bench: Benchmarking How Well Judges Perform on Skill-Augmented Agentic Execution"
       ],
       "source": "heuristic"
     },
@@ -126,38 +158,6 @@
         "IT leaders confident but cooked when it comes to rogue AI agents",
         "Is open source the answer to rogue AI agents? Nvidia's new alliance says yes",
         "OK, Well, Rogue AI Agents Are Hacking Again"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agent_networks",
-      "label": "agent networks",
-      "patterns": [
-        "\\bagent[- ]+networks\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "When Unlearning Fails: Reliable Data Deletion under Post-Training in Agent Networks",
-        "WeClawArena: An Auditable Sandbox and Benchmark for Cross-User Agents Collaboration and Security in Human-Centered Agent Networks",
-        "Blockchain Empowered Trustworthy Agent Networks: Foundations, Taxonomy, and Future Directions"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agent_populations",
-      "label": "agent populations",
-      "patterns": [
-        "\\bagent[- ]+populations\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "Everyone Conforms, No One Believes: Pluralistic Ignorance in LLM Agent Populations",
-        "Steganalysis of Adaptive Covert Collusion in Tool-Using Agent Populations: A Black-Box, Cross-Principal Approach",
-        "More is different when AI agent populations work together, study suggests"
       ],
       "source": "heuristic"
     }
