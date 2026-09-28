@@ -5221,7 +5221,184 @@
           "share": 0.031469
         }
       }
+    },
+    "2026-09-21": {
+      "week_start": "2026-09-21",
+      "captured_at": "2026-09-28T13:40:58.373680",
+      "documents": 590,
+      "by_source_type": {
+        "vendor": 11,
+        "research": 441,
+        "news": 133,
+        "vulnerability": 5
+      },
+      "tags": {
+        "agent_harness": {
+          "count": 13,
+          "share": 0.022034
+        },
+        "agent_identity_trust": {
+          "count": 3,
+          "share": 0.005085
+        },
+        "agent_memory_security": {
+          "count": 2,
+          "share": 0.00339
+        },
+        "agent_networks": {
+          "count": 1,
+          "share": 0.001695
+        },
+        "agent_populations": {
+          "count": 1,
+          "share": 0.001695
+        },
+        "agent_security": {
+          "count": 24,
+          "share": 0.040678
+        },
+        "agent_swarm_security": {
+          "count": 3,
+          "share": 0.005085
+        },
+        "agentic_ai": {
+          "count": 66,
+          "share": 0.111864
+        },
+        "agentic_execution": {
+          "count": 2,
+          "share": 0.00339
+        },
+        "bias_fairness": {
+          "count": 2,
+          "share": 0.00339
+        },
+        "computer_use_agents": {
+          "count": 8,
+          "share": 0.013559
+        },
+        "data_exfiltration": {
+          "count": 2,
+          "share": 0.00339
+        },
+        "data_poisoning": {
+          "count": 4,
+          "share": 0.00678
+        },
+        "deepfake_fraud": {
+          "count": 1,
+          "share": 0.001695
+        },
+        "episodic_memory": {
+          "count": 1,
+          "share": 0.001695
+        },
+        "eval_containment_escape": {
+          "count": 2,
+          "share": 0.00339
+        },
+        "governance_regulation": {
+          "count": 7,
+          "share": 0.011864
+        },
+        "guardrails_defense": {
+          "count": 11,
+          "share": 0.018644
+        },
+        "indirect_prompt_injection": {
+          "count": 5,
+          "share": 0.008475
+        },
+        "jailbreak": {
+          "count": 9,
+          "share": 0.015254
+        },
+        "long_context_memory": {
+          "count": 20,
+          "share": 0.033898
+        },
+        "mcp_security": {
+          "count": 1,
+          "share": 0.001695
+        },
+        "misinformation": {
+          "count": 8,
+          "share": 0.013559
+        },
+        "model_drift": {
+          "count": 5,
+          "share": 0.008475
+        },
+        "model_efficiency": {
+          "count": 16,
+          "share": 0.027119
+        },
+        "model_supply_chain": {
+          "count": 1,
+          "share": 0.001695
+        },
+        "multimodal_ai": {
+          "count": 19,
+          "share": 0.032203
+        },
+        "on_device_ai": {
+          "count": 7,
+          "share": 0.011864
+        },
+        "open_weights": {
+          "count": 7,
+          "share": 0.011864
+        },
+        "prompt_injection": {
+          "count": 22,
+          "share": 0.037288
+        },
+        "rag_security": {
+          "count": 4,
+          "share": 0.00678
+        },
+        "reasoning_models": {
+          "count": 12,
+          "share": 0.020339
+        },
+        "red_teaming": {
+          "count": 5,
+          "share": 0.008475
+        },
+        "rogue_ai_agents": {
+          "count": 1,
+          "share": 0.001695
+        },
+        "self_evolving_agents": {
+          "count": 13,
+          "share": 0.022034
+        },
+        "synthetic_data": {
+          "count": 1,
+          "share": 0.001695
+        },
+        "tool_calling_security": {
+          "count": 1,
+          "share": 0.001695
+        },
+        "tool_calls": {
+          "count": 10,
+          "share": 0.016949
+        },
+        "voice_agents": {
+          "count": 3,
+          "share": 0.005085
+        },
+        "vulnerability_cve": {
+          "count": 8,
+          "share": 0.013559
+        },
+        "world_models": {
+          "count": 30,
+          "share": 0.050847
+        }
+      }
     }
   },
-  "updated_at": "2026-09-27T16:37:55.503922"
+  "updated_at": "2026-09-28T13:40:58.374507"
 }

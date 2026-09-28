@@ -1,6 +1,22 @@
 {
-  "generated_at": "2026-09-27T16:22:17.110466",
+  "generated_at": "2026-09-28T13:21:03.581958",
   "tags": [
+    {
+      "tag": "voice_agents",
+      "label": "voice agents",
+      "patterns": [
+        "\\bvoice[- ]+agents\\b"
+      ],
+      "category": "security",
+      "recent": 10,
+      "prior": 0,
+      "examples": [
+        "A Reliability Assessment of LALM Audio Judges for Full-Duplex Voice Agents",
+        "DuplexWorld: Can voice agents help you get through the day?",
+        "Beyond Fresh Starts: Stateful Inference for Streaming ASR in Conversational Voice Agents"
+      ],
+      "source": "heuristic"
+    },
     {
       "tag": "tool_calls",
       "label": "tool calls",
@@ -14,22 +30,6 @@
         "Beyond Aggregate Risk: Role-Stratified Conformal Risk Control for LLM Tool Calls",
         "Getting the Parameters Right: A Difficulty-Graded Benchmark and Probe-Guided Training for LLM Tool Calls",
         "Verified Tool Calls Improve LLM Agent Reliability Under Non-Atomic Failures"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "voice_agents",
-      "label": "voice agents",
-      "patterns": [
-        "\\bvoice[- ]+agents\\b"
-      ],
-      "category": "security",
-      "recent": 8,
-      "prior": 0,
-      "examples": [
-        "A Reliability Assessment of LALM Audio Judges for Full-Duplex Voice Agents",
-        "DuplexWorld: Can voice agents help you get through the day?",
-        "Beyond Fresh Starts: Stateful Inference for Streaming ASR in Conversational Voice Agents"
       ],
       "source": "heuristic"
     },
@@ -142,22 +142,6 @@
         "Everyone Conforms, No One Believes: Pluralistic Ignorance in LLM Agent Populations",
         "Steganalysis of Adaptive Covert Collusion in Tool-Using Agent Populations: A Black-Box, Cross-Principal Approach",
         "More is different when AI agent populations work together, study suggests"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agent_teams",
-      "label": "agent teams",
-      "patterns": [
-        "\\bagent[- ]+teams\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "LOGOS: A Living Logic for AI Agent Teams That Evolve With Humans",
-        "Agent Team Work Zone: An Automated, Persistent Workspace for Long-Lived Coding Agent Teams",
-        "Testing Interchangeability in LLM Agent Teams"
       ],
       "source": "heuristic"
     }
