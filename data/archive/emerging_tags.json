@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-28T19:18:23.233252",
+  "generated_at": "2026-09-29T12:33:02.688781",
   "tags": [
     {
       "tag": "voice_agents",
@@ -8,7 +8,7 @@
         "\\bvoice[- ]+agents\\b"
       ],
       "category": "security",
-      "recent": 10,
+      "recent": 13,
       "prior": 0,
       "examples": [
         "A Reliability Assessment of LALM Audio Judges for Full-Duplex Voice Agents",
@@ -24,12 +24,28 @@
         "\\btool[- ]+calls\\b"
       ],
       "category": "security",
-      "recent": 8,
+      "recent": 9,
       "prior": 0,
       "examples": [
         "Beyond Aggregate Risk: Role-Stratified Conformal Risk Control for LLM Tool Calls",
         "Getting the Parameters Right: A Difficulty-Graded Benchmark and Probe-Guided Training for LLM Tool Calls",
         "Verified Tool Calls Improve LLM Agent Reliability Under Non-Atomic Failures"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "episodic_memory",
+      "label": "episodic memory",
+      "patterns": [
+        "\\bepisodic[- ]+memory\\b"
+      ],
+      "category": "security",
+      "recent": 8,
+      "prior": 0,
+      "examples": [
+        "Bridging Inference-Time Scaling and Episodic Memory with Action-Centric Graphs",
+        "Caching for the Future: Scrub Jay Episodic Memory Principles for Agent Memory Systems",
+        "Causal Episodic Memory for Feedback-Driven Agent Repair"
       ],
       "source": "heuristic"
     },
@@ -98,50 +114,18 @@
       "source": "heuristic"
     },
     {
-      "tag": "episodic_memory",
-      "label": "episodic memory",
+      "tag": "mobile_agents",
+      "label": "mobile agents",
       "patterns": [
-        "\\bepisodic[- ]+memory\\b"
+        "\\bmobile[- ]+agents\\b"
       ],
       "category": "security",
       "recent": 6,
       "prior": 0,
       "examples": [
-        "Bridging Inference-Time Scaling and Episodic Memory with Action-Centric Graphs",
-        "Caching for the Future: Scrub Jay Episodic Memory Principles for Agent Memory Systems",
-        "Causal Episodic Memory for Feedback-Driven Agent Repair"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "rogue_ai_agents",
-      "label": "rogue ai agents",
-      "patterns": [
-        "\\brogue[- ]+ai[- ]+agents\\b"
-      ],
-      "category": "security",
-      "recent": 6,
-      "prior": 0,
-      "examples": [
-        "IT leaders confident but cooked when it comes to rogue AI agents",
-        "Is open source the answer to rogue AI agents? Nvidia's new alliance says yes",
-        "OK, Well, Rogue AI Agents Are Hacking Again"
-      ],
-      "source": "heuristic"
-    },
-    {
-      "tag": "agent_populations",
-      "label": "agent populations",
-      "patterns": [
-        "\\bagent[- ]+populations\\b"
-      ],
-      "category": "security",
-      "recent": 5,
-      "prior": 0,
-      "examples": [
-        "Everyone Conforms, No One Believes: Pluralistic Ignorance in LLM Agent Populations",
-        "Steganalysis of Adaptive Covert Collusion in Tool-Using Agent Populations: A Black-Box, Cross-Principal Approach",
-        "More is different when AI agent populations work together, study suggests"
+        "AndroidReality: How Far Are Mobile Agents from the Real World?",
+        "Act2Intention: A Benchmark For Developing Active Mobile Agents Through Inferring User Intention from GUI Actions",
+        "Automated Trajectory Evaluation for Mobile Agents via Step-Level Consequence Reasoning and Aggregation"
       ],
       "source": "heuristic"
     }
