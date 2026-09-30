@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-29T17:34:14.992499",
+  "generated_at": "2026-09-30T12:28:00.497180",
   "tags": [
     {
       "tag": "voice_agents",
@@ -114,18 +114,18 @@
       "source": "heuristic"
     },
     {
-      "tag": "mobile_agents",
-      "label": "mobile agents",
+      "tag": "benchmarking_coding_agents",
+      "label": "benchmarking coding agents",
       "patterns": [
-        "\\bmobile[- ]+agents\\b"
+        "\\bbenchmarking[- ]+coding[- ]+agents\\b"
       ],
       "category": "security",
       "recent": 6,
       "prior": 0,
       "examples": [
-        "AndroidReality: How Far Are Mobile Agents from the Real World?",
-        "Act2Intention: A Benchmark For Developing Active Mobile Agents Through Inferring User Intention from GUI Actions",
-        "Automated Trajectory Evaluation for Mobile Agents via Step-Level Consequence Reasoning and Aggregation"
+        "SWE-NFI: Studying and Benchmarking Coding Agents for Non-Functional Improvements",
+        "SWE-Touch: Benchmarking Coding Agents When Users Touch the Code",
+        "Active-SWE: Benchmarking Coding Agents for Proactive Bug Fixing without Issue Reports"
       ],
       "source": "heuristic"
     }
