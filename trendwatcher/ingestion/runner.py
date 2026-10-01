@@ -6,12 +6,14 @@ from sqlalchemy import select
 
 from ..config import SourceConfig, load_sources
 from ..db import Document, get_session, init_db
-from ..enrichment.emerging import discover_emerging_tags, save_emerging_tags
+from ..enrichment.candidates import load_trend_candidates
 from ..enrichment.tagger import enrich
 from ..relevance.classifier import is_relevance_candidate
+from ..relevance.materiality import passes_materiality, supported_language
 from ..tbsf.batch import apply_tbsf
-from . import arxiv, bingnews, gnews, hn, nvd, rss
+from . import arxiv, bingnews, gnews, hn, html_article, nvd, rss, telegram, x
 from .dedup import normalize_url, title_fingerprint, titles_near_duplicate
+from .health import record_fetch
 from .resolve import is_aggregator_url
 
 
@@ -24,18 +26,33 @@ CONNECTORS = {
     "gnews": gnews.fetch,
     "bingnews": bingnews.fetch,
     "hn": hn.fetch,
+    "telegram": telegram.fetch,
+    "x": x.fetch,
+    "html": html_article.fetch,
 }
 
 
 def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
     """Возвращает (новых документов, всего получено)."""
-    items = CONNECTORS[source.type](source)
+    if not source.enabled:
+        log.info("[%s] skipped (disabled)", source.id)
+        return 0, 0
+    if source.type not in CONNECTORS:
+        log.error("[%s] unknown connector %s", source.id, source.type)
+        record_fetch(source.id, fetched=0, accepted=0, rejected=0, error=f"unknown type {source.type}")
+        return 0, 0
+    try:
+        items = CONNECTORS[source.type](source)
+    except Exception as exc:
+        record_fetch(source.id, fetched=0, accepted=0, rejected=0, error=str(exc))
+        raise
     # URL и отпечатки заголовков — по всей базе (перепечатки из разных лент).
     existing_urls = {normalize_url(u) for u in session.scalars(select(Document.url)).all()}
     all_titles = [t for t in session.scalars(select(Document.title)).all() if t]
     existing_titles = {title_fingerprint(t) for t in all_titles if title_fingerprint(t)}
     existing_title_raw = list(all_titles)
     added = 0
+    rejected = 0
     for item in items:
         if is_aggregator_url(item["url"]):
             continue
@@ -49,10 +66,22 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
         if any(titles_near_duplicate(item["title"], t) for t in existing_title_raw):
             continue
         text = f"{item['title']}\n{item['summary']}"
+        if source.filter_ai and not supported_language(text):
+            rejected += 1
+            continue
         meta = enrich(item["title"], item["summary"], source.source_type, source.id)
         if source.filter_ai and not is_relevance_candidate(
             text, meta["tags"], source_name=source.name, source_id=source.id
         ):
+            rejected += 1
+            continue
+        if source.filter_ai and not passes_materiality(
+            text,
+            role=source.resolved_role(),
+            source_name=source.name,
+            source_id=source.id,
+        ):
+            rejected += 1
             continue
         severity = meta["severity"]
         if item.get("cvss") is not None:
@@ -80,6 +109,9 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
         existing_title_raw.append(item["title"])
         added += 1
     session.commit()
+    health = record_fetch(source.id, fetched=len(items), accepted=added, rejected=rejected)
+    if health.get("review"):
+        log.warning("[%s] noise_rate=%.2f — candidate for review", source.id, health["noise_rate"])
     return added, len(items)
 
 
@@ -88,10 +120,8 @@ def retag_all() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     init_db()
     with get_session() as session:
+        load_trend_candidates(session)
         docs = session.scalars(select(Document)).all()
-        overlay = discover_emerging_tags(docs, use_llm=None)
-        save_emerging_tags(overlay)
-        log.info("emerging tags: %s", [t["tag"] for t in overlay])
         for doc in docs:
             meta = enrich(doc.title, doc.summary, doc.source_type, doc.source_id)
             doc.tags = meta["tags"]

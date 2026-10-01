@@ -269,7 +269,7 @@ class TestWiring(unittest.TestCase):
     def test_connectors_and_yaml(self):
         self.assertEqual(
             set(CONNECTORS),
-            {"rss", "arxiv", "nvd", "gnews", "bingnews", "hn"},
+            {"rss", "arxiv", "nvd", "gnews", "bingnews", "hn", "telegram", "x", "html"},
         )
         sources = load_sources()
         types = {s.type for s in sources}

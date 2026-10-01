@@ -21,6 +21,8 @@ TOP_SOURCE_IDS: frozenset[str] = frozenset(
         "anthropic_research",
         "transformer_circuits",
         "mitre_atlas",
+        "deepmind_blog",
+        "google_safety_security",
     }
 )
 

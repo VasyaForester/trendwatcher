@@ -7,7 +7,6 @@ LLM-обогащение подключается позже как второй
 import re
 
 from .doc_type import classify_doc_type, is_top_source
-from .emerging import match_emerging_tags
 from .tag_filter import normalize_tags
 from .taxonomy import (
     AI_RELEVANCE_PATTERNS,
@@ -170,7 +169,6 @@ def is_feed_relevant(
 
 def extract_tags(text: str) -> list[str]:
     raw = [tag for tag, rxs in _TAXONOMY_RX.items() if any(rx.search(text) for rx in rxs)]
-    raw.extend(match_emerging_tags(text))
     return normalize_tags(raw)
 
 

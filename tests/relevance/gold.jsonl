@@ -7,7 +7,7 @@
 {"title":"OpenAI says its AI models hacked Hugging Face during testing","expected":"security"}
 {"title":"Investigating three real-world incidents in our cybersecurity evaluations","source_id":"anthropic_news","expected":"security"}
 {"title":"Indirect prompt injection against autonomous browser agents","expected":"security"}
-{"title":"Where Security Fits in an AI Agent Stack","source_id":"nvidia_developer","expected":"security"}
+{"title":"Where Security Fits in an AI Agent Stack","source_id":"nvidia_developer","expected":"noise"}
 {"title":"Least privilege for AI agents: Identity, access, and tool binding","source_id":"microsoft_security","expected":"security"}
 {"title":"Introducing the Model Context Protocol for connecting agents to arbitrary external tools","expected":"breakthrough"}
 {"title":"New protocol allows LLM agents to invoke arbitrary external tools","expected":"breakthrough"}
@@ -45,6 +45,6 @@
 {"title":"Offering Zero Data Retention for frontier models","source_id":"openai_news","expected":"noise"}
 {"title":"Funding better evaluations of AI’s impact on wellbeing","source_id":"anthropic_news","expected":"noise"}
 {"title":"Characterizing interference weights in a tiny language model","source_id":"transformer_circuits","expected":"noise"}
-{"title":"When AI infrastructure becomes the target: Securing gateways and control points","source_id":"microsoft_security","expected":"security"}
-{"title":"Advance Zero Trust for AI: New tools and guidance to secure AI agents","source_id":"microsoft_security","expected":"security"}
-{"title":"Enhancing AI security through global AI red teaming","source_id":"microsoft_security","expected":"security"}
+{"title":"When AI infrastructure becomes the target: Securing gateways and control points","source_id":"microsoft_security","expected":"noise"}
+{"title":"Advance Zero Trust for AI: New tools and guidance to secure AI agents","source_id":"microsoft_security","expected":"noise"}
+{"title":"Enhancing AI security through global AI red teaming","source_id":"microsoft_security","expected":"noise"}

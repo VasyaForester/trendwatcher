@@ -22,7 +22,6 @@ from sqlalchemy import select
 
 from ..db import Document, utcnow
 from ..enrichment.tag_filter import SIGNAL_AI_TAGS, is_signal_tag
-from ..enrichment.emerging import emerging_tag_ids, load_emerging_tags
 from ..enrichment.taxonomy import AI_TECH_TAGS
 from .constants import SIGNAL_WINDOW_DAYS, SIGNAL_WINDOW_WEEKS
 from .timeseries import tag_profiles, week_start
@@ -185,8 +184,6 @@ def classify_signals(
             for tag in doc.tags:
                 prior_cnt[tag] += 1
 
-    extra = emerging_tag_ids()
-    meta_e = {t["tag"]: t for t in load_emerging_tags() if t.get("tag")}
     signals = []
     signal_mentions_recent = signal_mention_total(recent_cnt)
     signal_mentions_prior = signal_mention_total(prior_cnt)
@@ -231,12 +228,7 @@ def classify_signals(
             coverage_weeks=coverage_weeks,
         )
 
-        if tag in extra:
-            category = meta_e.get(tag, {}).get("category") or "security"
-            origin = "emerging"
-        else:
-            category = "ai_tech" if tag in AI_TECH_TAGS else "security"
-            origin = "taxonomy"
+        category = "ai_tech" if tag in AI_TECH_TAGS else "security"
         signals.append(
             {
                 "tag": tag,
@@ -249,7 +241,7 @@ def classify_signals(
                 "level": level,
                 "reason": reason,
                 "category": category,
-                "origin": origin,
+                "origin": "taxonomy",
                 "long_running": age_weeks >= 26,
                 "age_weeks": age_weeks,
                 "recent_share": round(recent_share, 4) if recent_share is not None else None,

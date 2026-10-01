@@ -84,7 +84,7 @@ _GENERIC_MODIFIERS = frozenset(
     """
     coding code search chat conversational language software
     autonomous deep neural reinforcement learning
-    management evaluation eval benchmark benchmarks framework architecture
+    management evaluation evaluating evaluate eval benchmark benchmarks framework architecture
     optimization observability operations support
     retrieval selection routing composition utilization matching ranking
     server servers client clients sdk api gateway host hosts
@@ -352,6 +352,25 @@ def _phrase_candidates(title: str) -> list[list[str]]:
 def _pattern_from_tokens(tokens: list[str]) -> str:
     parts = [re.escape(t) for t in tokens]
     return r"\b" + r"[- ]+".join(parts) + r"\b"
+
+
+def phrase_discoveries(title: str) -> list[dict]:
+    """Новые фразы из заголовка: id, label, patterns. Без таксономии и мусора."""
+    out: list[dict] = []
+    seen: set[str] = set()
+    for gram in _phrase_candidates(title):
+        slug = _slug(gram)
+        if not slug or slug in seen:
+            continue
+        seen.add(slug)
+        out.append(
+            {
+                "id": slug,
+                "label": " ".join(gram),
+                "patterns": [_pattern_from_tokens(gram)],
+            }
+        )
+    return out
 
 
 def _count_phrases(

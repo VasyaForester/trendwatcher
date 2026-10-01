@@ -114,7 +114,22 @@
     border-bottom: 1px solid transparent;
   }
   .trend-brief .brief-sources a:hover { border-bottom-color: var(--accent); }
-  footer { color: var(--muted); font-size: 11.5px; text-align: center; margin-top: 20px; }
+  .candidates-panel { margin-bottom: 18px; }
+  .cand-row { border-bottom: 1px solid var(--border); }
+  .cand-row:last-child { border-bottom: none; }
+  .cand-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    width: 100%; background: none; border: 0; color: inherit; font: inherit;
+    text-align: left; padding: 10px 0; cursor: pointer;
+  }
+  .cand-head:hover .cand-name { color: var(--accent); }
+  .cand-name { font-size: 13.5px; font-weight: 600; }
+  .cand-count { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .cand-docs { display: none; padding: 0 0 12px 0; }
+  .cand-row.open .cand-docs { display: block; }
+  .cand-doc { padding: 7px 0; border-top: 1px solid var(--border); font-size: 13px; }
+  .cand-doc a { color: var(--text); text-decoration: none; font-weight: 600; }
+  .cand-doc a:hover { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -149,7 +164,7 @@
       </table>
     </div>
     <div class="panel">
-      <h2>Сигналы: специальные / новые <span class="hint">self-evolving, swarm, RAG… · автотеги · 90д/90д</span></h2>
+      <h2>Сигналы: специальные / новые <span class="hint">self-evolving, swarm, RAG… · 90д/90д</span></h2>
       <table class="signals-table" id="signalsTableSpecial" data-group="special">
         <thead><tr>
           <th class="sortable" data-sort="tag" title="Сортировать по теме">Тема <span class="sort-ind"></span></th>
@@ -165,12 +180,16 @@
   <div class="legend-note" style="margin:-6px 0 18px;padding:0 4px">
     <span class="cat-dot security"></span>AI security&nbsp;&nbsp;
     <span class="cat-dot ai_tech"></span>AI-тренды.
-    <span class="cat-dot emerging"></span>автотег (#)&nbsp;&nbsp;
     <b>research</b> — пока только в исследованиях;
     <b>spike</b> — разовая вспышка;
     <b>stable</b> — на базовом уровне.
     Группы совпадают с графиками ниже. Скрытые (×) — только в этом браузере.
     <button type="button" id="restoreSignals" class="signal-dismiss" style="display:none;width:auto;padding:2px 8px;font-size:11px;margin-left:6px" title="Показать скрытые сигналы">Показать скрытые</button>
+  </div>
+
+  <div class="panel candidates-panel">
+    <h2>Trend candidates <span class="hint">гипотезы на следующий квартал · доля выше прошлого · не в таксономии</span></h2>
+    <div id="trendCandidates"><div class="empty">Загрузка…</div></div>
   </div>
 
   <div class="chart-grid">
@@ -252,8 +271,7 @@ const TREND_CHART_SPECIAL = new Set([
   "agent_harness",
 ]);
 function specialTagSet() {
-  const extra = (DATA.emerging_tags || []).map(t => t.tag).filter(Boolean);
-  return new Set([...TREND_CHART_SPECIAL, ...extra]);
+  return TREND_CHART_SPECIAL;
 }
 
 function loadHiddenSignals() {
@@ -545,6 +563,42 @@ function renderChart() {
   chartSpecial = renderOneTrendChart("trendChartSpecial", "special", chartSpecial);
 }
 
+function renderTrendCandidates() {
+  const el = document.getElementById("trendCandidates");
+  if (!el) return;
+  const items = DATA.trend_candidates || [];
+  if (!items.length) {
+    el.innerHTML = '<div class="empty">Пока нет гипотез, которые стабильнее прошлого квартала.</div>';
+    return;
+  }
+  el.innerHTML = items.map((c, i) => {
+    const docs = (c.docs || []).map(d => `
+      <div class="cand-doc">
+        <a href="${esc(d.url)}" target="_blank" rel="noopener">${esc(d.title)}</a>
+        <div class="meta" style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;font-size:11px;color:var(--muted)">
+          <span>${esc(d.source_name || "")}</span>
+          ${d.published_at ? `<span>·</span><span>${fmtDate(d.published_at)}</span>` : ""}
+          ${d.doc_type ? `<span class="type-badge t-${esc(d.doc_type)}">${esc(d.doc_type)}</span>` : ""}
+        </div>
+      </div>`).join("");
+    return `<div class="cand-row" data-cand="${i}">
+      <button type="button" class="cand-head" onclick="toggleCandidate(${i})" aria-expanded="false">
+        <span class="cand-name">${esc(c.label || c.id)}</span>
+        <span class="cand-count">${c.count} публ.</span>
+      </button>
+      <div class="cand-docs">${docs || '<div class="empty">Нет сохранённых публикаций</div>'}</div>
+    </div>`;
+  }).join("");
+}
+
+function toggleCandidate(i) {
+  const row = document.querySelector(`.cand-row[data-cand="${i}"]`);
+  if (!row) return;
+  const open = row.classList.toggle("open");
+  const btn = row.querySelector(".cand-head");
+  if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
+}
+
 function populateTagFilter() {
   const tags = new Set();
   DATA.feed.forEach(d => d.tags.forEach(t => tags.add(t)));
@@ -641,7 +695,7 @@ document.addEventListener("click", (e) => {
     : "";
   document.querySelector("footer").textContent =
     `TrendWatcher v0.1 — снапшот данных от ${gen}. Обновление: python run.py ingest && python run.py export`;
-  renderStats(); renderTopEvents(); initSignalSort(); renderSignals(); renderChart(); populateTagFilter(); renderFeed(); renderTrendBrief();
+  renderStats(); renderTopEvents(); initSignalSort(); renderSignals(); renderTrendCandidates(); renderChart(); populateTagFilter(); renderFeed(); renderTrendBrief();
 })();
 </script>
 </body>

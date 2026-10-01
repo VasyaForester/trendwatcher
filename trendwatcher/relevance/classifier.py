@@ -13,8 +13,10 @@ import httpx
 from ..enrichment.doc_type import is_top_source
 from ..enrichment.tagger import extract_tags, is_ai_related, is_feed_relevant
 from ..enrichment.taxonomy import FEED_REJECT_PATTERNS
+from ..config import role_for_source
 from .attack_surface import attack_surface_delta
 from .corroboration import evidence_score
+from .materiality import assess
 from .novelty import novelty_score
 from .prompts import SYSTEM_PROMPT, user_prompt
 from .schema import Relevance
@@ -258,7 +260,9 @@ def classify(
         want_llm = bool((api_key or os.environ.get("OPENAI_API_KEY", "")).strip())
     if want_llm and _needs_llm(scores, text, result):
         if llm_budget is not None and not llm_budget.allow():
-            return result
+            return _apply_materiality_gate(
+                result, text, source_id=source_id, source_name=source_name
+            )
         llm = call_llm_relevance(
             title,
             summary,
@@ -290,6 +294,29 @@ def classify(
                 attack_surfaces=scores["attack_surfaces"],
                 source="hybrid",
             )
+    return _apply_materiality_gate(
+        result, text, source_id=source_id, source_name=source_name
+    )
+
+
+def _apply_materiality_gate(
+    result: Relevance, text: str, *, source_id: str, source_name: str
+) -> Relevance:
+    """Дешёвый hard gate после скоринга: обзор без факта не попадает в ленту."""
+    if not result.in_feed():
+        return result
+    verdict = assess(
+        text,
+        role=role_for_source(source_id),
+        source_name=source_name,
+        source_id=source_id,
+    )
+    if verdict.accept:
+        return result
+    result.decision = "reject"
+    result.relevance_class = "noise"
+    result.reason = f"Materiality: {verdict.reason} (topic={verdict.topic_relevance:.2f}, concreteness={verdict.concreteness:.2f})"
+    result.path = "materiality"
     return result
 
 

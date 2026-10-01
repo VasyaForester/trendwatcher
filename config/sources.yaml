@@ -7,6 +7,19 @@
 #   Bloomberg/WSJ/многие paywall и HTML-only страницы не парсятся.
 # top: true — официальные лаборатории/стандарты; в Ленте тип TOP, только AI security.
 # gnews/bingnews/hn — поисковое покрытие; в БД сохраняется URL издателя, не SERP.
+# role: primary | expert | discovery. Пустое role выводится из id/type (см. SourceConfig).
+
+filtering:
+  min_topic_relevance: 0.70
+  min_concreteness: 0.55
+  discovery_min_concreteness: 0.65
+  primary_min_concreteness: 0.48
+  generic_overview_penalty: 0.45
+
+# X: официальный API (X_BEARER_TOKEN), затем эти зеркала. Пустой список — не выдумывать инстанс.
+x_backends:
+  nitter: []
+  html: []
 
 sources:
   # --- Research / CVE ---
@@ -57,6 +70,7 @@ sources:
 
   # --- Major tech / world media (topic RSS + strict filter) ---
   - id: nyt_technology
+    role: discovery
     name: "NYT Technology"
     type: rss
     source_type: news
@@ -65,6 +79,7 @@ sources:
     url: "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml"
 
   - id: guardian_technology
+    role: discovery
     name: "The Guardian Technology"
     type: rss
     source_type: news
@@ -73,6 +88,7 @@ sources:
     url: "https://www.theguardian.com/technology/rss"
 
   - id: bbc_technology
+    role: discovery
     name: "BBC Technology"
     type: rss
     source_type: news
@@ -81,6 +97,7 @@ sources:
     url: "https://feeds.bbci.co.uk/news/technology/rss.xml"
 
   - id: cnn_technology
+    role: discovery
     name: "CNN Technology"
     type: rss
     source_type: news
@@ -89,6 +106,7 @@ sources:
     url: "http://rss.cnn.com/rss/edition_technology.rss"
 
   - id: washingtonpost_technology
+    role: discovery
     name: "Washington Post Technology"
     type: rss
     source_type: news
@@ -97,6 +115,7 @@ sources:
     url: "https://feeds.washingtonpost.com/rss/business/technology"
 
   - id: cbc_technology
+    role: discovery
     name: "CBC Technology"
     type: rss
     source_type: news
@@ -105,6 +124,7 @@ sources:
     url: "https://www.cbc.ca/webfeed/rss/rss-technology"
 
   - id: economictimes_tech
+    role: discovery
     name: "Economic Times Tech"
     type: rss
     source_type: news
@@ -122,6 +142,7 @@ sources:
 
   # --- Tech press ---
   - id: wired
+    role: discovery
     name: "WIRED"
     type: rss
     source_type: news
@@ -130,6 +151,7 @@ sources:
     url: "https://www.wired.com/feed/rss"
 
   - id: theverge
+    role: discovery
     name: "The Verge"
     type: rss
     source_type: news
@@ -138,6 +160,7 @@ sources:
     url: "https://www.theverge.com/rss/index.xml"
 
   - id: techcrunch
+    role: discovery
     name: "TechCrunch"
     type: rss
     source_type: news
@@ -146,6 +169,7 @@ sources:
     url: "https://techcrunch.com/feed/"
 
   - id: zdnet_ai
+    role: discovery
     name: "ZDNet Artificial Intelligence"
     type: rss
     source_type: news
@@ -154,6 +178,7 @@ sources:
     url: "https://www.zdnet.com/topic/artificial-intelligence/rss.xml"
 
   - id: techxplore_ai
+    role: discovery
     name: "Tech Xplore — ML/AI"
     type: rss
     source_type: news
@@ -162,6 +187,7 @@ sources:
     url: "https://techxplore.com/rss-feed/machine-learning-ai-news/"
 
   - id: sciencedaily_ai
+    role: discovery
     name: "ScienceDaily — AI"
     type: rss
     source_type: news
@@ -170,6 +196,7 @@ sources:
     url: "https://www.sciencedaily.com/rss/computers_math/artificial_intelligence.xml"
 
   - id: mit_news_ai
+    role: discovery
     name: "MIT News — Artificial Intelligence"
     type: rss
     source_type: news
@@ -178,6 +205,7 @@ sources:
     url: "https://news.mit.edu/rss/topic/artificial-intelligence2"
 
   - id: aibusiness
+    role: discovery
     name: "AI Business"
     type: rss
     source_type: news
@@ -186,6 +214,7 @@ sources:
     url: "https://aibusiness.com/rss.xml"
 
   - id: cio
+    role: discovery
     name: "CIO"
     type: rss
     source_type: news
@@ -195,6 +224,7 @@ sources:
 
   # --- Security trade press ---
   - id: thehackernews
+    role: expert
     name: "The Hacker News"
     type: rss
     source_type: news
@@ -203,6 +233,7 @@ sources:
     url: "https://feeds.feedburner.com/TheHackersNews"
 
   - id: bleepingcomputer
+    role: expert
     name: "BleepingComputer"
     type: rss
     source_type: news
@@ -211,6 +242,7 @@ sources:
     url: "https://www.bleepingcomputer.com/feed/"
 
   - id: darkreading
+    role: expert
     name: "Dark Reading"
     type: rss
     source_type: news
@@ -219,6 +251,7 @@ sources:
     url: "https://www.darkreading.com/rss.xml"
 
   - id: krebsonsecurity
+    role: expert
     name: "Krebs on Security"
     type: rss
     source_type: news
@@ -457,6 +490,7 @@ sources:
 
   # --- Labs / trade press not covered by the lists above ---
   - id: simonwillison
+    role: expert
     name: "Simon Willison"
     type: rss
     source_type: news
@@ -465,6 +499,7 @@ sources:
     url: "https://simonwillison.net/atom.xml"
 
   - id: arstechnica
+    role: expert
     name: "Ars Technica"
     type: rss
     source_type: news
@@ -473,6 +508,7 @@ sources:
     url: "https://feeds.arstechnica.com/arstechnica/index"
 
   - id: securityweek
+    role: expert
     name: "SecurityWeek"
     type: rss
     source_type: news
@@ -481,6 +517,7 @@ sources:
     url: "https://www.securityweek.com/feed/"
 
   - id: unit42
+    role: expert
     name: "Palo Alto Unit 42"
     type: rss
     source_type: vendor
@@ -489,10 +526,11 @@ sources:
     url: "https://unit42.paloaltonetworks.com/feed/"
 
   - id: trailofbits
+    role: expert
     name: "Trail of Bits Blog"
     type: rss
     source_type: vendor
-    trust: 0.85
+    trust: 0.9
     filter_ai: true
     url: "https://blog.trailofbits.com/feed/"
 
@@ -506,6 +544,7 @@ sources:
 
   # --- Search discovery: query → publisher article URL (never SERP) ---
   - id: gnews_ai_security
+    role: discovery
     name: "Google News — AI security"
     type: gnews
     source_type: news
@@ -520,6 +559,7 @@ sources:
       - '("AI agent" OR agentic) (exploit OR vulnerability OR "prompt injection") when:14d'
 
   - id: bing_ai_security
+    role: discovery
     name: "Bing News — AI security"
     type: bingnews
     source_type: news
@@ -533,6 +573,7 @@ sources:
       - '"AI agent" exploit OR "sandbox escape"'
 
   - id: hn_ai_security
+    role: discovery
     name: "Hacker News"
     type: hn
     source_type: news
@@ -546,3 +587,193 @@ sources:
       - MCP security
       - AI agent exploit
       - sandbox escape LLM
+
+  # --- AI-security research blogs (RSS проверен, filter_ai + materiality) ---
+  - id: reco_blog
+    name: "Reco Blog"
+    type: rss
+    source_type: vendor
+    role: expert
+    trust: 0.85
+    filter_ai: true
+    url: "https://www.reco.ai/blog/rss.xml"
+
+  - id: cisco_talos
+    name: "Cisco Talos"
+    type: rss
+    source_type: vendor
+    role: expert
+    trust: 0.85
+    filter_ai: true
+    url: "https://blog.talosintelligence.com/rss/"
+
+  - id: checkpoint_research
+    name: "Check Point Research"
+    type: rss
+    source_type: vendor
+    role: expert
+    trust: 0.85
+    filter_ai: true
+    url: "https://research.checkpoint.com/feed/"
+
+  - id: crowdstrike_blog
+    name: "CrowdStrike Blog"
+    type: rss
+    source_type: vendor
+    role: expert
+    trust: 0.8
+    filter_ai: true
+    url: "https://www.crowdstrike.com/blog/feed/"
+
+  - id: wiz_blog
+    name: "Wiz Research"
+    type: rss
+    source_type: vendor
+    role: expert
+    trust: 0.85
+    filter_ai: true
+    url: "https://www.wiz.io/blog/rss.xml"
+
+  - id: snyk_blog
+    name: "Snyk Blog"
+    type: rss
+    source_type: vendor
+    role: expert
+    trust: 0.75
+    filter_ai: true
+    url: "https://snyk.io/blog/feed/"
+
+  - id: tenable_blog
+    name: "Tenable Blog"
+    type: rss
+    source_type: vendor
+    role: expert
+    trust: 0.75
+    filter_ai: true
+    url: "https://www.tenable.com/blog/feed"
+
+  - id: sonatype_blog
+    name: "Sonatype Blog"
+    type: rss
+    source_type: vendor
+    role: expert
+    trust: 0.75
+    filter_ai: true
+    url: "https://blog.sonatype.com/rss.xml"
+
+  - id: deepmind_blog
+    name: "Google DeepMind Blog"
+    type: rss
+    source_type: vendor
+    role: primary
+    trust: 0.9
+    filter_ai: true
+    top: true
+    url: "https://deepmind.google/blog/rss.xml"
+
+  - id: google_safety_security
+    name: "Google Safety and Security"
+    type: rss
+    source_type: vendor
+    role: primary
+    trust: 0.9
+    filter_ai: true
+    top: true
+    url: "https://blog.google/technology/safety-security/rss/"
+
+  - id: ncsc_reports
+    name: "UK NCSC Reports"
+    type: rss
+    source_type: standards
+    role: primary
+    trust: 0.95
+    filter_ai: true
+    url: "https://www.ncsc.gov.uk/api/1/services/v1/report-rss-feed.xml"
+
+  - id: therecord
+    name: "The Record"
+    type: rss
+    source_type: news
+    role: discovery
+    trust: 0.7
+    filter_ai: true
+    url: "https://therecord.media/feed"
+
+  - id: helpnetsecurity
+    name: "Help Net Security"
+    type: rss
+    source_type: news
+    role: discovery
+    trust: 0.6
+    filter_ai: true
+    url: "https://www.helpnetsecurity.com/feed/"
+
+  - id: infosecurity_magazine
+    name: "Infosecurity Magazine"
+    type: rss
+    source_type: news
+    role: discovery
+    trust: 0.55
+    filter_ai: true
+    url: "https://www.infosecurity-magazine.com/rss/news/"
+
+  # --- Telegram: публичный t.me/s, без Bot API. Discovery — строгий concreteness. ---
+  - id: tg_llmsecurity
+    name: "llm security и каланы"
+    type: telegram
+    source_type: social
+    role: expert
+    trust: 0.8
+    filter_ai: true
+    username: llmsecurity
+    max_results: 20
+
+  - id: tg_paranoaisecure
+    name: "AISecure"
+    type: telegram
+    source_type: social
+    role: expert
+    trust: 0.7
+    filter_ai: true
+    username: paranoAISecure
+    max_results: 20
+
+  - id: tg_secchamps
+    name: "Swordfish Security"
+    type: telegram
+    source_type: social
+    role: discovery
+    trust: 0.55
+    filter_ai: true
+    username: secchamps
+    max_results: 15
+
+  - id: tg_daily_writeups
+    name: "Daily Writeups"
+    type: telegram
+    source_type: social
+    role: discovery
+    trust: 0.45
+    filter_ai: true
+    username: Daily_Writeups
+    max_results: 15
+
+  - id: tg_habr_ai
+    name: "Хабр / ML & AI"
+    type: telegram
+    source_type: social
+    role: discovery
+    trust: 0.4
+    filter_ai: true
+    username: habr_ai
+    max_results: 15
+
+  - id: tg_safebdv
+    name: "Топ кибербезопасности"
+    type: telegram
+    source_type: social
+    role: discovery
+    trust: 0.4
+    filter_ai: true
+    username: safebdv
+    max_results: 15
