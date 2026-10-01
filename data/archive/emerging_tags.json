@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-30T17:37:53.847788",
+  "generated_at": "2026-10-01T12:57:07.575597",
   "tags": [
     {
       "tag": "voice_agents",
@@ -8,7 +8,7 @@
         "\\bvoice[- ]+agents\\b"
       ],
       "category": "security",
-      "recent": 13,
+      "recent": 14,
       "prior": 0,
       "examples": [
         "A Reliability Assessment of LALM Audio Judges for Full-Duplex Voice Agents",
@@ -24,7 +24,7 @@
         "\\btool[- ]+calls\\b"
       ],
       "category": "security",
-      "recent": 9,
+      "recent": 10,
       "prior": 0,
       "examples": [
         "Beyond Aggregate Risk: Role-Stratified Conformal Risk Control for LLM Tool Calls",
@@ -110,6 +110,22 @@
         "Fidelity Is Not Safety: Gently-Compressed LLMs Pass Every Data-Free Quality Guard Yet Invent Procedure Steps in Agentic Execution",
         "HALO: Heterogeneous Admission through Localized Obligations for Safe Agentic Execution",
         "SkillTV-Bench: Benchmarking How Well Judges Perform on Skill-Augmented Agentic Execution"
+      ],
+      "source": "heuristic"
+    },
+    {
+      "tag": "agents_fail",
+      "label": "agents fail",
+      "patterns": [
+        "\\bagents[- ]+fail\\b"
+      ],
+      "category": "security",
+      "recent": 6,
+      "prior": 0,
+      "examples": [
+        "GuardianAgentBench: Where Agents Fail and How to Guard Them",
+        "How Do Agents Fail on AutoResearch: End-to-End Diagnostic Evaluation on 100 Real-World Frontier Research Tasks",
+        "SoK: When Safe Agents Fail Together: The Security of Multi Agent LLM Systems"
       ],
       "source": "heuristic"
     },
