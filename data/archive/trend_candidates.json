@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-01T14:53:39.079134",
+  "updated_at": "2026-10-01T18:28:28.716509",
   "items": [
     {
       "id": "injection_attacks",
@@ -274,6 +274,44 @@
       "last_seen": "2026-10-01",
       "patterns": [
         "\\bblackfog[- ]+adds[- ]+prompt[- ]+protection\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "chain_live",
+      "label": "Chain live",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bchain[- ]+live\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "chain_live_secrets",
+      "label": "Chain live secrets",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bchain[- ]+live[- ]+secrets\\b"
       ],
       "quarters": {
         "2026-Q3": {
@@ -1471,44 +1509,6 @@
       "last_seen": "2026-08-02",
       "patterns": [
         "\\bace\\-graphrag[- ]+agentic[- ]+context\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "ace_graphrag_agentic_context_engineering",
-      "label": "Ace-graphrag agentic context engineering",
-      "first_seen": "2026-08-02",
-      "last_seen": "2026-08-02",
-      "patterns": [
-        "\\bace\\-graphrag[- ]+agentic[- ]+context[- ]+engineering\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "ace_self_correcting_agentic",
-      "label": "Ace self-correcting agentic",
-      "first_seen": "2026-08-25",
-      "last_seen": "2026-08-25",
-      "patterns": [
-        "\\bace[- ]+self\\-correcting[- ]+agentic\\b"
       ],
       "quarters": {
         "2026-Q3": {
