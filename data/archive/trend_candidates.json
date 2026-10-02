@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-01T18:28:28.716509",
+  "updated_at": "2026-10-02T09:09:07.039053",
   "items": [
     {
       "id": "injection_attacks",
@@ -16,6 +16,44 @@
         },
         "2026-Q4": {
           "docs": 2,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "absorbevo_an_agentic",
+      "label": "Absorbevo an agentic",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\babsorbevo[- ]+an[- ]+agentic\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "action_relevant_memory",
+      "label": "Action-relevant memory",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\baction\\-relevant[- ]+memory\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
           "weeks_hit": 1
         }
       }
@@ -116,6 +154,158 @@
       }
     },
     {
+      "id": "agent_economic",
+      "label": "Agent economic",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagent[- ]+economic\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agent_economic_infrastructure",
+      "label": "Agent economic infrastructure",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagent[- ]+economic[- ]+infrastructure\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agent_environments_order",
+      "label": "Agent environments order",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagent[- ]+environments[- ]+order\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agent_environments_order_progress",
+      "label": "Agent environments order progress",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagent[- ]+environments[- ]+order[- ]+progress\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agent_fine_tuning",
+      "label": "Agent fine-tuning",
+      "first_seen": "2026-09-16",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagent[- ]+fine\\-tuning\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 2,
+          "weeks_hit": 2
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agent_is_right",
+      "label": "Agent is right",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagent[- ]+is[- ]+right\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agent_pipelines",
+      "label": "Agent pipelines",
+      "first_seen": "2026-07-24",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagent[- ]+pipelines\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agent_tasks",
+      "label": "Agent tasks",
+      "first_seen": "2026-07-30",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagent[- ]+tasks\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
       "id": "agent_tool_calls",
       "label": "Agent tool calls",
       "first_seen": "2026-09-16",
@@ -154,12 +344,202 @@
       }
     },
     {
+      "id": "agentic_delegation",
+      "label": "Agentic delegation",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagentic[- ]+delegation\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agentic_heuristic",
+      "label": "Agentic heuristic",
+      "first_seen": "2026-09-13",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagentic[- ]+heuristic\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agentic_heuristic_design",
+      "label": "Agentic heuristic design",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagentic[- ]+heuristic[- ]+design\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agentic_multi_environment",
+      "label": "Agentic multi-environment",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagentic[- ]+multi\\-environment\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agentic_multi_environment_selection",
+      "label": "Agentic multi-environment selection",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagentic[- ]+multi\\-environment[- ]+selection\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agentic_small",
+      "label": "Agentic small",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagentic[- ]+small\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agentic_uav",
+      "label": "Agentic uav",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagentic[- ]+uav\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agentic_uav_swarms",
+      "label": "Agentic uav swarms",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagentic[- ]+uav[- ]+swarms\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agentic_verification",
+      "label": "Agentic verification",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagentic[- ]+verification\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
       "id": "agents_are_like",
       "label": "Agents are like",
       "first_seen": "2026-10-01",
       "last_seen": "2026-10-01",
       "patterns": [
         "\\bagents[- ]+are[- ]+like\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "agents_promise",
+      "label": "Agents promise",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bagents[- ]+promise\\b"
       ],
       "quarters": {
         "2026-Q3": {
@@ -211,6 +591,44 @@
       }
     },
     {
+      "id": "analyzing_and_evaluating",
+      "label": "Analyzing and evaluating",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\banalyzing[- ]+and[- ]+evaluating\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "analyzing_and_evaluating_agent",
+      "label": "Analyzing and evaluating agent",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\banalyzing[- ]+and[- ]+evaluating[- ]+agent\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
       "id": "apis_and_agent",
       "label": "Apis and agent",
       "first_seen": "2026-10-01",
@@ -236,6 +654,196 @@
       "last_seen": "2026-10-01",
       "patterns": [
         "\\bapis[- ]+and[- ]+agent[- ]+tool\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "argo_bench_evaluating",
+      "label": "Argo-bench evaluating",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bargo\\-bench[- ]+evaluating\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "argo_bench_evaluating_data_agents",
+      "label": "Argo-bench evaluating data agents",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bargo\\-bench[- ]+evaluating[- ]+data[- ]+agents\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "audit_strong_coding_agents",
+      "label": "Audit strong coding agents",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\baudit[- ]+strong[- ]+coding[- ]+agents\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "auditing_web_agent",
+      "label": "Auditing web agent",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bauditing[- ]+web[- ]+agent\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "auditing_web_agent_evaluation",
+      "label": "Auditing web agent evaluation",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bauditing[- ]+web[- ]+agent[- ]+evaluation\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "autonomous_inverse",
+      "label": "Autonomous inverse",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bautonomous[- ]+inverse\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "autonomous_inverse_design",
+      "label": "Autonomous inverse design",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bautonomous[- ]+inverse[- ]+design\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "beyond_memory",
+      "label": "Beyond memory",
+      "first_seen": "2026-07-18",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bbeyond[- ]+memory\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 4,
+          "weeks_hit": 4
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "beyond_memory_harnessing",
+      "label": "Beyond memory harnessing",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bbeyond[- ]+memory[- ]+harnessing\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "beyond_memory_harnessing_long_horizon",
+      "label": "Beyond memory harnessing long-horizon",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bbeyond[- ]+memory[- ]+harnessing[- ]+long\\-horizon\\b"
       ],
       "quarters": {
         "2026-Q3": {
@@ -325,12 +933,240 @@
       }
     },
     {
+      "id": "chaining_skills",
+      "label": "Chaining skills",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bchaining[- ]+skills\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "chaining_skills_to_hijack",
+      "label": "Chaining skills to hijack",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bchaining[- ]+skills[- ]+to[- ]+hijack\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
       "id": "chains_zammad",
       "label": "Chains zammad",
       "first_seen": "2026-10-01",
       "last_seen": "2026-10-01",
       "patterns": [
         "\\bchains[- ]+zammad\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "coding_agent_pipelines",
+      "label": "Coding agent pipelines",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcoding[- ]+agent[- ]+pipelines\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "coherence_when_every_agent",
+      "label": "Coherence when every agent",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcoherence[- ]+when[- ]+every[- ]+agent\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "commitments_when_agents",
+      "label": "Commitments when agents",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcommitments[- ]+when[- ]+agents\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "commitments_when_agents_promise",
+      "label": "Commitments when agents promise",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcommitments[- ]+when[- ]+agents[- ]+promise\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "communication_in_distributed_agentic",
+      "label": "Communication in distributed agentic",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcommunication[- ]+in[- ]+distributed[- ]+agentic\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "compact_context",
+      "label": "Compact context",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcompact[- ]+context\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "compact_context_in_long_horizon",
+      "label": "Compact context in long-horizon",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcompact[- ]+context[- ]+in[- ]+long\\-horizon\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "concurrency_control_protocols",
+      "label": "Concurrency control protocols",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bconcurrency[- ]+control[- ]+protocols\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "context_and_communication",
+      "label": "Context and communication",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcontext[- ]+and[- ]+communication\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "context_curation",
+      "label": "Context curation",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcontext[- ]+curation\\b"
       ],
       "quarters": {
         "2026-Q3": {
@@ -401,12 +1237,183 @@
       }
     },
     {
+      "id": "continuous_process_level_evaluation",
+      "label": "Continuous process-level evaluation",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcontinuous[- ]+process\\-level[- ]+evaluation\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "control_protocols",
+      "label": "Control protocols",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcontrol[- ]+protocols\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "courier_covert_exfiltration",
+      "label": "Courier covert exfiltration",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcourier[- ]+covert[- ]+exfiltration\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "covert_exfiltration",
+      "label": "Covert exfiltration",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcovert[- ]+exfiltration\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
       "id": "cyber_how_prompt",
       "label": "Cyber how prompt",
       "first_seen": "2026-10-01",
       "last_seen": "2026-10-01",
       "patterns": [
         "\\bcyber[- ]+how[- ]+prompt\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "cybersecurity_tool",
+      "label": "Cybersecurity tool",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bcybersecurity[- ]+tool\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "decentralized_agent",
+      "label": "Decentralized agent",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bdecentralized[- ]+agent\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "decentralized_agent_economic",
+      "label": "Decentralized agent economic",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bdecentralized[- ]+agent[- ]+economic\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "decentralized_agent_economic_infrastructure",
+      "label": "Decentralized agent economic infrastructure",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bdecentralized[- ]+agent[- ]+economic[- ]+infrastructure\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "decoding_in_coding_agent",
+      "label": "Decoding in coding agent",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "patterns": [
+        "\\bdecoding[- ]+in[- ]+coding[- ]+agent\\b"
       ],
       "quarters": {
         "2026-Q3": {
@@ -458,12 +1465,12 @@
       }
     },
     {
-      "id": "flags_coding_agent",
-      "label": "Flags coding agent",
+      "id": "dependence_and_prompt",
+      "label": "Dependence and prompt",
       "first_seen": "2026-10-01",
       "last_seen": "2026-10-01",
       "patterns": [
-        "\\bflags[- ]+coding[- ]+agent\\b"
+        "\\bdependence[- ]+and[- ]+prompt\\b"
       ],
       "quarters": {
         "2026-Q3": {
@@ -477,12 +1484,12 @@
       }
     },
     {
-      "id": "injection_attacks_target",
-      "label": "Injection attacks target",
+      "id": "dependence_and_prompt_confounds",
+      "label": "Dependence and prompt confounds",
       "first_seen": "2026-10-01",
       "last_seen": "2026-10-01",
       "patterns": [
-        "\\binjection[- ]+attacks[- ]+target\\b"
+        "\\bdependence[- ]+and[- ]+prompt[- ]+confounds\\b"
       ],
       "quarters": {
         "2026-Q3": {
@@ -496,1028 +1503,21 @@
       }
     },
     {
-      "id": "injection_firewall",
-      "label": "Injection firewall",
-      "first_seen": "2026-10-01",
+      "id": "diagnostic_agents",
+      "label": "Diagnostic agents",
+      "first_seen": "2026-07-23",
       "last_seen": "2026-10-01",
       "patterns": [
-        "\\binjection[- ]+firewall\\b"
+        "\\bdiagnostic[- ]+agents\\b"
       ],
       "quarters": {
         "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
+          "docs": 2,
+          "weeks_hit": 2
         },
         "2026-Q4": {
           "docs": 1,
           "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "lens_flags_coding_agent",
-      "label": "Lens flags coding agent",
-      "first_seen": "2026-10-01",
-      "last_seen": "2026-10-01",
-      "patterns": [
-        "\\blens[- ]+flags[- ]+coding[- ]+agent\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "prompt_protection",
-      "label": "Prompt protection",
-      "first_seen": "2026-10-01",
-      "last_seen": "2026-10-01",
-      "patterns": [
-        "\\bprompt[- ]+protection\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "prompt_protection_and_governance",
-      "label": "Prompt protection and governance",
-      "first_seen": "2026-10-01",
-      "last_seen": "2026-10-01",
-      "patterns": [
-        "\\bprompt[- ]+protection[- ]+and[- ]+governance\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "ready_to_delegate",
-      "label": "Ready to delegate",
-      "first_seen": "2026-10-01",
-      "last_seen": "2026-10-01",
-      "patterns": [
-        "\\bready[- ]+to[- ]+delegate\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "ready_to_delegate_real",
-      "label": "Ready to delegate real",
-      "first_seen": "2026-10-01",
-      "last_seen": "2026-10-01",
-      "patterns": [
-        "\\bready[- ]+to[- ]+delegate[- ]+real\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "real_work_to_autonomous",
-      "label": "Real work to autonomous",
-      "first_seen": "2026-10-01",
-      "last_seen": "2026-10-01",
-      "patterns": [
-        "\\breal[- ]+work[- ]+to[- ]+autonomous\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "target_your_ai_tools",
-      "label": "Target your ai tools",
-      "first_seen": "2026-10-01",
-      "last_seen": "2026-10-01",
-      "patterns": [
-        "\\btarget[- ]+your[- ]+ai[- ]+tools\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "tool_calls",
-      "label": "Tool calls",
-      "first_seen": "2026-07-27",
-      "last_seen": "2026-10-01",
-      "patterns": [
-        "\\btool[- ]+calls\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 9,
-          "weeks_hit": 6
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "work_to_autonomous",
-      "label": "Work to autonomous",
-      "first_seen": "2026-10-01",
-      "last_seen": "2026-10-01",
-      "patterns": [
-        "\\bwork[- ]+to[- ]+autonomous\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "work_to_autonomous_agents",
-      "label": "Work to autonomous agents",
-      "first_seen": "2026-10-01",
-      "last_seen": "2026-10-01",
-      "patterns": [
-        "\\bwork[- ]+to[- ]+autonomous[- ]+agents\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "a2a_agent",
-      "label": "A2a agent",
-      "first_seen": "2026-09-01",
-      "last_seen": "2026-09-01",
-      "patterns": [
-        "\\ba2a[- ]+agent\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "a2a_agent_configuration",
-      "label": "A2a agent configuration",
-      "first_seen": "2026-09-01",
-      "last_seen": "2026-09-01",
-      "patterns": [
-        "\\ba2a[- ]+agent[- ]+configuration\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "a2a_agent_configuration_controlled",
-      "label": "A2a agent configuration controlled",
-      "first_seen": "2026-09-01",
-      "last_seen": "2026-09-01",
-      "patterns": [
-        "\\ba2a[- ]+agent[- ]+configuration[- ]+controlled\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "a2a_server",
-      "label": "A2a server",
-      "first_seen": "2026-07-21",
-      "last_seen": "2026-07-21",
-      "patterns": [
-        "\\ba2a[- ]+server\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "a2a_server_example",
-      "label": "A2a server example",
-      "first_seen": "2026-07-21",
-      "last_seen": "2026-07-21",
-      "patterns": [
-        "\\ba2a[- ]+server[- ]+example\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "a2a_server_example_exposes",
-      "label": "A2a server example exposes",
-      "first_seen": "2026-07-21",
-      "last_seen": "2026-07-21",
-      "patterns": [
-        "\\ba2a[- ]+server[- ]+example[- ]+exposes\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "a2m_trace_optimized_agent",
-      "label": "A2m trace-optimized agent",
-      "first_seen": "2026-09-22",
-      "last_seen": "2026-09-22",
-      "patterns": [
-        "\\ba2m[- ]+trace\\-optimized[- ]+agent\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "abot_agentos_general_robotic_agent",
-      "label": "Abot-agentos general robotic agent",
-      "first_seen": "2026-07-11",
-      "last_seen": "2026-07-11",
-      "patterns": [
-        "\\babot\\-agentos[- ]+general[- ]+robotic[- ]+agent\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "about_agent",
-      "label": "About agent",
-      "first_seen": "2026-09-29",
-      "last_seen": "2026-09-29",
-      "patterns": [
-        "\\babout[- ]+agent\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "about_ai_agent",
-      "label": "About ai agent",
-      "first_seen": "2026-08-14",
-      "last_seen": "2026-08-14",
-      "patterns": [
-        "\\babout[- ]+ai[- ]+agent\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "about_ai_agent_control",
-      "label": "About ai agent control",
-      "first_seen": "2026-08-14",
-      "last_seen": "2026-08-14",
-      "patterns": [
-        "\\babout[- ]+ai[- ]+agent[- ]+control\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "about_prompt",
-      "label": "About prompt",
-      "first_seen": "2026-09-29",
-      "last_seen": "2026-09-29",
-      "patterns": [
-        "\\babout[- ]+prompt\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "about_uncertainty_in_agentic",
-      "label": "About uncertainty in agentic",
-      "first_seen": "2026-09-04",
-      "last_seen": "2026-09-04",
-      "patterns": [
-        "\\babout[- ]+uncertainty[- ]+in[- ]+agentic\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "abstention_aware_evaluation",
-      "label": "Abstention-aware evaluation",
-      "first_seen": "2026-08-31",
-      "last_seen": "2026-08-31",
-      "patterns": [
-        "\\babstention\\-aware[- ]+evaluation\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "abstraction_agent",
-      "label": "Abstraction agent",
-      "first_seen": "2026-09-03",
-      "last_seen": "2026-09-03",
-      "patterns": [
-        "\\babstraction[- ]+agent\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "abstraction_ladder_code_based_skills",
-      "label": "Abstraction ladder code-based skills",
-      "first_seen": "2026-09-25",
-      "last_seen": "2026-09-25",
-      "patterns": [
-        "\\babstraction[- ]+ladder[- ]+code\\-based[- ]+skills\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "abuse_apis_prompt",
-      "label": "Abuse apis prompt",
-      "first_seen": "2026-09-09",
-      "last_seen": "2026-09-09",
-      "patterns": [
-        "\\babuse[- ]+apis[- ]+prompt\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "abuse_in_mcp",
-      "label": "Abuse in mcp",
-      "first_seen": "2026-08-20",
-      "last_seen": "2026-08-20",
-      "patterns": [
-        "\\babuse[- ]+in[- ]+mcp\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "abuse_to_agentic",
-      "label": "Abuse to agentic",
-      "first_seen": "2026-08-25",
-      "last_seen": "2026-08-25",
-      "patterns": [
-        "\\babuse[- ]+to[- ]+agentic\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "abuse_to_agentic_execution",
-      "label": "Abuse to agentic execution",
-      "first_seen": "2026-08-25",
-      "last_seen": "2026-08-25",
-      "patterns": [
-        "\\babuse[- ]+to[- ]+agentic[- ]+execution\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "accelerate_agentic",
-      "label": "Accelerate agentic",
-      "first_seen": "2026-07-07",
-      "last_seen": "2026-07-07",
-      "patterns": [
-        "\\baccelerate[- ]+agentic\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "accelerate_agentic_workloads",
-      "label": "Accelerate agentic workloads",
-      "first_seen": "2026-07-07",
-      "last_seen": "2026-07-07",
-      "patterns": [
-        "\\baccelerate[- ]+agentic[- ]+workloads\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "accelerating_multi_turn_agentic",
-      "label": "Accelerating multi-turn agentic",
-      "first_seen": "2026-09-13",
-      "last_seen": "2026-09-13",
-      "patterns": [
-        "\\baccelerating[- ]+multi\\-turn[- ]+agentic\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "access_and_tool",
-      "label": "Access and tool",
-      "first_seen": "2026-07-16",
-      "last_seen": "2026-07-16",
-      "patterns": [
-        "\\baccess[- ]+and[- ]+tool\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "access_and_tool_binding",
-      "label": "Access and tool binding",
-      "first_seen": "2026-07-16",
-      "last_seen": "2026-07-16",
-      "patterns": [
-        "\\baccess[- ]+and[- ]+tool[- ]+binding\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "access_context",
-      "label": "Access context",
-      "first_seen": "2026-07-10",
-      "last_seen": "2026-07-10",
-      "patterns": [
-        "\\baccess[- ]+context\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "access_control_in_agentimus",
-      "label": "Access control in agentimus",
-      "first_seen": "2026-09-03",
-      "last_seen": "2026-09-03",
-      "patterns": [
-        "\\baccess[- ]+control[- ]+in[- ]+agentimus\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "access_harness",
-      "label": "Access harness",
-      "first_seen": "2026-07-11",
-      "last_seen": "2026-07-11",
-      "patterns": [
-        "\\baccess[- ]+harness\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "access_resource_hijacking",
-      "label": "Access resource hijacking",
-      "first_seen": "2026-08-15",
-      "last_seen": "2026-08-15",
-      "patterns": [
-        "\\baccess[- ]+resource[- ]+hijacking\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "access_to_local_mcp",
-      "label": "Access to local mcp",
-      "first_seen": "2026-08-05",
-      "last_seen": "2026-08-05",
-      "patterns": [
-        "\\baccess[- ]+to[- ]+local[- ]+mcp\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "access_when_ai_delegation",
-      "label": "Access when ai delegation",
-      "first_seen": "2026-08-11",
-      "last_seen": "2026-08-11",
-      "patterns": [
-        "\\baccess[- ]+when[- ]+ai[- ]+delegation\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "acci_dual_loop_diagnostic_protocol",
-      "label": "Acci dual-loop diagnostic protocol",
-      "first_seen": "2026-08-18",
-      "last_seen": "2026-08-18",
-      "patterns": [
-        "\\bacci[- ]+dual\\-loop[- ]+diagnostic[- ]+protocol\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "accommodation_in_autonomous",
-      "label": "Accommodation in autonomous",
-      "first_seen": "2026-09-21",
-      "last_seen": "2026-09-21",
-      "patterns": [
-        "\\baccommodation[- ]+in[- ]+autonomous\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "accord_evaluating",
-      "label": "Accord evaluating",
-      "first_seen": "2026-08-28",
-      "last_seen": "2026-08-28",
-      "patterns": [
-        "\\baccord[- ]+evaluating\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "accord_evaluating_user_agent",
-      "label": "Accord evaluating user-agent",
-      "first_seen": "2026-08-28",
-      "last_seen": "2026-08-28",
-      "patterns": [
-        "\\baccord[- ]+evaluating[- ]+user\\-agent\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "accord_evaluating_user_agent_collaboration",
-      "label": "Accord evaluating user-agent collaboration",
-      "first_seen": "2026-08-28",
-      "last_seen": "2026-08-28",
-      "patterns": [
-        "\\baccord[- ]+evaluating[- ]+user\\-agent[- ]+collaboration\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "accountable_agentic",
-      "label": "Accountable agentic",
-      "first_seen": "2026-09-17",
-      "last_seen": "2026-09-17",
-      "patterns": [
-        "\\baccountable[- ]+agentic\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "accountable_agentic_retrieval",
-      "label": "Accountable agentic retrieval",
-      "first_seen": "2026-09-17",
-      "last_seen": "2026-09-17",
-      "patterns": [
-        "\\baccountable[- ]+agentic[- ]+retrieval\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "accuracy_rule_gated_analytics_agent",
-      "label": "Accuracy rule-gated analytics agent",
-      "first_seen": "2026-08-10",
-      "last_seen": "2026-08-10",
-      "patterns": [
-        "\\baccuracy[- ]+rule\\-gated[- ]+analytics[- ]+agent\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "accurate_skill",
-      "label": "Accurate skill",
-      "first_seen": "2026-07-21",
-      "last_seen": "2026-07-21",
-      "patterns": [
-        "\\baccurate[- ]+skill\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "accurate_skill_retrieval",
-      "label": "Accurate skill retrieval",
-      "first_seen": "2026-07-21",
-      "last_seen": "2026-07-21",
-      "patterns": [
-        "\\baccurate[- ]+skill[- ]+retrieval\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "ace_graphrag_agentic",
-      "label": "Ace-graphrag agentic",
-      "first_seen": "2026-08-02",
-      "last_seen": "2026-08-02",
-      "patterns": [
-        "\\bace\\-graphrag[- ]+agentic\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
-        }
-      }
-    },
-    {
-      "id": "ace_graphrag_agentic_context",
-      "label": "Ace-graphrag agentic context",
-      "first_seen": "2026-08-02",
-      "last_seen": "2026-08-02",
-      "patterns": [
-        "\\bace\\-graphrag[- ]+agentic[- ]+context\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 0,
-          "weeks_hit": 0
         }
       }
     }
