@@ -11,6 +11,7 @@ from .db import Document, utcnow
 from .enrichment.doc_type import is_top_source
 from .ingestion.dedup import normalize_url, title_fingerprint, titles_near_duplicate
 from .relevance.classifier import LlmBudget, classify_document
+from .relevance.editorial import editorial_reject_reason, story_key
 from .tbsf.arxiv_text import is_arxiv_url
 
 FEED_SCAN_LIMIT = 8000
@@ -85,6 +86,29 @@ def diversify_feed(docs: list[Document], limit: int) -> list[Document]:
     return result
 
 
+def _one_copy_per_story(docs: list[Document]) -> list[Document]:
+    """Один документ на CVE или инцидент. Предпочтение первичному источнику, затем более раннему."""
+    best: dict[str, Document] = {}
+    rest: list[Document] = []
+    for doc in docs:
+        key = story_key(doc.title or "", doc.summary or "")
+        if not key:
+            rest.append(doc)
+            continue
+        current = best.get(key)
+        if current is None or _story_rank(doc) > _story_rank(current):
+            best[key] = doc
+    return rest + list(best.values())
+
+
+def _story_rank(doc: Document) -> tuple:
+    tier = {"vulnerability": 3, "standards": 3, "vendor": 2, "research": 2}.get(
+        doc.source_type or "", 1
+    )
+    published = doc.published_at.timestamp() if doc.published_at else 0
+    return (tier, -published)
+
+
 def build_feed(session, limit: int = 600) -> list[dict]:
     cutoff = utcnow() - timedelta(days=FEED_MAX_AGE_DAYS)
     docs = session.scalars(
@@ -122,6 +146,14 @@ def build_feed(session, limit: int = 600) -> list[dict]:
             continue
         if any(titles_near_duplicate(d.title, prev) for prev in seen_title_raw):
             continue
+        if editorial_reject_reason(
+            d.title or "",
+            d.summary or "",
+            source_name=d.source_name or "",
+            source_id=d.source_id or "",
+            url=d.url or "",
+        ):
+            continue
         if url_key:
             seen_urls.add(url_key)
         if title_key:
@@ -130,6 +162,7 @@ def build_feed(session, limit: int = 600) -> list[dict]:
         eligible.append(d)
         rel_by_obj[id(d)] = rel
 
+    eligible = _one_copy_per_story(eligible)
     mixed = diversify_feed(eligible, limit)
     mixed.sort(key=lambda d: d.published_at, reverse=True)
     out: list[dict] = []
