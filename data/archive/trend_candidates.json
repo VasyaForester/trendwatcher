@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-02T18:06:56.540959",
+  "updated_at": "2026-10-03T12:39:50.281941",
   "items": [
     {
       "id": "injection_attacks",
@@ -27,6 +27,25 @@
       "last_seen": "2026-10-01",
       "patterns": [
         "\\babsorbevo[- ]+an[- ]+agentic\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 1,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "accessibility_plugin",
+      "label": "Accessibility plugin",
+      "first_seen": "2026-10-03",
+      "last_seen": "2026-10-03",
+      "patterns": [
+        "\\baccessibility[- ]+plugin\\b"
       ],
       "quarters": {
         "2026-Q3": {
@@ -1495,25 +1514,6 @@
         "2026-Q3": {
           "docs": 0,
           "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "diagnostic_agents",
-      "label": "Diagnostic agents",
-      "first_seen": "2026-07-23",
-      "last_seen": "2026-10-01",
-      "patterns": [
-        "\\bdiagnostic[- ]+agents\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 2,
-          "weeks_hit": 2
         },
         "2026-Q4": {
           "docs": 1,
