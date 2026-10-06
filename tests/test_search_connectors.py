@@ -8,6 +8,7 @@ from datetime import datetime
 from unittest.mock import MagicMock, patch
 
 from trendwatcher.config import SourceConfig, load_sources
+from trendwatcher.ingestion.common import interleave
 from trendwatcher.ingestion import bingnews, gnews, hn
 from trendwatcher.ingestion.resolve import (
     is_aggregator_url,
@@ -277,7 +278,18 @@ class TestWiring(unittest.TestCase):
         for src in sources:
             self.assertIn(src.type, CONNECTORS)
         gnews_src = next(s for s in sources if s.id == "gnews_ai_security")
-        self.assertGreaterEqual(len(gnews_src.search_queries()), 3)
+        bing_src = next(s for s in sources if s.id == "bing_ai_security")
+        self.assertGreaterEqual(len(gnews_src.search_queries()), 12)
+        self.assertGreaterEqual(len(bing_src.search_queries()), 12)
+        joined = " ".join(gnews_src.search_queries()).lower()
+        for needle in ("tool poisoning", "rag poisoning", "coding agent", "dasf", "0-click"):
+            self.assertIn(needle, joined)
+
+    def test_interleave_keeps_narrow_dork(self):
+        broad = [{"q": "broad", "i": i} for i in range(10)]
+        narrow = [{"q": "narrow", "i": 0}]
+        picked = interleave([broad, narrow], cap=4, per_query=2)
+        self.assertIn("narrow", {row["q"] for row in picked})
 
     def test_ingest_skips_aggregator_url(self):
         from trendwatcher.ingestion.runner import ingest_source

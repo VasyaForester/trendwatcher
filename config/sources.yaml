@@ -550,13 +550,23 @@ sources:
     source_type: news
     trust: 0.55
     filter_ai: true
-    max_results: 40
+    max_results: 56
     queries:
-      - '"prompt injection" OR "indirect prompt injection" when:14d'
-      - '(jailbreak OR jailbreaking) (LLM OR GPT OR chatbot) when:14d'
-      - '("model context protocol" OR "MCP server") (security OR vulnerability OR exploit) when:14d'
-      - '("sandbox escape" OR "agent skill") (AI OR LLM OR agent) when:14d'
-      - '("AI agent" OR agentic) (exploit OR vulnerability OR "prompt injection") when:14d'
+      - '"indirect prompt injection" (exfiltrate OR credential OR poison OR "tool call") when:14d'
+      - '"prompt injection" (PoC OR exploit OR bypass OR demonstrated) (agent OR LLM OR MCP) when:14d -webinar'
+      - '(jailbreak OR jailbreaking) (LLM OR GPT) (bypass OR PoC OR "guardrail") when:14d -webinar'
+      - '("tool poisoning" OR "poisoned tool" OR "poisoned MCP") (agent OR LLM OR server) when:14d'
+      - '("MCP server" OR "model context protocol") (vulnerability OR exploit OR RCE OR "prompt injection") when:14d'
+      - '("memory poisoning" OR "RAG poisoning" OR "retrieval poisoning") (agent OR LLM) when:14d'
+      - '("malicious skill" OR "skill poisoning" OR "agent skill") (hijack OR vulnerability OR exploit) when:14d'
+      - '("coding agent" OR "AI IDE" OR Cursor) (vulnerability OR exfiltrate OR "prompt injection" OR RCE) when:14d'
+      - '("computer-use" OR "browser agent") ("prompt injection" OR exfiltrate OR jailbreak) when:14d'
+      - '("sandbox escape" OR "containment escape") (agent OR LLM OR model) when:14d'
+      - '("malicious model" OR "model extraction" OR "unsafe deserialization") (LLM OR checkpoint OR pickle) when:14d'
+      - '("credential exfiltration" OR "data exfiltration") (agent OR MCP OR LLM) when:14d'
+      - '("AI agent" OR agentic) (breach OR "zero-day" OR "0-click" OR incident) when:14d -webinar'
+      - '(OWASP OR DASF OR "MITRE ATLAS") (agent OR LLM) (released OR update OR standard OR control) when:30d'
+      - '("membership inference" OR "training data extraction") (LLM OR "language model") when:14d'
 
   - id: bing_ai_security
     role: discovery
@@ -565,12 +575,22 @@ sources:
     source_type: news
     trust: 0.5
     filter_ai: true
-    max_results: 30
+    max_results: 40
     queries:
-      - '"prompt injection" LLM'
-      - 'LLM jailbreak security'
-      - '"model context protocol" vulnerability'
-      - '"AI agent" exploit OR "sandbox escape"'
+      - '"indirect prompt injection" (exfiltrate OR credential OR poison)'
+      - '"prompt injection" (PoC OR exploit OR bypass) (agent OR LLM OR MCP)'
+      - '(jailbreak OR "guardrail bypass") (LLM OR GPT) (PoC OR demonstrated)'
+      - '("tool poisoning" OR "poisoned tool") (MCP OR agent)'
+      - '"model context protocol" (vulnerability OR exploit OR RCE)'
+      - '("memory poisoning" OR "RAG poisoning") (agent OR LLM)'
+      - '("malicious skill" OR "skill poisoning") (agent OR hijack)'
+      - '("coding agent" OR "AI IDE") (vulnerability OR "prompt injection" OR exfiltrate)'
+      - '("computer-use agent" OR "browser agent") ("prompt injection" OR exfiltrate)'
+      - '("sandbox escape" OR "containment escape") (LLM OR agent)'
+      - '("malicious model" OR "model extraction") (LLM OR checkpoint)'
+      - '("AI agent" OR agentic) (breach OR "zero-day" OR "0-click")'
+      - '(OWASP OR DASF OR "MITRE ATLAS") (LLM OR agent) (update OR released OR standard)'
+      - '("training data extraction" OR "membership inference") LLM'
 
   - id: hn_ai_security
     role: discovery

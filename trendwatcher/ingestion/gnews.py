@@ -8,7 +8,7 @@ import time
 import feedparser
 
 from ..config import SourceConfig
-from .common import strip_html, struct_time_to_dt
+from .common import interleave, strip_html, struct_time_to_dt
 from .resolve import (
     GNEWS_COOKIES,
     GNEWS_HEADERS,
@@ -32,11 +32,12 @@ def fetch(source: SourceConfig) -> list[dict]:
         log.warning("[%s] no search queries", source.id)
         return []
 
-    raw: list[dict] = []
+    buckets: list[list[dict]] = []
     seen_wrappers: set[str] = set()
     client = gnews_client()
     try:
         for query in queries:
+            bucket: list[dict] = []
             try:
                 resp = client.get(
                     SEARCH_URL,
@@ -71,7 +72,7 @@ def fetch(source: SourceConfig) -> list[dict]:
                     publisher = src.get("title") or ""
                 else:
                     publisher = getattr(src, "title", "") or str(src)
-                raw.append(
+                bucket.append(
                     {
                         "wrapper": wrapper,
                         "title": title,
@@ -80,9 +81,12 @@ def fetch(source: SourceConfig) -> list[dict]:
                         "publisher": publisher.strip(),
                     }
                 )
+            if bucket:
+                buckets.append(bucket)
 
         items: list[dict] = []
         cap = max(1, source.max_results)
+        raw = interleave(buckets, cap)
         for i, row in enumerate(raw):
             if len(items) >= cap:
                 break

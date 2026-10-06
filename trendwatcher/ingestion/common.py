@@ -30,6 +30,34 @@ def to_naive_utc(dt: datetime) -> datetime:
     return dt
 
 
+def interleave(buckets: list[list], cap: int, per_query: int = 4) -> list:
+    """Сначала по per_query из каждого запроса, затем добивает остаток. Так узкий дорк не теряется за широким."""
+    if cap <= 0:
+        return []
+    out: list = []
+
+    def take(row_index: int) -> bool:
+        progressed = False
+        for bucket in buckets:
+            if row_index >= len(bucket) or len(out) >= cap:
+                continue
+            out.append(bucket[row_index])
+            progressed = True
+            if len(out) >= cap:
+                return True
+        return progressed
+
+    for i in range(max(per_query, 0)):
+        if not take(i):
+            break
+        if len(out) >= cap:
+            return out
+    i = per_query
+    while len(out) < cap and take(i):
+        i += 1
+    return out
+
+
 def struct_time_to_dt(st) -> datetime | None:
     if st is None:
         return None

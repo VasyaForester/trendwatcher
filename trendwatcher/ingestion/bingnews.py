@@ -7,7 +7,7 @@ import logging
 import feedparser
 
 from ..config import SourceConfig
-from .common import http_get, strip_html, struct_time_to_dt
+from .common import http_get, interleave, strip_html, struct_time_to_dt
 from .resolve import is_aggregator_url, publisher_label, unwrap_bing_url
 
 
@@ -22,10 +22,11 @@ def fetch(source: SourceConfig) -> list[dict]:
         log.warning("[%s] no search queries", source.id)
         return []
 
-    items: list[dict] = []
+    buckets: list[list[dict]] = []
     seen: set[str] = set()
     cap = max(1, source.max_results)
     for query in queries:
+        bucket: list[dict] = []
         try:
             resp = http_get(
                 SEARCH_URL,
@@ -36,8 +37,6 @@ def fetch(source: SourceConfig) -> list[dict]:
             continue
         feed = feedparser.parse(resp.content)
         for entry in feed.entries:
-            if len(items) >= cap:
-                return items
             dest = unwrap_bing_url(entry.get("link") or "")
             if not dest or is_aggregator_url(dest) or dest in seen:
                 continue
@@ -51,7 +50,7 @@ def fetch(source: SourceConfig) -> list[dict]:
                 continue
             publisher = strip_html(entry.get("news_source") or "")
             seen.add(dest)
-            items.append(
+            bucket.append(
                 {
                     "url": dest,
                     "title": title,
@@ -60,4 +59,6 @@ def fetch(source: SourceConfig) -> list[dict]:
                     "source_name": publisher_label(dest, source.name, publisher),
                 }
             )
-    return items
+        if bucket:
+            buckets.append(bucket)
+    return interleave(buckets, cap)
