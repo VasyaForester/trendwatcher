@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-10T18:14:48.718425",
+  "updated_at": "2026-10-11T13:45:42.295680",
   "items": [
     {
       "id": "agent_behavior",
@@ -454,6 +454,63 @@
         "2026-Q4": {
           "docs": 2,
           "weeks_hit": 2
+        }
+      }
+    },
+    {
+      "id": "contains_missing",
+      "label": "Contains missing",
+      "first_seen": "2026-10-10",
+      "last_seen": "2026-10-10",
+      "patterns": [
+        "\\bcontains[- ]+missing\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 2,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "contains_missing_authorization",
+      "label": "Contains missing authorization",
+      "first_seen": "2026-10-10",
+      "last_seen": "2026-10-10",
+      "patterns": [
+        "\\bcontains[- ]+missing[- ]+authorization\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 2,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "contains_missing_authorization_vulnerability",
+      "label": "Contains missing authorization vulnerability",
+      "first_seen": "2026-10-10",
+      "last_seen": "2026-10-10",
+      "patterns": [
+        "\\bcontains[- ]+missing[- ]+authorization[- ]+vulnerability\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 2,
+          "weeks_hit": 1
         }
       }
     },
@@ -1452,63 +1509,6 @@
       "last_seen": "2026-10-06",
       "patterns": [
         "\\badvsim2real[- ]+training[- ]+web[- ]+agents\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "aecp_artifact_exclusive_communication_protocol",
-      "label": "Aecp artifact-exclusive communication protocol",
-      "first_seen": "2026-10-05",
-      "last_seen": "2026-10-05",
-      "patterns": [
-        "\\baecp[- ]+artifact\\-exclusive[- ]+communication[- ]+protocol\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "aerial_vln_agents",
-      "label": "Aerial vln agents",
-      "first_seen": "2026-10-07",
-      "last_seen": "2026-10-07",
-      "patterns": [
-        "\\baerial[- ]+vln[- ]+agents\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "against_adaptive_prompt",
-      "label": "Against adaptive prompt",
-      "first_seen": "2026-10-06",
-      "last_seen": "2026-10-06",
-      "patterns": [
-        "\\bagainst[- ]+adaptive[- ]+prompt\\b"
       ],
       "quarters": {
         "2026-Q3": {
