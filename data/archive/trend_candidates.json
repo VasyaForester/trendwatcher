@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-11T13:45:42.295680",
+  "updated_at": "2026-10-11T18:34:50.295924",
   "items": [
     {
       "id": "agent_behavior",
@@ -146,6 +146,25 @@
         "2026-Q3": {
           "docs": 17,
           "weeks_hit": 9
+        },
+        "2026-Q4": {
+          "docs": 3,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "contains_missing",
+      "label": "Contains missing",
+      "first_seen": "2026-10-10",
+      "last_seen": "2026-10-11",
+      "patterns": [
+        "\\bcontains[- ]+missing\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
         },
         "2026-Q4": {
           "docs": 3,
@@ -454,25 +473,6 @@
         "2026-Q4": {
           "docs": 2,
           "weeks_hit": 2
-        }
-      }
-    },
-    {
-      "id": "contains_missing",
-      "label": "Contains missing",
-      "first_seen": "2026-10-10",
-      "last_seen": "2026-10-10",
-      "patterns": [
-        "\\bcontains[- ]+missing\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 2,
-          "weeks_hit": 1
         }
       }
     },
