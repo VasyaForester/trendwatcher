@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-12T22:09:37.029379",
+  "updated_at": "2026-10-13T15:12:58.965157",
   "items": [
     {
       "id": "agent_behavior",
@@ -597,6 +597,25 @@
       "last_seen": "2026-10-06",
       "patterns": [
         "\\bcontext[- ]+curation\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 2,
+          "weeks_hit": 2
+        }
+      }
+    },
+    {
+      "id": "cybersecurity_tool",
+      "label": "Cybersecurity tool",
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-13",
+      "patterns": [
+        "\\bcybersecurity[- ]+tool\\b"
       ],
       "quarters": {
         "2026-Q3": {
@@ -1490,25 +1509,6 @@
       "last_seen": "2026-10-01",
       "patterns": [
         "\\badds[- ]+prompt\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 1,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "adds_prompt_protection",
-      "label": "Adds prompt protection",
-      "first_seen": "2026-10-01",
-      "last_seen": "2026-10-01",
-      "patterns": [
-        "\\badds[- ]+prompt[- ]+protection\\b"
       ],
       "quarters": {
         "2026-Q3": {
