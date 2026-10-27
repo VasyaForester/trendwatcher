@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-27T13:32:01.138783",
+  "updated_at": "2026-10-27T17:34:10.246115",
   "items": [
     {
       "id": "web_agents",
@@ -1389,6 +1389,25 @@
       }
     },
     {
+      "id": "agent_logs",
+      "label": "Agent logs",
+      "first_seen": "2026-10-07",
+      "last_seen": "2026-10-27",
+      "patterns": [
+        "\\bagent[- ]+logs\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 2,
+          "weeks_hit": 2
+        }
+      }
+    },
+    {
       "id": "agent_needs_the_strongest",
       "label": "Agent needs the strongest",
       "first_seen": "2026-10-22",
@@ -1495,25 +1514,6 @@
         "2026-Q3": {
           "docs": 1,
           "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 2,
-          "weeks_hit": 2
-        }
-      }
-    },
-    {
-      "id": "agent_teams",
-      "label": "Agent teams",
-      "first_seen": "2026-07-12",
-      "last_seen": "2026-10-14",
-      "patterns": [
-        "\\bagent[- ]+teams\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 5,
-          "weeks_hit": 5
         },
         "2026-Q4": {
           "docs": 2,
