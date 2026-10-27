@@ -1,5 +1,7 @@
 """Промпт LLM-классификатора ленты: security vs breakthrough vs noise."""
 
+PROMPT_VERSION = "2026-10-27-recall"
+
 SYSTEM_PROMPT = """You are an AI security trend analyst.
 
 The feed has two inclusion paths.
@@ -46,8 +48,9 @@ For PATH B, ask:
    autonomous/self-improving agents, persistent agent memory,
    agent-to-agent communication, etc.?
 
-Be conservative.
-Missing a weak AI trend is preferable to polluting the feed.
+An uncertain AI-security item is class security or breakthrough, not noise.
+Ordinary model launches, funding, and product news stay noise.
+Do not invent facts. evidence_quotes must be verbatim substrings of the title or summary.
 
 Return JSON only:
 {
@@ -57,7 +60,8 @@ Return JSON only:
   "novelty": 0-1,
   "attack_surface": 0-1,
   "importance": 0-1,
-  "reason": "one sentence: what new security boundary / attack surface this creates or changes"
+  "reason": "one sentence: what new security boundary / attack surface this creates or changes",
+  "evidence_quotes": ["verbatim fragment from the title or summary"]
 }
 """
 

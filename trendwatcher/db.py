@@ -40,6 +40,8 @@ class Document(Base):
     tbsf_level: Mapped[str | None] = mapped_column(String(8), nullable=True)
     tbsf_vector: Mapped[str | None] = mapped_column(String(32), nullable=True)
     full_text: Mapped[str | None] = mapped_column(Text, nullable=True)
+    event_key: Mapped[str] = mapped_column(String(80), default="")
+    gate: Mapped[str] = mapped_column(String(16), default="include")
 
     @property
     def tags(self) -> list[str]:
@@ -89,6 +91,8 @@ def _migrate_columns() -> None:
         "tbsf_level": "VARCHAR(8)",
         "tbsf_vector": "VARCHAR(32)",
         "full_text": "TEXT",
+        "event_key": "VARCHAR(80) DEFAULT ''",
+        "gate": "VARCHAR(16) DEFAULT 'include'",
     }
     with engine.begin() as conn:
         for col, typ in alters.items():

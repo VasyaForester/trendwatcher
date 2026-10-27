@@ -1,6 +1,7 @@
 """Классификация зрелости сигналов.
 
-Уровни привязаны к сглаженной динамике числа публикаций за 90д vs пред. 90д:
+Уровни привязаны к сглаженной динамике числа уникальных событий за 90д vs пред. 90д.
+recent_share и baseline_share — отдельные доли упоминаний, не сама динамика уровня.
 - strong    — сильный рост + объём/корроборация;
 - emerging  — заметный рост;
 - research  — молодая тема пока в основном в исследованиях;
@@ -25,7 +26,7 @@ from ..enrichment.tag_filter import SIGNAL_AI_TAGS, is_signal_tag
 from ..enrichment.taxonomy import AI_TECH_TAGS
 from .constants import SIGNAL_WINDOW_DAYS, SIGNAL_WINDOW_WEEKS
 from .timeseries import tag_profiles, week_start
-from .velocity import velocity_from_smoothed_counts, velocity_label
+from .velocity import smoothing_for_window, velocity_from_smoothed_counts, velocity_label
 
 LEVEL_ORDER = {
     "strong": 0,
@@ -165,24 +166,46 @@ def classify_signals(
     prior_cnt: dict[str, int] = defaultdict(int)
     src_types: dict[str, set] = defaultdict(set)
     by_src_type: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    seen_recent: dict[str, set] = defaultdict(set)
+    seen_prior: dict[str, set] = defaultdict(set)
+    seen_src: dict[str, set] = defaultdict(set)
+    seen_bucket: set[tuple] = set()
+    seen_corpus_recent: set[str] = set()
+    seen_corpus_prior: set[str] = set()
     corpus_recent = 0
     corpus_prior = 0
 
     for doc in docs:
+        key = (getattr(doc, "event_key", None) or "").strip() or f"id:{doc.id}"
         b = bucket(doc.published_at)
         if 0 <= b < n_buckets:
             for tag in doc.tags:
+                slot = (tag, b, key)
+                if slot in seen_bucket:
+                    continue
+                seen_bucket.add(slot)
                 tag_series[tag][b] += 1
         if doc.published_at >= recent_from:
-            corpus_recent += 1
+            if key not in seen_corpus_recent:
+                seen_corpus_recent.add(key)
+                corpus_recent += 1
             for tag in doc.tags:
-                recent_cnt[tag] += 1
+                if key not in seen_recent[tag]:
+                    seen_recent[tag].add(key)
+                    recent_cnt[tag] += 1
                 src_types[tag].add(doc.source_type)
-                by_src_type[tag][doc.source_type] += 1
+                pair = (key, doc.source_type)
+                if pair not in seen_src[tag]:
+                    seen_src[tag].add(pair)
+                    by_src_type[tag][doc.source_type] += 1
         elif doc.published_at >= prior_from:
-            corpus_prior += 1
+            if key not in seen_corpus_prior:
+                seen_corpus_prior.add(key)
+                corpus_prior += 1
             for tag in doc.tags:
-                prior_cnt[tag] += 1
+                if key not in seen_prior[tag]:
+                    seen_prior[tag].add(key)
+                    prior_cnt[tag] += 1
 
     signals = []
     signal_mentions_recent = signal_mention_total(recent_cnt)
@@ -213,7 +236,9 @@ def classify_signals(
 
         recent_share = (r / signal_mentions_recent) if signal_mentions_recent else None
         prior_share = (p / signal_mentions_prior) if signal_mentions_prior else None
-        velocity, vel_source = velocity_from_smoothed_counts(r, p)
+        smoothing = smoothing_for_window(r, p, n_types=n_types, week_conc=week_conc)
+        velocity, vel_source = velocity_from_smoothed_counts(r, p, smoothing=smoothing)
+        denominator = r + p + 2 * smoothing
 
         level, reason = level_from_velocity(
             velocity=velocity,
@@ -246,8 +271,10 @@ def classify_signals(
                 "age_weeks": age_weeks,
                 "recent_share": round(recent_share, 4) if recent_share is not None else None,
                 "baseline_share": round(prior_share, 4) if prior_share is not None else None,
-                "share_denominator": "signal_mentions",
-                "velocity_method": "smoothed_counts",
+                "share_denominator": "unique_signal_events",
+                "velocity_method": "unique_events_v2",
+                "smoothing": smoothing,
+                "velocity_denominator": denominator,
                 "signal_mentions_recent": signal_mentions_recent,
                 "signal_mentions_prior": signal_mentions_prior,
                 "research_share": round(research_share, 2),

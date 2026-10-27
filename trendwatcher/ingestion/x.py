@@ -91,9 +91,12 @@ def _from_rss(base: str, username: str) -> list[dict]:
             continue
         published = struct_time_to_dt(entry.get("published_parsed") or entry.get("updated_parsed")) or utcnow()
         summary = strip_html(entry.get("summary", ""))[:4000]
+        external = _external_url(summary, link)
+        if link and link not in summary:
+            summary = f"{summary}\n\nvia {link}".strip()
         items.append(
             {
-                "url": _external_url(summary, link),
+                "url": external,
                 "title": title[:180],
                 "summary": summary or title,
                 "published_at": published,
@@ -108,11 +111,16 @@ def _from_html(base: str, username: str) -> list[dict]:
     items = []
     for mid in dict.fromkeys(_STATUS_RX.findall(html)):
         permalink = f"https://x.com/{username}/status/{mid}"
+        window = html[max(0, html.find(mid) - 500) : html.find(mid) + 2500]
+        text_m = _TWEET_TEXT_RX.search(window)
+        text = strip_html((text_m.group(1) or text_m.group(2) or "") if text_m else "")
+        if len(text) < 40:
+            continue
         items.append(
             {
                 "url": permalink,
-                "title": f"Post {mid} by @{username}",
-                "summary": permalink,
+                "title": text[:180],
+                "summary": f"{text}\n\nvia {permalink}",
                 "published_at": utcnow(),
             }
         )
@@ -154,5 +162,11 @@ def fetch(source: SourceConfig) -> list[dict]:
         except Exception as exc:  # noqa: BLE001
             errors.append(f"html {base} {exc}")
             log.info("[%s] x html %s failed: %s", source.id, base, exc)
-    log.warning("[%s] x backends unavailable (%s)", source.id, "; ".join(errors) or "none configured")
+    note = "; ".join(errors) or "none configured"
+    log.warning("[%s] x backends unavailable (%s)", source.id, note)
+    source.fetch_status = "unavailable"
+    if not token and not backends["nitter"] and not backends["html"]:
+        raise RuntimeError("x backends unavailable")
+    if errors and not any("empty" in err for err in errors):
+        raise RuntimeError(note)
     return []

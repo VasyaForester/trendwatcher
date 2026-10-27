@@ -270,7 +270,7 @@ class TestWiring(unittest.TestCase):
     def test_connectors_and_yaml(self):
         self.assertEqual(
             set(CONNECTORS),
-            {"rss", "arxiv", "nvd", "gnews", "bingnews", "hn", "telegram", "x", "html"},
+            {"rss", "arxiv", "nvd", "gnews", "bingnews", "hn", "telegram", "x", "html", "watch"},
         )
         sources = load_sources()
         types = {s.type for s in sources}
@@ -308,6 +308,7 @@ class TestWiring(unittest.TestCase):
         }
         session = MagicMock()
         session.scalars.return_value.all.return_value = []
+        session.execute.return_value.all.return_value = []
         with patch.dict(CONNECTORS, {"gnews": lambda _s: [item]}):
             added, total = ingest_source(source, session)
         self.assertEqual(total, 1)

@@ -9,7 +9,7 @@ from sqlalchemy import select
 
 from .db import Document, utcnow
 from .enrichment.doc_type import is_top_source
-from .ingestion.dedup import normalize_url, title_fingerprint, titles_near_duplicate
+from .ingestion.dedup import normalize_url, title_fingerprint
 from .relevance.classifier import LlmBudget, classify_document
 from .relevance.editorial import editorial_reject_reason, story_key
 from .tbsf.arxiv_text import is_arxiv_url
@@ -131,20 +131,26 @@ def build_feed(session, limit: int = 600) -> list[dict]:
     budget = LlmBudget()
     eligible: list[Document] = []
     rel_by_obj: dict[int, object] = {}
+    related: dict[str, list[str]] = defaultdict(list)
+    for d in fresh:
+        event_key = (getattr(d, "event_key", None) or "").strip()
+        if event_key and d.source_name and d.source_name not in related[event_key]:
+            related[event_key].append(d.source_name)
     seen_urls: set[str] = set()
     seen_titles: set[str] = set()
-    seen_title_raw: list[str] = []
+    seen_events: set[str] = set()
     for d in fresh:
         rel = classify_document(d, corpus_titles=corpus_titles, llm_budget=budget)
         if not rel.in_feed():
             continue
         url_key = normalize_url(d.url)
         title_key = title_fingerprint(d.title)
+        event_key = (getattr(d, "event_key", None) or "").strip()
         if url_key and url_key in seen_urls:
             continue
         if title_key and title_key in seen_titles:
             continue
-        if any(titles_near_duplicate(d.title, prev) for prev in seen_title_raw):
+        if event_key and event_key in seen_events:
             continue
         if editorial_reject_reason(
             d.title or "",
@@ -158,7 +164,8 @@ def build_feed(session, limit: int = 600) -> list[dict]:
             seen_urls.add(url_key)
         if title_key:
             seen_titles.add(title_key)
-        seen_title_raw.append(d.title or "")
+        if event_key:
+            seen_events.add(event_key)
         eligible.append(d)
         rel_by_obj[id(d)] = rel
 
@@ -171,5 +178,8 @@ def build_feed(session, limit: int = 600) -> list[dict]:
         rel = rel_by_obj.get(id(d))
         if rel is not None:
             row.update(rel.to_feed_fields())
+        event_key = (getattr(d, "event_key", None) or "").strip()
+        row["event_key"] = event_key
+        row["related_sources"] = related.get(event_key, [])
         out.append(row)
     return out

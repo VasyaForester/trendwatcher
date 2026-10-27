@@ -8,11 +8,11 @@ from ..config import SourceConfig, load_sources
 from ..db import Document, get_session, init_db
 from ..enrichment.candidates import load_trend_candidates
 from ..enrichment.tagger import enrich
-from ..relevance.classifier import is_relevance_candidate
-from ..relevance.materiality import passes_materiality, supported_language
+from ..relevance.editorial import cluster_event_key
+from ..relevance.triage import log_reject, triage_document
 from ..tbsf.batch import apply_tbsf
-from . import arxiv, bingnews, gnews, hn, html_article, nvd, rss, telegram, x
-from .dedup import normalize_url, title_fingerprint, titles_near_duplicate
+from . import arxiv, bingnews, gnews, hn, html_article, nvd, rss, telegram, watch, x
+from .dedup import normalize_url
 from .health import record_fetch
 from .resolve import is_aggregator_url
 
@@ -29,6 +29,7 @@ CONNECTORS = {
     "telegram": telegram.fetch,
     "x": x.fetch,
     "html": html_article.fetch,
+    "watch": watch.fetch,
 }
 
 
@@ -46,46 +47,49 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
     except Exception as exc:
         record_fetch(source.id, fetched=0, accepted=0, rejected=0, error=str(exc))
         raise
-    # URL и отпечатки заголовков — по всей базе (перепечатки из разных лент).
-    existing_urls = {normalize_url(u) for u in session.scalars(select(Document.url)).all()}
-    all_titles = [t for t in session.scalars(select(Document.title)).all() if t]
-    existing_titles = {title_fingerprint(t) for t in all_titles if title_fingerprint(t)}
-    existing_title_raw = list(all_titles)
+    # Один и тот же URL не грузим дважды. Похожие заголовки сохраняем и связываем event_key.
+    existing_urls = {normalize_url(u) for u in session.scalars(select(Document.url)).all() if u}
+    known_titles = [
+        ((row[0] or ""), (row[1] or ""))
+        for row in session.execute(select(Document.title, Document.event_key)).all()
+        if row and row[0]
+    ]
     added = 0
     rejected = 0
+    duplicates = 0
+    reviews = 0
     for item in items:
         if is_aggregator_url(item["url"]):
             continue
         url = normalize_url(item["url"])
-        title_key = title_fingerprint(item["title"])
         if not url or is_aggregator_url(url) or url in existing_urls:
-            continue
-        if title_key and title_key in existing_titles:
-            continue
-        # Перепечатки одной истории из разных СМИ (разные формулировки заголовка).
-        if any(titles_near_duplicate(item["title"], t) for t in existing_title_raw):
+            duplicates += 1
             continue
         text = f"{item['title']}\n{item['summary']}"
-        if source.filter_ai and not supported_language(text):
-            rejected += 1
-            continue
-        meta = enrich(item["title"], item["summary"], source.source_type, source.id)
-        if source.filter_ai and not is_relevance_candidate(
-            text, meta["tags"], source_name=source.name, source_id=source.id
-        ):
-            rejected += 1
-            continue
-        if source.filter_ai and not passes_materiality(
+        decision, reason = triage_document(
             text,
             role=source.resolved_role(),
             source_name=source.name,
             source_id=source.id,
-        ):
+            filter_ai=source.filter_ai,
+        )
+        if decision == "reject":
             rejected += 1
+            log_reject(
+                url=url,
+                title=item["title"],
+                summary=item.get("summary") or "",
+                source_id=source.id,
+                role=source.resolved_role(),
+                reason=reason,
+                published_at=str(item.get("published_at") or ""),
+            )
             continue
+        meta = enrich(item["title"], item["summary"], source.source_type, source.id)
         severity = meta["severity"]
         if item.get("cvss") is not None:
             severity = max(severity, item["cvss"] / 10.0)
+        event_key = cluster_event_key(item["title"], item.get("summary") or "", known_titles)
         doc = Document(
             source_id=source.id,
             source_name=(item.get("source_name") or source.name)[:128],
@@ -97,6 +101,8 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
             published_at=item["published_at"],
             trust=source.trust,
             severity=round(severity, 3),
+            event_key=event_key,
+            gate=decision,
         )
         doc.tags = meta["tags"]
         doc.entities = meta["entities"]
@@ -104,12 +110,21 @@ def ingest_source(source: SourceConfig, session) -> tuple[int, int]:
         apply_tbsf(doc, fetch_body=False)
         session.add(doc)
         existing_urls.add(url)
-        if title_key:
-            existing_titles.add(title_key)
-        existing_title_raw.append(item["title"])
+        known_titles.append((item["title"], event_key))
+        if decision == "review":
+            reviews += 1
         added += 1
     session.commit()
-    health = record_fetch(source.id, fetched=len(items), accepted=added, rejected=rejected)
+    status = getattr(source, "fetch_status", "") or ("empty" if not items else "ok")
+    health = record_fetch(
+        source.id,
+        fetched=len(items),
+        accepted=added,
+        rejected=rejected,
+        duplicates=duplicates,
+        reviews=reviews,
+        status=status,
+    )
     if health.get("review"):
         log.warning("[%s] noise_rate=%.2f — candidate for review", source.id, health["noise_rate"])
     return added, len(items)

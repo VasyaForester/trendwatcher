@@ -80,6 +80,8 @@ def restore_db_from_ledger(
                 trust=float(row.get("trust", 0.7)),
                 severity=float(row.get("severity", 0.0)),
                 full_text=None,
+                event_key=(row.get("event_key") or "")[:80],
+                gate=(row.get("gate") or "include")[:16],
             )
             doc.tags = row.get("tags") or []
             doc.entities = []

@@ -51,6 +51,16 @@ def velocity_from_smoothed_counts(
     return round(value, 3), "smoothed_counts_90d"
 
 
+def smoothing_for_window(recent: int, prior: int, *, n_types: int, week_conc: float) -> int:
+    """Редкая тема с несколькими типами источников не прячется за псевдосчётом 25.
+
+    Всплеск одного типа источников остаётся на COUNT_SMOOTHING.
+    """
+    if recent + prior <= 12 and n_types >= 2 and week_conc < 0.70:
+        return 2
+    return COUNT_SMOOTHING
+
+
 def velocity_from_shares(
     recent_share: float | None,
     prior_share: float | None,

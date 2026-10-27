@@ -52,7 +52,9 @@ class TestXDegrades(unittest.TestCase):
 
         old = os.environ.pop("X_BEARER_TOKEN", None)
         try:
-            self.assertEqual(fetch_x(source), [])
+            with self.assertRaises(RuntimeError):
+                fetch_x(source)
+            self.assertEqual(getattr(source, "fetch_status", ""), "unavailable")
         finally:
             if old is not None:
                 os.environ["X_BEARER_TOKEN"] = old

@@ -67,9 +67,5 @@ def fetch(source: SourceConfig) -> list[dict]:
         log.warning("[%s] telegram username missing", source.id)
         return []
     url = source.url or f"https://t.me/s/{username}"
-    try:
-        resp = http_get(url, timeout=20.0)
-    except Exception as exc:  # noqa: BLE001 — один канал не должен ронять ingest
-        log.warning("[%s] telegram fetch failed: %s", source.id, exc)
-        return []
+    resp = http_get(url, timeout=20.0)
     return parse_channel_html(resp.text, username)[: source.max_results or 30]

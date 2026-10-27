@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import os
@@ -10,6 +11,7 @@ from typing import Any
 
 import httpx
 
+from ..config import DATA_DIR
 from ..enrichment.doc_type import is_top_source
 from ..enrichment.tagger import extract_tags, is_ai_related, is_feed_relevant
 from ..enrichment.taxonomy import FEED_REJECT_PATTERNS
@@ -18,7 +20,7 @@ from .attack_surface import attack_surface_delta
 from .corroboration import evidence_score
 from .materiality import assess
 from .novelty import novelty_score
-from .prompts import SYSTEM_PROMPT, user_prompt
+from .prompts import PROMPT_VERSION, SYSTEM_PROMPT, user_prompt
 from .schema import Relevance
 from .scorer import apply_gates
 
@@ -150,6 +152,44 @@ def _clip01(value: Any, default: float = 0.0) -> float:
         return default
 
 
+_LLM_CACHE = DATA_DIR / "archive" / "llm_relevance_cache.json"
+_LLM_CACHE_MAX = 2000
+
+
+def _llm_cache_load() -> dict:
+    if not _LLM_CACHE.is_file():
+        return {}
+    try:
+        raw = json.loads(_LLM_CACHE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return raw if isinstance(raw, dict) else {}
+
+
+def _llm_cache_store(key: str, data: dict) -> None:
+    cache = _llm_cache_load()
+    cache[key] = data
+    if len(cache) > _LLM_CACHE_MAX:
+        for old in list(cache)[: len(cache) - _LLM_CACHE_MAX]:
+            cache.pop(old, None)
+    _LLM_CACHE.parent.mkdir(parents=True, exist_ok=True)
+    _LLM_CACHE.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
+
+
+def _quotes_match_source(data: dict, title: str, summary: str) -> bool:
+    quotes = data.get("evidence_quotes") or []
+    if not isinstance(quotes, list):
+        return False
+    corpus = f"{title}\n{summary}".lower()
+    kept = [
+        q.strip()
+        for q in quotes
+        if isinstance(q, str) and len(q.strip()) >= 12 and q.strip().lower() in corpus
+    ]
+    data["evidence_quotes"] = kept
+    return bool(kept)
+
+
 def call_llm_relevance(
     title: str,
     summary: str,
@@ -164,6 +204,12 @@ def call_llm_relevance(
     if not key:
         return None
     model = model or os.environ.get("OPENAI_MODEL", DEFAULT_MODEL)
+    cache_key = hashlib.sha256(
+        f"{PROMPT_VERSION}\n{model}\n{title}\n{(summary or '')[:1500]}".encode("utf-8")
+    ).hexdigest()
+    cached = _llm_cache_load().get(cache_key)
+    if isinstance(cached, dict):
+        return cached
     payload = {
         "model": model,
         "temperature": 0,
@@ -185,6 +231,7 @@ def call_llm_relevance(
         return None
     if not isinstance(data, dict):
         return None
+    _llm_cache_store(cache_key, data)
     return data
 
 
@@ -270,6 +317,11 @@ def classify(
             tags=scores["tags"],
             api_key=api_key,
         )
+        if llm:
+            cls = str(llm.get("class") or "").lower()
+            if cls in {"security", "breakthrough"} and not _quotes_match_source(llm, title, summary):
+                llm = None
+                cls = ""
         if llm:
             cls = str(llm.get("class") or "").lower()
             sec = _clip01(llm.get("ai_security"), scores["ai_security"])

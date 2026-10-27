@@ -144,8 +144,10 @@
 
   <div class="grid">
     <div class="panel" style="grid-column: 1 / -1">
-      <h2>Топ событий <span class="hint">только arXiv · TBSF ↓ · полный текст</span></h2>
+      <h2>Топ событий <span class="hint">инциденты, уязвимости, фреймворки · не только arXiv</span></h2>
       <div id="topEvents"><div class="empty">Загрузка…</div></div>
+      <h2 style="margin-top:18px">TBSF <span class="hint">отдельный рейтинг исследовательских статей arXiv</span></h2>
+      <div id="tbsfTop"><div class="empty">Загрузка…</div></div>
     </div>
   </div>
 
@@ -157,7 +159,7 @@
           <th class="sortable" data-sort="tag" title="Сортировать по теме">Тема <span class="sort-ind"></span></th>
           <th class="sortable" data-sort="level" title="Сортировать по уровню">Уровень <span class="sort-ind"></span></th>
           <th class="sortable" data-sort="recent" title="Сортировать по числу публикаций за 90 дней">Публ. <span class="sort-ind"></span></th>
-          <th class="sortable" data-sort="velocity" title="Сортировать по сглаженной динамике числа публикаций 90д/90д">Динамика <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="velocity" title="Сглаженная динамика уникальных событий 90д/90д. Доли корпуса показываются отдельно и не задают уровень.">Динамика <span class="sort-ind"></span></th>
           <th class="col-dismiss"></th>
         </tr></thead>
         <tbody id="signalsGeneral"></tbody>
@@ -170,7 +172,7 @@
           <th class="sortable" data-sort="tag" title="Сортировать по теме">Тема <span class="sort-ind"></span></th>
           <th class="sortable" data-sort="level" title="Сортировать по уровню">Уровень <span class="sort-ind"></span></th>
           <th class="sortable" data-sort="recent" title="Сортировать по числу публикаций за 90 дней">Публ. <span class="sort-ind"></span></th>
-          <th class="sortable" data-sort="velocity" title="Сортировать по сглаженной динамике числа публикаций 90д/90д">Динамика <span class="sort-ind"></span></th>
+          <th class="sortable" data-sort="velocity" title="Сглаженная динамика уникальных событий 90д/90д. Доли корпуса показываются отдельно и не задают уровень.">Динамика <span class="sort-ind"></span></th>
           <th class="col-dismiss"></th>
         </tr></thead>
         <tbody id="signalsSpecial"></tbody>
@@ -408,21 +410,31 @@ function scoreBadge(e) {
   return "";
 }
 
-function renderTopEvents() {
-  const events = DATA.top_events.slice(0, 12);
-  const el = document.getElementById("topEvents");
-  if (!events.length) { el.innerHTML = '<div class="empty">Нет данных</div>'; return; }
-  el.innerHTML = events.map(e => `
+function eventCard(e) {
+  const reasons = (e.score_reasons || []).slice(0, 3).join(", ");
+  const related = (e.related_sources || []).filter(name => name && name !== e.source_name);
+  return `
     <div class="event">
       <a href="${e.url}" target="_blank" rel="noopener">${e.title}</a>
       <div class="meta">
         ${scoreBadge(e)}
         <span class="type-badge t-${e.doc_type}">${e.doc_type}</span>
         <span>${e.source_name}</span><span>·</span><span>${fmtDate(e.published_at)}</span>
+        ${reasons ? `<span>· ${reasons}</span>` : ""}
         ${e.tbsf_vector ? `<span>· ${e.tbsf_vector}</span>` : ""}
-        ${e.tags.slice(0,3).map(t => `<span class="chip tag" onclick="filterTag('${t}')">${t}</span>`).join("")}
+        ${related.length ? `<span>· ещё: ${related.slice(0, 4).join(", ")}</span>` : ""}
+        ${(e.tags || []).slice(0,3).map(t => `<span class="chip tag" onclick="filterTag('${t}')">${t}</span>`).join("")}
       </div>
-    </div>`).join("");
+    </div>`;
+}
+
+function renderTopEvents() {
+  const events = (DATA.top_events || []).slice(0, 12);
+  const el = document.getElementById("topEvents");
+  el.innerHTML = events.length ? events.map(eventCard).join("") : '<div class="empty">Нет данных</div>';
+  const papers = (DATA.tbsf_top || []).slice(0, 8);
+  const tbsf = document.getElementById("tbsfTop");
+  if (tbsf) tbsf.innerHTML = papers.length ? papers.map(eventCard).join("") : '<div class="empty">Нет данных</div>';
 }
 
 function signalRowHtml(s) {

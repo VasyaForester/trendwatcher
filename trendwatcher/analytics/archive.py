@@ -198,6 +198,8 @@ def append_document_ledger(session) -> int:
                 "tags": doc.tags,
                 "trust": doc.trust,
                 "severity": doc.severity,
+                "event_key": getattr(doc, "event_key", "") or "",
+                "gate": getattr(doc, "gate", "") or "include",
             }
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
             known_urls.add(doc.url)

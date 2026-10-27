@@ -10,7 +10,8 @@ from datetime import timedelta
 
 from sqlalchemy import func, select
 
-from .analytics.scoring import top_events
+from .analytics.scoring import ti_events, top_events
+from .ingestion.health import public_report
 from .analytics.signals import classify_signals
 from .analytics.timeseries import weekly_tag_counts
 from .analytics.archive import update_archive
@@ -38,11 +39,12 @@ def build_snapshot(session, feed_limit: int = FEED_LIMIT) -> dict:
         )
     )
     feed = build_feed(session, limit=feed_limit)
-    events = top_events(session, days=30, limit=15)
+    papers = top_events(session, days=30, limit=15)
+    events = ti_events(session, days=45, limit=12)
     signals = classify_signals(session)
     trends = weekly_tag_counts(session, weeks=13)
     archive = update_archive(session)
-    trend_brief = build_trend_brief(signals, events, feed)
+    trend_brief = build_trend_brief(signals, papers, feed)
     return {
         "generated_at": utcnow().isoformat(),
         "archive": archive,
@@ -52,6 +54,8 @@ def build_snapshot(session, feed_limit: int = FEED_LIMIT) -> dict:
             "last_week": last_week,
         },
         "top_events": events,
+        "tbsf_top": papers,
+        "ingestion": public_report(),
         "trends": {"weeks": trends["weeks"], "series": trends["series"]},
         "signals": signals,
         "feed": feed,

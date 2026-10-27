@@ -100,6 +100,55 @@ def editorial_reject_reason(
     return None
 
 
+_PRODUCT_RX = re.compile(
+    r"\b(gemini|copilot|chatgpt|claude|cursor|workspace|devika|zammad|"
+    r"mcp|openai|anthropic|huggingface|salesforce)\b",
+    re.I,
+)
+_TECH_RX = re.compile(
+    r"prompt injection|jailbreak|tool poison|memory poison|rag poison|"
+    r"sandbox escape|data exfiltrat|malicious skill",
+    re.I,
+)
+
+
+def _event_signature(title: str) -> tuple[frozenset[str], frozenset[str]]:
+    text = title or ""
+    products = frozenset(m.group(1).lower() for m in _PRODUCT_RX.finditer(text))
+    techs = frozenset(m.group(0).lower() for m in _TECH_RX.finditer(text))
+    return products, techs
+
+
+def _can_link_titles(title: str, prev: str) -> bool:
+    """Похожий заголовок склеивает события только при общей технике или продукте и без конфликта."""
+    from ..ingestion.dedup import titles_near_duplicate
+
+    if not titles_near_duplicate(title, prev):
+        return False
+    products, techs = _event_signature(title)
+    prev_products, prev_techs = _event_signature(prev)
+    if products and prev_products and not (products & prev_products):
+        return False
+    if techs and prev_techs and not (techs & prev_techs):
+        return False
+    return bool(products & prev_products or techs & prev_techs)
+
+
+def cluster_event_key(title: str, summary: str, known: list[tuple[str, str]]) -> str:
+    """CVE и якорь инцидента связывают разные заголовки. Похожие заголовки разных продуктов — нет."""
+    from ..ingestion.dedup import title_fingerprint
+
+    anchored = story_key(title, summary)
+    if anchored:
+        return anchored[:80]
+    for prev, key in known:
+        if not prev or not key or story_key(prev, ""):
+            continue
+        if _can_link_titles(title, prev):
+            return key[:80]
+    return (title_fingerprint(title) or "untitled")[:80]
+
+
 def story_key(title: str, summary: str = "") -> str | None:
     """Ключ одной истории: CVE или якорь инцидента. Пусто — не схлопывать."""
     text = f"{title or ''} {summary or ''}"

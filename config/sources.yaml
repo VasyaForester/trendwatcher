@@ -480,6 +480,26 @@ sources:
     filter_ai: true
     url: "https://www.nist.gov/news-events/news/rss.xml"
 
+  - id: nist_ai_rmf
+    name: "NIST AI RMF"
+    type: watch
+    source_type: standards
+    trust: 0.95
+    filter_ai: true
+    role: primary
+    url: "https://www.nist.gov/itl/ai-risk-management-framework"
+    topic_profile: [ai_security, framework]
+
+  - id: embracethered
+    role: expert
+    name: "Embrace The Red"
+    type: rss
+    source_type: vendor
+    trust: 0.9
+    filter_ai: true
+    url: "https://embracethered.com/blog/index.xml"
+    topic_profile: [ai_security, prompt_injection, agent_security]
+
   - id: cisa_advisories
     name: "CISA Advisories"
     type: rss
@@ -567,6 +587,9 @@ sources:
       - '("AI agent" OR agentic) (breach OR "zero-day" OR "0-click" OR incident) when:14d -webinar'
       - '(OWASP OR DASF OR "MITRE ATLAS") (agent OR LLM) (released OR update OR standard OR control) when:30d'
       - '("membership inference" OR "training data extraction") (LLM OR "language model") when:14d'
+      - '"prompt injection" when:14d -webinar'
+      - '("tool poisoning" OR "RAG poisoning" OR "malicious skill") when:14d'
+      - '"indirect prompt injection" when:14d'
 
   - id: bing_ai_security
     role: discovery
@@ -591,6 +614,9 @@ sources:
       - '("AI agent" OR agentic) (breach OR "zero-day" OR "0-click")'
       - '(OWASP OR DASF OR "MITRE ATLAS") (LLM OR agent) (update OR released OR standard)'
       - '("training data extraction" OR "membership inference") LLM'
+      - '"prompt injection"'
+      - '("tool poisoning" OR "RAG poisoning" OR "malicious skill")'
+      - '"indirect prompt injection"'
 
   - id: hn_ai_security
     role: discovery
@@ -607,6 +633,8 @@ sources:
       - MCP security
       - AI agent exploit
       - sandbox escape LLM
+      - tool poisoning
+      - malicious skill
 
   # --- AI-security research blogs (RSS проверен, filter_ai + materiality) ---
   - id: reco_blog
