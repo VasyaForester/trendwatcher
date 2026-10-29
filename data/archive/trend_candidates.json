@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-28T18:01:57.768513",
+  "updated_at": "2026-10-29T12:52:14.388782",
   "items": [
     {
       "id": "web_agents",
@@ -344,6 +344,25 @@
       }
     },
     {
+      "id": "context_protocol",
+      "label": "Context protocol",
+      "first_seen": "2026-07-06",
+      "last_seen": "2026-10-26",
+      "patterns": [
+        "\\bcontext[- ]+protocol\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 8,
+          "weeks_hit": 5
+        },
+        "2026-Q4": {
+          "docs": 5,
+          "weeks_hit": 4
+        }
+      }
+    },
+    {
       "id": "sandbox_escape",
       "label": "Sandbox escape",
       "first_seen": "2026-07-20",
@@ -568,25 +587,6 @@
         "2026-Q4": {
           "docs": 4,
           "weeks_hit": 2
-        }
-      }
-    },
-    {
-      "id": "context_protocol",
-      "label": "Context protocol",
-      "first_seen": "2026-07-06",
-      "last_seen": "2026-10-26",
-      "patterns": [
-        "\\bcontext[- ]+protocol\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 8,
-          "weeks_hit": 5
-        },
-        "2026-Q4": {
-          "docs": 4,
-          "weeks_hit": 3
         }
       }
     },
@@ -1256,6 +1256,25 @@
       }
     },
     {
+      "id": "strands_agents",
+      "label": "Strands agents",
+      "first_seen": "2026-07-15",
+      "last_seen": "2026-10-28",
+      "patterns": [
+        "\\bstrands[- ]+agents\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 4,
+          "weeks_hit": 4
+        },
+        "2026-Q4": {
+          "docs": 3,
+          "weeks_hit": 2
+        }
+      }
+    },
+    {
       "id": "trading_agents",
       "label": "Trading agents",
       "first_seen": "2026-08-28",
@@ -1499,25 +1518,6 @@
         "2026-Q4": {
           "docs": 2,
           "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "agent_interfaces",
-      "label": "Agent interfaces",
-      "first_seen": "2026-08-22",
-      "last_seen": "2026-10-27",
-      "patterns": [
-        "\\bagent[- ]+interfaces\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 2,
-          "weeks_hit": 2
         }
       }
     }
