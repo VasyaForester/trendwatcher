@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-31T12:14:49.819772",
+  "updated_at": "2026-10-31T16:44:31.291478",
   "items": [
     {
       "id": "web_agents",
@@ -230,6 +230,25 @@
       }
     },
     {
+      "id": "context_protocol",
+      "label": "Context protocol",
+      "first_seen": "2026-07-06",
+      "last_seen": "2026-10-31",
+      "patterns": [
+        "\\bcontext[- ]+protocol\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 8,
+          "weeks_hit": 5
+        },
+        "2026-Q4": {
+          "docs": 6,
+          "weeks_hit": 4
+        }
+      }
+    },
+    {
       "id": "scaling_agentic",
       "label": "Scaling agentic",
       "first_seen": "2026-07-16",
@@ -359,25 +378,6 @@
         "2026-Q4": {
           "docs": 5,
           "weeks_hit": 3
-        }
-      }
-    },
-    {
-      "id": "context_protocol",
-      "label": "Context protocol",
-      "first_seen": "2026-07-06",
-      "last_seen": "2026-10-26",
-      "patterns": [
-        "\\bcontext[- ]+protocol\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 8,
-          "weeks_hit": 5
-        },
-        "2026-Q4": {
-          "docs": 5,
-          "weeks_hit": 4
         }
       }
     },
