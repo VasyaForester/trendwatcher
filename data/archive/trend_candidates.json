@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-02T15:08:08.692089",
+  "updated_at": "2026-11-02T21:32:07.234688",
   "items": [
     {
       "id": "web_agents",
@@ -1427,6 +1427,44 @@
       }
     },
     {
+      "id": "injection_hidden",
+      "label": "Injection hidden",
+      "first_seen": "2026-11-01",
+      "last_seen": "2026-11-01",
+      "patterns": [
+        "\\binjection[- ]+hidden\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 3,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "injection_hidden_in_filing",
+      "label": "Injection hidden in filing",
+      "first_seen": "2026-11-01",
+      "last_seen": "2026-11-01",
+      "patterns": [
+        "\\binjection[- ]+hidden[- ]+in[- ]+filing\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 3,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
       "id": "memory_architectures",
       "label": "Memory architectures",
       "first_seen": "2026-10-02",
@@ -1476,44 +1514,6 @@
         "2026-Q3": {
           "docs": 6,
           "weeks_hit": 6
-        },
-        "2026-Q4": {
-          "docs": 3,
-          "weeks_hit": 2
-        }
-      }
-    },
-    {
-      "id": "multi_turn_agents",
-      "label": "Multi-turn agents",
-      "first_seen": "2026-08-05",
-      "last_seen": "2026-10-20",
-      "patterns": [
-        "\\bmulti\\-turn[- ]+agents\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 6,
-          "weeks_hit": 3
-        },
-        "2026-Q4": {
-          "docs": 3,
-          "weeks_hit": 3
-        }
-      }
-    },
-    {
-      "id": "offensive_agentic",
-      "label": "Offensive agentic",
-      "first_seen": "2026-10-31",
-      "last_seen": "2026-11-02",
-      "patterns": [
-        "\\boffensive[- ]+agentic\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
         },
         "2026-Q4": {
           "docs": 3,
