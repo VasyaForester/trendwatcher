@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-04T14:22:16.189677",
+  "updated_at": "2026-11-04T19:33:02.006248",
   "items": [
     {
       "id": "web_agents",
@@ -439,6 +439,25 @@
       }
     },
     {
+      "id": "agent_failures",
+      "label": "Agent failures",
+      "first_seen": "2026-07-22",
+      "last_seen": "2026-11-04",
+      "patterns": [
+        "\\bagent[- ]+failures\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 12,
+          "weeks_hit": 6
+        },
+        "2026-Q4": {
+          "docs": 5,
+          "weeks_hit": 4
+        }
+      }
+    },
+    {
       "id": "scientific_agents",
       "label": "Scientific agents",
       "first_seen": "2026-08-18",
@@ -492,25 +511,6 @@
         "2026-Q4": {
           "docs": 4,
           "weeks_hit": 4
-        }
-      }
-    },
-    {
-      "id": "agent_failures",
-      "label": "Agent failures",
-      "first_seen": "2026-07-22",
-      "last_seen": "2026-10-29",
-      "patterns": [
-        "\\bagent[- ]+failures\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 12,
-          "weeks_hit": 6
-        },
-        "2026-Q4": {
-          "docs": 4,
-          "weeks_hit": 3
         }
       }
     },
@@ -834,6 +834,25 @@
         "2026-Q4": {
           "docs": 4,
           "weeks_hit": 4
+        }
+      }
+    },
+    {
+      "id": "prompt_adware",
+      "label": "Prompt adware",
+      "first_seen": "2026-11-03",
+      "last_seen": "2026-11-04",
+      "patterns": [
+        "\\bprompt[- ]+adware\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 4,
+          "weeks_hit": 1
         }
       }
     },
@@ -1490,25 +1509,6 @@
       "last_seen": "2026-11-03",
       "patterns": [
         "\\bend\\-to[- ]+end[- ]+autonomous\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 5,
-          "weeks_hit": 5
-        },
-        "2026-Q4": {
-          "docs": 3,
-          "weeks_hit": 2
-        }
-      }
-    },
-    {
-      "id": "end_to_end_autonomous_driving",
-      "label": "End-to end autonomous driving",
-      "first_seen": "2026-07-09",
-      "last_seen": "2026-11-03",
-      "patterns": [
-        "\\bend\\-to[- ]+end[- ]+autonomous[- ]+driving\\b"
       ],
       "quarters": {
         "2026-Q3": {
