@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T14:12:06.243625",
+  "updated_at": "2026-11-06T19:04:26.842421",
   "items": [
     {
       "id": "web_agents",
@@ -97,6 +97,25 @@
       }
     },
     {
+      "id": "agents_against",
+      "label": "Agents against",
+      "first_seen": "2026-07-22",
+      "last_seen": "2026-11-06",
+      "patterns": [
+        "\\bagents[- ]+against\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 6,
+          "weeks_hit": 5
+        },
+        "2026-Q4": {
+          "docs": 9,
+          "weeks_hit": 4
+        }
+      }
+    },
+    {
       "id": "benchmarking_llm_agents",
       "label": "Benchmarking llm agents",
       "first_seen": "2026-07-29",
@@ -169,25 +188,6 @@
         "2026-Q4": {
           "docs": 8,
           "weeks_hit": 5
-        }
-      }
-    },
-    {
-      "id": "agents_against",
-      "label": "Agents against",
-      "first_seen": "2026-07-22",
-      "last_seen": "2026-11-04",
-      "patterns": [
-        "\\bagents[- ]+against\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 6,
-          "weeks_hit": 5
-        },
-        "2026-Q4": {
-          "docs": 8,
-          "weeks_hit": 4
         }
       }
     },
@@ -1028,6 +1028,25 @@
       }
     },
     {
+      "id": "agent_access",
+      "label": "Agent access",
+      "first_seen": "2026-08-05",
+      "last_seen": "2026-11-06",
+      "patterns": [
+        "\\bagent[- ]+access\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 3,
+          "weeks_hit": 2
+        }
+      }
+    },
+    {
       "id": "agent_behaviors",
       "label": "Agent behaviors",
       "first_seen": "2026-08-06",
@@ -1499,25 +1518,6 @@
         "2026-Q4": {
           "docs": 3,
           "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "chain_attack",
-      "label": "Chain attack",
-      "first_seen": "2026-09-29",
-      "last_seen": "2026-11-02",
-      "patterns": [
-        "\\bchain[- ]+attack\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 3,
-          "weeks_hit": 2
         }
       }
     }
