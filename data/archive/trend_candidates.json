@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T19:04:26.842421",
+  "updated_at": "2026-11-07T13:02:23.705320",
   "items": [
     {
       "id": "web_agents",
@@ -591,6 +591,25 @@
       }
     },
     {
+      "id": "agent_access",
+      "label": "Agent access",
+      "first_seen": "2026-08-05",
+      "last_seen": "2026-11-06",
+      "patterns": [
+        "\\bagent[- ]+access\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 4,
+          "weeks_hit": 2
+        }
+      }
+    },
+    {
       "id": "agent_actions",
       "label": "Agent actions",
       "first_seen": "2026-08-03",
@@ -1024,25 +1043,6 @@
         "2026-Q4": {
           "docs": 3,
           "weeks_hit": 3
-        }
-      }
-    },
-    {
-      "id": "agent_access",
-      "label": "Agent access",
-      "first_seen": "2026-08-05",
-      "last_seen": "2026-11-06",
-      "patterns": [
-        "\\bagent[- ]+access\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 3,
-          "weeks_hit": 2
         }
       }
     },
