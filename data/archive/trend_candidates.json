@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-10T14:54:26.692160",
+  "updated_at": "2026-11-10T19:21:28.890427",
   "items": [
     {
       "id": "web_agents",
@@ -93,6 +93,25 @@
         "2026-Q4": {
           "docs": 11,
           "weeks_hit": 7
+        }
+      }
+    },
+    {
+      "id": "sandbox_escape",
+      "label": "Sandbox escape",
+      "first_seen": "2026-07-20",
+      "last_seen": "2026-11-10",
+      "patterns": [
+        "\\bsandbox[- ]+escape\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 11,
+          "weeks_hit": 5
         }
       }
     },
@@ -203,25 +222,6 @@
         "2026-Q3": {
           "docs": 3,
           "weeks_hit": 3
-        },
-        "2026-Q4": {
-          "docs": 9,
-          "weeks_hit": 5
-        }
-      }
-    },
-    {
-      "id": "sandbox_escape",
-      "label": "Sandbox escape",
-      "first_seen": "2026-07-20",
-      "last_seen": "2026-11-10",
-      "patterns": [
-        "\\bsandbox[- ]+escape\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
         },
         "2026-Q4": {
           "docs": 9,
