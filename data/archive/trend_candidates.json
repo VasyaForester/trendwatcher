@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-11T13:59:45.020115",
+  "updated_at": "2026-11-11T19:39:09.758337",
   "items": [
     {
       "id": "web_agents",
@@ -40,6 +40,25 @@
       }
     },
     {
+      "id": "injection_attacks",
+      "label": "Injection attacks",
+      "first_seen": "2026-04-14",
+      "last_seen": "2026-11-11",
+      "patterns": [
+        "\\binjection[- ]+attacks\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 14,
+          "weeks_hit": 8
+        },
+        "2026-Q4": {
+          "docs": 12,
+          "weeks_hit": 7
+        }
+      }
+    },
+    {
       "id": "agent_behavior",
       "label": "Agent behavior",
       "first_seen": "2026-07-19",
@@ -74,25 +93,6 @@
         "2026-Q4": {
           "docs": 11,
           "weeks_hit": 5
-        }
-      }
-    },
-    {
-      "id": "injection_attacks",
-      "label": "Injection attacks",
-      "first_seen": "2026-04-14",
-      "last_seen": "2026-11-09",
-      "patterns": [
-        "\\binjection[- ]+attacks\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 14,
-          "weeks_hit": 8
-        },
-        "2026-Q4": {
-          "docs": 11,
-          "weeks_hit": 7
         }
       }
     },
