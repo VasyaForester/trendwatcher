@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-13T19:16:21.652708",
+  "updated_at": "2026-11-14T13:38:06.730091",
   "items": [
     {
       "id": "web_agents",
@@ -477,6 +477,25 @@
       }
     },
     {
+      "id": "enterprise_ai_agents",
+      "label": "Enterprise ai agents",
+      "first_seen": "2026-07-20",
+      "last_seen": "2026-11-14",
+      "patterns": [
+        "\\benterprise[- ]+ai[- ]+agents\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 5,
+          "weeks_hit": 3
+        },
+        "2026-Q4": {
+          "docs": 6,
+          "weeks_hit": 3
+        }
+      }
+    },
+    {
       "id": "scaling_agentic",
       "label": "Scaling agentic",
       "first_seen": "2026-07-16",
@@ -644,25 +663,6 @@
         "2026-Q4": {
           "docs": 5,
           "weeks_hit": 5
-        }
-      }
-    },
-    {
-      "id": "enterprise_ai_agents",
-      "label": "Enterprise ai agents",
-      "first_seen": "2026-07-20",
-      "last_seen": "2026-11-11",
-      "patterns": [
-        "\\benterprise[- ]+ai[- ]+agents\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 5,
-          "weeks_hit": 3
-        },
-        "2026-Q4": {
-          "docs": 5,
-          "weeks_hit": 3
         }
       }
     },
