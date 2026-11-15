@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-14T18:06:21.791667",
+  "updated_at": "2026-11-15T13:50:53.841017",
   "items": [
     {
       "id": "web_agents",
@@ -344,6 +344,25 @@
       }
     },
     {
+      "id": "against_prompt",
+      "label": "Against prompt",
+      "first_seen": "2026-08-04",
+      "last_seen": "2026-11-12",
+      "patterns": [
+        "\\bagainst[- ]+prompt\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 2,
+          "weeks_hit": 2
+        },
+        "2026-Q4": {
+          "docs": 6,
+          "weeks_hit": 4
+        }
+      }
+    },
+    {
       "id": "agent_collaboration",
       "label": "Agent collaboration",
       "first_seen": "2026-07-16",
@@ -568,25 +587,6 @@
         "2026-Q4": {
           "docs": 6,
           "weeks_hit": 5
-        }
-      }
-    },
-    {
-      "id": "against_prompt",
-      "label": "Against prompt",
-      "first_seen": "2026-08-04",
-      "last_seen": "2026-11-08",
-      "patterns": [
-        "\\bagainst[- ]+prompt\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 2,
-          "weeks_hit": 2
-        },
-        "2026-Q4": {
-          "docs": 5,
-          "weeks_hit": 3
         }
       }
     },
@@ -1237,6 +1237,25 @@
       }
     },
     {
+      "id": "security_tools",
+      "label": "Security tools",
+      "first_seen": "2026-10-29",
+      "last_seen": "2026-11-14",
+      "patterns": [
+        "\\bsecurity[- ]+tools\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 4,
+          "weeks_hit": 3
+        }
+      }
+    },
+    {
       "id": "tool_calls",
       "label": "Tool calls",
       "first_seen": "2026-07-27",
@@ -1499,25 +1518,6 @@
         "2026-Q4": {
           "docs": 3,
           "weeks_hit": 3
-        }
-      }
-    },
-    {
-      "id": "agentic_robotics",
-      "label": "Agentic robotics",
-      "first_seen": "2026-10-13",
-      "last_seen": "2026-11-06",
-      "patterns": [
-        "\\bagentic[- ]+robotics\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 3,
-          "weeks_hit": 2
         }
       }
     }
