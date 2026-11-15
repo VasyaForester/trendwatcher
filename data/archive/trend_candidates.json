@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-15T13:50:53.841017",
+  "updated_at": "2026-11-15T18:28:36.321310",
   "items": [
     {
       "id": "web_agents",
@@ -40,6 +40,25 @@
       }
     },
     {
+      "id": "injection_attacks",
+      "label": "Injection attacks",
+      "first_seen": "2026-04-14",
+      "last_seen": "2026-11-15",
+      "patterns": [
+        "\\binjection[- ]+attacks\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 14,
+          "weeks_hit": 8
+        },
+        "2026-Q4": {
+          "docs": 13,
+          "weeks_hit": 7
+        }
+      }
+    },
+    {
       "id": "agentic_rl",
       "label": "Agentic rl",
       "first_seen": "2026-07-31",
@@ -74,25 +93,6 @@
         "2026-Q4": {
           "docs": 12,
           "weeks_hit": 5
-        }
-      }
-    },
-    {
-      "id": "injection_attacks",
-      "label": "Injection attacks",
-      "first_seen": "2026-04-14",
-      "last_seen": "2026-11-11",
-      "patterns": [
-        "\\binjection[- ]+attacks\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 14,
-          "weeks_hit": 8
-        },
-        "2026-Q4": {
-          "docs": 12,
-          "weeks_hit": 7
         }
       }
     },
@@ -268,6 +268,25 @@
       }
     },
     {
+      "id": "against_prompt",
+      "label": "Against prompt",
+      "first_seen": "2026-08-04",
+      "last_seen": "2026-11-13",
+      "patterns": [
+        "\\bagainst[- ]+prompt\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 2,
+          "weeks_hit": 2
+        },
+        "2026-Q4": {
+          "docs": 7,
+          "weeks_hit": 4
+        }
+      }
+    },
+    {
       "id": "agent_execution",
       "label": "Agent execution",
       "first_seen": "2026-07-28",
@@ -340,25 +359,6 @@
         "2026-Q4": {
           "docs": 7,
           "weeks_hit": 6
-        }
-      }
-    },
-    {
-      "id": "against_prompt",
-      "label": "Against prompt",
-      "first_seen": "2026-08-04",
-      "last_seen": "2026-11-12",
-      "patterns": [
-        "\\bagainst[- ]+prompt\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 2,
-          "weeks_hit": 2
-        },
-        "2026-Q4": {
-          "docs": 6,
-          "weeks_hit": 4
         }
       }
     },
