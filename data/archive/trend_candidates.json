@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-16T15:10:04.685252",
+  "updated_at": "2026-11-16T22:03:21.250896",
   "items": [
     {
       "id": "web_agents",
@@ -17,6 +17,25 @@
         "2026-Q4": {
           "docs": 25,
           "weeks_hit": 7
+        }
+      }
+    },
+    {
+      "id": "sandbox_escape",
+      "label": "Sandbox escape",
+      "first_seen": "2026-07-20",
+      "last_seen": "2026-11-10",
+      "patterns": [
+        "\\bsandbox[- ]+escape\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 14,
+          "weeks_hit": 5
         }
       }
     },
@@ -78,6 +97,25 @@
       }
     },
     {
+      "id": "supply_chain",
+      "label": "Supply chain",
+      "first_seen": "2026-07-14",
+      "last_seen": "2026-11-16",
+      "patterns": [
+        "\\bsupply[- ]+chain\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 14,
+          "weeks_hit": 7
+        },
+        "2026-Q4": {
+          "docs": 13,
+          "weeks_hit": 6
+        }
+      }
+    },
+    {
       "id": "autonomous_driving",
       "label": "Autonomous driving",
       "first_seen": "2026-07-09",
@@ -116,25 +154,6 @@
       }
     },
     {
-      "id": "sandbox_escape",
-      "label": "Sandbox escape",
-      "first_seen": "2026-07-20",
-      "last_seen": "2026-11-10",
-      "patterns": [
-        "\\bsandbox[- ]+escape\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 12,
-          "weeks_hit": 5
-        }
-      }
-    },
-    {
       "id": "agent_behavior",
       "label": "Agent behavior",
       "first_seen": "2026-07-19",
@@ -150,25 +169,6 @@
         "2026-Q4": {
           "docs": 11,
           "weeks_hit": 6
-        }
-      }
-    },
-    {
-      "id": "supply_chain",
-      "label": "Supply chain",
-      "first_seen": "2026-07-14",
-      "last_seen": "2026-11-12",
-      "patterns": [
-        "\\bsupply[- ]+chain\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 14,
-          "weeks_hit": 7
-        },
-        "2026-Q4": {
-          "docs": 11,
-          "weeks_hit": 5
         }
       }
     },
@@ -1047,6 +1047,25 @@
       }
     },
     {
+      "id": "chain_attack",
+      "label": "Chain attack",
+      "first_seen": "2026-09-29",
+      "last_seen": "2026-11-16",
+      "patterns": [
+        "\\bchain[- ]+attack\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 4,
+          "weeks_hit": 3
+        }
+      }
+    },
+    {
       "id": "contains_missing_authorization",
       "label": "Contains missing authorization",
       "first_seen": "2026-10-10",
@@ -1176,6 +1195,44 @@
         "2026-Q4": {
           "docs": 4,
           "weeks_hit": 3
+        }
+      }
+    },
+    {
+      "id": "ios_sandbox",
+      "label": "Ios sandbox",
+      "first_seen": "2026-11-10",
+      "last_seen": "2026-11-10",
+      "patterns": [
+        "\\bios[- ]+sandbox\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 4,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "ios_sandbox_escape",
+      "label": "Ios sandbox escape",
+      "first_seen": "2026-11-10",
+      "last_seen": "2026-11-10",
+      "patterns": [
+        "\\bios[- ]+sandbox[- ]+escape\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 4,
+          "weeks_hit": 1
         }
       }
     },
@@ -1332,6 +1389,25 @@
       }
     },
     {
+      "id": "supply_chain_attack",
+      "label": "Supply chain attack",
+      "first_seen": "2026-09-29",
+      "last_seen": "2026-11-16",
+      "patterns": [
+        "\\bsupply[- ]+chain[- ]+attack\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 4,
+          "weeks_hit": 3
+        }
+      }
+    },
+    {
       "id": "tool_calls",
       "label": "Tool calls",
       "first_seen": "2026-07-27",
@@ -1442,82 +1518,6 @@
         "2026-Q4": {
           "docs": 3,
           "weeks_hit": 2
-        }
-      }
-    },
-    {
-      "id": "agent_societies",
-      "label": "Agent societies",
-      "first_seen": "2026-07-09",
-      "last_seen": "2026-10-26",
-      "patterns": [
-        "\\bagent[- ]+societies\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 6,
-          "weeks_hit": 4
-        },
-        "2026-Q4": {
-          "docs": 3,
-          "weeks_hit": 2
-        }
-      }
-    },
-    {
-      "id": "agent_tasks",
-      "label": "Agent tasks",
-      "first_seen": "2026-07-30",
-      "last_seen": "2026-11-09",
-      "patterns": [
-        "\\bagent[- ]+tasks\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 3,
-          "weeks_hit": 3
-        }
-      }
-    },
-    {
-      "id": "agent_trajectory",
-      "label": "Agent trajectory",
-      "first_seen": "2026-07-20",
-      "last_seen": "2026-11-06",
-      "patterns": [
-        "\\bagent[- ]+trajectory\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 3,
-          "weeks_hit": 2
-        },
-        "2026-Q4": {
-          "docs": 3,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "agentic_capabilities",
-      "label": "Agentic capabilities",
-      "first_seen": "2026-07-24",
-      "last_seen": "2026-11-01",
-      "patterns": [
-        "\\bagentic[- ]+capabilities\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 3,
-          "weeks_hit": 3
         }
       }
     }
