@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-17T16:00:47.077007",
+  "updated_at": "2026-11-17T20:40:27.692809",
   "items": [
     {
       "id": "web_agents",
@@ -97,6 +97,25 @@
       }
     },
     {
+      "id": "supply_chain",
+      "label": "Supply chain",
+      "first_seen": "2026-07-14",
+      "last_seen": "2026-11-17",
+      "patterns": [
+        "\\bsupply[- ]+chain\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 14,
+          "weeks_hit": 7
+        },
+        "2026-Q4": {
+          "docs": 14,
+          "weeks_hit": 6
+        }
+      }
+    },
+    {
       "id": "agentic_rl",
       "label": "Agentic rl",
       "first_seen": "2026-07-31",
@@ -108,25 +127,6 @@
         "2026-Q3": {
           "docs": 15,
           "weeks_hit": 9
-        },
-        "2026-Q4": {
-          "docs": 13,
-          "weeks_hit": 6
-        }
-      }
-    },
-    {
-      "id": "supply_chain",
-      "label": "Supply chain",
-      "first_seen": "2026-07-14",
-      "last_seen": "2026-11-16",
-      "patterns": [
-        "\\bsupply[- ]+chain\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 14,
-          "weeks_hit": 7
         },
         "2026-Q4": {
           "docs": 13,
@@ -1085,6 +1085,25 @@
       }
     },
     {
+      "id": "agents_go",
+      "label": "Agents go",
+      "first_seen": "2026-09-27",
+      "last_seen": "2026-11-17",
+      "patterns": [
+        "\\bagents[- ]+go\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 4,
+          "weeks_hit": 4
+        }
+      }
+    },
+    {
       "id": "agents_keep",
       "label": "Agents keep",
       "first_seen": "2026-09-03",
@@ -1499,25 +1518,6 @@
         "2026-Q4": {
           "docs": 4,
           "weeks_hit": 4
-        }
-      }
-    },
-    {
-      "id": "security_tools",
-      "label": "Security tools",
-      "first_seen": "2026-10-29",
-      "last_seen": "2026-11-14",
-      "patterns": [
-        "\\bsecurity[- ]+tools\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 4,
-          "weeks_hit": 3
         }
       }
     }
