@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-17T20:40:27.692809",
+  "updated_at": "2026-11-18T15:33:46.437724",
   "items": [
     {
       "id": "web_agents",
@@ -40,6 +40,25 @@
       }
     },
     {
+      "id": "injection_attacks",
+      "label": "Injection attacks",
+      "first_seen": "2026-04-14",
+      "last_seen": "2026-11-17",
+      "patterns": [
+        "\\binjection[- ]+attacks\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 14,
+          "weeks_hit": 8
+        },
+        "2026-Q4": {
+          "docs": 15,
+          "weeks_hit": 8
+        }
+      }
+    },
+    {
       "id": "autonomous_driving",
       "label": "Autonomous driving",
       "first_seen": "2026-07-09",
@@ -55,25 +74,6 @@
         "2026-Q4": {
           "docs": 14,
           "weeks_hit": 5
-        }
-      }
-    },
-    {
-      "id": "injection_attacks",
-      "label": "Injection attacks",
-      "first_seen": "2026-04-14",
-      "last_seen": "2026-11-15",
-      "patterns": [
-        "\\binjection[- ]+attacks\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 14,
-          "weeks_hit": 8
-        },
-        "2026-Q4": {
-          "docs": 14,
-          "weeks_hit": 7
         }
       }
     },
@@ -838,6 +838,25 @@
       }
     },
     {
+      "id": "agents_turn",
+      "label": "Agents turn",
+      "first_seen": "2026-08-27",
+      "last_seen": "2026-11-17",
+      "patterns": [
+        "\\bagents[- ]+turn\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 5,
+          "weeks_hit": 4
+        }
+      }
+    },
+    {
       "id": "financial_agents",
       "label": "Financial agents",
       "first_seen": "2026-08-06",
@@ -1134,25 +1153,6 @@
         "2026-Q3": {
           "docs": 3,
           "weeks_hit": 3
-        },
-        "2026-Q4": {
-          "docs": 4,
-          "weeks_hit": 3
-        }
-      }
-    },
-    {
-      "id": "agents_turn",
-      "label": "Agents turn",
-      "first_seen": "2026-08-27",
-      "last_seen": "2026-11-07",
-      "patterns": [
-        "\\bagents[- ]+turn\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
         },
         "2026-Q4": {
           "docs": 4,
