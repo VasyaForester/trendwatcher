@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-19T15:45:23.782474",
+  "updated_at": "2026-11-19T20:05:39.905819",
   "items": [
     {
       "id": "web_agents",
@@ -1085,6 +1085,25 @@
       }
     },
     {
+      "id": "tool_calls",
+      "label": "Tool calls",
+      "first_seen": "2026-07-27",
+      "last_seen": "2026-11-19",
+      "patterns": [
+        "\\btool[- ]+calls\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 10,
+          "weeks_hit": 6
+        },
+        "2026-Q4": {
+          "docs": 5,
+          "weeks_hit": 4
+        }
+      }
+    },
+    {
       "id": "agent_access",
       "label": "Agent access",
       "first_seen": "2026-08-05",
@@ -1499,25 +1518,6 @@
         "2026-Q4": {
           "docs": 4,
           "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "measuring_skill",
-      "label": "Measuring skill",
-      "first_seen": "2026-10-23",
-      "last_seen": "2026-11-10",
-      "patterns": [
-        "\\bmeasuring[- ]+skill\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 4,
-          "weeks_hit": 2
         }
       }
     }
