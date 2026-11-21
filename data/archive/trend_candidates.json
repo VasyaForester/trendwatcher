@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-20T19:52:52.406194",
+  "updated_at": "2026-11-21T14:30:16.425592",
   "items": [
     {
       "id": "web_agents",
@@ -53,7 +53,7 @@
           "weeks_hit": 1
         },
         "2026-Q4": {
-          "docs": 17,
+          "docs": 18,
           "weeks_hit": 6
         }
       }
@@ -72,7 +72,7 @@
           "weeks_hit": 7
         },
         "2026-Q4": {
-          "docs": 16,
+          "docs": 17,
           "weeks_hit": 6
         }
       }
@@ -249,6 +249,25 @@
       }
     },
     {
+      "id": "context_protocol",
+      "label": "Context protocol",
+      "first_seen": "2026-07-06",
+      "last_seen": "2026-11-21",
+      "patterns": [
+        "\\bcontext[- ]+protocol\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 8,
+          "weeks_hit": 5
+        },
+        "2026-Q4": {
+          "docs": 9,
+          "weeks_hit": 6
+        }
+      }
+    },
+    {
       "id": "against_prompt",
       "label": "Against prompt",
       "first_seen": "2026-08-04",
@@ -298,25 +317,6 @@
         "2026-Q3": {
           "docs": 1,
           "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 8,
-          "weeks_hit": 5
-        }
-      }
-    },
-    {
-      "id": "context_protocol",
-      "label": "Context protocol",
-      "first_seen": "2026-07-06",
-      "last_seen": "2026-11-15",
-      "patterns": [
-        "\\bcontext[- ]+protocol\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 8,
-          "weeks_hit": 5
         },
         "2026-Q4": {
           "docs": 8,
