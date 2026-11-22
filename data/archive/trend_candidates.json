@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-21T19:02:25.787830",
+  "updated_at": "2026-11-22T14:41:43.322534",
   "items": [
     {
       "id": "web_agents",
@@ -1351,6 +1351,25 @@
       }
     },
     {
+      "id": "agents_md",
+      "label": "Agents md",
+      "first_seen": "2026-10-22",
+      "last_seen": "2026-11-22",
+      "patterns": [
+        "\\bagents[- ]+md\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 4,
+          "weeks_hit": 2
+        }
+      }
+    },
+    {
       "id": "autonomous_discovery",
       "label": "Autonomous discovery",
       "first_seen": "2026-07-14",
@@ -1495,25 +1514,6 @@
         "2026-Q3": {
           "docs": 0,
           "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 4,
-          "weeks_hit": 4
-        }
-      }
-    },
-    {
-      "id": "evaluating_scientific",
-      "label": "Evaluating scientific",
-      "first_seen": "2026-07-18",
-      "last_seen": "2026-11-16",
-      "patterns": [
-        "\\bevaluating[- ]+scientific\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 3,
-          "weeks_hit": 3
         },
         "2026-Q4": {
           "docs": 4,
