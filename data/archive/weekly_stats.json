@@ -6495,7 +6495,178 @@
           "share": 0.031034
         }
       }
+    },
+    "2026-11-16": {
+      "week_start": "2026-11-16",
+      "captured_at": "2026-11-23T10:26:09.657374",
+      "documents": 1086,
+      "by_source_type": {
+        "vendor": 118,
+        "research": 627,
+        "news": 268,
+        "social": 37,
+        "vulnerability": 35,
+        "standards": 1
+      },
+      "tags": {
+        "adversarial_ml": {
+          "count": 2,
+          "share": 0.001842
+        },
+        "agent_harness": {
+          "count": 19,
+          "share": 0.017495
+        },
+        "agent_identity_trust": {
+          "count": 2,
+          "share": 0.001842
+        },
+        "agent_memory_security": {
+          "count": 4,
+          "share": 0.003683
+        },
+        "agent_security": {
+          "count": 20,
+          "share": 0.018416
+        },
+        "agent_swarm_security": {
+          "count": 1,
+          "share": 0.000921
+        },
+        "agentic_ai": {
+          "count": 99,
+          "share": 0.09116
+        },
+        "ai_codegen_security": {
+          "count": 4,
+          "share": 0.003683
+        },
+        "autonomous_cyber_offense": {
+          "count": 3,
+          "share": 0.002762
+        },
+        "bias_fairness": {
+          "count": 3,
+          "share": 0.002762
+        },
+        "computer_use_agents": {
+          "count": 10,
+          "share": 0.009208
+        },
+        "data_poisoning": {
+          "count": 5,
+          "share": 0.004604
+        },
+        "deepfake_fraud": {
+          "count": 7,
+          "share": 0.006446
+        },
+        "eval_containment_escape": {
+          "count": 3,
+          "share": 0.002762
+        },
+        "governance_regulation": {
+          "count": 6,
+          "share": 0.005525
+        },
+        "guardrails_defense": {
+          "count": 25,
+          "share": 0.02302
+        },
+        "indirect_prompt_injection": {
+          "count": 9,
+          "share": 0.008287
+        },
+        "jailbreak": {
+          "count": 6,
+          "share": 0.005525
+        },
+        "long_context_memory": {
+          "count": 16,
+          "share": 0.014733
+        },
+        "malware_abuse": {
+          "count": 4,
+          "share": 0.003683
+        },
+        "mcp_security": {
+          "count": 2,
+          "share": 0.001842
+        },
+        "misinformation": {
+          "count": 3,
+          "share": 0.002762
+        },
+        "model_drift": {
+          "count": 1,
+          "share": 0.000921
+        },
+        "model_efficiency": {
+          "count": 39,
+          "share": 0.035912
+        },
+        "model_supply_chain": {
+          "count": 1,
+          "share": 0.000921
+        },
+        "model_theft": {
+          "count": 1,
+          "share": 0.000921
+        },
+        "multimodal_ai": {
+          "count": 49,
+          "share": 0.04512
+        },
+        "on_device_ai": {
+          "count": 16,
+          "share": 0.014733
+        },
+        "open_weights": {
+          "count": 18,
+          "share": 0.016575
+        },
+        "privacy": {
+          "count": 2,
+          "share": 0.001842
+        },
+        "prompt_injection": {
+          "count": 19,
+          "share": 0.017495
+        },
+        "rag_security": {
+          "count": 8,
+          "share": 0.007366
+        },
+        "reasoning_models": {
+          "count": 21,
+          "share": 0.019337
+        },
+        "red_teaming": {
+          "count": 12,
+          "share": 0.01105
+        },
+        "self_evolving_agents": {
+          "count": 37,
+          "share": 0.03407
+        },
+        "synthetic_data": {
+          "count": 4,
+          "share": 0.003683
+        },
+        "tool_calling_security": {
+          "count": 1,
+          "share": 0.000921
+        },
+        "vulnerability_cve": {
+          "count": 59,
+          "share": 0.054328
+        },
+        "world_models": {
+          "count": 55,
+          "share": 0.050645
+        }
+      }
     }
   },
-  "updated_at": "2026-11-22T19:20:39.674204"
+  "updated_at": "2026-11-23T10:26:09.664273"
 }
