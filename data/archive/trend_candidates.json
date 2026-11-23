@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-23T10:26:18.351822",
+  "updated_at": "2026-11-23T17:48:58.330908",
   "items": [
     {
       "id": "web_agents",
@@ -363,6 +363,25 @@
       }
     },
     {
+      "id": "security_tools",
+      "label": "Security tools",
+      "first_seen": "2026-10-29",
+      "last_seen": "2026-11-20",
+      "patterns": [
+        "\\bsecurity[- ]+tools\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 0,
+          "weeks_hit": 0
+        },
+        "2026-Q4": {
+          "docs": 8,
+          "weeks_hit": 4
+        }
+      }
+    },
+    {
       "id": "teaching_agents",
       "label": "Teaching agents",
       "first_seen": "2026-07-28",
@@ -450,25 +469,6 @@
         "2026-Q3": {
           "docs": 5,
           "weeks_hit": 3
-        },
-        "2026-Q4": {
-          "docs": 7,
-          "weeks_hit": 4
-        }
-      }
-    },
-    {
-      "id": "security_tools",
-      "label": "Security tools",
-      "first_seen": "2026-10-29",
-      "last_seen": "2026-11-20",
-      "patterns": [
-        "\\bsecurity[- ]+tools\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 0,
-          "weeks_hit": 0
         },
         "2026-Q4": {
           "docs": 7,
