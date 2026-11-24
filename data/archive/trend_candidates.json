@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-24T17:45:12.842891",
+  "updated_at": "2026-11-24T22:12:27.766207",
   "items": [
     {
       "id": "web_agents",
@@ -150,6 +150,44 @@
         "2026-Q4": {
           "docs": 13,
           "weeks_hit": 6
+        }
+      }
+    },
+    {
+      "id": "artificial_intelligence_agent",
+      "label": "Artificial intelligence agent",
+      "first_seen": "2026-08-11",
+      "last_seen": "2026-11-24",
+      "patterns": [
+        "\\bartificial[- ]+intelligence[- ]+agent\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 13,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "continuous_artificial_intelligence_agent",
+      "label": "Continuous artificial intelligence agent",
+      "first_seen": "2026-08-11",
+      "last_seen": "2026-11-24",
+      "patterns": [
+        "\\bcontinuous[- ]+artificial[- ]+intelligence[- ]+agent\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 13,
+          "weeks_hit": 1
         }
       }
     },
@@ -686,25 +724,6 @@
       }
     },
     {
-      "id": "artificial_intelligence_agent",
-      "label": "Artificial intelligence agent",
-      "first_seen": "2026-08-11",
-      "last_seen": "2026-11-24",
-      "patterns": [
-        "\\bartificial[- ]+intelligence[- ]+agent\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 6,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
       "id": "benchmarking_agentic",
       "label": "Benchmarking agentic",
       "first_seen": "2026-07-13",
@@ -758,25 +777,6 @@
         "2026-Q4": {
           "docs": 6,
           "weeks_hit": 4
-        }
-      }
-    },
-    {
-      "id": "continuous_artificial_intelligence_agent",
-      "label": "Continuous artificial intelligence agent",
-      "first_seen": "2026-08-11",
-      "last_seen": "2026-11-24",
-      "patterns": [
-        "\\bcontinuous[- ]+artificial[- ]+intelligence[- ]+agent\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 6,
-          "weeks_hit": 1
         }
       }
     },
