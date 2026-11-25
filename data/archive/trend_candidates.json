@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-11-24T22:12:27.766207",
+  "updated_at": "2026-11-25T17:11:21.384726",
   "items": [
     {
       "id": "web_agents",
       "label": "Web agents",
       "first_seen": "2026-07-06",
-      "last_seen": "2026-11-17",
+      "last_seen": "2026-11-24",
       "patterns": [
         "\\bweb[- ]+agents\\b"
       ],
@@ -15,8 +15,84 @@
           "weeks_hit": 11
         },
         "2026-Q4": {
-          "docs": 26,
-          "weeks_hit": 8
+          "docs": 27,
+          "weeks_hit": 9
+        }
+      }
+    },
+    {
+      "id": "artificial_intelligence_agent",
+      "label": "Artificial intelligence agent",
+      "first_seen": "2026-08-11",
+      "last_seen": "2026-11-25",
+      "patterns": [
+        "\\bartificial[- ]+intelligence[- ]+agent\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 23,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "continuous_artificial_intelligence_agent",
+      "label": "Continuous artificial intelligence agent",
+      "first_seen": "2026-08-11",
+      "last_seen": "2026-11-25",
+      "patterns": [
+        "\\bcontinuous[- ]+artificial[- ]+intelligence[- ]+agent\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 23,
+          "weeks_hit": 1
+        }
+      }
+    },
+    {
+      "id": "autonomous_driving",
+      "label": "Autonomous driving",
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-11-24",
+      "patterns": [
+        "\\bautonomous[- ]+driving\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 17,
+          "weeks_hit": 9
+        },
+        "2026-Q4": {
+          "docs": 20,
+          "weeks_hit": 7
+        }
+      }
+    },
+    {
+      "id": "sandbox_escape",
+      "label": "Sandbox escape",
+      "first_seen": "2026-07-20",
+      "last_seen": "2026-11-25",
+      "patterns": [
+        "\\bsandbox[- ]+escape\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 19,
+          "weeks_hit": 7
         }
       }
     },
@@ -36,44 +112,6 @@
         "2026-Q4": {
           "docs": 19,
           "weeks_hit": 7
-        }
-      }
-    },
-    {
-      "id": "autonomous_driving",
-      "label": "Autonomous driving",
-      "first_seen": "2026-07-09",
-      "last_seen": "2026-11-18",
-      "patterns": [
-        "\\bautonomous[- ]+driving\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 17,
-          "weeks_hit": 9
-        },
-        "2026-Q4": {
-          "docs": 18,
-          "weeks_hit": 6
-        }
-      }
-    },
-    {
-      "id": "sandbox_escape",
-      "label": "Sandbox escape",
-      "first_seen": "2026-07-20",
-      "last_seen": "2026-11-19",
-      "patterns": [
-        "\\bsandbox[- ]+escape\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 18,
-          "weeks_hit": 6
         }
       }
     },
@@ -154,40 +192,21 @@
       }
     },
     {
-      "id": "artificial_intelligence_agent",
-      "label": "Artificial intelligence agent",
-      "first_seen": "2026-08-11",
+      "id": "benchmarking_llm_agents",
+      "label": "Benchmarking llm agents",
+      "first_seen": "2026-07-29",
       "last_seen": "2026-11-24",
       "patterns": [
-        "\\bartificial[- ]+intelligence[- ]+agent\\b"
+        "\\bbenchmarking[- ]+llm[- ]+agents\\b"
       ],
       "quarters": {
         "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
+          "docs": 7,
+          "weeks_hit": 4
         },
         "2026-Q4": {
           "docs": 13,
-          "weeks_hit": 1
-        }
-      }
-    },
-    {
-      "id": "continuous_artificial_intelligence_agent",
-      "label": "Continuous artificial intelligence agent",
-      "first_seen": "2026-08-11",
-      "last_seen": "2026-11-24",
-      "patterns": [
-        "\\bcontinuous[- ]+artificial[- ]+intelligence[- ]+agent\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 13,
-          "weeks_hit": 1
+          "weeks_hit": 6
         }
       }
     },
@@ -207,25 +226,6 @@
         "2026-Q4": {
           "docs": 13,
           "weeks_hit": 6
-        }
-      }
-    },
-    {
-      "id": "benchmarking_llm_agents",
-      "label": "Benchmarking llm agents",
-      "first_seen": "2026-07-29",
-      "last_seen": "2026-11-13",
-      "patterns": [
-        "\\bbenchmarking[- ]+llm[- ]+agents\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 7,
-          "weeks_hit": 4
-        },
-        "2026-Q4": {
-          "docs": 12,
-          "weeks_hit": 5
         }
       }
     },
@@ -252,7 +252,7 @@
       "id": "agents_against",
       "label": "Agents against",
       "first_seen": "2026-07-22",
-      "last_seen": "2026-11-23",
+      "last_seen": "2026-11-24",
       "patterns": [
         "\\bagents[- ]+against\\b"
       ],
@@ -262,8 +262,27 @@
           "weeks_hit": 5
         },
         "2026-Q4": {
-          "docs": 10,
+          "docs": 11,
           "weeks_hit": 5
+        }
+      }
+    },
+    {
+      "id": "agent_failures",
+      "label": "Agent failures",
+      "first_seen": "2026-07-22",
+      "last_seen": "2026-11-24",
+      "patterns": [
+        "\\bagent[- ]+failures\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 12,
+          "weeks_hit": 6
+        },
+        "2026-Q4": {
+          "docs": 9,
+          "weeks_hit": 7
         }
       }
     },
@@ -279,6 +298,25 @@
         "2026-Q3": {
           "docs": 6,
           "weeks_hit": 3
+        },
+        "2026-Q4": {
+          "docs": 9,
+          "weeks_hit": 6
+        }
+      }
+    },
+    {
+      "id": "context_compaction",
+      "label": "Context compaction",
+      "first_seen": "2026-08-02",
+      "last_seen": "2026-11-24",
+      "patterns": [
+        "\\bcontext[- ]+compaction\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
         },
         "2026-Q4": {
           "docs": 9,
@@ -340,44 +378,6 @@
         "2026-Q4": {
           "docs": 8,
           "weeks_hit": 4
-        }
-      }
-    },
-    {
-      "id": "agent_failures",
-      "label": "Agent failures",
-      "first_seen": "2026-07-22",
-      "last_seen": "2026-11-19",
-      "patterns": [
-        "\\bagent[- ]+failures\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 12,
-          "weeks_hit": 6
-        },
-        "2026-Q4": {
-          "docs": 8,
-          "weeks_hit": 6
-        }
-      }
-    },
-    {
-      "id": "context_compaction",
-      "label": "Context compaction",
-      "first_seen": "2026-08-02",
-      "last_seen": "2026-11-04",
-      "patterns": [
-        "\\bcontext[- ]+compaction\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
-        },
-        "2026-Q4": {
-          "docs": 8,
-          "weeks_hit": 5
         }
       }
     },
@@ -496,6 +496,25 @@
       }
     },
     {
+      "id": "benchmarking_agents",
+      "label": "Benchmarking agents",
+      "first_seen": "2026-08-10",
+      "last_seen": "2026-11-23",
+      "patterns": [
+        "\\bbenchmarking[- ]+agents\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 3,
+          "weeks_hit": 3
+        },
+        "2026-Q4": {
+          "docs": 7,
+          "weeks_hit": 5
+        }
+      }
+    },
+    {
       "id": "contains_missing",
       "label": "Contains missing",
       "first_seen": "2026-10-10",
@@ -568,6 +587,25 @@
         "2026-Q4": {
           "docs": 7,
           "weeks_hit": 5
+        }
+      }
+    },
+    {
+      "id": "visual_agents",
+      "label": "Visual agents",
+      "first_seen": "2026-07-10",
+      "last_seen": "2026-11-21",
+      "patterns": [
+        "\\bvisual[- ]+agents\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 7,
+          "weeks_hit": 2
         }
       }
     },
@@ -743,25 +781,6 @@
       }
     },
     {
-      "id": "benchmarking_agents",
-      "label": "Benchmarking agents",
-      "first_seen": "2026-08-10",
-      "last_seen": "2026-11-10",
-      "patterns": [
-        "\\bbenchmarking[- ]+agents\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 3,
-          "weeks_hit": 3
-        },
-        "2026-Q4": {
-          "docs": 6,
-          "weeks_hit": 4
-        }
-      }
-    },
-    {
       "id": "context_compression",
       "label": "Context compression",
       "first_seen": "2026-07-10",
@@ -933,21 +952,21 @@
       }
     },
     {
-      "id": "visual_agents",
-      "label": "Visual agents",
-      "first_seen": "2026-07-10",
-      "last_seen": "2026-11-21",
+      "id": "tool_calls",
+      "label": "Tool calls",
+      "first_seen": "2026-07-27",
+      "last_seen": "2026-11-19",
       "patterns": [
-        "\\bvisual[- ]+agents\\b"
+        "\\btool[- ]+calls\\b"
       ],
       "quarters": {
         "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
+          "docs": 10,
+          "weeks_hit": 6
         },
         "2026-Q4": {
           "docs": 6,
-          "weeks_hit": 2
+          "weeks_hit": 5
         }
       }
     },
@@ -1256,17 +1275,17 @@
       }
     },
     {
-      "id": "tool_calls",
-      "label": "Tool calls",
-      "first_seen": "2026-07-27",
-      "last_seen": "2026-11-19",
+      "id": "visual_memory",
+      "label": "Visual memory",
+      "first_seen": "2026-09-26",
+      "last_seen": "2026-11-24",
       "patterns": [
-        "\\btool[- ]+calls\\b"
+        "\\bvisual[- ]+memory\\b"
       ],
       "quarters": {
         "2026-Q3": {
-          "docs": 10,
-          "weeks_hit": 6
+          "docs": 1,
+          "weeks_hit": 1
         },
         "2026-Q4": {
           "docs": 5,
@@ -1290,6 +1309,25 @@
         "2026-Q4": {
           "docs": 4,
           "weeks_hit": 2
+        }
+      }
+    },
+    {
+      "id": "agent_authorization",
+      "label": "Agent authorization",
+      "first_seen": "2026-09-16",
+      "last_seen": "2026-11-24",
+      "patterns": [
+        "\\bagent[- ]+authorization\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 4,
+          "weeks_hit": 4
         }
       }
     },
@@ -1476,44 +1514,6 @@
         "2026-Q3": {
           "docs": 0,
           "weeks_hit": 0
-        },
-        "2026-Q4": {
-          "docs": 4,
-          "weeks_hit": 2
-        }
-      }
-    },
-    {
-      "id": "autonomous_discovery",
-      "label": "Autonomous discovery",
-      "first_seen": "2026-07-14",
-      "last_seen": "2026-10-20",
-      "patterns": [
-        "\\bautonomous[- ]+discovery\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 3,
-          "weeks_hit": 3
-        },
-        "2026-Q4": {
-          "docs": 4,
-          "weeks_hit": 4
-        }
-      }
-    },
-    {
-      "id": "bench_evaluating",
-      "label": "Bench evaluating",
-      "first_seen": "2026-07-27",
-      "last_seen": "2026-11-20",
-      "patterns": [
-        "\\bbench[- ]+evaluating\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 7,
-          "weeks_hit": 6
         },
         "2026-Q4": {
           "docs": 4,
