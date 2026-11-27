@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-27T16:32:04.536281",
+  "updated_at": "2026-11-27T21:07:44.390752",
   "items": [
     {
       "id": "web_agents",
@@ -59,6 +59,25 @@
       }
     },
     {
+      "id": "sandbox_escape",
+      "label": "Sandbox escape",
+      "first_seen": "2026-07-20",
+      "last_seen": "2026-11-27",
+      "patterns": [
+        "\\bsandbox[- ]+escape\\b"
+      ],
+      "quarters": {
+        "2026-Q3": {
+          "docs": 1,
+          "weeks_hit": 1
+        },
+        "2026-Q4": {
+          "docs": 22,
+          "weeks_hit": 7
+        }
+      }
+    },
+    {
       "id": "autonomous_driving",
       "label": "Autonomous driving",
       "first_seen": "2026-07-09",
@@ -70,25 +89,6 @@
         "2026-Q3": {
           "docs": 17,
           "weeks_hit": 9
-        },
-        "2026-Q4": {
-          "docs": 20,
-          "weeks_hit": 7
-        }
-      }
-    },
-    {
-      "id": "sandbox_escape",
-      "label": "Sandbox escape",
-      "first_seen": "2026-07-20",
-      "last_seen": "2026-11-25",
-      "patterns": [
-        "\\bsandbox[- ]+escape\\b"
-      ],
-      "quarters": {
-        "2026-Q3": {
-          "docs": 1,
-          "weeks_hit": 1
         },
         "2026-Q4": {
           "docs": 20,
